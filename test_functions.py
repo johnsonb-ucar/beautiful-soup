@@ -6,6 +6,28 @@ from bs4 import Tag, NavigableString, BeautifulSoup, Comment
 
 # User-defined functions
 
+def decompose_anchors_with_name_and_no_string(soup):
+    """The HTML documentation contains anchors with name attributes of the form
+    ``<a name="Decisions"></a>``. These anchors are used as link targets
+    elsewhere in each page. Pandoc converts these tags more predictably when
+    they are replaced with id attributes within header tags. For example,
+    ``<h2 id="decisions">Decisions</h2>``. This function decomposes all of the 
+    named anchors in a page that don't have link text.
+    """
+    for a in soup('a'):
+        # If the anchor does not have a name, a KeyError will be returned. The
+        # code will try checking the name attribute. Since most anchors in the
+        # DART documentation do not have a name. Thus nothing happens in the
+        # except case.
+        try:
+            if a['name'] and a.string == None:
+                a.decompose()
+                print('Removing named anchor with no string.')
+        except KeyError:
+            pass
+    
+    return soup
+
 def decompose_legalese_links(soup):
     """Each page in the HTML documentation has a Legalese link and target that
     takes the user to the bottom of the page. This function removes them.
@@ -218,6 +240,7 @@ with open(input_page) as fp:
     soup = BeautifulSoup(fp, 'html.parser')
 
 # Pass the soup through the functions.
+soup = decompose_anchors_with_name_and_no_string(soup)
 soup = decompose_legalese_links(soup)
 soup = decompose_logo_main_index_table(soup)
 soup = decompose_obsolete_sections(soup)

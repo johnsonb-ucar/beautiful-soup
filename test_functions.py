@@ -200,6 +200,65 @@ def replace_ems_with_classes(soup):
     
     return soup
 
+def replace_headers_and_compose_content_list(soup):
+    """Each page in the HTML documentation has a collection of h1, h2 and h3
+    tags that act as section headers. Typically, the ``<h2>`` tags are used to
+    denote sections of the page. Unfortunately ``<h3>`` and ``<h4>`` tags tend
+    to be scattered around the documentation pages and are often used out of
+    order, failing to respect the expected header hierarchy in an HTML
+    document, e.g.:
+
+    .. code-block::
+    
+       <h1>
+           <h2></h2>
+           <h2></h2>
+               <h3></h3>
+           <h2></h2>
+               <h3</h3>
+                   <h4></h4>
+    
+    This function collects the ``<h2>`` headers in a page and composes a
+    content list near the top of the page that will serve as internal
+    navigation.
+    """
+
+    # Make an empty unordered list
+    content_list = soup.new_tag('ul')
+
+    for h2 in soup('h2'):
+        # Use the string methods to modify versions of the header string for 
+        # use in creating the content list and to assign an id attribute to the
+        # tag. 
+        
+        # Make an empty list item tag to populate with modified versions of the
+        # header string  
+        list_item = soup.new_tag('li')
+        list_item_a = soup.new_tag('a')
+
+        # Modify the original h2 string to be capitalized
+        h2.string = h2.string.capitalize()
+        # Assign the list item string to the same capitalized verison of the h2
+        # string
+        list_item_a.string = h2.string.capitalize()
+
+        # Create an id attribute for the original h2 tag and assign it a
+        # lowercase, underscored modification of the original h2 tag 
+        h2.attrs['id'] = h2.string.lower().replace(" ", "_")
+        # Create a href attribute for the list item and assign it the same
+        # lowercase, underscored modification of the original h2 tag
+        list_item_a.attrs['href'] = '#'+h2.string.lower().replace(" ", "_")
+        
+        # Insert the anchor into the list item
+        list_item.append(list_item_a)
+        # Append the list item to the content list
+        content_list.append(list_item)
+
+    # Insert the content list after the page title contained in the first <h1>
+    soup.h1.insert_after("\n", content_list)
+
+    return soup
+
 def replace_namelist_divs(soup):
     """Namelists in the HTML documentation are represented using a div with a
     namelist class. Pandoc needs the namelist to be wrapped in ``<pre><code>``
@@ -247,6 +306,7 @@ soup = decompose_obsolete_sections(soup)
 soup = decompose_top_links(soup)
 soup = extract_comments(soup)
 soup = replace_ems_with_classes(soup)
+soup = replace_headers_and_compose_content_list(soup)
 soup = replace_namelist_divs(soup)
 
 # Save the output.

@@ -255,7 +255,7 @@ def replace_headers_and_compose_content_list(soup):
         content_list.append(list_item)
 
     # Insert the content list after the page title contained in the first <h1>
-    soup.h1.insert_after("\n", content_list)
+    soup.h1.insert_after("\n<h2>Contents</h2>\n", content_list)
 
     return soup
 
@@ -293,12 +293,52 @@ def replace_namelist_divs(soup):
 
     return soup
 
+def unwrap_anchors_within_body_text(soup):
+    """The HTML documentation contains anchors with name attributes of the form
+    ``<a href="#DataSources"></a>``. These anchors are used as link targets
+    elsewhere in each page. Pandoc converts documents more cleanly when id tags
+    are used in structural elements such as ``<h*>`` tags instead. This latter
+    syntax is implemented in the ``replace_headers_and_compose_content_list``
+    function. Thus this function simply replaces anchors with ``href="#*"`` and
+    strings with the string they contain. This is an imperfect solution but
+    the alternative is having internal links with missing targets.
+    """
+    for a in soup('a'):
+        # If an anchor doesn't have a href, an AttributeError will be returned.
+        # Therefore, use try & except.
+        try:
+            href = a.get('href')
+
+            if href != None and href[0] == '#' and len(a.contents) > 0:
+                a.unwrap()
+        except AttributeError:
+            pass
+
+    return soup
+
+
 # Open the input page.
 input_page = 'original_MOD15A2_to_obs.html'
 with open(input_page) as fp:
     soup = BeautifulSoup(fp, 'html.parser')
 
 # Pass the soup through the functions.
+# For the most part, the functions can be run in any order. However, there are 
+# two exceptions: 
+# 
+# 1. ``decompose_anchors_providing_navigation_near_top_of_file`` function won't
+#    work as intended if it is run after ``decompose_logo_main_index_table`` 
+#    because the former function uses the logo table to locate where the
+#    navigation anchors occur in the document while the latter removes the logo 
+#    table from the document.
+#
+# 2. ``unwrap_anchors_within_body_text`` will 
+#    remove the anchors in the list elements of the content list at the
+#    beginning of the document, thus it should be run after
+#    ``decompose_anchors_providing_navigation_near_top_of_file``.
+#
+# If the functions are run in alphabetical order, they will work as intended.
+
 soup = decompose_anchors_with_name_and_no_string(soup)
 soup = decompose_legalese_links(soup)
 soup = decompose_logo_main_index_table(soup)
@@ -308,6 +348,7 @@ soup = extract_comments(soup)
 soup = replace_ems_with_classes(soup)
 soup = replace_headers_and_compose_content_list(soup)
 soup = replace_namelist_divs(soup)
+soup = unwrap_anchors_within_body_text(soup)
 
 # Save the output.
 output_page = 'modified_MOD15A2_to_obs.html'

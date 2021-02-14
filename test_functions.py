@@ -6,6 +6,97 @@ from bs4 import Tag, NavigableString, BeautifulSoup, Comment
 
 # User-defined functions
 
+def decompose_anchors_providing_navigation_near_top_of_file(soup):
+    """Each of the original HTML files has a nagivation list near the top of
+    the page. The anchors in these navigation lists do not have a systematic
+    relationship between their link text and ``href`` values. Sometimes the 
+    link text matches the ``href`` values and sometimes it does not. 
+    Text and ``href`` match: ``<a href="#Namelist">NAMELIST</a>``
+    Text and ``href`` don't match:  ``<a href="#Legalese">TERMS OF USE</a>``
+    This causes many problems for the automatic pandoc conversion, thus this
+    function simply removes these navigation anchors and another function,
+    ``replace_headers_and_compose_content_list``, creates a content list that
+    will be reliably translated to reStructuredText.
+    """
+    # 'DART project logo' is the alt text for the DART logo image.
+    logo_string = 'DART project logo'
+    header_types = ['h1', 'h2', 'h3', 'h4', 'h5']
+
+    # This function has the most comments because its logic is seemingly 
+    # circuitous. Removing the navigation list is a delicate process because
+    # the original navigation list intersperses Tags and NavigableStrings.
+    # It isn't possible to traverse the section and remove objects from it by
+    # alternating the next_element and extract() because the next elements of
+    # Tags **are** their content strings. Thus extracting a tag precludes
+    # next_element from iterating through the elements, since the next element
+    # was the content string that was just extracted.
+
+    # Thus, the function uses the DART logo table to locate the navigation
+    # list and makes a first pass through the list while removing the Tags.
+    # The function then uses the DART logo table again to locate the navigation
+    # list and makes a second pass through the list while removing the 
+    # NavigableStrings.
+
+    # This is the first pass.
+    for table in soup('table'):
+        # table.contents returns a list of the rows in the table. Iterate
+        # through the rows.
+        # Type cast the row as a str in order to use the substring in string
+        # syntax to check if any row contains the 'DART project logo' string.
+        # If the table contains the logo string, then start traversing the
+        # document and removing rows until the next header is reached.
+
+        # Find the logo table.
+        if any(logo_string in str(row) for row in table.contents):
+            # The navigation table can't be traversed using next_siblings
+            # because there are strings outside of tags, for example:
+            # ``<a href="#Namelist">NAMELIST</a> /``
+            # ``<a href="#DataSources">DATA SOURCES</a> /``
+            # the `` /`` is not a sibling of the table.
+            # Use next_sibling once to skip over the table and get the tag for
+            # the first navigation anchor.
+            
+            in_section = True
+            for next_sibling in table.find_next_siblings():
+                if in_section:
+                    # Check if the next_sibling is a Tag object.
+                    if isinstance(next_sibling, Tag):
+                        # If it is a tag, it will nave a name. Check to see if
+                        # the name is h1, h2, h3, h4, or h5.
+                        if next_sibling.name in header_types:
+                            # If so, the section has been traversed.
+                            in_section = False
+                        else:
+                            # Otherwise, the sibling is still in the section,
+                            # so remove it.
+                            next_sibling.decompose()
+
+    # This is the second pass.   
+    for table in soup('table'):
+        # Find the logo table.
+        if any(logo_string in str(row) for row in table.contents):
+            # Get the table's next sibling. Using next_element on the table
+            # itself is undesirable because that would require iterating
+            # through the table elements. next_sibling skips the table to the
+            # next Tag or, in this case, NavigableString.
+            next_sibling = table.next_sibling
+            # Get the next_element of the next_sibling.
+            next_element = next_sibling.next_element
+            # Use a boolean to keep the logic simple in a while loop.
+            in_section = True
+            while in_section:
+                # If the next_element is header tag, the section has been 
+                # traversed.
+                if isinstance(next_element, Tag) and next_element.name in header_types:
+                    in_section = False
+                # Otherwise, get the next element and delete this one.
+                else:
+                    this_element = next_element
+                    next_element = this_element.next_element
+                    this_element.extract()
+    
+    return soup
+
 def decompose_anchors_with_name_and_no_string(soup):
     """The HTML documentation contains anchors with name attributes of the form
     ``<a name="Decisions"></a>``. These anchors are used as link targets
@@ -172,6 +263,29 @@ def extract_comments(soup):
 
     return soup
 
+def replace_anchors_within_body_text_with_their_contents(soup):
+    """The HTML documentation contains anchors with name attributes of the form
+    ``<a href="#DataSources"></a>``. These anchors are used as link targets
+    elsewhere in each page. Pandoc converts documents more cleanly when id tags
+    are used in structural elements such as ``<h*>`` tags instead. This latter
+    syntax is implemented in the ``replace_headers_and_compose_content_list``
+    function. Thus this function simply replaces anchors with ``href="#*"`` and
+    strings with the string they contain. This is an imperfect solution but
+    the alternative is having internal links with missing targets.
+    """
+    for a in soup('a'):
+        # If an anchor doesn't have a href, an AttributeError will be returned.
+        # Therefore, use try & except.
+        try:
+            href = a.get('href')
+
+            if href != None and href[0] == '#' and len(a.contents) > 0:
+                a.unwrap()
+        except AttributeError:
+            pass
+
+    return soup
+
 def replace_ems_with_classes(soup):
     """The filepaths and environmental variables in the HTML documentation are
     represented using ``<em>`` tags with unix and file classes. Pandoc needs
@@ -253,9 +367,13 @@ def replace_headers_and_compose_content_list(soup):
         list_item.append(list_item_a)
         # Append the list item to the content list
         content_list.append(list_item)
+        content_list.append("\n")
 
     # Insert the content list after the page title contained in the first <h1>
-    soup.h1.insert_after("\n<h2>Contents</h2>\n", content_list)
+    soup.h1.insert_after("\n", content_list)
+    header_for_content_list = soup.new_tag('h2')
+    header_for_content_list.string = 'Contents'
+    soup.h1.insert_after("\n", header_for_content_list)
 
     return soup
 
@@ -293,36 +411,13 @@ def replace_namelist_divs(soup):
 
     return soup
 
-def unwrap_anchors_within_body_text(soup):
-    """The HTML documentation contains anchors with name attributes of the form
-    ``<a href="#DataSources"></a>``. These anchors are used as link targets
-    elsewhere in each page. Pandoc converts documents more cleanly when id tags
-    are used in structural elements such as ``<h*>`` tags instead. This latter
-    syntax is implemented in the ``replace_headers_and_compose_content_list``
-    function. Thus this function simply replaces anchors with ``href="#*"`` and
-    strings with the string they contain. This is an imperfect solution but
-    the alternative is having internal links with missing targets.
-    """
-    for a in soup('a'):
-        # If an anchor doesn't have a href, an AttributeError will be returned.
-        # Therefore, use try & except.
-        try:
-            href = a.get('href')
-
-            if href != None and href[0] == '#' and len(a.contents) > 0:
-                a.unwrap()
-        except AttributeError:
-            pass
-
-    return soup
-
-
 # Open the input page.
 input_page = 'original_MOD15A2_to_obs.html'
 with open(input_page) as fp:
     soup = BeautifulSoup(fp, 'html.parser')
 
 # Pass the soup through the functions.
+# 
 # For the most part, the functions can be run in any order. However, there are 
 # two exceptions: 
 # 
@@ -332,23 +427,24 @@ with open(input_page) as fp:
 #    navigation anchors occur in the document while the latter removes the logo 
 #    table from the document.
 #
-# 2. ``unwrap_anchors_within_body_text`` will 
+# 2. ``replace_anchors_within_body_text_with_their_contents`` will 
 #    remove the anchors in the list elements of the content list at the
-#    beginning of the document, thus it should be run after
-#    ``decompose_anchors_providing_navigation_near_top_of_file``.
+#    beginning of the document, thus it should be run before the content list
+#    is created by ``replace_headers_and_compose_content_list``.
 #
 # If the functions are run in alphabetical order, they will work as intended.
 
+soup = decompose_anchors_providing_navigation_near_top_of_file(soup)
 soup = decompose_anchors_with_name_and_no_string(soup)
 soup = decompose_legalese_links(soup)
 soup = decompose_logo_main_index_table(soup)
 soup = decompose_obsolete_sections(soup)
 soup = decompose_top_links(soup)
 soup = extract_comments(soup)
+soup = replace_anchors_within_body_text_with_their_contents(soup)
 soup = replace_ems_with_classes(soup)
 soup = replace_headers_and_compose_content_list(soup)
 soup = replace_namelist_divs(soup)
-soup = unwrap_anchors_within_body_text(soup)
 
 # Save the output.
 output_page = 'modified_MOD15A2_to_obs.html'

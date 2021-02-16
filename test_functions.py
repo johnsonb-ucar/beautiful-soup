@@ -1,10 +1,56 @@
 #!/usr/bin/python
 
+# Import python standard libraries
+
+import os
+
 # Import third-party libraries
 
 from bs4 import Tag, NavigableString, BeautifulSoup, Comment
 
 # User-defined functions
+
+def convert_relative_path_to_absolute_path(this_file_path, relative_path, doc_root):
+    """Sphinx expects paths to be defined as absolute paths in which the path 
+    root is the ``doc_root``. This function takes three arguments:
+
+    1. the path of the file being edited
+    2. the relative path from the file being edited to the linked file
+    3. the doc_root used by Sphinx
+
+    It returns the absolute path to the linked file.
+
+    In order for this function to work as intented, both the file being edited
+    and the linked file must be contained within ``doc_root``.
+    """
+
+    # Find how many parent directories have to be traversed by first splitting
+    # the ``../`` out of the string.
+    split_parents_out_of_path = relative_path.split('../')
+    # Each ``../`` in the original string creates a empty list element in the
+    # split string list. Count how many empty list elements there are.  
+    number_of_parent_directories = split_parents_out_of_path.count('')
+
+    # Split the original file path by slashes
+    this_file_path = this_file_path.split('/')
+    # pop off the number of parent_directories plus one (for the filename)
+    # from the original filepath's split list
+    for ipop in range(0, number_of_parent_directories+1):
+        this_file_path.pop()
+    
+    # Append the last list item from split_parents_out_of_path to the 
+    # this_file_path list.
+    this_file_path.append(split_parents_out_of_path[-1])
+
+    # Define an absolute path string to use as the basis of joining the split
+    # list contained in this_file_path.
+    absolute_path = '/'
+    absolute_path = absolute_path.join(this_file_path)
+    
+    # Remove the path to the doc_root from the absolute path.
+    absolute_path = absolute_path.replace(doc_root, '')
+
+    return absolute_path
 
 def convert_string_to_sentence_case(string):
     """This function does not operate on the soup. It takes a string and
@@ -517,12 +563,39 @@ def rewrite_lesser_headers_than_h2_as_sentence_case(soup):
 
     return(soup)
 
-test_string = "Overview of DART"
-print(convert_string_to_sentence_case(test_string))
+def rewrite_relative_paths_as_absolute_in_hrefs(soup, original_file_path, doc_root):
+    """Sphinx expects paths to be defined as absolute paths in which the path 
+    root is the ``doc_root``. This function checks all of the anchors in a file
+    for relative paths and rewrites them as absolute paths, where ``/`` 
+    corresponds to the ``doc_root``.
+    """
+    # If an anchor doesn't have a href, an AttributeError will be returned.
+    # Therefore, use try & except.
+    for a in soup('a'):
+        try:
+            href = a.get('href')
+
+            # Check if the path is a relative path by seeing if the first three
+            # characters denote a parent directory
+            if href != None and len(href) > 2 and href[:3] == '../':
+                a.attrs['href'] = convert_relative_path_to_absolute_path(
+                    original_file_path, href, doc_root)
+
+        except AttributeError:
+            pass
+
+    return soup
+
+# Get the directory in which this script resides.
+current_directory = os.path.dirname(os.path.realpath(__file__))
+
+# Assign the documentation root and paths to the input and output documents.
+doc_root = current_directory + '/docs/html'
+original_file_path = doc_root + '/observations/obs_converters/MODIS/MOD15A2_to_obs.html'
+modified_file_path = doc_root + '/observations/obs_converters/MODIS/modified_MOD15A2_to_obs.html'
 
 # Open the input page.
-input_page = 'original_MOD15A2_to_obs.html'
-with open(input_page) as fp:
+with open(original_file_path) as fp:
     soup = BeautifulSoup(fp, 'html.parser')
 
 # Pass the soup through the functions.
@@ -555,8 +628,8 @@ soup = replace_ems_with_classes(soup)
 soup = replace_headers_and_compose_content_list(soup)
 soup = replace_namelist_divs(soup)
 soup = rewrite_lesser_headers_than_h2_as_sentence_case(soup)
+soup = rewrite_relative_paths_as_absolute_in_hrefs(soup, original_file_path, doc_root)
 
 # Save the output.
-output_page = 'modified_MOD15A2_to_obs.html'
-with open(output_page, 'w') as file:
+with open(modified_file_path, 'w') as file:
     file.write(str(soup))

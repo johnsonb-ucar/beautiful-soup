@@ -6,6 +6,93 @@ from bs4 import Tag, NavigableString, BeautifulSoup, Comment
 
 # User-defined functions
 
+def convert_string_to_sentence_case(string):
+    """This function does not operate on the soup. It takes a string and
+    converts it to sentence case using rules of American English. The
+    function contains three lists that words are compared against so that it
+    can recognize whether a word is:
+    
+    1. an acronym or initialism,
+    2. a proper noun,
+    3. a name that is never capitalized, such as mkmf.
+    
+    These lists enable the function to treat the words contained therein
+    appropriately.
+    """
+
+    all_caps = [
+        '1D', '3DVAR', '3DVAR/4DVAR', '4DVAR', 'AIRS', 'AIX', 'AMSR-E',
+        'AQUA', 'ASCII', 'ATCF', 'ATM', 'CAM', 'CAM-FV', 'CAM-SE', 'CESM',
+        'CESM', 'CESM1', 'CESM2', 'CLM', 'CM1', 'COAMPS', 'COSMIC', 'DART',
+        'DMSP', 'EDR-DSK', 'F16', 'F90', 'GHRSST', 'GITM', 'GPS', 'GTSPP',
+        'GUI', 'HRLDAS', 'HRLDAS-V3.3', 'L63', 'LANL', 'LANL/POP', 'MADIS',
+        'MDF', 'MIDAS', 'MODIS', 'MODULE', 'MPAS', 'MPAS_ATM', 'MPAS_OCN',
+        'MPI', 'NCO', 'NCOMMAS', 'NOAH', 'NOAHLSM_OFFLINE', 'OCN', 'OSX',
+        'POP', 'POP2', 'PROGRAM', 'QC', 'RINEX', 'RMA', 'ROMS', 'SGI', 'SQG',
+        'SSEC', 'SSUSI', 'TERRA', 'TIEGCM', 'TPW', 'WACCM', 'WOD', 'WRF',
+        'WRF/DART'
+    ]
+
+    proper_nouns = [
+        'Absoft', 'AmeriFlux', 'Convert all netCDF variations',
+        'DEFAULT_obs_def_mod', 'Easter', 'Fiji', 'Fortran', 'Guam', 'Hawaii',
+        'Iceland', 'Ikeda', 'Jamaica', 'Kodiak', 'Lanai', 'Lorenz',
+        'Lorenz_04', 'Lorenz_63', 'Lorenz_84', 'Lorenz_96', 'Lorenz_96',
+        'Manhattan', 'Matlab', 'Matlab®', 'Mesonet', 'MITgcm_ocean', 'netCDF',
+        'NetCDF', 'Oklahoma', 'PowerPC', 'PrecisionCheck', 'Pro', 'QuikSCAT',
+        'SeaWinds'
+    ]
+
+    # Preserving lower case only matters for the first word of the string, 
+    # since it would otherwise be capitalized.
+    lower_case = [
+        'atmos_tracer_utilities_mod', 'convert_L2b.f90', 'dart_to_cam', 'mkmf',
+        'model_mod', 'model_to_dart', 'mpas_dart_obs_preprocess',
+        'obs_to_table.f90', 'pe2lyr', 'perfect_model_obs_nml',
+        'plot_wind_vectors.m', 'replace_wrf_fields', 'utilities_nml'
+    ]
+
+    # To keep the logic simple, this boolean gets set to true when the first 
+    # word is a numeral or other punctuation. In that case, the second word in
+    # the sentence should be capitalized.
+    capitalize_second_word = False
+    
+    for iword, word in enumerate(string.split(' ')):
+
+        if iword == 0:
+            # First check to see if the word is a numeral identifying a list,
+            # such as 1. or 2.1. A succinct way to check this is to convert the 
+            # string to lowercase and then check if the resulting string is
+            # actually lowercase. If it is not lowercase, then the string
+            # contains no characters and only contains numerals or punctuation.
+            if not word.lower().islower():
+                # The first word is a numeral or other punctuation.
+                capitalize_second_word = True
+            elif word not in all_caps and word not in proper_nouns and \
+                word not in lower_case:
+                word = word.capitalize()
+            sentence_case_string = word
+        # If the first word was a numeral or punctuation, apply the
+        # capitalization logic to the second word.
+        elif capitalize_second_word:
+            if word not in all_caps and word not in proper_nouns and \
+                word not in lower_case:
+                word = word.capitalize()
+            sentence_case_string = sentence_case_string + ' ' + word
+            capitalize_second_word = False
+        # Otherwise, apply the lowercase logic to the word.
+        else:
+            if word not in all_caps and word not in proper_nouns and \
+                word not in lower_case:
+                word = word.lower()
+            sentence_case_string = sentence_case_string + ' ' + word
+    
+    # Some of the headers end with a period. Remove it.
+    if sentence_case_string[-1] == '.':
+        sentence_case_string = sentence_case_string[:-1]
+
+    return sentence_case_string
+
 def decompose_anchors_providing_navigation_near_top_of_file(soup):
     """Each of the original HTML files has a nagivation list near the top of
     the page. The anchors in these navigation lists do not have a systematic
@@ -350,11 +437,14 @@ def replace_headers_and_compose_content_list(soup):
         list_item = soup.new_tag('li')
         list_item_a = soup.new_tag('a')
 
+        # Convert the header string to sentence case
+        sentence_case_header = convert_string_to_sentence_case(h2.string)
+
         # Modify the original h2 string to be capitalized
-        h2.string = h2.string.capitalize()
+        h2.string = sentence_case_header
         # Assign the list item string to the same capitalized verison of the h2
         # string
-        list_item_a.string = h2.string.capitalize()
+        list_item_a.string = sentence_case_header
 
         # Create an id attribute for the original h2 tag and assign it a
         # lowercase, underscored modification of the original h2 tag 
@@ -411,6 +501,25 @@ def replace_namelist_divs(soup):
 
     return soup
 
+def rewrite_lesser_headers_than_h2_as_sentence_case(soup):
+    """The ``replace_headers_and_compose_content_list`` function rewrites all 
+    of the h2 headers in the document using sentence case. This function
+    rewrites the h3, h4, h5 and h6 headers using sentence case.
+    """
+    # Create a list with the types of headers to rewrite.
+    header_types = ['h3', 'h4', 'h5', 'h6']
+    
+    # Iterate through the header types.
+    for header_type in header_types:
+        # Iterate through the actual headers.
+        for header in soup(header_type):
+            header.string = convert_string_to_sentence_case(header.string)
+
+    return(soup)
+
+test_string = "Overview of DART"
+print(convert_string_to_sentence_case(test_string))
+
 # Open the input page.
 input_page = 'original_MOD15A2_to_obs.html'
 with open(input_page) as fp:
@@ -445,6 +554,7 @@ soup = replace_anchors_within_body_text_with_their_contents(soup)
 soup = replace_ems_with_classes(soup)
 soup = replace_headers_and_compose_content_list(soup)
 soup = replace_namelist_divs(soup)
+soup = rewrite_lesser_headers_than_h2_as_sentence_case(soup)
 
 # Save the output.
 output_page = 'modified_MOD15A2_to_obs.html'

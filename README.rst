@@ -48,10 +48,14 @@ After the library is installed:
 
    $ python test_functions.py
 
-The script will read ``original_MOD15A2_to_obs.html`` and will output 
-``modified_MOD15A2_to_obs.html``. The files can be compared using your favorite
-diff tool. For example:
+The script will read an input file,
+``docs/html/observations/obs_converters/MODIS/MOD15A2_to_obs.html``, and will
+create a separate output file,
+``docs/html/observations/obs_converters/MODIS/modified_MOD15A2_to_obs.html``.
+
+The files can be compared using your favorite diff tool. For example:
 
 .. code-block::
 
-   $ meld original_MOD15A2_to_obs.html modified_MOD15A2_to_obs.html
+   $ meld docs/html/observations/obs_converters/MODIS/MOD15A2_to_obs.html docs/html/observations/obs_converters/MODIS/modified_MOD15A2_to_obs.html
+   

@@ -106,39 +106,43 @@ def convert_string_to_sentence_case(string):
     # the sentence should be capitalized.
     capitalize_second_word = False
 
-    for iword, word in enumerate(string.split(' ')):
+    if string is not None:
+        for iword, word in enumerate(string.split(' ')):
 
-        if iword == 0:
-            # First check to see if the word is a numeral identifying a list,
-            # such as 1. or 2.1. A succinct way to check this is to convert the
-            # string to lowercase and then check if the resulting string is
-            # actually lowercase. If it is not lowercase, then the string
-            # contains no characters and only contains numerals or punctuation.
-            if not word.lower().islower():
-                # The first word is a numeral or other punctuation.
-                capitalize_second_word = True
-            elif (word not in all_caps and word not in proper_nouns and
-                  word not in lower_case):
-                word = word.capitalize()
-            sentence_case_string = word
-        # If the first word was a numeral or punctuation, apply the
-        # capitalization logic to the second word.
-        elif capitalize_second_word:
-            if (word not in all_caps and word not in proper_nouns and
-                    word not in lower_case):
-                word = word.capitalize()
-            sentence_case_string = sentence_case_string + ' ' + word
-            capitalize_second_word = False
-        # Otherwise, apply the lowercase logic to the word.
-        else:
-            if (word not in all_caps and word not in proper_nouns and
-                    word not in lower_case):
-                word = word.lower()
-            sentence_case_string = sentence_case_string + ' ' + word
+            if iword == 0:
+                # First check to see if the word is a numeral identifying a
+                # list, such as 1. or 2.1. A succinct way to check this is to
+                # convert the string to lowercase and then check if the
+                # resulting string is actually lowercase. If it is not
+                # lowercase, then the string contains no characters and only
+                # contains numerals or punctuation.
+                if not word.lower().islower():
+                    # The first word is a numeral or other punctuation.
+                    capitalize_second_word = True
+                elif (word not in all_caps and word not in proper_nouns and
+                      word not in lower_case):
+                    word = word.capitalize()
+                sentence_case_string = word
+            # If the first word was a numeral or punctuation, apply the
+            # capitalization logic to the second word.
+            elif capitalize_second_word:
+                if (word not in all_caps and word not in proper_nouns and
+                        word not in lower_case):
+                    word = word.capitalize()
+                sentence_case_string = sentence_case_string + ' ' + word
+                capitalize_second_word = False
+            # Otherwise, apply the lowercase logic to the word.
+            else:
+                if (word not in all_caps and word not in proper_nouns and
+                        word not in lower_case):
+                    word = word.lower()
+                sentence_case_string = sentence_case_string + ' ' + word
 
-    # Some of the headers end with a period. Remove it.
-    if sentence_case_string[-1] == '.':
-        sentence_case_string = sentence_case_string[:-1]
+        # Some of the headers end with a period. Remove it.
+        if sentence_case_string[-1] == '.':
+            sentence_case_string = sentence_case_string[:-1]
+    else:
+        sentence_case_string = ''
 
     return sentence_case_string
 
@@ -157,7 +161,7 @@ def decompose_anchors_providing_navigation_near_top_of_file(soup):
     """
     # 'DART project logo' is the alt text for the DART logo image.
     logo_string = 'DART project logo'
-    header_types = ['h1', 'h2', 'h3', 'h4', 'h5']
+    header_types = ['h1', 'h2', 'h3', 'h4', 'h5', 'p']
 
     # This function has the most comments because its logic is seemingly
     # circuitous. Removing the navigation list is a delicate process because
@@ -219,9 +223,10 @@ def decompose_anchors_providing_navigation_near_top_of_file(soup):
             next_sibling = table.next_sibling
             # Get the next_element of the next_sibling.
             next_element = next_sibling.next_element
+
             # Use a boolean to keep the logic simple in a while loop.
             in_section = True
-            while in_section:
+            while in_section and next_element is not None:
                 # If the next_element is header tag, the section has been
                 # traversed.
                 if (isinstance(next_element, Tag) and next_element.name in
@@ -253,7 +258,7 @@ def decompose_anchors_with_name_and_no_string(soup):
             if a['name'] and a.string is None:
                 a.decompose()
                 print('Removing named anchor with no string.')
-        except KeyError:
+        except (KeyError, TypeError):
             pass
 
     return soup
@@ -424,7 +429,8 @@ def replace_anchors_within_body_text_with_their_contents(soup):
         try:
             href = a.get('href')
 
-            if href is not None and href[0] == '#' and len(a.contents) > 0:
+            if (href is not None and len(href) > 0 and href[0] == '#' and
+                    len(a.contents) > 0):
                 a.unwrap()
         except AttributeError:
             pass
@@ -448,7 +454,7 @@ def replace_ems_with_classes(soup):
             # Each em can have zero or more classes assigned to it. Check if
             # union of its set of classes and the classes to remove have any
             # shared elements. If so, replace the em tag with a code tag.
-            if classes_to_remove & set(em['class']):
+            if classes_to_remove & set(em['class']) and em.string is not None:
                 code_tag = soup.new_tag('code')
                 code_tag.string = em.string
                 em.replace_with(code_tag)
@@ -520,10 +526,19 @@ def replace_headers_and_compose_content_list(soup):
         content_list.append("\n")
 
     # Insert the content list after the page title contained in the first <h1>.
-    soup.h1.insert_after("\n", content_list)
-    header_for_content_list = soup.new_tag('h2')
-    header_for_content_list.string = 'Contents'
-    soup.h1.insert_after("\n", header_for_content_list)
+    if soup.h1:
+        soup.h1.insert_after("\n", content_list)
+        header_for_content_list = soup.new_tag('h1')
+        header_for_content_list.string = 'Contents'
+        soup.h1.insert_after("\n", header_for_content_list)
+    # Otherwise insert the content list after the first <h2>.
+    else:
+        soup.body.insert(0, '\n')
+        soup.body.insert(0, content_list)
+        header_for_content_list = soup.new_tag('h1')
+        header_for_content_list.string = 'Contents'
+        soup.body.insert(0, '\n')
+        soup.body.insert(0, header_for_content_list)
 
     return soup
 
@@ -540,7 +555,7 @@ def replace_namelist_divs(soup):
         try:
             # Only replace the <div><pre> tags with the <pre><code> tags if the
             # div has the namelist class.
-            if set(div['class']) & variations:
+            if set(div['class']) & variations and div.pre.string:
                 # Make a code tag and set its string to contain the contents of
                 # the namelist div's pre tag. The namelist div's pre tag
                 # contains the literal string of the namelist.

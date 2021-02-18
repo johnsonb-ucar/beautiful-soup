@@ -1,0 +1,314 @@
+module bgrid_polar_filter_mod
+
+--------------
+
+module bgrid_polar_filter_mod
+-----------------------------
+
+::
+
+        Contact:   B. Wyman
+        Reviewers:
+        Change history: WebCVS Log for bgrid_polar_filter.f90
+
+--------------
+
+OVERVIEW
+^^^^^^^^
+
+::
+
+
+        Provides polar filtering routines for the B-grid dynamical core.
+        This is an MPP version that can be run with 1-D or 2-D decomposition.
+
+::
+
+
+        The polar filtering scheme is used at high latitudes to damp the shortest
+        resolvable waves so that a longer time step can be taken.  Filtering is
+        applied to the mass divergence, horizontal omega-alpha tendency,
+        horizontal advective tendency of temperature and prognostic tracers,
+        and the momentum components.  The momentum components are transformed to
+        stereographic coordinates before they are filtered to minimize distortion
+        near the poles.  The filtering scheme conserves mass and tracer mass,
+        but does not conserve energy (Takacs and Balgovind, 1983).
+
+        The fields are filtered by transforming a full latitude circle of data
+        to Fourier components using a fast Fourier transform (FFT). The Fourier
+        components are damped (i.e., multiplied) by a given function of wave
+        number and latitude (see NOTES), and then transformed back to grid point
+        space using the inverse FFT.
+
+        Load balancing for multiple processor runs is handled by gathering up full
+        latitude rows on data and transmitting them equally to all processors.
+
+--------------
+
+OTHER MODULES USED
+^^^^^^^^^^^^^^^^^^
+
+::
+
+
+        bgrid_horiz_mod
+        fft_mod
+        fms_mod
+        mpp_mod
+        mpp_domains_mod
+
+--------------
+
+PUBLIC INTERFACE
+^^^^^^^^^^^^^^^^
+
+::
+
+
+     use bgrid_polar_filter_mod [,only: pfilt_control_type,
+                                        polar_filter_init ,
+                                        polar_filter      ,
+                                        polar_filter_wind ]
+
+     pfilt_control_type
+          Derived-type variable containing constants needed by the polar filtering
+          interfaces. It is returned by the function polar_filter_init and is
+          used by all other routine in this module.
+
+     polar_filter_init
+          Function that initializes a variable of derived-type pfilt_control_type.
+
+     polar_filter
+          Performs polar filtering of either one or two B-grid fields on either
+          the mass or momentum grid.
+
+     polar_filter_wind
+          Performs polar filtering of the velocity components. The components
+          are transformed to stereographic components for the actually filtering.
+
+--------------
+
+PUBLIC DATA
+^^^^^^^^^^^
+
+::
+
+
+   type (pfilt_control_type)
+
+       The internal contents of this type are private and cannot be accessed
+       by the user.
+
+--------------
+
+PUBLIC ROUTINES
+^^^^^^^^^^^^^^^
+
+::
+
+
+
+   Control = polar_filter_init ( Hgrid, reflat, weight, sigma, verbose )
+
+     INPUT
+
+        Hgrid     horiz_grid_type (see horiz_grid_mod)
+
+     OPTIONAL INPUT
+
+        reflat    The reference latitude in degrees. This is the latitude
+                  where polar filtering begins. Equator-ward from this latitude
+                  there is no filtering.
+                    [real, default: reflat=60.]
+
+        weight    A weight to modify the overall strength of the filter without
+                  increasing the number of latitudes filtered.
+                    [integer, default: weight=1]
+
+        sigma     Logical flag the sigma or eta coordinate.
+                  Setting this flag equal true when running a sigma coordinate
+                  model will make the code more efficient.
+                    [logical, default: sigma=.false.]
+
+        verbose   verbose flag, a larger number increases the printed output
+                    [integer, default: verbose=0]
+
+     RETURNS
+
+        Control   A variable of derived-type pfilt_control_type (see above).
+
+   -----------------------------------------------------------------
+
+
+   call polar_filter (Control, data, grid, mask)
+             OR
+   call polar_filter (Control, u, v, grid, mask)
+
+     INPUT
+
+       Control   Derived-type variable returned by a previous call
+                 to polar_filter_init. 
+                    [type(pfilt_control_type)]
+
+       grid      Identifier for the grid that the data in on.
+                 Possible values are:  grid = 1, mass grid
+                                            = 2, velocity grid, u comp
+                                            = 3, velocity grid, v comp
+                    [integer, scalar]
+
+     INPUT/OUTPUT
+
+       data, u, v   The data arrays to be filtered.  The returned value
+                    will be the filtered data.  The horizontal dimensions (1 and 2)
+                    must be consistent with the model's data domain.
+                    The third and fourth dimensions are arbitrary.
+                    The halo regions of the returned fields have not been updated.
+                    The arguments u and v do not necessarily have to be on the
+                    momentum grid.
+                      [real, dimension(:,:) or (:,:,:) or (:,:,:,:)]
+
+     OPTIONAL INPUT
+
+       mask      data mask, 0.0 (data not present) or 1.0 (data present)
+                 must have the same first 3 dimensions as data
+                   [real, dimension(:,:) or (:,:,:)]
+
+   -----------------------------------------------------------------
+
+
+   call polar_filter_wind ( Control, u, v, mask )
+
+     INPUT
+
+       Control   Derived-type variable returned by a previous call
+                 to polar_filter_init. 
+                    [type(pfilt_control_type)]
+
+     INPUT/OUTPUT
+
+       u, v      velocity components to be filtered
+                   [real, dimension(:,:) or (:,:,:)]
+
+     OPTIONAL INPUT
+
+       mask      data mask, 0.0 (data not present) or 1.0 (data present)
+                 must have the same first 3 dimensions as data
+                   [real, dimension(:,:) or (:,:,:)]
+
+--------------
+
+ERROR MESSAGES
+^^^^^^^^^^^^^^
+
+::
+
+
+   FATAL error in polar_filter or polar_filter_wind
+
+       input array has the wrong dimensions
+           The horizontal dimensions (1 and 2) have the wrong size.
+           The dimensions must include any halo row points in the 
+           model's data domain grid.
+
+   FATAL error in polar_filter_......
+
+       invalid grid arg
+           The argument "grid" must have the value 1,2, or 3.
+           Look at the documentation of these routines for details.
+
+   FATAL error in polar_filter_init
+
+       reflat must lie between 0 and 90.
+           The reflat (reference latitude in degrees) was not in the
+           required range.  Check the namelist value you supplied (for the
+           B-grid model check namelist &dynamics_driver).  Also consider
+           whether round-off error may caused the problem, if so slightly
+           adjust the value.
+
+   FATAL error in load_balance_filter
+
+       cannot get and put fft rows on the same pe
+          There may be a code error. Check with the delveloper.
+
+--------------
+
+REFERENCES
+^^^^^^^^^^
+
+::
+
+
+   Arakawa, A. and R. Lamb, 1977: Computational design of the basic
+       dynamical processes of the UCLA general circulation model. 
+       Methods in Computational Physics, Vol. 17. Academic Press, 173-265.
+
+   Takacs, L. L. and R. C. Balgovind, 1983: High-latitude filtering
+       in global grid-point models.  Mon. Wea. Rev., 111, 2005-2015.
+
+   Renner, V., 1981: Zonal filtering experiments with a barotropic
+       model.  Contrib. Atmos. Phys., 54, 453-464.
+
+--------------
+
+KNOWN BUGS
+^^^^^^^^^^
+
+::
+
+
+        None.
+
+--------------
+
+NOTES
+^^^^^
+
+::
+
+
+    Filter Response Function
+    ------------------------
+
+        Damping factors as a function of wave number (k) and latitude index (j)
+        are defined as:                                        
+                                                               
+           SS(k,j) = { cos_PH(j) / [ cos_PH(ref) * sin_X ] } ** weight
+
+               where  X = k * dx / 2.
+                     dx = longitudinal grid spacing in radians
+
+                     cos_PH(j)   = cosine of latitude at row j
+                     cos_PH(ref) = cosine of reference latitude
+                     weight      = optional parameter for increasing the overall
+                                   strength of the filter (default = 1)
+
+        The reference latitude is the first non-filtering latitude.
+
+
+    MPP Implementation
+    ------------------
+
+    Approach for one-dimensional decomposition in Y
+
+       An algorithm was devised that transmits latitude rows of data from PEs
+       that too many rows to PEs that have too few rows. This algorithm is applied
+       in reverse after the filtering has been done.
+
+    Approach for two-dimensional decomposition in X and Y
+
+       An additional step is applied to the one-dimensional algorithm where
+       the first PE in a latitude row gathers the data (using mpp_transmit)
+       from the other PEs at that latitude.  At this point the problem is
+       identical to the one-dimensional case.
+
+--------------
+
+FUTURE PLANS
+^^^^^^^^^^^^
+
+::
+
+
+        None.
+
+--------------

@@ -72,14 +72,14 @@ def convert_string_to_sentence_case(string):
     all_caps = [
         '1D', '3DVAR', '3DVAR/4DVAR', '4DVAR', 'AIRS', 'AIX', 'AMSR-E',
         'AQUA', 'ASCII', 'ATCF', 'ATM', 'CAM', 'CAM-FV', 'CAM-SE', 'CESM',
-        'CESM', 'CESM1', 'CESM2', 'CLM', 'CM1', 'COAMPS', 'COSMIC', 'DART',
-        'DMSP', 'EDR-DSK', 'F16', 'F90', 'GHRSST', 'GITM', 'GPS', 'GTSPP',
-        'GUI', 'HRLDAS', 'HRLDAS-V3.3', 'L63', 'LANL', 'LANL/POP', 'MADIS',
-        'MDF', 'MIDAS', 'MODIS', 'MODULE', 'MPAS', 'MPAS_ATM', 'MPAS_OCN',
-        'MPI', 'NCO', 'NCOMMAS', 'NOAH', 'NOAHLSM_OFFLINE', 'OCN', 'OSX',
-        'POP', 'POP2', 'PROGRAM', 'QC', 'RINEX', 'RMA', 'ROMS', 'SGI', 'SQG',
-        'SSEC', 'SSUSI', 'TERRA', 'TIEGCM', 'TPW', 'WACCM', 'WOD', 'WRF',
-        'WRF/DART'
+        'CESM', 'CESM+DART' 'CESM1', 'CESM2', 'CLM', 'CM1', 'COAMPS', 'COSMIC',
+        'DART', 'DMSP', 'EDR-DSK', 'F16', 'F90', 'GHRSST', 'GITM', 'GPS',
+        'GTSPP', 'GUI', 'HRLDAS', 'HRLDAS-V3.3', 'L63', 'LANL', 'LANL/POP',
+        'MADIS', 'MDF', 'MIDAS', 'MODIS', 'MODULE', 'MPAS', 'MPAS_ATM',
+        'MPAS_OCN', 'MPI', 'NCO', 'NCOMMAS', 'NOAH', 'NOAHLSM_OFFLINE', 'OCN',
+        'OSX', 'POP', 'POP2', 'PROGRAM', 'QC', 'RINEX', 'RMA', 'ROMS', 'SGI',
+        'SQG', 'SSEC', 'SSUSI', 'TERRA', 'TIEGCM', 'TPW', 'WACCM', 'WOD',
+        'WRF', 'WRF/DART'
     ]
 
     proper_nouns = [

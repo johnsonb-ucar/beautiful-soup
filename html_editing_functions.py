@@ -241,6 +241,76 @@ def decompose_anchors_providing_navigation_near_top_of_file(soup):
     return soup
 
 
+def decompose_anchors_providing_navigation_in_bgrid_and_mitgcm_pages(soup):
+    """Each of the bgrid_solo and three out of the four MITgcm_ocean HTML files
+    has a nagivation list near the top of the page. The anchors in these
+    navigation lists do not have a systematic relationship between their link
+    text and ``href`` values. Thus this function simply removes these
+    navigation anchors and another function,
+    ``replace_headers_and_compose_content_list``, creates a content list that
+    will be reliably translated to reStructuredText.
+    """
+    header_types = ['h1', 'h2', 'h3', 'h4', 'h5', 'p']
+
+    # This function has a lot of comments because its logic is seemingly
+    # circuitous. Removing the navigation list is a delicate process because
+    # the original navigation list intersperses Tags and NavigableStrings.
+    # It isn't possible to traverse the section and remove objects from it by
+    # alternating the next_element and extract() because the next elements of
+    # Tags **are** their content strings. Thus extracting a tag precludes
+    # next_element from iterating through the elements, since the next element
+    # was the content string that was just extracted.
+
+    # This function uses the soup.body tag locate the top of the page, where
+    # navigation list exists and makes a first pass through the list while
+    # removing the Tags. The function then uses soup.body tag again to locate
+    # the navigation list and makes a second pass through the list while
+    # removing the NavigableStrings.
+
+    # This is the first pass.
+
+    # Use a boolean to keep the logic simple in a while loop.
+    first_anchor = soup.a
+
+    in_section = True
+    for next_sibling in first_anchor.find_next_siblings():
+        print('next_sibling.content', next_sibling.content)
+        if in_section:
+            # Check if the next_sibling is a Tag object.
+            if isinstance(next_sibling, Tag):
+                # If it is a tag, it will nave a name. Check to see if
+                # the name is h1, h2, h3, h4, or h5.
+                if next_sibling.name in header_types:
+                    # If so, the section has been traversed.
+                    in_section = False
+                else:
+                    # Otherwise, the sibling is still in the section,
+                    # so remove it.
+                    next_sibling.decompose()
+    first_anchor.decompose()
+
+    # This is the second pass.
+    
+    # Get the next_element of the next_sibling.
+    next_element = soup.body.next_element
+
+    # Use a boolean to keep the logic simple in a while loop.
+    in_section = True
+    while in_section and next_element is not None:
+        # If the next_element is header tag, the section has been
+        # traversed.
+        if (isinstance(next_element, Tag) and next_element.name in
+                header_types):
+            in_section = False
+        # Otherwise, get the next element and delete this one.
+        else:
+            this_element = next_element
+            next_element = this_element.next_element
+            this_element.extract()
+
+    return soup
+
+
 def decompose_anchors_with_name_and_no_string(soup):
     """The HTML documentation contains anchors with name attributes of the form
     ``<a name="Decisions"></a>``. These anchors are used as link targets
@@ -526,19 +596,31 @@ def replace_headers_and_compose_content_list(soup):
         content_list.append("\n")
 
     # Insert the content list after the page title contained in the first <h1>.
+    insert_count = 0
     if soup.h1:
-        soup.h1.insert_after("\n", content_list)
-        header_for_content_list = soup.new_tag('h1')
-        header_for_content_list.string = 'Contents'
-        soup.h1.insert_after("\n", header_for_content_list)
+        if insert_count == 0:
+            soup.h1.insert_after("\n", content_list)
+            header_for_content_list = soup.new_tag('h2')
+            header_for_content_list.string = 'Contents'
+            soup.h1.insert_after("\n", header_for_content_list)
+            insert_count += 1
     # Otherwise insert the content list after the first <h2>.
+    elif soup.h2:
+        if insert_count == 0:
+            soup.h2.insert_after("\n", content_list)
+            header_for_content_list = soup.new_tag('h3')
+            header_for_content_list.string = 'Contents'
+            soup.h2.insert_after("\n", header_for_content_list)
+            insert_count += 1
     else:
-        soup.body.insert(0, '\n')
-        soup.body.insert(0, content_list)
-        header_for_content_list = soup.new_tag('h1')
-        header_for_content_list.string = 'Contents'
-        soup.body.insert(0, '\n')
-        soup.body.insert(0, header_for_content_list)
+        if insert_count == 0:
+            soup.body.insert(0, '\n')
+            soup.body.insert(0, content_list)
+            header_for_content_list = soup.new_tag('h2')
+            header_for_content_list.string = 'Contents'
+            soup.body.insert(0, '\n')
+            soup.body.insert(0, header_for_content_list)
+            insert_count += 1
 
     return soup
 

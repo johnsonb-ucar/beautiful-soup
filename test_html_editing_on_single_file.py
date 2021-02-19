@@ -24,8 +24,7 @@ current_directory = os.path.dirname(os.path.realpath(__file__))
 doc_root = current_directory + '/docs/html'
 original_file_path = (doc_root + '/observations/obs_converters/MODIS/'
                       'MOD15A2_to_obs.html')
-modified_file_path = (doc_root + '/observations/obs_converters/MODIS/'
-                      'modified_MOD15A2_to_obs.html')
+modified_file_path = (current_directory + '/modified_MOD15A2_to_obs.html')
 
 # Open the input page.
 with open(original_file_path) as fp:

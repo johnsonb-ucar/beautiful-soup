@@ -36,3 +36,23 @@ for ifile in range(0, len(origin_list)):
     os.makedirs(os.path.dirname(destination_list[ifile]), exist_ok=True)
     # Copy the file from the source to the destination
     shutil.copy(origin_list[ifile], destination_list[ifile])
+
+# Copy the .rst files as well
+
+original_root = current_directory+'/../DART'
+print(original_root)
+suffix = 'rst'
+destination_root = current_directory + '/docs/rst'
+
+origin_list = sorted(get_list_of_files_with_suffix(original_root, suffix))
+destination_list = sorted(get_list_of_destination_files(origin_list,
+                          original_root, destination_root))
+
+# Use the sorted lists to copy the files
+for ifile in range(0, len(origin_list)):
+    print('Copy ' + origin_list[ifile], '\nto ' + destination_list[ifile] +
+          '\n')
+    # Make the destination directory, if it doesn't already exist.
+    os.makedirs(os.path.dirname(destination_list[ifile]), exist_ok=True)
+    # Copy the file from the source to the destination
+    shutil.copy(origin_list[ifile], destination_list[ifile])

@@ -58,4 +58,3 @@ The files can be compared using your favorite diff tool. For example:
 .. code-block::
 
    $ meld docs/html/observations/obs_converters/MODIS/MOD15A2_to_obs.html ./modified_MOD15A2_to_obs.html
-   

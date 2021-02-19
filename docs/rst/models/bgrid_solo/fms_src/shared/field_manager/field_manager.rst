@@ -1,5 +1,12 @@
-module field_manager_mod
+.. _module_field_manager_mod:
+
+Module field_manager_mod
 ------------------------
+
+Contents
+~~~~~~~~
+
+-  `Module field_manager_mod <#module_field_manager_mod>`__
 
 .. container::
 
@@ -9,7 +16,7 @@ module field_manager_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 The field manager reads entries from a field table and stores this information along with the type of field it belongs
@@ -51,11 +58,10 @@ namelist, individual fields can be modified through the field table however.
    tracer with a profile with fixed values, in this example all zero.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -68,7 +74,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -83,28 +89,27 @@ PUBLIC INTERFACE
                                       get_field_methods,
                                       parse ]
 
-   `field_manager_init <#field_manager_init>`__:
+   field_manager_init:
       Routine to initialize the field manager.
-   `field_manager_end <#field_manager_end>`__:
+   field_manager_end:
       Destructor for field manager.
-   `find_field_index <#find_field_index>`__:
+   find_field_index:
       Function to return the index of the field.
-   `get_field_info <#get_field_info>`__:
+   get_field_info:
       This routine allows access to field information given an index.
-   `get_field_method <#get_field_method>`__:
+   get_field_method:
       A routine to get a specified method.
-   `get_field_methods <#get_field_methods>`__:
+   get_field_methods:
       A routine to obtain all the methods associated with a field.
-   `parse <#parse>`__:
+   parse:
       A function to parse an integer or an array of integers, a real or an array of reals, a string or an array of
       strings.
 
 | 
-| 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -122,12 +127,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: field_manager_init
+a. .. rubric:: Field_manager_init
       :name: field_manager_init
 
    ::
@@ -151,9 +154,7 @@ a.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: field_manager_end
+b. .. rubric:: Field_manager_end
       :name: field_manager_end
 
    ::
@@ -164,9 +165,7 @@ b.
       This subroutine writes to the logfile that the user is exiting field_manager and changes the initialized flag to
       false.
 
-c. 
-
-   .. rubric:: find_field_index
+c. .. rubric:: Find_field_index
       :name: find_field_index
 
    ::
@@ -182,9 +181,7 @@ c.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-d. 
-
-   .. rubric:: get_field_info
+d. .. rubric:: Get_field_info
       :name: get_field_info
 
    ::
@@ -215,9 +212,7 @@ d.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-e. 
-
-   .. rubric:: get_field_method
+e. .. rubric:: Get_field_method
       :name: get_field_method
 
    ::
@@ -236,9 +231,7 @@ e.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-f. 
-
-   .. rubric:: get_field_methods
+f. .. rubric:: Get_field_methods
       :name: get_field_methods
 
    ::
@@ -254,9 +247,7 @@ f.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-g. 
-
-   .. rubric:: parse
+g. .. rubric:: Parse
       :name: parse
 
    ::
@@ -291,7 +282,7 @@ g.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -300,7 +291,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -347,4 +338,4 @@ ERROR MESSAGES
 
 .. container::
 
-   `top <#TOP>`__
+   top

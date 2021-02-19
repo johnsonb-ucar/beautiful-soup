@@ -2,7 +2,7 @@ PROGRAM ``filter``
 ==================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

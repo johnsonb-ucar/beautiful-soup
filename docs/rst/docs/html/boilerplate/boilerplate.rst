@@ -1,13 +1,19 @@
 PROGRM OR MODULE name_of_thing
 ==============================
 
-=================== ============================================================
-|DART project logo| Jump to `DART Documentation Main Index <../../index.html>`__
-=================== ============================================================
+Contents
+--------
 
-`NAMELIST <#Namelist>`__ / `MODULES USED <#ModulesUsed>`__ / `INTERFACES <#Interface>`__ / `FILES <#FilesUsed>`__ /
-`REFERENCES <#References>`__ / `ERRORS <#Errors>`__ / `PLANS <#FuturePlans>`__ / `PRIVATE
-COMPONENTS <#PrivateComponents>`__ / `TERMS OF USE <#Legalese>`__
+-  `Overview <#overview>`__
+-  `Namelist <#namelist>`__
+-  `Other modules used <#other_modules_used>`__
+-  `Public interfaces <#public_interfaces>`__
+-  `Files <#files>`__
+-  `References <#references>`__
+-  `Error codes and conditions <#error_codes_and_conditions>`__
+-  `Private components <#private_components>`__
+
+NAMELIST / MODULES USED / INTERFACES / FILES / REFERENCES / ERRORS / PLANS / PRIVATE COMPONENTS /
 
 Overview
 --------
@@ -18,57 +24,42 @@ overview issues, how/when/why to use this thing, etc.
 
 more stuff about code, usage, etc.
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
 
-NAMELIST
+Namelist
 --------
 
-DART namelists are always read from file *input.nml*.
+DART namelists are always read from file ``input.nml``.
 
 We adhere to the F90 standard of starting a namelist with an ampersand '&' and terminating with a slash '/' for all our
 namelist input. Character strings that contain a '/' must be enclosed in quotes to prevent them from prematurely
 terminating the namelist.
 
-.. container:: namelist
+::
 
-   ::
-
-      &NAMELIST_NML 
-         name=value,
-         name=value, 
-         name=value
-      /
+   &NAMELIST_NML 
+      name=value,
+      name=value, 
+      name=value
+   /
 
 | 
 
 .. container::
 
-   Item
-
-Type
-
-Description
-
-name
-
-type
-
-(often multi-line) description
+   ==== ==== ==============================
+   Item Type Description
+   ==== ==== ==============================
+   name type (often multi-line) description
+   ==== ==== ==============================
 
 | 
-| 
-
-.. container:: top
-
-   [`top <#>`__]
 
 --------------
 
-OTHER MODULES USED
+.. _other_modules_used:
+
+Other modules used
 ------------------
 
 ::
@@ -79,21 +70,19 @@ OTHER MODULES USED
    time_manager_mod
    fms_mod
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
 
-PUBLIC INTERFACES
+.. _public_interfaces:
+
+Public interfaces
 -----------------
 
-===================== ==============================
-*use xxxxxxx, only :* `yyypubtype1 <#yyypubtype1>`__
-                      `yyyroutine1 <#yyyroutine1>`__
-                      `yyyroutine2 <#yyyroutine2>`__
-                      `yyyroutine3 <#yyyroutine3>`__
-===================== ==============================
+===================== ===========
+*use xxxxxxx, only :* yyypubtype1
+                      yyyroutine1
+                      yyyroutine2
+                      yyyroutine3
+===================== ===========
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
 
@@ -120,7 +109,6 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    ========= ====================================
 
 | 
-| 
 
 .. container:: routine
 
@@ -139,12 +127,12 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
      subroutine automatically slices, dices and makes julienne fries. *But wait!* There's more!
 
    +----------+----------------------------------------------------------------------------------------------------------+
-   | *var1*   | is the number of spark plugs in a '67 Cuda.                                                              |
+   | ``var1`` | is the number of spark plugs in a '67 Cuda.                                                              |
    +----------+----------------------------------------------------------------------------------------------------------+
-   | *var2*   | is used for both input and output. Upon input, this contains the furlongs per weekday for every vertical |
+   | ``var2`` | is used for both input and output. Upon input, this contains the furlongs per weekday for every vertical |
    |          | level. Upon exit, we now have the number of spotted gobies per square hectare at that level.             |
    +----------+----------------------------------------------------------------------------------------------------------+
-   | *var3*   | The leftmost dimension pertains to the number of feet in an orange-footed brush fowl, indiginous to      |
+   | ``var3`` | The leftmost dimension pertains to the number of feet in an orange-footed brush fowl, indiginous to      |
    |          | Australia. The next dimension is the number of feathers on said fowl, naturally.                         |
    +----------+----------------------------------------------------------------------------------------------------------+
    | *global* | is really, REALLY useful in certain situations.                                                          |
@@ -152,7 +140,6 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    notes would go here
 
-| 
 | 
 
 .. container:: routine
@@ -173,31 +160,26 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    | This is the second-best thing since sliced bread. All you have to do is throw some arguments in the call and the
      function automatically deep fries.
 
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | *var1*       | the first time you changed your oil.                                                                 |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | *var2*       | miles between every oil change you've ever done. Don't lie.                                          |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | *var3*       | the distances you've ridden. Each row corresponds to the hour-of-day, each column is a different     |
-   |              | day-of-the-week.                                                                                     |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | *bob*        | mean time between failures. in msec.                                                                 |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | *yyroutine2* | number of gray hairs as a function of time. in kilohairs.                                            |
-   +--------------+------------------------------------------------------------------------------------------------------+
+   +----------------+----------------------------------------------------------------------------------------------------+
+   | ``var1``       | the first time you changed your oil.                                                               |
+   +----------------+----------------------------------------------------------------------------------------------------+
+   | ``var2``       | miles between every oil change you've ever done. Don't lie.                                        |
+   +----------------+----------------------------------------------------------------------------------------------------+
+   | ``var3``       | the distances you've ridden. Each row corresponds to the hour-of-day, each column is a different   |
+   |                | day-of-the-week.                                                                                   |
+   +----------------+----------------------------------------------------------------------------------------------------+
+   | *bob*          | mean time between failures. in msec.                                                               |
+   +----------------+----------------------------------------------------------------------------------------------------+
+   | ``yyroutine2`` | number of gray hairs as a function of time. in kilohairs.                                          |
+   +----------------+----------------------------------------------------------------------------------------------------+
 
    notes would go here
 
 | 
-| 
-
-.. container:: top
-
-   [`top <#>`__]
 
 --------------
 
-FILES
+Files
 -----
 
 This is the place to discuss the files that are associated with this module. They could be input files, output files,
@@ -214,13 +196,9 @@ dart_log.out [default name] the run-time diagnostic output
 dart_log.nml [default name] the record of all the namelists actually USED - contains the default values
 =========================== ===========================================================================
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
 
-REFERENCES
+References
 ----------
 
 -  Anderson, J., T. Hoar, K. Raeder, H. Liu, N. Collins, R. Torn, and A. Arellano, 2009:
@@ -229,59 +207,28 @@ REFERENCES
 
 -  none
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
 
-ERROR CODES and CONDITIONS
+.. _error_codes_and_conditions:
+
+Error codes and conditions
 --------------------------
 
 .. container:: errors
 
-   Routine
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | Routine                               | Message                               | Comment                               |
+   +=======================================+=======================================+=======================================+
+   | xxxx                                  | size of [argument] is incorrect       | The size of [argument] must be 1 and  |
+   |                                       |                                       | 4                                     |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | xxxx                                  | yyyyy                                 | bad judgement                         |
+   |                                       |                                       | What were you thinking?               |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
 
-Message
+.. _private_components:
 
-Comment
-
-xxxx
-
-size of [argument] is incorrect
-
-The size of [argument] must be 1 and 4
-
-xxxx
-
-yyyyy
-
-| bad judgement
-| What were you thinking?
-
-KNOWN BUGS
-----------
-
-none at this time
-
-.. container:: top
-
-   [`top <#>`__]
-
---------------
-
-FUTURE PLANS
-------------
-
-none at this time
-
-.. container:: top
-
-   [`top <#>`__]
-
---------------
-
-PRIVATE COMPONENTS
+Private components
 ------------------
 
 N/A
@@ -299,17 +246,4 @@ place to point them out, if you like.
          real(r8) :: x
       end type location_type
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../../images/Dartboard7.png
-   :height: 70px

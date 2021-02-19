@@ -2,7 +2,7 @@ MODULE smoother_mod
 ===================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Example <#example>`__

@@ -1,5 +1,12 @@
-module gaussian_topog_mod
+.. _module_gaussian_topog_mod:
+
+Module gaussian_topog_mod
 -------------------------
+
+Contents
+~~~~~~~~
+
+-  `Module gaussian_topog_mod <#module_gaussian_topog_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module gaussian_topog_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 Routines for creating Gaussian-shaped land surface topography for latitude-longitude grids.
@@ -21,11 +28,10 @@ Routines for creating Gaussian-shaped land surface topography for latitude-longi
    input. The mountain shapes are controlled by the height, half-width, and ridge-width parameters.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -37,7 +43,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -47,17 +53,16 @@ PUBLIC INTERFACE
       use gaussian_topog_mod [, only:  gaussian_topog_init,
                                        get_gaussian_topog ]
 
-   `gaussian_topog_init <#gaussian_topog_init>`__:
+   gaussian_topog_init:
       Returns a surface height field that consists of the sum of one or more Gaussian-shaped mountains.
-   `get_gaussian_topog <#get_gaussian_topog>`__:
+   get_gaussian_topog:
       Returns a simple surface height field that consists of a single Gaussian-shaped mountain.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -66,12 +71,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: gaussian_topog_init
+a. .. rubric:: Gaussian_topog_init
       :name: gaussian_topog_init
 
    ::
@@ -80,8 +83,7 @@ a.
 
    **DESCRIPTION**
       Returns a land surface topography that consists of a "set" of simple Gaussian-shaped mountains. The height,
-      position, width, and elongation of the mountains can be controlled by variables in namelist
-      `&gaussian_topog_nml <#NAMELIST>`__.
+      position, width, and elongation of the mountains can be controlled by variables in namelist &gaussian_topog_nml.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
       | ``lon   ``                                                | The mean grid box longitude in radians.                   |
@@ -98,9 +100,7 @@ a.
       |                                                           |    [real, dimension(:,:)]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: get_gaussian_topog
+b. .. rubric:: Get_gaussian_topog
       :name: get_gaussian_topog
 
    ::
@@ -146,7 +146,7 @@ b.
 
 --------------
 
-NAMELIST
+Namelist
 ^^^^^^^^
 
 .. container::
@@ -172,11 +172,10 @@ NAMELIST
    []
 
 | 
-| 
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -185,7 +184,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -196,7 +195,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -204,11 +203,10 @@ REFERENCES
    None.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -216,11 +214,10 @@ COMPILER SPECIFICS
    None.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -228,11 +225,10 @@ PRECOMPILER OPTIONS
    None.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -241,7 +237,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -249,11 +245,10 @@ TEST PROGRAM
    None.
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -261,11 +256,10 @@ KNOWN BUGS
    None.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -293,11 +287,10 @@ NOTES
    See the `topography <topography.html#TEST%20PROGRAM>`__ module documentation for a test program.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -310,4 +303,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

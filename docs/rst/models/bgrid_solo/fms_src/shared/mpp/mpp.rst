@@ -1,5 +1,12 @@
-module mpp_mod
+.. _module_mpp_mod:
+
+Module mpp_mod
 --------------
+
+Contents
+~~~~~~~~
+
+-  `Module mpp_mod <#module_mpp_mod>`__
 
 .. container::
 
@@ -11,7 +18,7 @@ module mpp_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 ``mpp_mod``, is a set of simple calls to provide a uniform interface to different message-passing libraries. It
@@ -76,11 +83,10 @@ MPI-2, Co-Array Fortran) can be incorporated as the need arises.
    ``mpp_set_current_pelist`` call is provided to set the current pelist.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -92,7 +98,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -123,49 +129,48 @@ PUBLIC INTERFACE
                             mpp_malloc,
                             mpp_set_stack_size ]
 
-   `mpp_max <#mpp_max>`__:
+   mpp_max:
       Reduction operations.
-   `mpp_sum <#mpp_sum>`__:
+   mpp_sum:
       Reduction operation.
-   `mpp_transmit <#mpp_transmit>`__:
+   mpp_transmit:
       Basic message-passing call.
-   `mpp_broadcast <#mpp_broadcast>`__:
+   mpp_broadcast:
       Parallel broadcasts.
-   `mpp_chksum <#mpp_chksum>`__:
+   mpp_chksum:
       Parallel checksums.
-   `mpp_error <#mpp_error>`__:
+   mpp_error:
       Error handler.
-   `mpp_init <#mpp_init>`__:
+   mpp_init:
       Initialize ``mpp_mod``.
-   `stdin <#stdin>`__:
+   stdin:
       Standard fortran unit numbers.
-   `mpp_exit <#mpp_exit>`__:
+   mpp_exit:
       Exit ``mpp_mod``.
-   `mpp_pe <#mpp_pe>`__:
+   mpp_pe:
       Returns processor ID.
-   `mpp_npes <#mpp_npes>`__:
+   mpp_npes:
       Returns processor count for current pelist.
-   `mpp_declare_pelist <#mpp_declare_pelist>`__:
+   mpp_declare_pelist:
       Declare a pelist.
-   `mpp_set_current_pelist <#mpp_set_current_pelist>`__:
+   mpp_set_current_pelist:
       Set context pelist.
-   `mpp_clock_set_grain <#mpp_clock_set_grain>`__:
+   mpp_clock_set_grain:
       Set the level of granularity of timing measurements.
-   `mpp_sync <#mpp_sync>`__:
+   mpp_sync:
       Global synchronization.
-   `mpp_sync_self <#mpp_sync_self>`__:
+   mpp_sync_self:
       Local synchronization.
-   `mpp_malloc <#mpp_malloc>`__:
+   mpp_malloc:
       Symmetric memory allocation.
-   `mpp_set_stack_size <#mpp_set_stack_size>`__:
+   mpp_set_stack_size:
       Allocate module internal workspace.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -174,12 +179,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: mpp_max
+a. .. rubric:: Mpp_max
       :name: mpp_max
 
    ::
@@ -196,9 +199,7 @@ a.
       |               | synchronization across the PEs in ``pelist``, or the current pelist if ``pelist`` is absent.        |
       +---------------+-----------------------------------------------------------------------------------------------------+
 
-b. 
-
-   .. rubric:: mpp_sum
+b. .. rubric:: Mpp_sum
       :name: mpp_sum
 
    ::
@@ -227,9 +228,7 @@ b.
       ``a   `` 
       ========
 
-c. 
-
-   .. rubric:: mpp_transmit
+c. .. rubric:: Mpp_transmit
       :name: mpp_transmit
 
    ::
@@ -280,9 +279,7 @@ c.
                  call mpp_recv( a, n, 0 )
              end if
 
-d. 
-
-   .. rubric:: mpp_broadcast
+d. .. rubric:: Mpp_broadcast
       :name: mpp_broadcast
 
    ::
@@ -312,9 +309,7 @@ d.
       ``data(*)   `` 
       ==============
 
-e. 
-
-   .. rubric:: mpp_chksum
+e. .. rubric:: Mpp_chksum
       :name: mpp_chksum
 
    ::
@@ -354,9 +349,7 @@ e.
       ``var   ``    
       =============
 
-f. 
-
-   .. rubric:: mpp_error
+f. .. rubric:: Mpp_error
       :name: mpp_error
 
    ::
@@ -418,9 +411,7 @@ f.
       |                  | traceback.                                                                                       |
       +------------------+--------------------------------------------------------------------------------------------------+
 
-g. 
-
-   .. rubric:: mpp_init
+g. .. rubric:: Mpp_init
       :name: mpp_init
 
    ::
@@ -439,9 +430,7 @@ g.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-h. 
-
-   .. rubric:: stdin
+h. .. rubric:: Stdin
       :name: stdin
 
    ::
@@ -454,9 +443,7 @@ h.
       input, output, error messages and log messages. Log messages, by convention, are written to the file
       ``logfile.out``.
 
-i. 
-
-   .. rubric:: mpp_exit
+i. .. rubric:: Mpp_exit
       :name: mpp_exit
 
    ::
@@ -467,9 +454,7 @@ i.
       Called at the end of the run, or to re-initialize ``mpp_mod``, should you require that for some odd reason.
       This call implies synchronization across all PEs.
 
-j. 
-
-   .. rubric:: mpp_pe
+j. .. rubric:: Mpp_pe
       :name: mpp_pe
 
    ::
@@ -481,9 +466,7 @@ j.
       This returns the unique ID associated with a PE. This number runs between 0 and ``npes-1``, where ``npes`` is the
       total processor count, returned by ``mpp_npes``. For a uniprocessor application this will always return 0.
 
-k. 
-
-   .. rubric:: mpp_npes
+k. .. rubric:: Mpp_npes
       :name: mpp_npes
 
    ::
@@ -494,9 +477,7 @@ k.
    **DESCRIPTION**
       This returns the number of PEs in the current pelist. For a uniprocessor application, this will always return 1.
 
-l. 
-
-   .. rubric:: mpp_declare_pelist
+l. .. rubric:: Mpp_declare_pelist
       :name: mpp_declare_pelist
 
    ::
@@ -515,9 +496,7 @@ l.
       | ``pelist   ``                                             |    [integer, dimension(:)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-m. 
-
-   .. rubric:: mpp_set_current_pelist
+m. .. rubric:: Mpp_set_current_pelist
       :name: mpp_set_current_pelist
 
    ::
@@ -534,9 +513,7 @@ m.
       | ``pliest   ``                                             |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-n. 
-
-   .. rubric:: mpp_clock_set_grain
+n. .. rubric:: Mpp_clock_set_grain
       :name: mpp_clock_set_grain
 
    ::
@@ -597,9 +574,7 @@ n.
       | ``grain   ``                                              |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-o. 
-
-   .. rubric:: mpp_sync
+o. .. rubric:: Mpp_sync
       :name: mpp_sync
 
    ::
@@ -619,9 +594,7 @@ o.
       | ``pelist   ``                                             |    [integer, dimension(:)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-p. 
-
-   .. rubric:: mpp_sync_self
+p. .. rubric:: Mpp_sync_self
       :name: mpp_sync_self
 
    **DESCRIPTION**
@@ -635,9 +608,7 @@ p.
       | ``pelist   ``                                             |    [integer, dimension(:)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-q. 
-
-   .. rubric:: mpp_malloc
+q. .. rubric:: Mpp_malloc
       :name: mpp_malloc
 
    ::
@@ -647,11 +618,11 @@ q.
    **DESCRIPTION**
       This routine is used on SGI systems when ``mpp_mod`` is invoked in the SHMEM library. It ensures that dynamically
       allocated memory can be used with ``shmem_get`` and ``shmem_put``. This is called *symmetric allocation* and is
-      described in the ``intro_shmem`` man page. ``ptr`` is a *Cray pointer* (see the section on
-      `portability <#PORTABILITY>`__). The operation can be expensive (since it requires a global barrier). We therefore
-      attempt to re-use existing allocation whenever possible. Therefore ``len`` and ``ptr`` must have the ``SAVE``
-      attribute in the calling routine, and retain the information about the last call to ``mpp_malloc``. Additional
-      memory is symmetrically allocated if and only if ``newlen`` exceeds ``len``.
+      described in the ``intro_shmem`` man page. ``ptr`` is a *Cray pointer* (see the section on portability). The
+      operation can be expensive (since it requires a global barrier). We therefore attempt to re-use existing
+      allocation whenever possible. Therefore ``len`` and ``ptr`` must have the ``SAVE`` attribute in the calling
+      routine, and retain the information about the last call to ``mpp_malloc``. Additional memory is symmetrically
+      allocated if and only if ``newlen`` exceeds ``len``.
       This is never required on Cray PVP or MPP systems. While the T3E manpages do talk about symmetric allocation,
       ``mpp_mod`` is coded to remove this restriction.
       It is never required if ``mpp_mod`` is invoked in MPI.
@@ -668,9 +639,7 @@ q.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-r. 
-
-   .. rubric:: mpp_set_stack_size
+r. .. rubric:: Mpp_set_stack_size
       :name: mpp_set_stack_size
 
    ::
@@ -700,7 +669,7 @@ r.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -709,7 +678,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -718,7 +687,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -726,11 +695,10 @@ REFERENCES
    None.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -769,11 +737,10 @@ COMPILER SPECIFICS
       runs a 4-PE test on a t3e.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -789,11 +756,10 @@ PRECOMPILER OPTIONS
       our needs.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -809,7 +775,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -817,11 +783,10 @@ TEST PROGRAM
    None.
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -832,11 +797,10 @@ KNOWN BUGS
    rollover time interval. Note that this is a limitation, or "feature" of the ``f90 SYSTEM_CLOCK`` intrinsic.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -844,11 +808,10 @@ NOTES
    None.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -861,4 +824,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

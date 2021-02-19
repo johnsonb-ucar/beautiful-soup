@@ -2,7 +2,7 @@ MODULE (1D) location_mod
 ========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

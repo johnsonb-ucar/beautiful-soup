@@ -1,5 +1,12 @@
-module tracer_manager_mod
+.. _module_tracer_manager_mod:
+
+Module tracer_manager_mod
 -------------------------
+
+Contents
+~~~~~~~~
+
+-  `Module tracer_manager_mod <#module_tracer_manager_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module tracer_manager_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 Code to manage the simple addition of tracers to the FMS code. This code keeps track of the numbers and names of tracers
@@ -27,11 +34,10 @@ included in a tracer table.
    MODEL_ATMOS and 5 is different from a call with MODEL_OCEAN and 5.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -45,7 +51,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -73,54 +79,53 @@ PUBLIC INTERFACE
                                        query_combined,
                                        set_tracer_atts ]
 
-   `tracer_manager_init <#tracer_manager_init>`__:
+   tracer_manager_init:
       Routine to initialize the tracer manager
-   `register_tracers <#register_tracers>`__:
+   register_tracers:
       A routine to register the tracers included in a component model.
-   `get_number_tracers <#get_number_tracers>`__:
+   get_number_tracers:
       A routine to return the number of tracers included in a component model.
-   `get_tracer_indices <#get_tracer_indices>`__:
+   get_tracer_indices:
       Routine to return the component model tracer indices as defined within the tracer manager.
-   `get_tracer_index <#get_tracer_index>`__:
+   get_tracer_index:
       Function which returns the number assigned to the tracer name.
-   `assign_tracer_field <#assign_tracer_field>`__:
+   assign_tracer_field:
       Routine to point the appropriate field within the tracer_type to the appropriate field within the component model.
-   `tracer_manager_end <#tracer_manager_end>`__:
+   tracer_manager_end:
       Routine to write to the log file that the tracer manager is ending.
-   `get_tracer_field <#get_tracer_field>`__:
+   get_tracer_field:
       A function to retrieve the present timestep data.
-   `get_tracer_tlevels <#get_tracer_tlevels>`__:
+   get_tracer_tlevels:
       A function to retrieve the three time levels data.
-   `get_tracer_tendency <#get_tracer_tendency>`__:
+   get_tracer_tendency:
       A function to retrieve the tendency data.
-   `get_tracer_names <#get_tracer_names>`__:
+   get_tracer_names:
       Routine to find the names associated with a tracer number.
-   `get_family_name <#get_family_name>`__:
+   get_family_name:
       Routine to return the family name for tracer n.
-   `check_if_prognostic <#check_if_prognostic>`__:
+   check_if_prognostic:
       Function to see if a tracer is prognostic or diagnostic.
-   `find_family_members <#find_family_members>`__:
+   find_family_members:
       Subroutine to find which tracers are members of family family_name.
-   `add_members_to_family <#add_members_to_family>`__:
+   add_members_to_family:
       Routine to sum up the members of a family of tracers so that they may be advected and diffused as one tracer.
-   `split_family_into_members <#split_family_into_members>`__:
+   split_family_into_members:
       Subroutine that sets the present value of the member of a tracer family according to the fraction of the family
       that it was in the previous step.
-   `set_tracer_profile <#set_tracer_profile>`__:
+   set_tracer_profile:
       Subroutine to set the tracer field to the wanted profile.
-   `query_method <#query_method>`__:
+   query_method:
       A function to query the "methods" associated with each tracer.
-   `query_combined <#query_combined>`__:
+   query_combined:
       A function to query whether families of tracers have been combined already.
-   `set_tracer_atts <#set_tracer_atts>`__:
+   set_tracer_atts:
       A subroutine to allow the user set the tracer longname and units from the tracer initialization routine.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -129,12 +134,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: tracer_manager_init
+a. .. rubric:: Tracer_manager_init
       :name: tracer_manager_init
 
    ::
@@ -144,9 +147,7 @@ a.
    **DESCRIPTION**
       This routine writes the version and tagname to the logfile and sets the module initialization flag.
 
-b. 
-
-   .. rubric:: register_tracers
+b. .. rubric:: Register_tracers
       :name: register_tracers
 
    ::
@@ -180,9 +181,7 @@ b.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-c. 
-
-   .. rubric:: get_number_tracers
+c. .. rubric:: Get_number_tracers
       :name: get_number_tracers
 
    ::
@@ -216,9 +215,7 @@ c.
       |                                                           |    [integer, optional]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-d. 
-
-   .. rubric:: get_tracer_indices
+d. .. rubric:: Get_tracer_indices
       :name: get_tracer_indices
 
    ::
@@ -255,9 +252,7 @@ d.
       |                                                           |    [integer, optional, dimension(:)]                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-e. 
-
-   .. rubric:: get_tracer_index
+e. .. rubric:: Get_tracer_index
       :name: get_tracer_index
 
    ::
@@ -292,9 +287,7 @@ e.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-f. 
-
-   .. rubric:: assign_tracer_field
+f. .. rubric:: Assign_tracer_field
       :name: assign_tracer_field
 
    ::
@@ -327,9 +320,7 @@ f.
       |                                                           |    [real, target, optional, dimension(:,:,:,:)]           |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-g. 
-
-   .. rubric:: tracer_manager_end
+g. .. rubric:: Tracer_manager_end
       :name: tracer_manager_end
 
    ::
@@ -339,9 +330,7 @@ g.
    **DESCRIPTION**
       Routine to write to the log file that the tracer manager is ending.
 
-h. 
-
-   .. rubric:: get_tracer_field
+h. .. rubric:: Get_tracer_field
       :name: get_tracer_field
 
    ::
@@ -365,9 +354,7 @@ h.
       |                                                           |    [real, pointer, dimension(:,:,:)]                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-i. 
-
-   .. rubric:: get_tracer_tlevels
+i. .. rubric:: Get_tracer_tlevels
       :name: get_tracer_tlevels
 
    ::
@@ -391,9 +378,7 @@ i.
       |                                                           |    [real, pointer, dimension(:,:,:,:)]                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-j. 
-
-   .. rubric:: get_tracer_tendency
+j. .. rubric:: Get_tracer_tendency
       :name: get_tracer_tendency
 
    ::
@@ -417,9 +402,7 @@ j.
       |                                                           |    [real, pointer, dimension(:,:,:)]                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-k. 
-
-   .. rubric:: get_tracer_names
+k. .. rubric:: Get_tracer_names
       :name: get_tracer_names
 
    ::
@@ -449,9 +432,7 @@ k.
       |                                                           |    [character, optional]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-l. 
-
-   .. rubric:: get_family_name
+l. .. rubric:: Get_family_name
       :name: get_family_name
 
    ::
@@ -475,9 +456,7 @@ l.
       |                                                           |    [character]                                            |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-m. 
-
-   .. rubric:: check_if_prognostic
+m. .. rubric:: Check_if_prognostic
       :name: check_if_prognostic
 
    ::
@@ -502,9 +481,7 @@ m.
       |                                                           |    [logical]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-n. 
-
-   .. rubric:: find_family_members
+n. .. rubric:: Find_family_members
       :name: find_family_members
 
    ::
@@ -533,9 +510,7 @@ n.
       |                                                           |    [logical, dimension(:)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-o. 
-
-   .. rubric:: add_members_to_family
+o. .. rubric:: Add_members_to_family
       :name: add_members_to_family
 
    ::
@@ -572,9 +547,7 @@ o.
       spatially, advection as one tracer and subsequent splitting will result in a different result to advecting each
       tracer separately. The user should understand the possible repercussions of this before using it.
 
-p. 
-
-   .. rubric:: split_family_into_members
+p. .. rubric:: Split_family_into_members
       :name: split_family_into_members
 
    ::
@@ -613,9 +586,7 @@ p.
       spatially, advection as one tracer and subsequent splitting will result in a different result to advecting each
       tracer separately. The user should understand the possible repercussions of this before using it.
 
-q. 
-
-   .. rubric:: set_tracer_profile
+q. .. rubric:: Set_tracer_profile
       :name: set_tracer_profile
 
    ::
@@ -654,9 +625,7 @@ q.
       |                                                           |    [real]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-r. 
-
-   .. rubric:: query_method
+r. .. rubric:: Query_method
       :name: query_method
 
    ::
@@ -708,9 +677,7 @@ r.
       \|(atmosphere) \|profile_type \|profile \|surface_value = X, bottom_value = Y \|(ocean)
       ==================================================================
 
-s. 
-
-   .. rubric:: query_combined
+s. .. rubric:: Query_combined
       :name: query_combined
 
    ::
@@ -736,9 +703,7 @@ s.
       |                                                           |    [logical]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-t. 
-
-   .. rubric:: set_tracer_atts
+t. .. rubric:: Set_tracer_atts
       :name: set_tracer_atts
 
    ::
@@ -774,7 +739,7 @@ t.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -783,7 +748,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -866,4 +831,4 @@ ERROR MESSAGES
 
 .. container::
 
-   `top <#TOP>`__
+   top

@@ -1,5 +1,12 @@
-module mpp_io_mod
+.. _module_mpp_io_mod:
+
+Module mpp_io_mod
 -----------------
+
+Contents
+~~~~~~~~
+
+-  `Module mpp_io_mod <#module_mpp_io_mod>`__
 
 .. container::
 
@@ -11,7 +18,7 @@ module mpp_io_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 ``mpp_io_mod``, is a set of simple calls for parallel I/O on distributed systems. It is geared toward the writing of
@@ -45,8 +52,8 @@ data in netCDF format. It requires the modules ` <models/bgrid_solo/fms_src/shar
    The internal representation of the data being written out is assumed be the default real type, which can be 4 or
    8-byte. Time data is always written as 8-bytes to avoid overflow on climatic time scales in units of seconds.
    ` <modes>`__
-   .. rubric:: I/O modes in ``mpp_io_mod``
-      :name: io-modes-in-mpp_io_mod
+   .. rubric:: 
+      :name: section
 
    The I/O activity critical to performance in the models for which ``mpp_io_mod`` is designed is typically the writing
    of large datasets on a model grid volume produced at intervals during a run. Consider a 3D grid volume, where model
@@ -61,8 +68,8 @@ data in netCDF format. It requires the modules ` <models/bgrid_solo/fms_src/shar
    *Multi-threaded, multi-fileset I/O:* many PEs write to independent files. This is also called *distributed I/O*.
    The middle option is the most difficult to achieve performance. The choice of one of these modes is made when a file
    is opened for I/O, in ` <#mpp_open>`__.
-   .. rubric:: Metadata in ``mpp_io_mod``
-      :name: metadata-in-mpp_io_mod
+   .. rubric:: 
+      :name: section-1
 
    A requirement of the design of ``mpp_io_mod`` is that the file must be entirely self-describing: comprehensive header
    information describing its contents is present in the header of every file. The header information follows the model
@@ -212,11 +219,10 @@ data in netCDF format. It requires the modules ` <models/bgrid_solo/fms_src/shar
    *Multi-fileset* reads are not supported with ``mpp_read``.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -228,7 +234,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -249,39 +255,38 @@ PUBLIC INTERFACE
                                mpp_flush,
                                mpp_get_ncid ]
 
-   `mpp_write_meta <#mpp_write_meta>`__:
+   mpp_write_meta:
       Write metadata.
-   `mpp_write <#mpp_write>`__:
+   mpp_write:
       Write to an open file.
-   `mpp_read <#mpp_read>`__:
+   mpp_read:
       Read from an open file.
-   `mpp_get_atts <#mpp_get_atts>`__:
+   mpp_get_atts:
       Get file global metdata.
-   `mpp_io_init <#mpp_io_init>`__:
+   mpp_io_init:
       Initialize ``mpp_io_mod``.
-   `mpp_io_exit <#mpp_io_exit>`__:
+   mpp_io_exit:
       Exit ``mpp_io_mod``.
-   `mpp_open <#mpp_open>`__:
+   mpp_open:
       Open a file for parallel I/O.
-   `mpp_close <#mpp_close>`__:
+   mpp_close:
       Close an open file.
-   `mpp_read_meta <#mpp_read_meta>`__:
+   mpp_read_meta:
       Read metadata.
-   `mpp_get_info <#mpp_get_info>`__:
+   mpp_get_info:
       Get some general information about a file.
-   `mpp_get_times <#mpp_get_times>`__:
+   mpp_get_times:
       Get file time data.
-   `mpp_flush <#mpp_flush>`__:
+   mpp_flush:
       Flush I/O buffers to disk.
-   `mpp_get_ncid <#mpp_get_ncid>`__:
+   mpp_get_ncid:
       Get netCDF ID of an open file.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -290,12 +295,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: mpp_write_meta
+a. .. rubric:: Mpp_write_meta
       :name: mpp_write_meta
 
    ::
@@ -331,13 +334,12 @@ a.
       call mpp_write_meta ( unit, name, cval=cval )
 
    **DESCRIPTION**
-      This routine is used to write the `metadata <#metadata>`__ describing the contents of a file being written. Each
-      file can contain any number of fields, which are functions of 0-3 space axes and 0-1 time axes. (Only one time
-      axis can be defined per file). The basic metadata defined `above <#metadata>`__ for ``axistype`` and ``fieldtype``
-      are written in the first two forms of the call shown below. These calls will associate a unique variable ID with
-      each variable (axis or field). These can be used to attach any other real, integer or character attribute to a
-      variable. The last form is used to define a *global* real, integer or character attribute that applies to the
-      dataset as a whole.
+      This routine is used to write the metadata describing the contents of a file being written. Each file can contain
+      any number of fields, which are functions of 0-3 space axes and 0-1 time axes. (Only one time axis can be defined
+      per file). The basic metadata defined above for ``axistype`` and ``fieldtype`` are written in the first two forms
+      of the call shown below. These calls will associate a unique variable ID with each variable (axis or field). These
+      can be used to attach any other real, integer or character attribute to a variable. The last form is used to
+      define a *global* real, integer or character attribute that applies to the dataset as a whole.
    **INPUT**
       ================
       ``unit   ``      
@@ -387,9 +389,7 @@ a.
       You cannot interleave calls to ``mpp_write`` and ``mpp_write_meta``: the first call to ``mpp_write`` implies that
       metadata specification is complete.
 
-b. 
-
-   .. rubric:: mpp_write
+b. .. rubric:: Mpp_write
       :name: mpp_write
 
    ::
@@ -416,7 +416,7 @@ b.
       can be 0-3D.
       The ``data`` argument for distributed data is expected by ``mpp_write`` to contain data specified on the *data*
       domain, and will write the data belonging to the *compute* domain, fetching or sending data as required by the
-      parallel I/O `mode <#modes>`__ specified in the ``mpp_open`` call. This is consistent with our definition of
+      parallel I/O mode specified in the ``mpp_open`` call. This is consistent with our definition of
       `domains <http:models/bgrid_solo/fms_src/shared/mpp/mpp_domains.html#domains>`__, where all arrays are expected to
       be dimensioned on the data domain, and all operations performed on the compute domain.
       The type of the ``data`` argument must be a *default real*, which can be 4 or 8 byte.
@@ -448,9 +448,7 @@ b.
       | You cannot interleave calls to ``mpp_write`` and ``mpp_write_meta``: the first call to ``mpp_write`` implies
         that metadata specification is complete.
 
-c. 
-
-   .. rubric:: mpp_read
+c. .. rubric:: Mpp_read
       :name: mpp_read
 
    ::
@@ -468,7 +466,7 @@ c.
       domain-decomposed. Distributed data must be 2D or 3D (in space). Non-distributed data can be 0-3D.
       The ``data`` argument for distributed data is expected by ``mpp_read`` to contain data specified on the *data*
       domain, and will read the data belonging to the *compute* domain, fetching data as required by the parallel I/O
-      `mode <#modes>`__ specified in the ``mpp_open`` call. This is consistent with our definition of
+      mode specified in the ``mpp_open`` call. This is consistent with our definition of
       `domains <http:models/bgrid_solo/fms_src/shared/mpp/mpp_domains.html#domains>`__, where all arrays are expected to
       be dimensioned on the data domain, and all operations performed on the compute domain.
    **INPUT**
@@ -499,9 +497,7 @@ c.
       Packed variables are unpacked using the ``scale`` and ``add`` attributes.
       ``mpp_read_meta`` must be called prior to calling ``mpp_read.``
 
-d. 
-
-   .. rubric:: mpp_get_atts
+d. .. rubric:: Mpp_get_atts
       :name: mpp_get_atts
 
    ::
@@ -517,9 +513,7 @@ d.
       | ``global_atts   ``                                        |    [atttype, dimension(:)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-e. 
-
-   .. rubric:: mpp_io_init
+e. .. rubric:: Mpp_io_init
       :name: mpp_io_init
 
    ::
@@ -538,9 +532,7 @@ e.
       | ``maxunit   ``                                            |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-f. 
-
-   .. rubric:: mpp_io_exit
+f. .. rubric:: Mpp_io_exit
       :name: mpp_io_exit
 
    ::
@@ -551,9 +543,7 @@ f.
       It is recommended, though not at present required, that you call this near the end of a run. This will close all
       open files that were opened with ` <#mpp_open>`__. Files opened otherwise are not affected.
 
-g. 
-
-   .. rubric:: mpp_open
+g. .. rubric:: Mpp_open
       :name: mpp_open
 
    ::
@@ -654,9 +644,7 @@ g.
       | Currently ``iospec``\ performs no action on non-SGI/Cray systems. The interface is still provided, however:
         users are cordially invited to add the requisite system calls for other systems.
 
-h. 
-
-   .. rubric:: mpp_close
+h. .. rubric:: Mpp_close
       :name: mpp_close
 
    ::
@@ -673,9 +661,7 @@ h.
       | ``action   ``                                             |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-i. 
-
-   .. rubric:: mpp_read_meta
+i. .. rubric:: Mpp_read_meta
       :name: mpp_read_meta
 
    ::
@@ -683,11 +669,11 @@ i.
       call mpp_read_meta (unit)
 
    **DESCRIPTION**
-      This routine is used to read the `metadata <#metadata>`__ describing the contents of a file. Each file can contain
-      any number of fields, which are functions of 0-3 space axes and 0-1 time axes. (Only one time axis can be defined
-      per file). The basic metadata defined `above <#metadata>`__ for ``axistype`` and ``fieldtype`` are stored in
-      ``mpp_io_mod`` and can be accessed outside of ``mpp_io_mod`` using calls to ``mpp_get_info``, ``mpp_get_atts``,
-      ``mpp_get_vars`` and ``mpp_get_times``.
+      This routine is used to read the metadata describing the contents of a file. Each file can contain any number of
+      fields, which are functions of 0-3 space axes and 0-1 time axes. (Only one time axis can be defined per file). The
+      basic metadata defined above for ``axistype`` and ``fieldtype`` are stored in ``mpp_io_mod`` and can be accessed
+      outside of ``mpp_io_mod`` using calls to ``mpp_get_info``, ``mpp_get_atts``, ``mpp_get_vars`` and
+      ``mpp_get_times``.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
       | ``unit   ``                                               |    [integer]                                              |
@@ -696,9 +682,7 @@ i.
    **NOTE**
       ``mpp_read_meta`` must be called prior to ``mpp_read``.
 
-j. 
-
-   .. rubric:: mpp_get_info
+j. .. rubric:: Mpp_get_info
       :name: mpp_get_info
 
    ::
@@ -723,9 +707,7 @@ j.
       | ``ntime   ``                                              |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-k. 
-
-   .. rubric:: mpp_get_times
+k. .. rubric:: Mpp_get_times
       :name: mpp_get_times
 
    ::
@@ -744,9 +726,7 @@ k.
       | ``time_values   ``                                        |    [real(DOUBLE_KIND), dimension(:)]                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-l. 
-
-   .. rubric:: mpp_flush
+l. .. rubric:: Mpp_flush
       :name: mpp_flush
 
    ::
@@ -762,9 +742,7 @@ l.
       | ``unit   ``                                               |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-m. 
-
-   .. rubric:: mpp_get_ncid
+m. .. rubric:: Mpp_get_ncid
       :name: mpp_get_ncid
 
    ::
@@ -782,7 +760,7 @@ m.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -791,7 +769,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -800,7 +778,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -808,11 +786,10 @@ REFERENCES
    None.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -832,11 +809,10 @@ COMPILER SPECIFICS
         ` <models/bgrid_solo/fms_src/shared/mpp/mpp.html#linking>`__, which are ``use``\ d by this module.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -847,11 +823,10 @@ PRECOMPILER OPTIONS
       compilers.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -866,7 +841,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -874,11 +849,10 @@ TEST PROGRAM
    None.
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -886,11 +860,10 @@ KNOWN BUGS
    None.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -898,11 +871,10 @@ NOTES
    None.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -915,4 +887,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

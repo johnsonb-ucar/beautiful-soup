@@ -2,7 +2,7 @@ PROGRAM ``closest_member_tool``
 ===============================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

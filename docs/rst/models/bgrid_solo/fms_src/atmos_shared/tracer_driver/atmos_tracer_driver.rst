@@ -1,5 +1,12 @@
-module atmos_tracer_driver_mod
+.. _module_atmos_tracer_driver_mod:
+
+Module atmos_tracer_driver_mod
 ------------------------------
+
+Contents
+~~~~~~~~
+
+-  `Module atmos_tracer_driver_mod <#module_atmos_tracer_driver_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module atmos_tracer_driver_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 This code allows the user to easily add tracers to the FMS framework.
@@ -66,11 +73,10 @@ This code allows the user to easily add tracers to the FMS framework.
    routine has been called.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -89,7 +95,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -100,19 +106,18 @@ PUBLIC INTERFACE
                                             atmos_tracer_driver_init,
                                             atmos_tracer_driver_end ]
 
-   `atmos_tracer_driver <#atmos_tracer_driver>`__:
+   atmos_tracer_driver:
       A routine which allows tracer code to be called.
-   `atmos_tracer_driver_init <#atmos_tracer_driver_init>`__:
+   atmos_tracer_driver_init:
       Subroutine to initialize the tracer driver module.
-   `atmos_tracer_driver_end <#atmos_tracer_driver_end>`__:
+   atmos_tracer_driver_end:
       Subroutine to terminate the tracer driver module.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -121,12 +126,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: atmos_tracer_driver
+a. .. rubric:: Atmos_tracer_driver
       :name: atmos_tracer_driver
 
    ::
@@ -204,9 +207,7 @@ a.
       |                                                           |    [real, dimension(:,:,:,:)]                             |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: atmos_tracer_driver_init
+b. .. rubric:: Atmos_tracer_driver_init
       :name: atmos_tracer_driver_init
 
    ::
@@ -246,9 +247,7 @@ b.
       |                                                           |    [real, dimension(:,:,:,:)]                             |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-c. 
-
-   .. rubric:: atmos_tracer_driver_end
+c. .. rubric:: Atmos_tracer_driver_end
       :name: atmos_tracer_driver_end
 
    ::
@@ -260,7 +259,7 @@ c.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -269,7 +268,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -282,4 +281,4 @@ ERROR MESSAGES
 
 .. container::
 
-   `top <#TOP>`__
+   top

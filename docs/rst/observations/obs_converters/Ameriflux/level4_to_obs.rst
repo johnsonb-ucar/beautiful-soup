@@ -2,7 +2,7 @@ PROGRAM ``level4_to_obs``
 =========================
 
 Contents
-========
+--------
 
 -  `Namelist <#namelist>`__
 -  `Data sources <#data_sources>`__

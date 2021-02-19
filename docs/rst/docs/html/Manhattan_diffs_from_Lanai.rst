@@ -2,7 +2,7 @@ DART Manhattan Differences from Lanai Release Notes
 ===================================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `NetCDF restart files <#_netcdf_restart_files_>`__

@@ -2,7 +2,7 @@ MODULE model_mod (MPAS OCN)
 ===========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `model_mod variable storage <#model_mod_variable_storage>`__

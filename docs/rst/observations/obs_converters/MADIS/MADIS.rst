@@ -2,7 +2,7 @@ MADIS Data Ingest System
 ========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Data sources <#data_sources>`__

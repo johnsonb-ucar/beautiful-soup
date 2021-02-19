@@ -1,9 +1,8 @@
 Bitwise Considerations
 ======================
 
-=================== =========================================================
-|DART project logo| Jump to `DART Documentation Main Index <../index.html>`__
-=================== =========================================================
+Contents
+--------
 
 By bitwise we mean bit for bit identical results in the output obs_sequence file and the restarts (netcdf-to-netcdf or
 DART format-to-dart format) when comparing one version of the code to another. For testing the code to be bitwise with
@@ -35,17 +34,4 @@ The *CAM* and *bgrid_solo* model_mods have been altered so the state is in a dif
 format restarts will **not** be bitwise with Lanai DART format restarts, but netcdf files will be (after running
 dart_to_cam).
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../images/Dartboard7.png
-   :height: 70px

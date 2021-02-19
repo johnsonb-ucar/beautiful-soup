@@ -2,7 +2,7 @@ ROMS observations to DART observation sequences
 ===============================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

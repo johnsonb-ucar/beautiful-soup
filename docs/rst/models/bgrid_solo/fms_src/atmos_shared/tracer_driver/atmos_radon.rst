@@ -1,5 +1,12 @@
-module atmos_radon_mod
+.. _module_atmos_radon_mod:
+
+Module atmos_radon_mod
 ----------------------
+
+Contents
+~~~~~~~~
+
+-  `Module atmos_radon_mod <#module_atmos_radon_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module atmos_radon_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 | This code allows the implementation of an extremely simplified radon tracer in the FMS framework.
@@ -22,11 +29,10 @@ OVERVIEW
    manner.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -42,7 +48,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -53,19 +59,18 @@ PUBLIC INTERFACE
                                     atmos_radon_init,
                                     atmos_radon_end ]
 
-   `atmos_radon_sourcesink <#atmos_radon_sourcesink>`__:
+   atmos_radon_sourcesink:
       The routine that calculate the sources and sinks of radon.
-   `atmos_radon_init <#atmos_radon_init>`__:
+   atmos_radon_init:
       The constructor routine for the radon module.
-   `atmos_radon_end <#atmos_radon_end>`__:
+   atmos_radon_end:
       The destructor routine for the radon module.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -74,12 +79,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: atmos_radon_sourcesink
+a. .. rubric:: Atmos_radon_sourcesink
       :name: atmos_radon_sourcesink
 
    ::
@@ -122,9 +125,7 @@ a.
       |                                                           |    [real, dimension(:,:,:)]                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: atmos_radon_init
+b. .. rubric:: Atmos_radon_init
       :name: atmos_radon_init
 
    ::
@@ -154,9 +155,7 @@ b.
       |                                                           |    [real, dimension(:,:,:,:)]                             |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-c. 
-
-   .. rubric:: atmos_radon_end
+c. .. rubric:: Atmos_radon_end
       :name: atmos_radon_end
 
    ::
@@ -168,7 +167,7 @@ c.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -177,7 +176,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -188,4 +187,4 @@ ERROR MESSAGES
 
 .. container::
 
-   `top <#TOP>`__
+   top

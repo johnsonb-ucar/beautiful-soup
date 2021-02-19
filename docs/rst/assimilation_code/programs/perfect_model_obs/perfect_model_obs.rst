@@ -2,7 +2,7 @@ program ``perfect_model_obs``
 =============================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

@@ -2,7 +2,7 @@ MODULE location_mod (threed_sphere)
 ===================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Usage <#usage>`__

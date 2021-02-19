@@ -2,7 +2,7 @@ PROGRAM ``COSMOS_development``
 ==============================
 
 Contents
-========
+--------
 
 -  `Data sources <#data_sources>`__
 -  `Programs <#programs>`__

@@ -2,7 +2,7 @@ PROGRAM ``gen_sampling_err_table``
 ==================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

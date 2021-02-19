@@ -1,5 +1,12 @@
-module diag_manager_mod
+.. _module_diag_manager_mod:
+
+Module diag_manager_mod
 -----------------------
+
+Contents
+~~~~~~~~
+
+-  `Module diag_manager_mod <#module_diag_manager_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module diag_manager_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 <TT>diag_manager_mod</TT> is a set of simple calls for parallel diagnostics on distributed systems. It is geared toward
@@ -38,11 +45,10 @@ the writing of data in netCDF format.
    netCDF library. The program is free and is covered by the `GPL license <ftp://ftp.gfdl.gov/perm/hnv/mpp/LICENSE>`__.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -57,7 +63,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -73,29 +79,28 @@ PUBLIC INTERFACE
                                      get_base_date,
                                      need_data ]
 
-   `send_data <#send_data>`__:
+   send_data:
       Send data over to output fields.
-   `register_diag_field <#register_diag_field>`__:
+   register_diag_field:
       Register Diagnostic Field.
-   `register_static_field <#register_static_field>`__:
+   register_static_field:
       Register Static Field.
-   `diag_manager_end <#diag_manager_end>`__:
+   diag_manager_end:
       Exit Diagnostics Manager.
-   `diag_manager_init <#diag_manager_init>`__:
+   diag_manager_init:
       Initialize Diagnostics Manager.
-   `get_base_time <#get_base_time>`__:
+   get_base_time:
       Return base time for diagnostics.
-   `get_base_date <#get_base_date>`__:
+   get_base_date:
       Return base date for diagnostics.
-   `need_data <#need_data>`__:
+   need_data:
       Determine whether data is needed for the current model time step.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -104,12 +109,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: send_data
+a. .. rubric:: Send_data
       :name: send_data
 
    **DESCRIPTION**
@@ -136,9 +139,7 @@ a.
       |                                                           |    [time_type]                                            |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: register_diag_field
+b. .. rubric:: Register_diag_field
       :name: register_diag_field
 
    ::
@@ -147,7 +148,7 @@ b.
       register_diag_field (module_name, field_name, axes, init_time, & long_name, units, missing_value, range)
 
    **DESCRIPTION**
-      Return field index for subsequent calls to `send_data <#send_data>`__
+      Return field index for subsequent calls to send_data
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
       | ``module_name   ``                                        |    [character(len=*)]                                     |
@@ -167,9 +168,7 @@ b.
       | ``range   ``                                              |    [real, dimension(2)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-c. 
-
-   .. rubric:: register_static_field
+c. .. rubric:: Register_static_field
       :name: register_static_field
 
    ::
@@ -196,9 +195,7 @@ c.
       | ``range   ``                                              |    [real, dimension(2)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-d. 
-
-   .. rubric:: diag_manager_end
+d. .. rubric:: Diag_manager_end
       :name: diag_manager_end
 
    ::
@@ -212,9 +209,7 @@ d.
       | ``TIME   ``                                               |    [time_type]                                            |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-e. 
-
-   .. rubric:: diag_manager_init
+e. .. rubric:: Diag_manager_init
       :name: diag_manager_init
 
    ::
@@ -224,9 +219,7 @@ e.
    **DESCRIPTION**
       Open and read diag_table. Select fields and files for diagnostic output.
 
-f. 
-
-   .. rubric:: get_base_time
+f. .. rubric:: Get_base_time
       :name: get_base_time
 
    ::
@@ -236,9 +229,7 @@ f.
    **DESCRIPTION**
       Return base time for diagnostics (note: base time must be >= model time).
 
-g. 
-
-   .. rubric:: get_base_date
+g. .. rubric:: Get_base_date
       :name: get_base_date
 
    ::
@@ -248,9 +239,7 @@ g.
    **DESCRIPTION**
       Return date information for diagnostic reference time.
 
-h. 
-
-   .. rubric:: need_data
+h. .. rubric:: Need_data
       :name: need_data
 
    ::
@@ -272,7 +261,7 @@ h.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -281,7 +270,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -290,7 +279,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -298,11 +287,10 @@ REFERENCES
    None.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -320,11 +308,10 @@ COMPILER SPECIFICS
       is required.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -333,11 +320,10 @@ PRECOMPILER OPTIONS
       <TT>diag_manager_mod</TT> uses standard f90.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -351,7 +337,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -359,11 +345,10 @@ TEST PROGRAM
    None.
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -371,11 +356,10 @@ KNOWN BUGS
    None.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -383,11 +367,10 @@ NOTES
    None.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -400,4 +383,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

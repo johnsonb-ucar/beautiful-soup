@@ -1,7 +1,14 @@
 --------------
 
-module vert_advection_mod
+.. _module_vert_advection_mod:
+
+Module vert_advection_mod
 -------------------------
+
+Contents
+~~~~~~~~
+
+-  `Module vert_advection_mod <#module_vert_advection_mod>`__
 
 .. container::
 
@@ -12,11 +19,10 @@ module vert_advection_mod
    **Last Modified:**  $Date$
 
 | 
-| 
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 Computes the tendency due to vertical advection for an arbitrary quantity.
@@ -29,7 +35,7 @@ Computes the tendency due to vertical advection for an arbitrary quantity.
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -40,7 +46,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -56,16 +62,13 @@ PUBLIC INTERFACE
       Computes the vertical advective tendency for an arbitrary quantity. There is no initialization routine necessary.
 
 | 
-| 
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: vert_advection
+a. .. rubric:: Vert_advection
       :name: vert_advection
 
    ::
@@ -134,7 +137,7 @@ a.
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -149,11 +152,10 @@ ERROR MESSAGES
       The value of optional argument form must be one of the public parameters FLUX_FORM or ADVECTIVE_FORM.
 
 | 
-| 
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -162,11 +164,10 @@ REFERENCES
       application to the moisture in a general circulation model. *Mon. Wea. Rev.*, **122**, 1575-1593.
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -174,11 +175,10 @@ KNOWN BUGS
    None.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -186,11 +186,10 @@ NOTES
    None.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::

@@ -2,7 +2,7 @@ PROGRAM create_real_obs
 =======================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Instructions <#instructions>`__

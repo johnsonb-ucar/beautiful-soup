@@ -2,7 +2,7 @@ DART Manhattan Release Notes
 ============================
 
 Contents
-========
+--------
 
 -  `Getting started <#getting_started>`__
 -  `Document conventions <#document_conventions>`__

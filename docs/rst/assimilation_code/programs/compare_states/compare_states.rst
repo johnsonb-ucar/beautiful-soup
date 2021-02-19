@@ -2,7 +2,7 @@ PROGRAM ``compare_states``
 ==========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

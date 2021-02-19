@@ -2,7 +2,7 @@ program ``model_mod_check``
 ===========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

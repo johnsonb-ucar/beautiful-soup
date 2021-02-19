@@ -2,7 +2,7 @@ program ``create_fixed_network_seq``
 ====================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Modules used <#modules_used>`__

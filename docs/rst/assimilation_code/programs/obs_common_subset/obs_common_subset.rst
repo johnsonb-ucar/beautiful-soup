@@ -2,7 +2,7 @@ program ``obs_common_subset``
 =============================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

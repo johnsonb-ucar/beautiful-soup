@@ -2,7 +2,7 @@ MODULE model_mod (CLM)
 ======================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Pertinent details of the CLM gridcell <#pertinent_details_of_the_clm_gridcell>`__

@@ -1,5 +1,12 @@
-module horiz_interp_mod
+.. _module_horiz_interp_mod:
+
+Module horiz_interp_mod
 -----------------------
+
+Contents
+~~~~~~~~
+
+-  `Module horiz_interp_mod <#module_horiz_interp_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module horiz_interp_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 Performs spatial interpolation between rectangular latitude/longitude grids.

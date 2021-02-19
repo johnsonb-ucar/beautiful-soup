@@ -2,7 +2,7 @@ Aviso+/CMEMS Observations
 =========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Data sources <#data_sources>`__

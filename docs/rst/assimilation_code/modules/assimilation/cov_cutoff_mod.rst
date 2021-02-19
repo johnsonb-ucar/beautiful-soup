@@ -2,7 +2,7 @@ MODULE cov_cutoff_mod
 =====================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

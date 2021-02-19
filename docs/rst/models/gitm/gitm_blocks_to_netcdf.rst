@@ -2,7 +2,7 @@ PROGRAM ``gitm_blocks_to_netcdf``
 =================================
 
 Contents
-========
+--------
 
 -  `Namelist <#namelist>`__
 -  `Modules used <#modules_used>`__

@@ -2,7 +2,7 @@ DART Lanai Differences from Kodiak Release Notes
 ================================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Changes to core DART routines <#changes_to_core_dart_routines>`__

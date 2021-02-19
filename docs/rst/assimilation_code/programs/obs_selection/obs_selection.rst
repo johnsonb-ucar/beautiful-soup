@@ -2,7 +2,7 @@ program ``obs_selection``
 =========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

@@ -2,7 +2,7 @@ MODULE model_mod (NCOMMAS)
 ==========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `NCOMMAS 7_1 <#ncommas_7_1>`__

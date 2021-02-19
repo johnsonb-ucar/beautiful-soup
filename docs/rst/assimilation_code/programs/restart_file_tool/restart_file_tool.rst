@@ -2,7 +2,7 @@ PROGRAM ``restart_file_tool``
 =============================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 

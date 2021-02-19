@@ -2,7 +2,7 @@ MODULE DEFAULT_obs_def_mod
 ==========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 

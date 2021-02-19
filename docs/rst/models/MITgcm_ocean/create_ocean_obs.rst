@@ -1,9 +1,18 @@
-PROGRAM *create_ocean_obs*
-==========================
+PROGRAM ``create_ocean_obs``
+============================
+
+Contents
+--------
+
+-  `Modules used <#modules_used>`__
+-  `Namelist <#namelist>`__
+-  `Files <#files>`__
+-  `References <#references>`__
+-  `Error codes and conditions <#error_codes_and_conditions>`__
 
 $Id$
 
-*create_ocean_obs* is responsible for converting an interim ASCII file of ocean observations into a DART observation
+``create_ocean_obs`` is responsible for converting an interim ASCII file of ocean observations into a DART observation
 sequence file. The interim ASCII file is a simple 'whitespace separated' table where each row is an observation and each
 column is specific information about the observation.
 
@@ -19,7 +28,7 @@ column is specific information about the observation.
 | 4             | observation value        | such as it is ...                                                       |
 +---------------+--------------------------+-------------------------------------------------------------------------+
 | 5             | vertical coordinate flag | see                                                                     |
-|               |                          | `location_mod:location_type <../../assim                                |
+|               |                          | `location_mod:location_type </assim                                     |
 |               |                          | ilation_code/location/threed_sphere/location_mod.html#location_type>`__ |
 |               |                          | for a full explanation. The short explanation is that *surface == -1*,  |
 |               |                          | and *depth == 3* There is a pathological difference between a surface   |
@@ -28,12 +37,12 @@ column is specific information about the observation.
 | 6             | observation variance     | good luck here ...                                                      |
 +---------------+--------------------------+-------------------------------------------------------------------------+
 | 7             | Quality Control flag     | integer value passed through to DART. There is a namelist parameter for |
-|               |                          | *filter* to ignore any observation with a                               |
-|               |                          | QC value <= `input_qc_thre                                              |
-|               |                          | shold <../../assimilation_code/programs/filter/filter.html#Namelist>`__ |
+|               |                          | ``filter`` to ignore any observation with a                             |
+|               |                          | QC value <= `input_qc                                                   |
+|               |                          | _threshold </assimilation_code/programs/filter/filter.html#Namelist>`__ |
 +---------------+--------------------------+-------------------------------------------------------------------------+
 | 8             | obs_kind_name            | a character string that must match a string in                          |
-|               |                          | `obs_def/obs_def_MITgcm_ocean_mod.f90 <../..                            |
+|               |                          | `obs_def/obs_def_MITgcm_ocean_mod.f90 <                                 |
 |               |                          | /observations/forward_operators/obs_def_MITgcm_ocean_model_mod.html>`__ |
 +---------------+--------------------------+-------------------------------------------------------------------------+
 | 9             | startDate_1              | the year-month-date of the observation (YYYYMMDD format)                |
@@ -58,13 +67,15 @@ For example:
    ...
 
 It is always possible to combine observation sequence files with the program
-`obs_sequence_tool <../../assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__, so it was simply
+`obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__, so it was simply
 convenient to generate a separate file for each observation platform and type ('GLIDER' and 'TEMPERATURE'), however it
 is by no means required.
 
 --------------
 
-MODULES USED
+.. _modules_used:
+
+Modules used
 ------------
 
 Some of these modules use modules ... **those** modules and namelists are not discussed here. probably should be ...
@@ -78,7 +89,7 @@ Some of these modules use modules ... **those** modules and namelists are not di
 
 --------------
 
-NAMELIST
+Namelist
 --------
 
 This program has a namelist of its own, and some of the underlying modules require namelists. To avoid duplication and,
@@ -88,10 +99,10 @@ to the full documentation for each namelist.
 +----------------------------------------------------------+----------------------------------------------------------+
 | Namelist                                                 | Primary Purpose                                          |
 +==========================================================+==========================================================+
-| `utilities_nml <../../assimilatio                        | set the termination level and file name for the run-time |
+| `utilities_nml </assimilatio                             | set the termination level and file name for the run-time |
 | n_code/modules/utilities/utilities_mod.html#Namelist>`__ | log                                                      |
 +----------------------------------------------------------+----------------------------------------------------------+
-| `obs_sequence_nml <../../assimilation_code               | write binary or ASCII observation sequence files         |
+| `obs_sequence_nml </assimilation_code                    | write binary or ASCII observation sequence files         |
 | /modules/observations/obs_sequence_mod.html#Namelist>`__ |                                                          |
 +----------------------------------------------------------+----------------------------------------------------------+
 
@@ -108,124 +119,62 @@ terminating the namelist.
 
 .. container:: indent1
 
-   This namelist is read in a file called *input.nml*
+   This namelist is read in a file called ``input.nml``
 
-   Contents
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | Contents                              | Type                                  | Description                           |
+   +=======================================+=======================================+=======================================+
+   | year                                  | integer *[default: 1996]*             | The first year of interest.           |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | month                                 | integer *[default: 1]*                | The first month of interest.          |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | day                                   | integer *[default: 1]*                | The first day of interest.            |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | tot_days                              | integer *[default: 31]*               | Stop processing after this many days. |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | max_num                               | integer *[default: 800000]*           | The maximum number of observations to |
+   |                                       |                                       | read/write.                           |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | fname                                 | character(len=129)                    | The name of the interim ASCII file of |
+   |                                       | *[default: 'raw_ocean_obs.txt']*      | observations.                         |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | output_name                           | character(len=129)                    | The output file name.                 |
+   |                                       | *[default: 'raw_ocean_obs_seq.out']*  |                                       |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | lon1                                  | real *[default: 0.0]*                 | The leftmost longitude of interest.   |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | lon2                                  | real *[default: 360.0]*               | The rightmost longitude of interest.  |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | lat1                                  | real *[default: -90.0]*               | The most southern latitude of         |
+   |                                       |                                       | interest.                             |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | lat2                                  | real *[default: 90.0]*                | The most northern latitude of         |
+   |                                       |                                       | interest.                             |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
 
-Type
-
-Description
-
-year
-
-integer *[default: 1996]*
-
-The first year of interest.
-
-month
-
-integer *[default: 1]*
-
-The first month of interest.
-
-day
-
-integer *[default: 1]*
-
-The first day of interest.
-
-tot_days
-
-integer *[default: 31]*
-
-Stop processing after this many days.
-
-max_num
-
-integer *[default: 800000]*
-
-The maximum number of observations to read/write.
-
-fname
-
-| character(len=129)
-| *[default: 'raw_ocean_obs.txt']*
-
-The name of the interim ASCII file of observations.
-
-output_name
-
-| character(len=129)
-| *[default: 'raw_ocean_obs_seq.out']*
-
-The output file name.
-
-lon1
-
-real *[default: 0.0]*
-
-The leftmost longitude of interest.
-
-lon2
-
-real *[default: 360.0]*
-
-The rightmost longitude of interest.
-
-lat1
-
-real *[default: -90.0]*
-
-The most southern latitude of interest.
-
-lat2
-
-real *[default: 90.0]*
-
-The most northern latitude of interest.
-
-| 
 | 
 
 --------------
 
-FILES
+Files
 -----
 
--  input namelist file: *input.nml*
--  input data file: as listed by *input.nml&create_ocean_obs_nml:fname*
--  output data file: as listed by *input.nml&create_ocean_obs_nml:output_name*
+-  input namelist file: ``input.nml``
+-  input data file: as listed by ``input.nml``\ ``&create_ocean_obs_nml:fname``
+-  output data file: as listed by ``input.nml``\ ``&create_ocean_obs_nml:output_name``
 
 --------------
 
-REFERENCES
+References
 ----------
 
 -  none
 
 --------------
 
-ERROR CODES and CONDITIONS
+.. _error_codes_and_conditions:
+
+Error codes and conditions
 --------------------------
 
-There are no error conditions specific to *create_ocean_obs*.
-
-KNOWN BUGS
-----------
-
-There are no known bugs.
-
---------------
-
-FUTURE PLANS
-------------
-
-None at this time. Feel free to suggest improvements.
-
---------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
+There are no error conditions specific to ``create_ocean_obs``.

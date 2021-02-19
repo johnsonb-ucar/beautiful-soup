@@ -2,7 +2,7 @@ MODULE obs_def_dew_point_mod
 ============================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Other modules used <#other_modules_used>`__

@@ -2,7 +2,7 @@ PROGRAM ``rad_3dvar_to_dart``
 =============================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

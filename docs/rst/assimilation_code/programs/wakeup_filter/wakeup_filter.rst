@@ -2,7 +2,7 @@ PROGRAM ``wakeup_filter``
 =========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Modules used <#modules_used>`__

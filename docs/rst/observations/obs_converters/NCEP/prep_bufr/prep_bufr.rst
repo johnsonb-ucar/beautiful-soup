@@ -2,7 +2,7 @@ PROGRAM ``prepbufr``
 ====================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Instructions <#instructions>`__

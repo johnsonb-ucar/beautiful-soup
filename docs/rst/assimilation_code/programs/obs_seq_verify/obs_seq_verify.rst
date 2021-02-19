@@ -2,7 +2,7 @@ program ``obs_seq_verify``
 ==========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

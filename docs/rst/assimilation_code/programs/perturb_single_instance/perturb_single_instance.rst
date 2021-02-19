@@ -2,7 +2,7 @@ PROGRAM ``perturb_single_instance``
 ===================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

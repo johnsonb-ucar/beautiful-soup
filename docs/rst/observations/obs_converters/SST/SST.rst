@@ -2,7 +2,7 @@ PROGRAM ``sst_to_obs, oi_sst_to_obs``
 =====================================
 
 Contents
-========
+--------
 
 -  `Sst_to_obs namelist <#sst_to_obs_namelist>`__
 -  `Oi_sst_to_obs namelist <#oi_sst_to_obs_namelist>`__

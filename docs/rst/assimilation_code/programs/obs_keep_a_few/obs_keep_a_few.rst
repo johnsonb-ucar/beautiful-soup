@@ -2,7 +2,7 @@ program ``obs_keep_a_few``
 ==========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Other modules used <#other_modules_used>`__

@@ -2,7 +2,7 @@ DART Lanai Release Notes
 ========================
 
 Contents
-========
+--------
 
 -  `Dart overview <#dart_overview>`__
 -  `Getting started <#getting_started>`__

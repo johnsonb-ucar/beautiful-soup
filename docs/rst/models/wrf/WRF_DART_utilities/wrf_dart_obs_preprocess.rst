@@ -2,7 +2,7 @@ PROGRAM ``wrf_dart_obs_preprocess``
 ===================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

@@ -1,9 +1,8 @@
 Netcdf Inflation Files
 ======================
 
-=================== =========================================================
-|DART project logo| Jump to `DART Documentation Main Index <../index.html>`__
-=================== =========================================================
+Contents
+--------
 
 The filter_nml now read restart and inflation files directly from NetCDF files
 
@@ -55,17 +54,4 @@ For multiple domains filter is expecting to write:
 
 where d0\* is the domain number.
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../images/Dartboard7.png
-   :height: 70px

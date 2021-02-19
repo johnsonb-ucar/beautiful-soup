@@ -2,7 +2,7 @@ CESM+DART setup
 ===============
 
 Contents
-========
+--------
 
 -  `Cesm+dart setup overview <#cesm+dart_setup_overview>`__
 -  `CESM component combinations <#cesm_component_combinations>`__

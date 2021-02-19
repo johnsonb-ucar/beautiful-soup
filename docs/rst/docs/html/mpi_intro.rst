@@ -1,9 +1,8 @@
 The MPI version of DART
 =======================
 
-=================== =========================================================
-|DART project logo| Jump to `DART Documentation Main Index <../index.html>`__
-=================== =========================================================
+Contents
+--------
 
 Introduction
 ~~~~~~~~~~~~
@@ -38,7 +37,7 @@ DART use of MPI
   using MPI and running in parallel is simply an additional option.) To build a parallel version of the 'filter'
   program, the 'mkmf_filter' command needs to be called with the '-mpi' option to generate a Makefile which compiles
   with the MPI scripts instead of the Fortran compiler.
-| See the *quickbuild.csh* script in each $DART/models/*/work directory for the commands that need to be edited to
+| See the ``quickbuild.csh`` script in each $DART/models/*/work directory for the commands that need to be edited to
   enable the MPI utilities. You will also need to edit the $DART/mkmf/mkmf.template file to call the proper version of
   the MPI compile script if it does not have the default name, is not in a standard location on the system, or needs
   additional options set to select between multiple Fortran compilers.
@@ -66,15 +65,15 @@ DART use of MPI
 -  async = 0
    The model and filter programs are compiled into a single executable, and when the model needs to advance, the filter
    program calls a subroutine. See a `diagram <filter_async_modes.html#async0>`__ which illustrates this option.
--   async = 2
+-  async = 2
    The model is compiled into a sequential (single task) program. If 'filter' is running in parallel, each filter task
    will execute the model independently to advance the group of ensembles. See a
    `diagram <filter_async_modes.html#async2>`__ which illustrates this option.
--   async = 4
+-  async = 4
    The model is compiled into an MPI program (parallel) and only 'filter' task 0 tells the startup script when it is
    time to advance the model. Each ensemble is advanced one by one, with the model using all the processors to run in
    parallel. See a `diagram <filter_async_modes.html#async4>`__ which illustrates this option.
--   async ignored (sometimes referred to as 'async 5', but not a setting in the namelist)
+-  async ignored (sometimes referred to as 'async 5', but not a setting in the namelist)
    This is the way most large models run now. There is a separate script, outside of filter, which runs the N copies of
    the model to do the advance. Then filter is run, as an MPI program, and it only assimilates for a single time and
    then exits. The external script manages the file motion between steps, and calls both the models and filter in turn.
@@ -86,8 +85,8 @@ DART use of MPI
   independently without the model having to know about MPI or parallelism.
 | Compiling and running an MPI application can be substantially more complicated than running a single executable. There
   are a suite of small test programs to help diagnose any problems encountered in trying to run the new version of DART.
-  Look in `developer_tests/mpi_utilities/tests/README <../../developer_tests/mpi_utilities/tests/README>`__ for
-  instructions and a set of tests to narrow down any difficulties.
+  Look in `developer_tests/mpi_utilities/tests/README </developer_tests/mpi_utilities/tests/README>`__ for instructions
+  and a set of tests to narrow down any difficulties.
 
 Performance issues and timing results
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -156,12 +155,3 @@ User considerations for their own configurations
   be divided and spread across multiple nodes to avoid paging to disk.
 
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../images/Dartboard7.png
-   :height: 70px

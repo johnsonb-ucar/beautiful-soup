@@ -2,7 +2,7 @@ MODULE obs_model_mod
 ====================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Other modules used <#other_modules_used>`__

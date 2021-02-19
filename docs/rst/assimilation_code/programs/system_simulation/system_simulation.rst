@@ -2,7 +2,7 @@ system simulation programs
 ==========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

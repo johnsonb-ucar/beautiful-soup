@@ -1,9 +1,8 @@
 Vertical Conversion of Observations
 ===================================
 
-=================== =========================================================
-|DART project logo| Jump to `DART Documentation Main Index <../index.html>`__
-=================== =========================================================
+Contents
+--------
 
 In Lanai vertical conversion of observations occurs in get_close_obs. The Lanai code in filter_assim is as follows:
 
@@ -45,7 +44,7 @@ The DART RMA code in filter_assim is as follows:
       ...
    enddo
 
-Bitwise Problem
+Bitwise problem
 ~~~~~~~~~~~~~~~
 
 Moving the ``convert_vertical_location`` changes the number of ``get/set location`` calls. There is a bitwise creep of
@@ -54,17 +53,4 @@ exact number of ``get/set location`` you can change the line lanai_bitwise = .fa
 assim_tools_mod.f90. Note this is not a namelist option because production code should not be run with lanai_bitwise =
 .true. For more detail on running bitwise with Lanai see `bitwise considerations <bitwise_considerations.html>`__.
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../images/Dartboard7.png
-   :height: 70px

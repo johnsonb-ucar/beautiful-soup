@@ -1,19 +1,23 @@
 DART "Jamaica release" difference document
 ==========================================
 
-=================== ============================================================
-|DART project logo| Jump to `DART Documentation Main Index <../../index.html>`__
-=================== ============================================================
+Contents
+--------
+
+-  `These files have changed (or are added) <#these_files_have_changed_(or_are_added)>`__
+-  `These files are obsolete - and have been deleted <#these_files_are_obsolete_-_and_have_been_deleted>`__
 
 | This document describes the changes from the "Iceland" or "Post-Iceland" DART releases to the new **jamaica** release.
 | **A word about MPI**: It is very important to remember that all the MPI routines are in one module --
-  *mpi_utilities_mod.f90*. If you are NOT using MPI - there is a simple equivalent module named
-  *null_mpi_utilities_mod.f90* which is the default.
+  ``mpi_utilities_mod.f90``. If you are NOT using MPI - there is a simple equivalent module named
+  ``null_mpi_utilities_mod.f90`` which is the default.
+
+.. _these_files_have_changed_(or_are_added):
 
 These files have changed (or are added)
 ---------------------------------------
 
-| 1. *adaptive_inflate_mod.f90*: This module was almost completely rewritten although fundamental operations remain
+| 1. ``adaptive_inflate_mod.f90``: This module was almost completely rewritten although fundamental operations remain
   unchanged. The only change to have direct impact on users is that there is no longer a namelist for this module
   (inflation is now controlled through the filter_nml) and inflation restarts are always in a single file, no matter
   what the choice of multiple restart files for state restarts is.
@@ -40,9 +44,8 @@ These files have changed (or are added)
 --------------
 
 | 
-| 
 
-| 2. *assim_model_mod.f90*: There were several changes to the public interfaces. First, get_close_states and
+| 2. ``assim_model_mod.f90``: There were several changes to the public interfaces. First, get_close_states and
   get_num_close_states no longer exist. This is part of moving the default ability to find close points out of model_mod
   and into the location mod. Second, an additional optional argument, override_write_format, was added to function
   open_restart_write. This allows a caller to force a write in either binary or ascii independent of the namelist
@@ -56,9 +59,8 @@ These files have changed (or are added)
 --------------
 
 | 
-| 
 
-| 3. *assim_tools_mod.f90*: Large portions of this module were entirely rewritten. The parallel assimilation algorithm
+| 3. ``assim_tools_mod.f90``: Large portions of this module were entirely rewritten. The parallel assimilation algorithm
   is implemented in the subroutine filter_assim which is now the ONLY public interface into assim_tools. The new
   parallel assimilation algorithm and its associated inflation computations are documented in the manuscript by Anderson
   and Collins that is to appear in the Journal of Atmospheric and Oceanic Technology and in section 22 of the tutorial.
@@ -82,18 +84,16 @@ These files have changed (or are added)
 --------------
 
 | 
-| 
 
-4. *types_mod.f90*: Types i4, r4, c4 and c8 were added to the public list and additional comment documentation added.
+4. ``types_mod.f90``: Types i4, r4, c4 and c8 were added to the public list and additional comment documentation added.
 
 | 
 
 --------------
 
 | 
-| 
 
-5. *cov_cutoff_mod.f90*: The interface to comp_cov_factor was modified to add four new arguments, obs_loc, obs_kind,
+5. ``cov_cutoff_mod.f90``: The interface to comp_cov_factor was modified to add four new arguments, obs_loc, obs_kind,
 target_loc, and target_kind. These arguments are not used in the default implementation but are made available for
 applications in which users want to implement more complicated cutoff functions that can be a function of the location
 and type of both the observation and the state variable.
@@ -103,9 +103,8 @@ and type of both the observation and the state variable.
 --------------
 
 | 
-| 
 
-6. *diagnostics/oned/obs_diag.f90*: The default value of rat_cri in the namelist was changed from 3.0 to 4.0 to avoid
+6. ``diagnostics/oned/obs_diag.f90``: The default value of rat_cri in the namelist was changed from 3.0 to 4.0 to avoid
 throwing out too many observations as outside the expected range. Observation-space diagnostics have been extended to
 handle the fact that inflation can happen in the prior or posterior (by keying on the new dart_qc variable). The new
 dart_qc values were used to determine which observations were assimilated for posterior and prior estimates and a
@@ -118,9 +117,8 @@ with.
 --------------
 
 | 
-| 
 
-7. *diagnostics/threed_sphere/obs_diag*: Observation-space diagnostics have been extended to handle which observations
+7. ``diagnostics/threed_sphere/obs_diag``: Observation-space diagnostics have been extended to handle which observations
 were assimilated for posterior and/or prior estimates (by keying on the new dart_qc variable). The namelist variable
 qc_threshold was renamed input_qc_threshold to further distinguish the fact there are now two types of QC values:
 dart_qc and whatever comes with the observation to begin with.
@@ -130,9 +128,8 @@ dart_qc and whatever comes with the observation to begin with.
 --------------
 
 | 
-| 
 
-| 8. *ensemble_manager_mod.f90*: This module has been almost entirely rewritten for the mpi implementation. Its
+| 8. ``ensemble_manager_mod.f90``: This module has been almost entirely rewritten for the mpi implementation. Its
   continues to manage ensemble storage but adds a general transpose capability that is central the the parallel
   implementation.
 | The namelist retains the single_restart_file_in and single_restart_file_out but drops the in_core entry and adds
@@ -144,9 +141,8 @@ dart_qc and whatever comes with the observation to begin with.
 --------------
 
 | 
-| 
 
-| 9. *filter.f90*: There are major changes throughout filter for the mpi implementation. Foremost is the fact that the
+| 9. ``filter.f90``: There are major changes throughout filter for the mpi implementation. Foremost is the fact that the
   async=3 option no longer exists, which removes the need for filter_server.csh; nor do manually-defined 'regions'
   exist, which removes the need for assim_region.csh.
 | Changes to namelist: for full details see the html documentation for filter and the tutorial documentation for
@@ -176,22 +172,20 @@ dart_qc and whatever comes with the observation to begin with.
 --------------
 
 | 
-| 
 
-10. *integrate_model.f90*: The namelist integrate_model.nml no longer exists. The old namelist had entries for the input
-and output files, but they are now hard-coded to 'temp_ic' and 'temp_ud'. The target time for the advance is now taken
-directly from the input file and the old namelist entries for target_time_days and target_time_seconds are no longer
-needed. It is essential that integrate_model be compiled WITHOUT the parallel mpi_utilities.
+10. ``integrate_model.f90``: The namelist integrate_model.nml no longer exists. The old namelist had entries for the
+input and output files, but they are now hard-coded to 'temp_ic' and 'temp_ud'. The target time for the advance is now
+taken directly from the input file and the old namelist entries for target_time_days and target_time_seconds are no
+longer needed. It is essential that integrate_model be compiled WITHOUT the parallel mpi_utilities.
 
 | 
 
 --------------
 
 | 
-| 
 
-| 11. *oned/location_mod.f90*: location modules are now responsible for providing interfaces to (efficiently) find a set
-  of locations that are close to a given location. The new and modified public interfaces are: get_close_obs,
+| 11. ``oned/location_mod.f90``: location modules are now responsible for providing interfaces to (efficiently) find a
+  set of locations that are close to a given location. The new and modified public interfaces are: get_close_obs,
   get_close_obs_destroy, get_close_maxdist_init, and get_close_obs_init. In addition, a new type, get_close_type, is
   defined to store information that helps to do this type of search efficiently given a fixed set of locations to check.
   The oned location_mod doesn't have a need to do this efficiently, so these new interfaces are generally just stubs.
@@ -205,9 +199,8 @@ needed. It is essential that integrate_model be compiled WITHOUT the parallel mp
 --------------
 
 | 
-| 
 
-| 12. *threed_sphere/location_mod.f90*: The location module is now primarily responsible for the efficient search for
+| 12. ``threed_sphere/location_mod.f90``: The location module is now primarily responsible for the efficient search for
   close states / obs. A series of new interfaces have been added, along with namelist modifications, to support finding
   a subset of locations that are close to a single given location. This can be used both for get_close_obs and
   get_close_state computations and replaces the get_close_state interfaces that were in the model_mod.
@@ -239,9 +232,8 @@ needed. It is essential that integrate_model be compiled WITHOUT the parallel mp
 --------------
 
 | 
-| 
 
-| 13. *model_mod.f90*: Unfortunately, there are minor changes to the model_mod public interfaces required to work with
+| 13. ``model_mod.f90``: Unfortunately, there are minor changes to the model_mod public interfaces required to work with
   the switch to using the location_mod to find close locations. The public interface model_get_close_states is no longer
   required. Three new interfaces: get_close_maxdist_init, get_close_obs_init, and get_close_obs are required to use the
   new location module. In a minimal implementation, these three interfaces can just be satisfied by using the interfaces
@@ -258,22 +250,20 @@ needed. It is essential that integrate_model be compiled WITHOUT the parallel mp
 --------------
 
 | 
-| 
 
-14. *PBL_1d/create_real_network.f90* originated from create_fixed_network. It uses module_wrf to get obs from smos file,
-with file, date, and interval controlled via the wrf1d namelist. Note that an obs_def is still required to control which
-obs are actually written out. Normally, this would be created with create_obs_sequence. This would be run in place of
-both create_fixed_network and perfect_model_obs.
+14. ``PBL_1d/create_real_network.f90`` originated from create_fixed_network. It uses module_wrf to get obs from smos
+file, with file, date, and interval controlled via the wrf1d namelist. Note that an obs_def is still required to control
+which obs are actually written out. Normally, this would be created with create_obs_sequence. This would be run in place
+of both create_fixed_network and perfect_model_obs.
 
 | 
 
 --------------
 
 | 
-| 
 
-| 15. *cam/model_mod.f90*: model_mod can now automatically handle the eulerian and finite volume CAMs (and should handle
-  the Semi-Lagrangian core too), both single threaded and MPI-enabled. The latter enables efficient use of more
+| 15. ``cam/model_mod.f90``: model_mod can now automatically handle the eulerian and finite volume CAMs (and should
+  handle the Semi-Lagrangian core too), both single threaded and MPI-enabled. The latter enables efficient use of more
   processors than there are ensemble members. This situation is becoming more common, since DART can now assimilate
   using smaller ensembles, and massively parallel machines are becoming more common. This new mode of running jobs
   (async=4) replaces the async=3 and requires only 2 scripts instead of 4.
@@ -296,9 +286,8 @@ both create_fixed_network and perfect_model_obs.
 --------------
 
 | 
-| 
 
-16. *wrf/model_mod.f90*: several researchers had their own subtly-different versions of WRF model_mod.f90. These
+16. ``wrf/model_mod.f90``: several researchers had their own subtly-different versions of WRF model_mod.f90. These
 versions have been integrated (assimilated? ;) into one version. The new version performs vertical localization, support
 for soil parameters, and a host of other features. Hui Liu (DAReS), Altug Aksoy, Yongsheng Chen, and David Dowell of
 NCAR's MMM group are extensively using this model.
@@ -308,20 +297,19 @@ NCAR's MMM group are extensively using this model.
 --------------
 
 | 
-| 
 
-17. *DEFAULT_obs_def_mod.F90*: A new public interface, get_obs_def_key, was added to return the integer key given an
+17. ``DEFAULT_obs_def_mod.F90``: A new public interface, get_obs_def_key, was added to return the integer key given an
 obs_def_type. The interface to read_obs_def has an additional intent(inout) argument, obs_val. This is NOT used in the
 default implementation, but is required for the implementation of certain special observations like radar reflectivity.
 
-17a. *obs_def_radar_mod.f90*: added nyquist velocity metadata field to radial velocity.
+17a. ``obs_def_radar_mod.f90``: added nyquist velocity metadata field to radial velocity.
 
-17b. *obs_def_QuikSCAT_mod.f90*: New module for the SeaWinds instrument (on the QuikSCAT satellite) data as available in
-the NCEP BUFR files.
+17b. ``obs_def_QuikSCAT_mod.f90``: New module for the SeaWinds instrument (on the QuikSCAT satellite) data as available
+in the NCEP BUFR files.
 
-17c. *obs_def_reanalysis_bufr_mod.f90*: Added land surface and ATOVS temperature and moisture values.
+17c. ``obs_def_reanalysis_bufr_mod.f90``: Added land surface and ATOVS temperature and moisture values.
 
-17d. *obs_def_GWD_mod.f90*: module to define 'observations' of gravity wave drag that are needed to perform parameter
+17d. ``obs_def_GWD_mod.f90``: module to define 'observations' of gravity wave drag that are needed to perform parameter
 estimation studies.
 
 | 
@@ -329,9 +317,8 @@ estimation studies.
 --------------
 
 | 
-| 
 
-18. *DEFAULT_obs_kind_mod.F90*: Added in several new raw variable types including KIND_CLOUD_LIQUID_WATER,
+18. ``DEFAULT_obs_kind_mod.F90``: Added in several new raw variable types including KIND_CLOUD_LIQUID_WATER,
 KIND_CLOUD_ICE, KIND_CONDENSATION_HEATING, KIND_VAPOR_MIXING_RATIO, KIND_ICE_NUMBER_CONCENTRATION,
 KIND_GEOPOTENTIAL_HEIGHT, KIND_SOIL_MOISTURE, KIND_GRAV_WAVE_DRAG_EFFIC, and KIND_GRAV_WAVE_STRESS_FRACTION.
 
@@ -340,13 +327,12 @@ KIND_GEOPOTENTIAL_HEIGHT, KIND_SOIL_MOISTURE, KIND_GRAV_WAVE_DRAG_EFFIC, and KIN
 --------------
 
 | 
-| 
 
-19. *obs_model_mod.f90*: There were major internal changes to this routine which implements the shell interface advance
-of models that is used in the new async = 2 and async = 4 advance options. The public interfaces also changed with the
-old get_close_states being removed and the advance_state interface being made public. The advance_state interface
-appears the same except that the intent(in) argument model_size no longer exists. The advance_state interface allows the
-model to be advanced to a particular target_time without going through the move_ahead interface that uses the
+19. ``obs_model_mod.f90``: There were major internal changes to this routine which implements the shell interface
+advance of models that is used in the new async = 2 and async = 4 advance options. The public interfaces also changed
+with the old get_close_states being removed and the advance_state interface being made public. The advance_state
+interface appears the same except that the intent(in) argument model_size no longer exists. The advance_state interface
+allows the model to be advanced to a particular target_time without going through the move_ahead interface that uses the
 observation sequence to drive the advance.
 
 | 
@@ -354,9 +340,8 @@ observation sequence to drive the advance.
 --------------
 
 | 
-| 
 
-20. *merge_obs_seq.f90*: This routine is now MUCH faster for both insertions and simple 'appends' and can now handle
+20. ``merge_obs_seq.f90``: This routine is now MUCH faster for both insertions and simple 'appends' and can now handle
 multiple input files. Conversion between ASCII and binary formats (even for a single file) is now supported. Sorting by
 time and the removal of unused blocks of observations is also possible.
 
@@ -365,9 +350,8 @@ time and the removal of unused blocks of observations is also possible.
 --------------
 
 | 
-| 
 
-| 21. *obs_sequence_mod.f90*: The obs_sequence_mod presents abstractions for both the obs_sequence and the obs_type.
+| 21. ``obs_sequence_mod.f90``: The obs_sequence_mod presents abstractions for both the obs_sequence and the obs_type.
 | For the observation sequence, public interfaces delete_seq_head, delete_seq_tail, get_next_obs_from_key and
   get_prev_obs_from_key were added. Given a time and a sequence, the delete_seq_tail deletes all observations later than
   the time from the sequence and delete_seq_head deletes all observations earlier than the time. Given a sequence and an
@@ -387,10 +371,9 @@ time and the removal of unused blocks of observations is also possible.
 --------------
 
 | 
-| 
 
-22. *perfect_model_obs.f90*: There were major internal changes to be consistent with the new ensemble_manager_mod and to
-use a one-line main program that calls a subroutine to avoid lots of shared storage. The namelist has 4 additional
+22. ``perfect_model_obs.f90``: There were major internal changes to be consistent with the new ensemble_manager_mod and
+to use a one-line main program that calls a subroutine to avoid lots of shared storage. The namelist has 4 additional
 arguments, first_obs_days, first_obs_seconds, last_obs_days and last_obs_seconds. These specify times before which and
 after which observations in the input obs_sequence should be ignored. The default value is -1 which implies that all
 observations are to be used.
@@ -400,9 +383,8 @@ observations are to be used.
 --------------
 
 | 
-| 
 
-23. *random_nr_mod.f90*: Converted to use digits12 for real computations to avoid possible change in sequences when
+23. ``random_nr_mod.f90``: Converted to use digits12 for real computations to avoid possible change in sequences when
 reduced precision is used for the r8 kind defined in types_mod.f90.
 
 | 
@@ -410,19 +392,17 @@ reduced precision is used for the r8 kind defined in types_mod.f90.
 --------------
 
 | 
-| 
 
-24. *random_seq_mod.f90*: Interface init_random_seq was modified to accept an additional optional argument, seed, which
-is the seed for the sequence if present.
+24. ``random_seq_mod.f90``: Interface init_random_seq was modified to accept an additional optional argument, seed,
+which is the seed for the sequence if present.
 
 | 
 
 --------------
 
 | 
-| 
 
-| 25. *utilities_mod.f90*: Several modules had duplicate netCDF error checking routines; these have been consolidated
+| 25. ``utilities_mod.f90``: Several modules had duplicate netCDF error checking routines; these have been consolidated
   into an nc_check() routine in the utilities module.  A new set_output() routine can control which tasks in a
   multi-task MPI job write output messages (warnings and errors are written from any task).  The default is for task 0
   to write and all others not to.  A routine do_output() returns .true. if this task should write messages.  This is
@@ -440,16 +420,15 @@ is the seed for the sequence if present.
 --------------
 
 | 
-| 
 
-| 26. *mpi_utilities_mod.f90*: A new module which isolates all calls to the MPI libraries to this one module.  Includes
-  interfaces for sending and receiving arrays of data, broadcasts, barriers for synchronization, data reduction (e.g.
-  global sum), and routines for identifying the local task number and total number of tasks.   Also contains a block and
-  restart routine for use with the async=4 mode of interacting with a parallel MPI model advance.  Programs using this
-  module must generally be compiled with either an MPI wrapper script (usually called mpif90) or with the proper command
-  line flags.  Some MPI installations use an include file to define the MPI parameters, others use an F90 module. If the
-  mpi_utilities_mod does not compile as distributed search the source code of this module for the string 'BUILD TIP' for
-  more detailed suggestions on getting it to compile.
+| 26. ``mpi_utilities_mod.f90``: A new module which isolates all calls to the MPI libraries to this one module. 
+  Includes interfaces for sending and receiving arrays of data, broadcasts, barriers for synchronization, data reduction
+  (e.g. global sum), and routines for identifying the local task number and total number of tasks.   Also contains a
+  block and restart routine for use with the async=4 mode of interacting with a parallel MPI model advance.  Programs
+  using this module must generally be compiled with either an MPI wrapper script (usually called mpif90) or with the
+  proper command line flags.  Some MPI installations use an include file to define the MPI parameters, others use an F90
+  module. If the mpi_utilities_mod does not compile as distributed search the source code of this module for the string
+  'BUILD TIP' for more detailed suggestions on getting it to compile.
 | When using MPI the call to initialize_mpi_utilities() must be made as close to the start of the execution of the
   program as possible, and the call to finalize_mpi_utilities() as close to the end of execution as possible.  Some
   implementations of the MPICH library (which is common on Linux clusters) require that MPI be initialized before any
@@ -462,9 +441,8 @@ is the seed for the sequence if present.
 --------------
 
 | 
-| 
 
-27. *null_mpi_utilities_mod.f90*: A module which has all the same entry points as the mpi_utilities_mod but does not
+27. ``null_mpi_utilities_mod.f90``: A module which has all the same entry points as the mpi_utilities_mod but does not
 require the MPI library. A program which compiles with this module instead of the real MPI utilities module can only be
 run with a single task since it cannot do real parallel communication, but does not require the MPI libraries to compile
 or link. This is the default module -- you cannot simultaneously use both the mpi_utilities_mod and the
@@ -475,9 +453,8 @@ null_mpi_utilities_mod.
 --------------
 
 | 
-| 
 
-28. *mkmf/mkmf*: The mkmf program takes a new -w argument.  If specified, the resulting makefile will call 'wrappers'
+28. ``mkmf/mkmf``: The mkmf program takes a new -w argument.  If specified, the resulting makefile will call 'wrappers'
 for the fortran compiler and loader.  The default compiler and loader are $(FC) and $(LD); with the -w flag they will
 become $(MPIFC) and $(MPILD).  In the mkmf.template file you can then define both the MPI wrappers (generally 'mpif90')
 and the regular F90 compiler.
@@ -487,9 +464,8 @@ and the regular F90 compiler.
 --------------
 
 | 
-| 
 
-29. *mkmf.template.\**: The mkmf.template files have been consolidated where possible and heavily commented to reflect
+29. ``mkmf.template.*``: The mkmf.template files have been consolidated where possible and heavily commented to reflect
 nuances of implementations on different comiler/OS combinations. The habit of appending individual platform names (which
 led to file creep) is hopefully broken.
 
@@ -498,9 +474,8 @@ led to file creep) is hopefully broken.
 --------------
 
 | 
-| 
 
-30. *input.nml*: All the default input.nml namelists are now easily 'diff'ed against the corresponding
+30. ``input.nml``: All the default input.nml namelists are now easily 'diff'ed against the corresponding
 input.nml.*_template files. This enhances the ability to determine what values are different than the default values.
 
 | 
@@ -508,9 +483,8 @@ input.nml.*_template files. This enhances the ability to determine what values a
 --------------
 
 | 
-| 
 
-| 31. *DART/shell_scripts/DiffCVS_SVN*: is a new script that identifies differences in two parallel instantiations of
+| 31. ``DART/shell_scripts/DiffCVS_SVN``: is a new script that identifies differences in two parallel instantiations of
   source files. I used it so many times during the migration from CVS to SVN that I decided to add it to the DART
   project. This script compares all the source files in two directories ... after removing the trivial differences like
   the form of the copyright tags (its a new year, you know) and the fact that SVN has different revision numbers than
@@ -525,9 +499,8 @@ input.nml.*_template files. This enhances the ability to determine what values a
 --------------
 
 | 
-| 
 
-32. *models/PBL_1d/src/\**: These source files are 'directly' from other developers and had file extensions that
+32. ``models/PBL_1d/src/*``: These source files are 'directly' from other developers and had file extensions that
 required the use of special compilation flags. There is now a script PBL_1d/shell_scripts/ChangeExtensions.csh that not
 only changes the file extensions (to something the compilers understand i.e. F90) it also modifies the path_names_\*
 files appropriately. The original files had an extension of .F even though they used F90-like formatting. .F is
@@ -540,13 +513,12 @@ autopromotion ...
 --------------
 
 | 
-| 
 
-| 33. *DART/matlab*: The matlab scripts have experienced no major overhauls, but do handle a few more models than
+| 33. ``DART/matlab``: The matlab scripts have experienced no major overhauls, but do handle a few more models than
   previously. The next release is scheduled to have full matlab support for CAM, and WRF. The ReadASCIIObsSeq.m function
   has a couple (backwards compatible) tweaks to accomodate some changes in R2006a, R2006b.
-| The biggest change is the addition of *plot_observation_locations.m*, which facilitates exploring observation
-  locations (by type) for any 3D (i.e. real-world) observation sequence. This ability is derived by running *obs_diag*
+| The biggest change is the addition of ``plot_observation_locations.m``, which facilitates exploring observation
+  locations (by type) for any 3D (i.e. real-world) observation sequence. This ability is derived by running ``obs_diag``
   with a namelist variable set such that a matlab-readable dataset is written out.
 
 | 
@@ -554,19 +526,17 @@ autopromotion ...
 --------------
 
 | 
-| 
 
-34. *models/ikeda*: There is a whole new model - courtesy of Greg Lawson of CalTech. A nice 2-variable system that does
-not require any fancy time-stepping routines. Thanks Greg!
+34. ``models/ikeda``: There is a whole new model - courtesy of Greg Lawson of CalTech. A nice 2-variable system that
+does not require any fancy time-stepping routines. Thanks Greg!
 
 | 
 
 --------------
 
 | 
-| 
 
-35. *obs_def_dew_point_mod.f90*: implements a more robust method (based on Bolton's Approximation) for computing dew
+35. ``obs_def_dew_point_mod.f90``: implements a more robust method (based on Bolton's Approximation) for computing dew
 point.
 
 | 
@@ -574,29 +544,21 @@ point.
 --------------
 
 | 
-| 
 
-These files are obsolete - and have been deleted.
--------------------------------------------------
+.. _these_files_are_obsolete_-_and_have_been_deleted:
 
-1. *assim_tools/assim_region.f90*: new algorithms and methodologies fundamentally replace the need to manually define
+These files are obsolete - and have been deleted
+------------------------------------------------
+
+1. ``assim_tools/assim_region.f90``: new algorithms and methodologies fundamentally replace the need to manually define
 and then assimilate regions. Think of all those intermediate files that are not needed!
 
-2. *filter_server\** are no longer needed because async == 3 is no longer supported (again - replaced by MPI).
+2. ``filter_server*`` are no longer needed because async == 3 is no longer supported (again - replaced by MPI).
 
 3. scripts that advance 'ensembles' are all gone - again because of the MPI implementation. The only script now needed
 is 'advance_model.csh'.
 
-4. *smoother/smoother.f90*:  The standalone smoother program has become a module and the functionality is now part of
+4. ``smoother/smoother.f90``:  The standalone smoother program has become a module and the functionality is now part of
 the filter program.  
 
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../../images/Dartboard7.png
-   :height: 70px

@@ -2,7 +2,7 @@ MODULE ``obs_kind_mod``
 =======================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

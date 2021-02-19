@@ -2,7 +2,7 @@ Oklahoma Mesonet MDF Data
 =========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Data sources <#data_sources>`__

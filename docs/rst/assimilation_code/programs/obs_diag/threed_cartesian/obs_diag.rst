@@ -2,7 +2,7 @@ PROGRAM ``obs_diag`` (for observations that use the threed_cartesian location mo
 =====================================================================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `What is new in the Manhattan release <#what_is_new_in_the_manhattan_release>`__

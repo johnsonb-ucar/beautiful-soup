@@ -2,7 +2,7 @@ PROGRAM ``PrecisionCheck``
 ==========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Examples <#examples>`__

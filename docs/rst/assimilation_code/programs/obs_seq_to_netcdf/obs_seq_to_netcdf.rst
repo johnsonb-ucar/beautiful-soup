@@ -2,7 +2,7 @@ PROGRAM ``obs_seq_to_netcdf``
 =============================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

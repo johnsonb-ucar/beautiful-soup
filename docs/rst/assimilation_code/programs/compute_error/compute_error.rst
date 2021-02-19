@@ -2,7 +2,7 @@ PROGRAM ``compute_error``
 =========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

@@ -1,31 +1,53 @@
 DART Kodiak Release Notes
 =========================
 
-=================== ====================================================================
-|DART project logo| Jump to `DART Documentation Main Index <../../../docs/index.html>`__
-=================== ====================================================================
+Contents
+--------
 
-| `Dart Overview <#Overview>`__ / `Getting Started <#GettingStarted>`__ / `Installation <#Installation>`__ / `Notes for
-  Current Users <#CurrentUsers>`__ / `Non-backwards Compatible Changes <#Nonbackward>`__ / `New
-  Features <#NewFeatures>`__ / `New Models <#NewModels>`__ / `Changed Models <#ChangedModels>`__ / `New
-  Observations <#NewObs>`__ / `New Diagnostics and Documentation <#NewDiagnostics>`__ / `New
-  Utilities <#NewUtilities>`__ / `Known Problems <#KnownProblems>`__ / `Terms of Use <#Legalese>`__
+-  `Dart overview <#dart_overview>`__
+-  `Getting started <#getting_started>`__
+-  `Document conventions <#document_conventions>`__
+-  `Installation <#installation>`__
+-  `Downloading the distribution <#downloading_the_distribution>`__
+-  `Customizing the build scripts -- overview <#customizing_the_build_scripts_--_overview>`__
+-  `Building the Lorenz_63 DART project <#building_the_lorenz_63_dart_project>`__
+-  `Running lorenz_63 <#running_lorenz_63>`__
+-  `Experiment overview <#experiment_overview>`__
+-  `The tutorial <#the_tutorial>`__
+-  `Matlab® diagnostics <#matlab®_diagnostics>`__
+-  `Bias, filter divergence and covariance inflation (with the L63
+   model) <#bias,_filter_divergence_and_covariance_inflation_(with_the_l63_model)>`__
+-  `Synthetic observations <#synthetic_observations>`__
+-  `Notes for current users <#notes_for_current_users>`__
+-  `Non-backwards compatible changes <#non-backwards_compatible_changes>`__
+-  `New features <#new_features>`__
+-  `New models <#new_models>`__
+-  `Changed models <#changed_models>`__
+-  `New observation types/sources <#new_observation_types/sources>`__
+-  `New diagnostics and documentation <#new_diagnostics_and_documentation>`__
+-  `New utilities <#new_utilities>`__
+-  `Known problems <#known_problems>`__
+
+| Dart Overview / Getting Started / Installation / Notes for Current Users / Non-backwards Compatible Changes / New
+  Features / New Models / Changed Models / New Observations / New Diagnostics and Documentation / New Utilities / Known
+  Problems /
 
 **The current release of DART is named Lanai. These release notes are now obsolete but are being preserved for reference
-purposes. See the**\ `Lanai release notes <../docs/html/Lanai_release.html>`__\ **for the most recent DART release
-information.**
+purposes. See the**\ `Lanai release notes </docs/html/docs/html/Lanai_release.html>`__\ **for the most recent DART
+release information.**
 
 | 
-| 
 
-Dart Overview
+.. _dart_overview:
+
+Dart overview
 -------------
 
 The Data Assimilation Research Testbed (DART) is designed to facilitate the combination of assimilation algorithms,
 models, and real (or synthetic) observations to allow increased understanding of all three. The DART programs are highly
 portable, having been compiled with many Fortran 90 compilers and run on linux compute-servers, linux clusters, OSX
-laptops/desktops, SGI Altix clusters, supercomputers running AIX, and more. Read the
-`Customizations <#customizations>`__ section for help in building on new platforms.
+laptops/desktops, SGI Altix clusters, supercomputers running AIX, and more. Read the Customizations section for help in
+building on new platforms.
 
 DART employs a modular programming approach to apply an Ensemble Kalman Filter which nudges models toward a state that
 is more consistent with information from a set of observations. Models may be swapped in and out, as can different
@@ -36,21 +58,23 @@ observation and its uncertainty ultimately results in the adjustments to the mod
 described in detail in the tutorial directory of the package.
 
 DART diagnostic output includes two netCDF files containing the model states just before the adjustment
-(*Prior_Diag.nc*) and just after the adjustment (*Posterior_Diag.nc*) as well as a file *obs_seq.final* with the model
-estimates of the observations. There is a suite of Matlab® functions that facilitate exploration of the results, but the
-netCDF files are inherently portable and contain all the necessary metadata to interpret the contents.
+(``Prior_Diag.nc``) and just after the adjustment (``Posterior_Diag.nc``) as well as a file ``obs_seq.final`` with the
+model estimates of the observations. There is a suite of Matlab® functions that facilitate exploration of the results,
+but the netCDF files are inherently portable and contain all the necessary metadata to interpret the contents.
 
 In this document links are available which point to Web-based documentation files and also to the same information in
 html files distributed with DART. If you have used subversion to check out a local copy of the DART files you can open
-this file in a browser by loading *DART/doc/html/Kodiak_release.html* and then use the *local file* links to see other
-documentation pages without requiring a connection to the internet. If you are looking at this documentation from the
-*www.image.ucar.edu* web server or you are connected to the internet you can use the *Website* links to view other
-documentation pages.
+this file in a browser by loading ``DART/doc/html/Kodiak_release.html`` and then use the ``local file`` links to see
+other documentation pages without requiring a connection to the internet. If you are looking at this documentation from
+the ``www.image.ucar.edu`` web server or you are connected to the internet you can use the ``Website`` links to view
+other documentation pages.
 
-Getting Started
+.. _getting_started:
+
+Getting started
 ---------------
 
-What's Required
+What's required
 ~~~~~~~~~~~~~~~
 
 #. a Fortran 90 compiler
@@ -66,7 +90,7 @@ What's Required
   DART code compile cleanly.
 | DART uses the `netCDF <http://www.unidata.ucar.edu/packages/netcdf/>`__ self-describing data format with a particular
   metadata convention to describe output that is used to analyze the results of assimilation experiments. These files
-  have the extension *.nc* and can be read by a number of standard data analysis tools.
+  have the extension ``.nc`` and can be read by a number of standard data analysis tools.
 | Since most of the models being used with DART are written in Fortran and run on various UNIX or \*nix platforms, the
   development environment for DART is highly skewed to these machines. We do most of our development on a small linux
   workstation and a mac laptop running OSX 10.x, and we have an extensive test network. (I've never built nor run DART
@@ -98,21 +122,23 @@ DART programs can require three different types of input. First, some of the DAR
 synthetic observational datasets, require interactive input from the keyboard. For simple cases this interactive input
 can be made directly from the keyboard. In more complicated cases a file containing the appropriate keyboard input can
 be created and this file can be directed to the standard input of the DART program. Second, many DART programs expect
-one or more input files in DART specific formats to be available. For instance, *perfect_model_obs*, which creates a
+one or more input files in DART specific formats to be available. For instance, ``perfect_model_obs``, which creates a
 synthetic observation set given a particular model and a description of a sequence of observations, requires an input
 file that describes this observation sequence. At present, the observation files for DART are in a custom format in
 either human-readable ascii or more compact machine-specific binary. Third, many DART modules (including main programs)
 make use of the Fortran90 namelist facility to obtain values of certain parameters at run-time. All programs look for a
-namelist input file called *input.nml* in the directory in which the program is executed. The *input.nml* file can
+namelist input file called ``input.nml`` in the directory in which the program is executed. The ``input.nml`` file can
 contain a sequence of individual Fortran90 namelists which specify values of particular parameters for modules that
 compose the executable program.
+
+.. _document_conventions:
 
 Document conventions
 --------------------
 
 | Anything underlined is a URL.
-| *All filenames look like this -- (typewriter font, green)*.
-| *Program names look like this -- (italicized font, green)*.
+| ``All filenames look like this -- (typewriter font, green)``.
+| ``Program names look like this -- (italicized font, green)``.
 | *user input looks like this -- (bold, magenta)*.
 
 .. container:: unix
@@ -135,7 +161,7 @@ And the contents of a file are enclosed in a box with a border:
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
 Installation
 ------------
@@ -143,12 +169,11 @@ Installation
 This document outlines the installation of the DART software and the system requirements. The entire installation
 process is summarized in the following steps:
 
-#. `Determine which F90 compiler is available <#compilers>`__.
-#. `Determine the location of the netCDF library <#netCDFlib>`__.
-#. `Download the DART software into the expected source tree <#download>`__.
-#. `Modify certain DART files to reflect the available F90 compiler and location of the appropriate
-   libraries <#customizations>`__.
-#. `Build the executables <#building>`__.
+#. Determine which F90 compiler is available.
+#. Determine the location of the ``netCDF`` library.
+#. Download the DART software into the expected source tree.
+#. Modify certain DART files to reflect the available F90 compiler and location of the appropriate libraries.
+#. Build the executables.
 
 We have tried to make the code as portable as possible, but we do not have access to all compilers on all platforms, so
 there are no guarantees. We are interested in your experience building the system, so please email me (Tim Hoar)
@@ -156,23 +181,23 @@ thoar 'at' ucar 'dot' edu (trying to cut down on the spam).
 
 After the installation, you might want to peruse the following.
 
--  `Running the Lorenz_63 Model <#Running>`__.
--  `Using the Matlab® diagnostic scripts <#matlab>`__.
--  A short discussion on `bias, filter divergence and covariance inflation. <#discussion>`__
--  And another one on `synthetic observations <#syntheticobservations>`__.
+-  Running the Lorenz_63 Model.
+-  Using the Matlab® diagnostic scripts.
+-  A short discussion on bias, filter divergence and covariance inflation.
+-  And another one on synthetic observations.
 
 You should *absolutely* run the DART_LAB interactive tutorial (if you have Matlab available) and look at the DART_LAB
 presentation slides `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/DART_LAB/DART_LAB.html>`__ or
-`local file <../../DART_LAB/DART_LAB.html>`__ in the *DART_LAB* directory, and then take the tutorial in the
-*DART/tutorial* directory.
+`local file </docs/DART_LAB/DART_LAB.html>`__ in the ``DART_LAB`` directory, and then take the tutorial in the
+``DART/tutorial`` directory.
 
 .. container::
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-Requirements: an F90 Compiler
+Requirements: an F90 compiler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The DART software has been successfully built on several Linux/x86 platforms with several versions of the `Intel Fortran
@@ -187,36 +212,36 @@ recompiling the code is a necessity to experiment with different models, there a
 
    --------------
 
-   `[top] <#>`__
-
-Requirements: the *netCDF* library
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   [top]
 
 DART uses the `netCDF <http://www.unidata.ucar.edu/packages/netcdf/>`__ self-describing data format for the results of
-assimilation experiments. These files have the extension *.nc* and can be read by a number of standard data analysis
+assimilation experiments. These files have the extension ``.nc`` and can be read by a number of standard data analysis
 tools. In particular, DART also makes use of the F90 interface to the library which is available through the
-*netcdf.mod* and *typesizes.mod* modules. *IMPORTANT*: different compilers create these modules with different "case"
-filenames, and sometimes they are not **both** installed into the expected directory. It is required that both modules
-be present. The normal place would be in the ``netcdf/include`` directory, as opposed to the ``netcdf/lib`` directory.
+``netcdf.mod`` and ``typesizes.mod`` modules. *IMPORTANT*: different compilers create these modules with different
+"case" filenames, and sometimes they are not **both** installed into the expected directory. It is required that both
+modules be present. The normal place would be in the ``netcdf/include`` directory, as opposed to the ``netcdf/lib``
+directory.
 
 If the netCDF library does not exist on your system, you must build it (as well as the F90 interface modules). The
 library and instructions for building the library or installing from an RPM may be found at the netCDF home page:
 http://www.unidata.ucar.edu/packages/netcdf/ Pay particular attention to the compiler-specific patches that must be
 applied for the Intel Fortran Compiler. (Or the PG compiler, for that matter.)
 
-The location of the netCDF library, *libnetcdf.a*, and the locations of both *netcdf.mod* and *typesizes.mod* will be
-needed by the makefile template, as described in the `compiling <#compiling>`__ section. Depending on the netCDF build
-options, the Fortran 90 interfaces may be built in a separate library named *netcdff.a* and you may need to add
-*-lnetcdff* to the library flags.
+The location of the netCDF library, ``libnetcdf.a``, and the locations of both ``netcdf.mod`` and ``typesizes.mod`` will
+be needed by the makefile template, as described in the compiling section. Depending on the netCDF build options, the
+Fortran 90 interfaces may be built in a separate library named ``netcdff.a`` and you may need to add ``-lnetcdff`` to
+the library flags.
 
 .. container::
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-Downloading the distribution.
------------------------------
+.. _downloading_the_distribution:
+
+Downloading the distribution
+----------------------------
 
 | **HURRAY**! The DART source code is now distributed through an anonymous Subversion server! The **big** advantage is
   the ability to patch or update existing code trees at your discretion. Subversion (the client-side app is '**svn**')
@@ -234,57 +259,59 @@ Downloading the distribution.
   to perform some commands even when the repository is not available. It does double the size of the code tree ... so
   the download is something like 480MB -- pretty big. BUT - all future updates are (usually) just the differences, so
   they happen very quickly.
-| If you follow the instructions on the download site, you should wind up with a directory named *DART*. Compiling the
+| If you follow the instructions on the download site, you should wind up with a directory named ``DART``. Compiling the
   code in this tree (as is usually the case) will necessitate much more space.
 | If you cannot use svn, just let me know and I will create a tar file for you. svn is so superior to a tar file that a
   tar file should be considered a last resort.
 | The code tree is very "bushy"; there are many directories of support routines, etc. but only a few directories
   involved with the customization and installation of the DART software. If you can compile and run ONE of the low-order
   models, you should be able to compile and run ANY of the low-order models. For this reason, we can focus on the Lorenz
-  \`63 model. Subsequently, the only directories with files to be modified to check the installation are:  *DART/mkmf*,
-   *DART/models/lorenz_63/work*, and  *DART/matlab* (but only for analysis).
+  \`63 model. Subsequently, the only directories with files to be modified to check the installation are:
+   ``DART/mkmf``,  ``DART/models/lorenz_63/work``, and  ``DART/matlab`` (but only for analysis).
 
 .. container::
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-Customizing the build scripts -- Overview.
-------------------------------------------
+.. _customizing_the_build_scripts_--_overview:
 
-DART executable programs are constructed using two tools: *make* and *mkmf*. The *make* utility is a very common piece
-of software that requires a user-defined input file that records dependencies between different source files. *make*
-then performs a hierarchy of actions when one or more of the source files is modified. The *mkmf* utility is a custom
-preprocessor that generates a *make* input file (named *Makefile*) and an example namelist
-*input.nml.\ program\ \_default* with the default values. The *Makefile* is designed specifically to work with
+Customizing the build scripts -- overview
+-----------------------------------------
+
+DART executable programs are constructed using two tools: ``make`` and ``mkmf``. The ``make`` utility is a very common
+piece of software that requires a user-defined input file that records dependencies between different source files.
+``make`` then performs a hierarchy of actions when one or more of the source files is modified. The ``mkmf`` utility is
+a custom preprocessor that generates a ``make`` input file (named ``Makefile``) and an example namelist
+*input.nml.\ program\ \_default* with the default values. The ``Makefile`` is designed specifically to work with
 object-oriented Fortran90 (and other languages) for systems like DART.
 
-*mkmf* requires two separate input files. The first is a \`template' file which specifies details of the commands
+``mkmf`` requires two separate input files. The first is a \`template' file which specifies details of the commands
 required for a specific Fortran90 compiler and may also contain pointers to directories containing pre-compiled
 utilities required by the DART system. **This template file will need to be modified to reflect your system**. The
 second input file is a \`path_names' file which includes a complete list of the locations (either relative or absolute)
 of all Fortran90 source files that are required to produce a particular DART program. Each 'path_names' file must
 contain a path for exactly one Fortran90 file containing a main program, but may contain any number of additional paths
-pointing to files containing Fortran90 modules. An *mkmf* command is executed which uses the 'path_names' file and the
-mkmf template file to produce a *Makefile* which is subsequently used by the standard *make* utility.
+pointing to files containing Fortran90 modules. An ``mkmf`` command is executed which uses the 'path_names' file and the
+mkmf template file to produce a ``Makefile`` which is subsequently used by the standard ``make`` utility.
 
 | Shell scripts that execute the mkmf command for all standard DART executables are provided as part of the standard
-  DART software. For more information on *mkmf* see `the FMS mkmf
+  DART software. For more information on ``mkmf`` see `the FMS mkmf
   description <http://www.gfdl.gov/fms/pubrel/j/atm_dycores/doc/dycore_public_manual.html#mkmf>`__.
-| One of the benefits of using *mkmf* is that it also creates an example namelist file for each program. The example
-  namelist is called *input.nml.\ program\ \_default*, so as not to clash with any exising *input.nml* that may exist in
-  that directory.
+| One of the benefits of using ``mkmf`` is that it also creates an example namelist file for each program. The example
+  namelist is called *input.nml.\ program\ \_default*, so as not to clash with any exising ``input.nml`` that may exist
+  in that directory.
 
-Building and Customizing the 'mkmf.template' file
+Building and customizing the 'mkmf.template' file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A series of templates for different compilers/architectures exists in the *DART/mkmf/* directory and have names with
+A series of templates for different compilers/architectures exists in the ``DART/mkmf/`` directory and have names with
 extensions that identify the compiler, the architecture, or both. This is how you inform the build process of the
-specifics of your system. Our intent is that you copy one that is similar to your system into *mkmf.template* and
+specifics of your system. Our intent is that you copy one that is similar to your system into ``mkmf.template`` and
 customize it. For the discussion that follows, knowledge of the contents of one of these templates
-(i.e. *mkmf.template.gfortran*) is needed. Note that only the LAST lines are shown here, the head of the file is just a
-big comment (worth reading, btw).
+(i.e. ``mkmf.template.gfortran``) is needed. Note that only the LAST lines are shown here, the head of the file is just
+a big comment (worth reading, btw).
 
 .. container:: routine
 
@@ -299,63 +326,64 @@ big comment (worth reading, btw).
    LIBS = -L${NETCDF}/lib -lnetcdf
    LDFLAGS = -I$(INCS) $(LIBS)
 
-| Essentially, each of the lines defines some part of the resulting *Makefile*. Since *make* is particularly good at
-  sorting out dependencies, the order of these lines really doesn't make any difference. The *FC = gfortran* line
+| Essentially, each of the lines defines some part of the resulting ``Makefile``. Since ``make`` is particularly good at
+  sorting out dependencies, the order of these lines really doesn't make any difference. The ``FC = gfortran`` line
   ultimately defines the Fortran90 compiler to use, etc. The lines which are most likely to need site-specific changes
-  start with *FFLAGS* and *NETCDF*, which indicate where to look for the netCDF F90 modules and the location of the
+  start with ``FFLAGS`` and ``NETCDF``, which indicate where to look for the netCDF F90 modules and the location of the
   netCDF library and modules.
-| If you have MPI installed on your system *MPIFC, MPILD* dictate which compiler will be used in that instance. If you
+| If you have MPI installed on your system ``MPIFC, MPILD`` dictate which compiler will be used in that instance. If you
   do not have MPI, these variables are of no consequence.
 
 ` <netCDF>`__
 
-NETCDF
+Netcdf
 ^^^^^^
 
-| Modifying the *NETCDF* value should be relatively straightforward.
-| Change the string to reflect the location of your netCDF installation containing *netcdf.mod* and *typesizes.mod*. The
-  value of the *NETCDF* variable will be used by the *FFLAGS, LIBS,* and *LDFLAGS* variables.
+| Modifying the ``NETCDF`` value should be relatively straightforward.
+| Change the string to reflect the location of your netCDF installation containing ``netcdf.mod`` and ``typesizes.mod``.
+  The value of the ``NETCDF`` variable will be used by the ``FFLAGS, LIBS,`` and ``LDFLAGS`` variables.
 
 ` <fflags>`__
 
-FFLAGS
+Fflags
 ^^^^^^
 
 Each compiler has different compile flags, so there is really no way to exhaustively cover this other than to say the
 templates as we supply them should work -- depending on the location of your netCDF. The low-order models can be
-compiled without a *-r8* switch, but the *bgrid_solo* model cannot.
+compiled without a ``-r8`` switch, but the ``bgrid_solo`` model cannot.
 
 ` <libs>`__
 
-LIBS
+Libs
 ^^^^
 
-The Fortran 90 interfaces may be part of the default *netcdf.a* library and *-lnetcdf* is all you need. However it is
-also common for the Fortran 90 interfaces to be built in a separate library named *netcdff.a*. In that case you will
-need *-lnetcdf* and also *-lnetcdff* on the **LIBS** line. This is a build-time option when the netCDF libraries are
-compiled so it varies from site to site.
+The Fortran 90 interfaces may be part of the default ``netcdf.a`` library and ``-lnetcdf`` is all you need. However it
+is also common for the Fortran 90 interfaces to be built in a separate library named ``netcdff.a``. In that case you
+will need ``-lnetcdf`` and also ``-lnetcdff`` on the **LIBS** line. This is a build-time option when the netCDF
+libraries are compiled so it varies from site to site.
 
-| 
 | 
 
 Customizing the 'path_names_*' file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Several *path_names_\** files are provided in the *work* directory for each specific model, in this case:
-*DART/models/lorenz_63/work*. Since each model comes with its own set of files, the *path_names_\** files need no
+Several ``path_names_*`` files are provided in the ``work`` directory for each specific model, in this case:
+``DART/models/lorenz_63/work``. Since each model comes with its own set of files, the ``path_names_*`` files need no
 customization.
 
 .. container::
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-Building the Lorenz_63 DART project.
-------------------------------------
+.. _building_the_lorenz_63_dart_project:
 
-DART executables are constructed in a *work* subdirectory under the directory containing code for the given model. From
-the top-level DART directory change to the L63 work directory and list the contents:
+Building the Lorenz_63 DART project
+-----------------------------------
+
+DART executables are constructed in a ``work`` subdirectory under the directory containing code for the given model.
+From the top-level DART directory change to the L63 work directory and list the contents:
 
 .. container:: unix
 
@@ -404,50 +432,50 @@ With the result:
    set_def.out
    workshop_setup.csh
 
-In all the *work* directories there will be a *quickbuild.csh* script that builds or rebuilds the executables. The
+In all the ``work`` directories there will be a ``quickbuild.csh`` script that builds or rebuilds the executables. The
 following instructions do this work by hand to introduce you to the individual steps, but in practice running quickbuild
 will be the normal way to do the compiles.
 
-There are nine *mkmf\_xxxxxx* files for the programs
+There are nine ``mkmf_``\ *xxxxxx* files for the programs
 
-#. *preprocess*,
-#. *create_obs_sequence*,
-#. *create_fixed_network_seq*,
-#. *perfect_model_obs*,
-#. *filter*,
-#. *wakeup_filter*,
-#. *obs_sequence_tool*, and
-#. *restart_file_tool*, and
-#. *obs_diag*,
+#. ``preprocess``,
+#. ``create_obs_sequence``,
+#. ``create_fixed_network_seq``,
+#. ``perfect_model_obs``,
+#. ``filter``,
+#. ``wakeup_filter``,
+#. ``obs_sequence_tool``, and
+#. ``restart_file_tool``, and
+#. ``obs_diag``,
 
-along with the corresponding *path_names\_xxxxxx* files. There are also files that contain initial conditions, netCDF
-output, and several observation sequence files, all of which will be discussed later. You can examine the contents of
-one of the *path_names\_xxxxxx* files, for instance *path_names_filter*, to see a list of the relative paths of all
-files that contain Fortran90 modules required for the program *filter* for the L63 model. All of these paths are
-relative to your *DART* directory. The first path is the main program (*filter.f90*) and is followed by all the
-Fortran90 modules used by this program (after preprocessing).
+along with the corresponding ``path_names_``\ *xxxxxx* files. There are also files that contain initial conditions,
+netCDF output, and several observation sequence files, all of which will be discussed later. You can examine the
+contents of one of the ``path_names_``\ *xxxxxx* files, for instance ``path_names_filter``, to see a list of the
+relative paths of all files that contain Fortran90 modules required for the program ``filter`` for the L63 model. All of
+these paths are relative to your ``DART`` directory. The first path is the main program (``filter.f90``) and is followed
+by all the Fortran90 modules used by this program (after preprocessing).
 
-The *mkmf\_xxxxxx* scripts are cryptic but should not need to be modified -- as long as you do not restructure the code
-tree (by moving directories, for example). The function of the *mkmf\_xxxxxx* script is to generate a *Makefile* and an
-*input.nml.\ program\ \_default* file. It does not do the compile; *make* does that:
+The ``mkmf_``\ *xxxxxx* scripts are cryptic but should not need to be modified -- as long as you do not restructure the
+code tree (by moving directories, for example). The function of the ``mkmf_``\ *xxxxxx* script is to generate a
+``Makefile`` and an *input.nml.\ program\ \_default* file. It does not do the compile; ``make`` does that:
 
 .. container:: unix
 
    csh mkmf_preprocess
    make
 
-| The first command generates an appropriate *Makefile* and the *input.nml.preprocess_default* file. The second command
-  results in the compilation of a series of Fortran90 modules which ultimately produces an executable file:
-  *preprocess*. Should you need to make any changes to the *DART/mkmf/mkmf.template*, you will need to regenerate the
-  *Makefile*.
-| The *preprocess* program actually builds source code to be used by all the remaining modules. It is **imperative** to
-  actually **run** *preprocess* before building the remaining executables. This is how the same code can assimilate
+| The first command generates an appropriate ``Makefile`` and the ``input.nml.preprocess_default`` file. The second
+  command results in the compilation of a series of Fortran90 modules which ultimately produces an executable file:
+  ``preprocess``. Should you need to make any changes to the ``DART/mkmf/mkmf.template``, you will need to regenerate
+  the ``Makefile``.
+| The ``preprocess`` program actually builds source code to be used by all the remaining modules. It is **imperative**
+  to actually **run** ``preprocess`` before building the remaining executables. This is how the same code can assimilate
   state vector 'observations' for the Lorenz_63 model and real radar reflectivities for WRF without needing to specify a
   set of radar operators for the Lorenz_63 model!
-| *preprocess* reads the *&preprocess_nml* namelist to determine what observations and operators to incorporate. For
-  this exercise, we will use the values in *input.nml*. *preprocess* is designed to abort if the files it is supposed to
-  build already exist. For this reason, it is necessary to remove a couple files (if they exist) before you run the
-  preprocessor. (The *quickbuild.csh* script will do this for you automatically.)
+| ``preprocess`` reads the ``&preprocess_nml`` namelist to determine what observations and operators to incorporate. For
+  this exercise, we will use the values in ``input.nml``. ``preprocess`` is designed to abort if the files it is
+  supposed to build already exist. For this reason, it is necessary to remove a couple files (if they exist) before you
+  run the preprocessor. (The ``quickbuild.csh`` script will do this for you automatically.)
 
 .. container:: unix
 
@@ -459,8 +487,8 @@ tree (by moving directories, for example). The function of the *mkmf\_xxxxxx* sc
       ls -l ../../../obs_def/obs_def_mod.f90
       ls -l ../../../obs_kind/obs_kind_mod.f90
 
-| This created *../../../obs_def/obs_def_mod.f90* from *../../../obs_kind/DEFAULT_obs_kind_mod.F90* and several other
-  modules. *../../../obs_kind/obs_kind_mod.f90* was created similarly. Now we can build the rest of the project.
+| This created ``../../../obs_def/obs_def_mod.f90`` from ``../../../obs_kind/DEFAULT_obs_kind_mod.F90`` and several
+  other modules. ``../../../obs_kind/obs_kind_mod.f90`` was created similarly. Now we can build the rest of the project.
 | A series of object files for each module compiled will also be left in the work directory, as some of these are
   undoubtedly needed by the build of the other DART components. You can proceed to create the other programs needed to
   work with L63 in DART as follows:
@@ -481,50 +509,50 @@ tree (by moving directories, for example). The function of the *mkmf\_xxxxxx* sc
 | 
 
 The result (hopefully) is that six executables now reside in your work directory. The most common problem is that the
-netCDF libraries and include files (particularly *typesizes.mod*) are not found. Edit the *DART/mkmf/mkmf.template*,
-recreate the *Makefile*, and try again.
+netCDF libraries and include files (particularly ``typesizes.mod``) are not found. Edit the ``DART/mkmf/mkmf.template``,
+recreate the ``Makefile``, and try again.
 
 program
 
 purpose
 
-*preprocess*
+``preprocess``
 
 creates custom source code for just the observation types of interest
 
-*create_obs_sequence*
+``create_obs_sequence``
 
 specify a (set) of observation characteristics taken by a particular (set of) instruments
 
-*create_fixed_network_seq*
+``create_fixed_network_seq``
 
 repeat a set of observations through time to simulate observing networks where observations are taken in the same
 location at regular (or irregular) intervals
 
-*perfect_model_obs*
+``perfect_model_obs``
 
 generate "true state" for synthetic observation experiments. Can also be used to 'spin up' a model by running it for a
 long time.
 
-*filter*
+``filter``
 
 does the assimilation
 
-*obs_diag*
+``obs_diag``
 
 creates observation-space diagnostic files to be explored by the Matlab® scripts.
 
-*obs_sequence_tool*
+``obs_sequence_tool``
 
 manipulates observation sequence files. It is not generally needed (particularly for low-order models) but can be used
 to combine observation sequences or convert from ASCII to binary or vice-versa. We will not cover its use in this
 document.
 
-*restart_file_tool*
+``restart_file_tool``
 
 manipulates the initial condition and restart files. We're going to ignore this one here.
 
-*wakeup_filter*
+``wakeup_filter``
 
 is only needed for MPI applications. We're starting at the beginning here, so we're going to ignore this one, too.
 
@@ -532,10 +560,12 @@ is only needed for MPI applications. We're starting at the beginning here, so we
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-Running Lorenz_63.
-------------------
+.. _running_lorenz_63:
+
+Running lorenz_63
+-----------------
 
 This initial sequence of exercises includes detailed instructions on how to work with the DART code and allows
 investigation of the basic features of one of the most famous dynamical systems, the 3-variable Lorenz-63 model. The
@@ -544,45 +574,48 @@ simple ensemble filter data assimilation system. To perform a synthetic observat
 model, the following steps must be performed (an overview of the process is given first, followed by detailed procedures
 for each step):
 
-Experiment Overview
+.. _experiment_overview:
+
+Experiment overview
 -------------------
 
-#. `Integrate the L63 model for a long time <#integrate>`__
+#. Integrate the L63 model for a long time
    starting from arbitrary initial conditions to generate a model state that lies on the attractor. The ergodic nature
    of the L63 system means a 'lengthy' integration always converges to some point on the computer's finite precision
    representation of the model's attractor.
-#. `Generate a set of ensemble initial conditions <#ensemblate>`__
+#. Generate a set of ensemble initial conditions
    from which to start an assimilation. Since L63 is ergodic, the ensemble members can be designed to look like random
    samples from the model's 'climatological distribution'. To generate an ensemble member, very small perturbations can
    be introduced to the state on the attractor generated by step 1. This perturbed state can then be integrated for a
    very long time until all memory of its initial condition can be viewed as forgotten. Any number of ensemble initial
    conditions can be generated by repeating this procedure.
-#. `Simulate a particular observing system <#simulate>`__
+#. Simulate a particular observing system
    by first creating an 'observation set definition' and then creating an 'observation sequence'. The 'observation set
    definition' describes the instrumental characteristics of the observations and the 'observation sequence' defines the
    temporal sequence of the observations.
-#. `Populate the 'observation sequence' with 'perfect' observations <#generate>`__
+#. Populate the 'observation sequence' with 'perfect' observations
    by integrating the model and using the information in the 'observation sequence' file to create simulated
    observations. This entails operating on the model state at the time of the observation with an appropriate forward
    operator (a function that operates on the model state vector to produce the expected value of the particular
    observation) and then adding a random sample from the observation error distribution specified in the observation set
    definition. At the same time, diagnostic output about the 'true' state trajectory can be created.
-#. `Assimilate the synthetic observations <#assimilate>`__
+#. Assimilate the synthetic observations
    by running the filter; diagnostic output is generated.
 
-1. Integrate the L63 model for a 'long' time.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Integrate the L63 model for a 'long' time
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*perfect_model_obs* integrates the model for all the times specified in the 'observation sequence definition' file. To
+``perfect_model_obs`` integrates the model for all the times specified in the 'observation sequence definition' file. To
 this end, begin by creating an 'observation sequence definition' file that spans a long time. Creating an 'observation
-sequence definition' file is a two-step procedure involving *create_obs_sequence* followed by
-*create_fixed_network_seq*. After they are both run, it is necessary to integrate the model with *perfect_model_obs*.
+sequence definition' file is a two-step procedure involving ``create_obs_sequence`` followed by
+``create_fixed_network_seq``. After they are both run, it is necessary to integrate the model with
+``perfect_model_obs``.
 
-1.1 Create an observation set definition.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1.1 Create an observation set definition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| *create_obs_sequence* creates an observation set definition, the time-independent part of an observation sequence. An
-  observation set definition file only contains the *location, type,* and *observational error characteristics*
+| ``create_obs_sequence`` creates an observation set definition, the time-independent part of an observation sequence.
+  An observation set definition file only contains the ``location, type,`` and ``observational error characteristics``
   (normally just the diagonal observational error variance) for a related set of observations. There are no actual
   observations, nor are there any times associated with the definition. For spin-up, we are only interested in
   integrating the L63 model, not in generating any particular synthetic observations. Begin by creating a minimal
@@ -597,9 +630,9 @@ sequence definition' file is a two-step procedure involving *create_obs_sequence
   the most elementary form of synthetic observations are called 'identity' observations. These observations are
   generated simply by adding a random sample from a specified observational error distribution directly to the value of
   one of the state variables. This defines the observation as being an identity observation of the first state variable
-  in the L63 model. The program will respond by terminating after generating a file (generally named *set_def.out*) that
-  defines the single identity observation of the first state variable of the L63 model. The following is a screenshot
-  (much of the verbose logging has been left off for clarity), the user input looks *like this*.
+  in the L63 model. The program will respond by terminating after generating a file (generally named ``set_def.out``)
+  that defines the single identity observation of the first state variable of the L63 model. The following is a
+  screenshot (much of the verbose logging has been left off for clarity), the user input looks *like this*.
 
 .. container:: unix
 
@@ -685,11 +718,11 @@ sequence definition' file is a two-step procedure involving *create_obs_sequence
        write_obs_seq  opening formatted file set_def.out
        write_obs_seq  closed file set_def.out
 
-1.2 Create an observation sequence definition.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1.2 Create an observation sequence definition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| *create_fixed_network_seq* creates an 'observation sequence definition' by extending the 'observation set definition'
-  with the temporal attributes of the observations.
+| ``create_fixed_network_seq`` creates an 'observation sequence definition' by extending the 'observation set
+  definition' with the temporal attributes of the observations.
 | The first input is the name of the file created in the previous step, i.e. the name of the observation set definition
   that you've just created. It is possible to create sequences in which the observation sets are observed at regular
   intervals or irregularly in time. Here, all we need is a sequence that takes observations over a long period of time -
@@ -698,7 +731,7 @@ sequence definition' file is a two-step procedure involving *create_obs_sequence
   day for 1000 days, we create an observation sequence definition spanning 24000 'model' timesteps; sufficient to
   spin-up the model onto the attractor. Finally, enter a name for the 'observation sequence definition' file. Note
   again: there are no observation values present in this file. Just an observation type, location, time and the error
-  characteristics. We are going to populate the observation sequence with the *perfect_model_obs* program.
+  characteristics. We are going to populate the observation sequence with the ``perfect_model_obs`` program.
 
 .. container:: unix
 
@@ -745,16 +778,17 @@ sequence definition' file is a two-step procedure involving *create_obs_sequence
        write_obs_seq  opening formatted file obs_seq.in
        write_obs_seq closed file obs_seq.in
 
-1.3 Initialize the model onto the attractor.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1.3 Initialize the model onto the attractor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| *perfect_model_obs* can now advance the arbitrary initial state for 24,000 timesteps to move it onto the attractor.
-| *perfect_model_obs* uses the Fortran90 namelist input mechanism instead of (admittedly gory, but temporary)
-  interactive input. All of the DART software expects the namelists to found in a file called *input.nml*. When you
-  built the executable, an example namelist was created *input.nml.perfect_model_obs_default* that contains all of the
+| ``perfect_model_obs`` can now advance the arbitrary initial state for 24,000 timesteps to move it onto the attractor.
+| ``perfect_model_obs`` uses the Fortran90 namelist input mechanism instead of (admittedly gory, but temporary)
+  interactive input. All of the DART software expects the namelists to found in a file called ``input.nml``. When you
+  built the executable, an example namelist was created ``input.nml.perfect_model_obs_default`` that contains all of the
   namelist input for the executable. If you followed the example, each namelist was saved to a unique name. We must now
-  rename and edit the namelist file for *perfect_model_obs*. Copy *input.nml.perfect_model_obs_default* to *input.nml*
-  and edit it to look like the following: (just worry about the highlighted stuff - and whitespace doesn't matter)
+  rename and edit the namelist file for ``perfect_model_obs``. Copy ``input.nml.perfect_model_obs_default`` to
+  ``input.nml`` and edit it to look like the following: (just worry about the highlighted stuff - and whitespace doesn't
+  matter)
 
 .. container:: unix
 
@@ -831,43 +865,44 @@ accompanying the source code for the module.
 perfect_model_obs_nml
 ~~~~~~~~~~~~~~~~~~~~~
 
-+-------------------------+-------------------------------------------------------------------------------------------+
-| namelist variable       | description                                                                               |
-+=========================+===========================================================================================+
-| *start_from_restart*    | When set to 'false', *perfect_model_obs* generates an arbitrary initial condition (which  |
-|                         | cannot be guaranteed to be on the L63 attractor). When set to 'true', a restart file      |
-|                         | (specified by *restart_in_file_name*) is read.                                            |
-+-------------------------+-------------------------------------------------------------------------------------------+
-| *output_restart*        | When set to 'true', *perfect_model_obs* will record the model state at the end of this    |
-|                         | integration in the file named by *restart_out_file_name*.                                 |
-+-------------------------+-------------------------------------------------------------------------------------------+
-| *async*                 | The lorenz_63 model is advanced through a subroutine call - indicated by async = 0. There |
-|                         | is no other valid value for this model.                                                   |
-+-------------------------+-------------------------------------------------------------------------------------------+
-| *init_time\_xxxx*       | the start time of the integration.                                                        |
-+-------------------------+-------------------------------------------------------------------------------------------+
-| *first_obs\_xxxx*       | the time of the first observation of interest. While not needed in this example, you can  |
-|                         | skip observations if you want to. A value of -1 indicates to start at the beginning.      |
-+-------------------------+-------------------------------------------------------------------------------------------+
-| *last_obs\_xxxx*        | the time of the last observation of interest. While not needed in this example, you do    |
-|                         | not have to assimilate all the way to the end of the observation sequence file. A value   |
-|                         | of -1 indicates to use all the observations.                                              |
-+-------------------------+-------------------------------------------------------------------------------------------+
-| *output_interval*       | interval at which to save the model state (in True_State.nc).                             |
-+-------------------------+-------------------------------------------------------------------------------------------+
-| *restart_in_file_name*  | is ignored when 'start_from_restart' is 'false'.                                          |
-+-------------------------+-------------------------------------------------------------------------------------------+
-| *restart_out_file_name* | if *output_restart* is 'true', this specifies the name of the file containing the model   |
-|                         | state at the end of the integration.                                                      |
-+-------------------------+-------------------------------------------------------------------------------------------+
-| *obs_seq_in_file_name*  | specifies the file name that results from running *create_fixed_network_seq*, i.e. the    |
-|                         | 'observation sequence definition' file.                                                   |
-+-------------------------+-------------------------------------------------------------------------------------------+
-| *obs_seq_out_file_name* | specifies the output file name containing the 'observation sequence', finally populated   |
-|                         | with (perfect?) 'observations'.                                                           |
-+-------------------------+-------------------------------------------------------------------------------------------+
-| *advance_ens_command*   | specifies the shell commands or script to execute when async /= 0.                        |
-+-------------------------+-------------------------------------------------------------------------------------------+
++---------------------------+-----------------------------------------------------------------------------------------+
+| namelist variable         | description                                                                             |
++===========================+=========================================================================================+
+| ``start_from_restart``    | When set to 'false', ``perfect_model_obs`` generates an arbitrary initial condition     |
+|                           | (which cannot be guaranteed to be on the L63 attractor). When set to 'true', a restart  |
+|                           | file (specified by ``restart_in_file_name``) is read.                                   |
++---------------------------+-----------------------------------------------------------------------------------------+
+| ``output_restart``        | When set to 'true', ``perfect_model_obs`` will record the model state at the end of     |
+|                           | this integration in the file named by ``restart_out_file_name``.                        |
++---------------------------+-----------------------------------------------------------------------------------------+
+| ``async``                 | The lorenz_63 model is advanced through a subroutine call - indicated by async = 0.     |
+|                           | There is no other valid value for this model.                                           |
++---------------------------+-----------------------------------------------------------------------------------------+
+| ``init_time_``\ *xxxx*    | the start time of the integration.                                                      |
++---------------------------+-----------------------------------------------------------------------------------------+
+| ``first_obs_``\ *xxxx*    | the time of the first observation of interest. While not needed in this example, you    |
+|                           | can skip observations if you want to. A value of -1 indicates to start at the           |
+|                           | beginning.                                                                              |
++---------------------------+-----------------------------------------------------------------------------------------+
+| ``last_obs_``\ *xxxx*     | the time of the last observation of interest. While not needed in this example, you do  |
+|                           | not have to assimilate all the way to the end of the observation sequence file. A value |
+|                           | of -1 indicates to use all the observations.                                            |
++---------------------------+-----------------------------------------------------------------------------------------+
+| ``output_interval``       | interval at which to save the model state (in True_State.nc).                           |
++---------------------------+-----------------------------------------------------------------------------------------+
+| ``restart_in_file_name``  | is ignored when 'start_from_restart' is 'false'.                                        |
++---------------------------+-----------------------------------------------------------------------------------------+
+| ``restart_out_file_name`` | if ``output_restart`` is 'true', this specifies the name of the file containing the     |
+|                           | model state at the end of the integration.                                              |
++---------------------------+-----------------------------------------------------------------------------------------+
+| ``obs_seq_in_file_name``  | specifies the file name that results from running ``create_fixed_network_seq``, i.e.    |
+|                           | the 'observation sequence definition' file.                                             |
++---------------------------+-----------------------------------------------------------------------------------------+
+| ``obs_seq_out_file_name`` | specifies the output file name containing the 'observation sequence', finally populated |
+|                           | with (perfect?) 'observations'.                                                         |
++---------------------------+-----------------------------------------------------------------------------------------+
+| ``advance_ens_command``   | specifies the shell commands or script to execute when async /= 0.                      |
++---------------------------+-----------------------------------------------------------------------------------------+
 
 utilities_nml
 ~~~~~~~~~~~~~
@@ -875,31 +910,31 @@ utilities_nml
 +-------------------+-------------------------------------------------------------------------------------------------+
 | namelist variable | description                                                                                     |
 +===================+=================================================================================================+
-| *TERMLEVEL*       | When set to '1' the programs terminate when a 'warning' is generated. When set to '2' the       |
+| ``TERMLEVEL``     | When set to '1' the programs terminate when a 'warning' is generated. When set to '2' the       |
 |                   | programs terminate only with 'fatal' errors.                                                    |
 +-------------------+-------------------------------------------------------------------------------------------------+
-| *logfilename*     | Run-time diagnostics are saved to this file. This namelist is used by all programs, so the file |
+| ``logfilename``   | Run-time diagnostics are saved to this file. This namelist is used by all programs, so the file |
 |                   | is opened in APPEND mode. Subsequent executions cause this file to grow.                        |
 +-------------------+-------------------------------------------------------------------------------------------------+
 
-Executing *perfect_model_obs* will integrate the model 24,000 steps and output the resulting state in the file
-*perfect_restart*. Interested parties can check the spinup in the *True_State.nc* file.
+Executing ``perfect_model_obs`` will integrate the model 24,000 steps and output the resulting state in the file
+``perfect_restart``. Interested parties can check the spinup in the ``True_State.nc`` file.
 
 .. container:: unix
 
    ./perfect_model_obs
 
-2. Generate a set of ensemble initial conditions.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2. Generate a set of ensemble initial conditions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 | The set of initial conditions for a 'perfect model' experiment is created in several steps. 1) Starting from the
-  spun-up state of the model (available in *perfect_restart*), run *perfect_model_obs* to generate the 'true state' of
-  the experiment and a corresponding set of observations. 2) Feed the same initial spun-up state and resulting
-  observations into *filter*.
-| The first step is achieved by changing a perfect_model_obs namelist parameter, copying *perfect_restart* to
-  *perfect_ics*, and rerunning *perfect_model_obs*. This execution of *perfect_model_obs* will advance the model state
-  from the end of the first 24,000 steps to the end of an additional 24,000 steps and place the final state in
-  *perfect_restart*. The rest of the namelists in *input.nml* should remain unchanged.
+  spun-up state of the model (available in ``perfect_restart``), run ``perfect_model_obs`` to generate the 'true state'
+  of the experiment and a corresponding set of observations. 2) Feed the same initial spun-up state and resulting
+  observations into ``filter``.
+| The first step is achieved by changing a perfect_model_obs namelist parameter, copying ``perfect_restart`` to
+  ``perfect_ics``, and rerunning ``perfect_model_obs``. This execution of ``perfect_model_obs`` will advance the model
+  state from the end of the first 24,000 steps to the end of an additional 24,000 steps and place the final state in
+  ``perfect_restart``. The rest of the namelists in ``input.nml`` should remain unchanged.
 
 .. container:: routineIndent1
 
@@ -929,24 +964,25 @@ Executing *perfect_model_obs* will integrate the model 24,000 steps and output t
    cp perfect_restart perfect_ics
    ./perfect_model_obs
 
-A *True_State.nc* file is also created. It contains the 'true' state of the integration.
+A ``True_State.nc`` file is also created. It contains the 'true' state of the integration.
 
 Generating the ensemble
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-This step (#2 from above) is done with the program *filter*, which also uses the Fortran90 namelist mechanism for input.
-It is now necessary to copy the *input.nml.filter_default* namelist to *input.nml*.
+This step (#2 from above) is done with the program ``filter``, which also uses the Fortran90 namelist mechanism for
+input. It is now necessary to copy the ``input.nml.filter_default`` namelist to ``input.nml``.
 
 .. container:: indent1
 
    cp input.nml.filter_default input.nml
 
 | You may also build one master namelist containting all the required namelists. Having unused namelists in the
-  *input.nml* does not hurt anything, and it has been so useful to be reminded of what is possible that we made it an
+  ``input.nml`` does not hurt anything, and it has been so useful to be reminded of what is possible that we made it an
   error to NOT have a required namelist. Take a peek at any of the other models for examples of a "fully qualified"
-  *input.nml*.
-| *HINT:* if you used *svn* to get the project, try 'svn revert input.nml' to restore the namelist that was distributed
-  with the project - which DOES have all the namelist blocks. Just be sure the values match the examples here.
+  ``input.nml``.
+| *HINT:* if you used ``svn`` to get the project, try 'svn revert input.nml' to restore the namelist that was
+  distributed with the project - which DOES have all the namelist blocks. Just be sure the values match the examples
+  here.
 
 .. container:: routineIndent1
 
@@ -1043,39 +1079,40 @@ It is now necessary to copy the *input.nml.filter_default* namelist to *input.nm
          TERMLEVEL = 1,
          logfilename = 'dart_log.out'  /
 
-Only the non-obvious(?) entries for *filter_nml* will be discussed.
+Only the non-obvious(?) entries for ``filter_nml`` will be discussed.
 
-+----------------------------+----------------------------------------------------------------------------------------+
-| namelist variable          | description                                                                            |
-+============================+========================================================================================+
-| *ens_size*                 | Number of ensemble members. 100 is sufficient for most of the L63 exercises.           |
-+----------------------------+----------------------------------------------------------------------------------------+
-| *start_from_restart*       | when '.false.', *filter* will generate its own ensemble of initial conditions. It is   |
-|                            | important to note that the filter still makes use of the file named by                 |
-|                            | *restart_in_file_name* (i.e. *perfect_ics*) by randomly perturbing these state         |
-|                            | variables.                                                                             |
-+----------------------------+----------------------------------------------------------------------------------------+
-| *num_output_state_members* | specifies the number of state vectors contained in the netCDF diagnostic files. May be |
-|                            | a value from 0 to *ens_size*.                                                          |
-+----------------------------+----------------------------------------------------------------------------------------+
-| *num_output_obs_members*   | specifies the number of 'observations' (derived from applying the forward operator to  |
-|                            | the state vector) are contained in the *obs_seq.final* file. May be a value from 0 to  |
-|                            | *ens_size*                                                                             |
-+----------------------------+----------------------------------------------------------------------------------------+
-| *inf_flavor*               | A value of 0 results in no inflation.(spin-up)                                         |
-+----------------------------+----------------------------------------------------------------------------------------+
++------------------------------+--------------------------------------------------------------------------------------+
+| namelist variable            | description                                                                          |
++==============================+======================================================================================+
+| ``ens_size``                 | Number of ensemble members. 100 is sufficient for most of the L63 exercises.         |
++------------------------------+--------------------------------------------------------------------------------------+
+| ``start_from_restart``       | when '.false.', ``filter`` will generate its own ensemble of initial conditions. It  |
+|                              | is important to note that the filter still makes use of the file named by            |
+|                              | ``restart_in_file_name`` (i.e. ``perfect_ics``) by randomly perturbing these state   |
+|                              | variables.                                                                           |
++------------------------------+--------------------------------------------------------------------------------------+
+| ``num_output_state_members`` | specifies the number of state vectors contained in the netCDF diagnostic files. May  |
+|                              | be a value from 0 to ``ens_size``.                                                   |
++------------------------------+--------------------------------------------------------------------------------------+
+| ``num_output_obs_members``   | specifies the number of 'observations' (derived from applying the forward operator   |
+|                              | to the state vector) are contained in the ``obs_seq.final`` file. May be a value     |
+|                              | from 0 to ``ens_size``                                                               |
++------------------------------+--------------------------------------------------------------------------------------+
+| ``inf_flavor``               | A value of 0 results in no inflation.(spin-up)                                       |
++------------------------------+--------------------------------------------------------------------------------------+
 
-The filter is told to generate its own ensemble initial conditions since *start_from_restart* is '.false.'. However, it
-is important to note that the filter still makes use of *perfect_ics* which is set to be the *restart_in_file_name*.
-This is the model state generated from the first 24,000 step model integration by *perfect_model_obs*. *Filter*
-generates its ensemble initial conditions by randomly perturbing the state variables of this state.
+The filter is told to generate its own ensemble initial conditions since ``start_from_restart`` is '.false.'. However,
+it is important to note that the filter still makes use of ``perfect_ics`` which is set to be the
+``restart_in_file_name``. This is the model state generated from the first 24,000 step model integration by
+``perfect_model_obs``. ``Filter`` generates its ensemble initial conditions by randomly perturbing the state variables
+of this state.
 
-*num_output_state_members* are '.true.' so the state vector is output at every time for which there are observations
-(once a day here). *Posterior_Diag.nc* and *Prior_Diag.nc* then contain values for 20 ensemble members once a day. Once
-the namelist is set, execute *filter* to integrate the ensemble forward for 24,000 steps with the final ensemble state
-written to the *filter_restart*. Copy the *perfect_model_obs* restart file *perfect_restart* (the \`true state') to
-*perfect_ics*, and the *filter* restart file *filter_restart* to *filter_ics* so that future assimilation experiments
-can be initialized from these spun-up states.
+``num_output_state_members`` are '.true.' so the state vector is output at every time for which there are observations
+(once a day here). ``Posterior_Diag.nc`` and ``Prior_Diag.nc`` then contain values for 20 ensemble members once a day.
+Once the namelist is set, execute ``filter`` to integrate the ensemble forward for 24,000 steps with the final ensemble
+state written to the ``filter_restart``. Copy the ``perfect_model_obs`` restart file ``perfect_restart`` (the \`true
+state') to ``perfect_ics``, and the ``filter`` restart file ``filter_restart`` to ``filter_ics`` so that future
+assimilation experiments can be initialized from these spun-up states.
 
 .. container:: unix
 
@@ -1085,86 +1122,38 @@ can be initialized from these spun-up states.
       cp perfect_restart perfect_ics
       cp filter_restart filter_ics
 
-The spin-up of the ensemble can be viewed by examining the output in the netCDF files *True_State.nc* generated by
-*perfect_model_obs* and *Posterior_Diag.nc* and *Prior_Diag.nc* generated by *filter*. To do this, see the detailed
-discussion of matlab diagnostics in Appendix I.
+The spin-up of the ensemble can be viewed by examining the output in the netCDF files ``True_State.nc`` generated by
+``perfect_model_obs`` and ``Posterior_Diag.nc`` and ``Prior_Diag.nc`` generated by ``filter``. To do this, see the
+detailed discussion of matlab diagnostics in Appendix I.
 
-3. Simulate a particular observing system.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3. Simulate a particular observing system
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Begin by using *create_obs_sequence* to generate an observation set in which each of the 3 state variables of L63 is
+Begin by using ``create_obs_sequence`` to generate an observation set in which each of the 3 state variables of L63 is
 observed with an observational error variance of 1.0 for each observation. To do this, use the following input sequence
 (the text including and after # is a comment and does not need to be entered):
 
-*4*
+============= ===========================================================
+*4*           # upper bound on num of observations in sequence
+*0*           # number of copies of data (0 for just a definition)
+*0*           # number of quality control values per field (0 or greater)
+*0*           # -1 to exit/end observation definitions
+*-1*          # observe state variable 1
+*0   0*       # time -- days, seconds
+*1.0*         # observational variance
+*0*           # -1 to exit/end observation definitions
+*-2*          # observe state variable 2
+*0   0*       # time -- days, seconds
+*1.0*         # observational variance
+*0*           # -1 to exit/end observation definitions
+*-3*          # observe state variable 3
+*0   0*       # time -- days, seconds
+*1.0*         # observational variance
+*-1*          # -1 to exit/end observation definitions
+*set_def.out* # Output file name
+============= ===========================================================
 
-# upper bound on num of observations in sequence
-
-*0*
-
-# number of copies of data (0 for just a definition)
-
-*0*
-
-# number of quality control values per field (0 or greater)
-
-*0*
-
-# -1 to exit/end observation definitions
-
-*-1*
-
-# observe state variable 1
-
-*0   0*
-
-# time -- days, seconds
-
-*1.0*
-
-# observational variance
-
-*0*
-
-# -1 to exit/end observation definitions
-
-*-2*
-
-# observe state variable 2
-
-*0   0*
-
-# time -- days, seconds
-
-*1.0*
-
-# observational variance
-
-*0*
-
-# -1 to exit/end observation definitions
-
-*-3*
-
-# observe state variable 3
-
-*0   0*
-
-# time -- days, seconds
-
-*1.0*
-
-# observational variance
-
-*-1*
-
-# -1 to exit/end observation definitions
-
-*set_def.out*
-
-# Output file name
-
-Now, generate an observation sequence definition by running *create_fixed_network_seq* with the following input
+Now, generate an observation sequence definition by running ``create_fixed_network_seq`` with the following input
 sequence:
 
 ============= ===============================================================
@@ -1176,10 +1165,10 @@ sequence:
 *obs_seq.in*  # Output file for observation sequence definition
 ============= ===============================================================
 
-4. Generate a particular observing system and true state.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4. Generate a particular observing system and true state
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An observation sequence file is now generated by running *perfect_model_obs* with the namelist values (unchanged from
+An observation sequence file is now generated by running ``perfect_model_obs`` with the namelist values (unchanged from
 step 2):
 
 .. container:: routineIndent1
@@ -1203,13 +1192,13 @@ step 2):
          obs_seq_out_file_name = "obs_seq.out",
          adv_ens_command       = "./advance_ens.csh"  /
 
-This integrates the model starting from the state in *perfect_ics* for 1000 12-hour intervals outputting synthetic
-observations of the three state variables every 12 hours and producing a netCDF diagnostic file, *True_State.nc*.
+This integrates the model starting from the state in ``perfect_ics`` for 1000 12-hour intervals outputting synthetic
+observations of the three state variables every 12 hours and producing a netCDF diagnostic file, ``True_State.nc``.
 
-5. Filtering.
-~~~~~~~~~~~~~
+5. Filtering
+~~~~~~~~~~~~
 
-Finally, *filter* can be run with its namelist set to:
+Finally, ``filter`` can be run with its namelist set to:
 
 .. container:: routineIndent1
 
@@ -1255,48 +1244,52 @@ Finally, *filter* can be run with its namelist set to:
          inf_sd_lower_bound       = 0.0,                     0.0
        /
 
-*filter* produces two output diagnostic files, *Prior_Diag.nc* which contains values of the ensemble mean, ensemble
-spread, and ensemble members for 12- hour lead forecasts before assimilation is applied and *Posterior_Diag.nc* which
+``filter`` produces two output diagnostic files, ``Prior_Diag.nc`` which contains values of the ensemble mean, ensemble
+spread, and ensemble members for 12- hour lead forecasts before assimilation is applied and ``Posterior_Diag.nc`` which
 contains similar data for after the assimilation is applied (sometimes referred to as analysis values).
 
-Now try applying all of the matlab diagnostic functions described in `the Matlab® Diagnostics section <#matlab>`__.
+Now try applying all of the matlab diagnostic functions described in the Matlab® Diagnostics section.
 
 .. container::
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-The Tutorial.
--------------
+.. _the_tutorial:
 
-The *DART/tutorial* documents are an excellent way to kick the tires on DART and learn about ensemble data assimilation.
-If you have gotten this far, you can run anything in the tutorial.
+The tutorial
+------------
+
+The ``DART/tutorial`` documents are an excellent way to kick the tires on DART and learn about ensemble data
+assimilation. If you have gotten this far, you can run anything in the tutorial.
 
 .. container::
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-Matlab® Diagnostics
+.. _matlab®_diagnostics:
+
+Matlab® diagnostics
 -------------------
 
 The output files are netCDF files, and may be examined with many different software packages. We happen to use Matlab®,
 and provide our diagnostic scripts in the hopes that they are useful.
 
-The diagnostic scripts and underlying functions reside in two places: *DART/diagnostics/matlab* and *DART/matlab*. They
-are reliant on the public-domain `netcdf
+The diagnostic scripts and underlying functions reside in two places: ``DART/diagnostics/matlab`` and ``DART/matlab``.
+They are reliant on the public-domain `netcdf
 toolbox <http://woodshole.er.usgs.gov/staffpages/cdenham/public_html/MexCDF/nc4ml5.html>`__ from
-*http://woodshole.er.usgs.gov/staffpages/cdenham/public_html/MexCDF/nc4ml5.html* as well as the public-domain `CSIRO
+``http://woodshole.er.usgs.gov/staffpages/cdenham/public_html/MexCDF/nc4ml5.html`` as well as the public-domain `CSIRO
 matlab/netCDF interface <http://www.marine.csiro.au/sw/matlab-netcdf.html>`__ from
-*http://www.marine.csiro.au/sw/matlab-netcdf.html*. If you do not have them installed on your system and want to use
+``http://www.marine.csiro.au/sw/matlab-netcdf.html``. If you do not have them installed on your system and want to use
 Matlab to peruse netCDF, you must follow their installation instructions. The 'interested reader' may want to look at
-the *DART/matlab/startup.m* file I use on my system. If you put it in your *$HOME/matlab* directory, it is invoked every
-time you start up Matlab.
+the ``DART/matlab/startup.m`` file I use on my system. If you put it in your ``$HOME/matlab`` directory, it is invoked
+every time you start up Matlab.
 
-| Once you can access the *getnc* function from within Matlab, you can use our diagnostic scripts. It is necessary to
-  prepend the location of the *DART/matlab* scripts to the *matlabpath*. Keep in mind the location of the netcdf
+| Once you can access the ``getnc`` function from within Matlab, you can use our diagnostic scripts. It is necessary to
+  prepend the location of the ``DART/matlab`` scripts to the ``matlabpath``. Keep in mind the location of the netcdf
   operators on your system WILL be different from ours ... and that's OK.
 
 .. container:: unix
@@ -1350,40 +1343,42 @@ time you start up Matlab.
 And the matlab graphics window will display the spread of the ensemble error for each state variable. The scripts are
 designed to do the "obvious" thing for the low-order models and will prompt for additional information if needed. The
 philosophy of these is that anything that starts with a lower-case *plot\_\ some_specific_task* is intended to be
-user-callable and should handle any of the models. All the other routines in *DART/matlab* are called BY the high-level
-routines.
+user-callable and should handle any of the models. All the other routines in ``DART/matlab`` are called BY the
+high-level routines.
 
-+-----------------------------+---------------------------------------------------------------------------------------+
-| Matlab script               | description                                                                           |
-+=============================+=======================================================================================+
-| *plot_bins*                 | plots ensemble rank histograms                                                        |
-+-----------------------------+---------------------------------------------------------------------------------------+
-| *plot_correl*               | Plots space-time series of correlation between a given variable at a given time and   |
-|                             | other variables at all times in a n ensemble time sequence.                           |
-+-----------------------------+---------------------------------------------------------------------------------------+
-| *plot_ens_err_spread*       | Plots summary plots of the ensemble error and ensemble spread. Interactively queries  |
-|                             | for the needed information. Since different models potentially need different pieces  |
-|                             | of information ... the model types are determined and additional user input may be    |
-|                             | queried.                                                                              |
-+-----------------------------+---------------------------------------------------------------------------------------+
-| *plot_ens_mean_time_series* | Queries for the state variables to plot.                                              |
-+-----------------------------+---------------------------------------------------------------------------------------+
-| *plot_ens_time_series*      | Queries for the state variables to plot.                                              |
-+-----------------------------+---------------------------------------------------------------------------------------+
-| *plot_phase_space*          | Plots a 3D trajectory of (3 state variables of) a single ensemble member. Additional  |
-|                             | trajectories may be superimposed.                                                     |
-+-----------------------------+---------------------------------------------------------------------------------------+
-| *plot_total_err*            | Summary plots of global error and spread.                                             |
-+-----------------------------+---------------------------------------------------------------------------------------+
-| *plot_var_var_correl*       | Plots time series of correlation between a given variable at a given time and another |
-|                             | variable at all times in an ensemble time sequence.                                   |
-+-----------------------------+---------------------------------------------------------------------------------------+
++-------------------------------+-------------------------------------------------------------------------------------+
+| Matlab script                 | description                                                                         |
++===============================+=====================================================================================+
+| ``plot_bins``                 | plots ensemble rank histograms                                                      |
++-------------------------------+-------------------------------------------------------------------------------------+
+| ``plot_correl``               | Plots space-time series of correlation between a given variable at a given time and |
+|                               | other variables at all times in a n ensemble time sequence.                         |
++-------------------------------+-------------------------------------------------------------------------------------+
+| ``plot_ens_err_spread``       | Plots summary plots of the ensemble error and ensemble spread. Interactively        |
+|                               | queries for the needed information. Since different models potentially need         |
+|                               | different pieces of information ... the model types are determined and additional   |
+|                               | user input may be queried.                                                          |
++-------------------------------+-------------------------------------------------------------------------------------+
+| ``plot_ens_mean_time_series`` | Queries for the state variables to plot.                                            |
++-------------------------------+-------------------------------------------------------------------------------------+
+| ``plot_ens_time_series``      | Queries for the state variables to plot.                                            |
++-------------------------------+-------------------------------------------------------------------------------------+
+| ``plot_phase_space``          | Plots a 3D trajectory of (3 state variables of) a single ensemble member.           |
+|                               | Additional trajectories may be superimposed.                                        |
++-------------------------------+-------------------------------------------------------------------------------------+
+| ``plot_total_err``            | Summary plots of global error and spread.                                           |
++-------------------------------+-------------------------------------------------------------------------------------+
+| ``plot_var_var_correl``       | Plots time series of correlation between a given variable at a given time and       |
+|                               | another variable at all times in an ensemble time sequence.                         |
++-------------------------------+-------------------------------------------------------------------------------------+
 
 .. container::
 
    --------------
 
-   `[top] <#>`__
+   [top]
+
+.. _bias,_filter_divergence_and_covariance_inflation_(with_the_l63_model):
 
 Bias, filter divergence and covariance inflation (with the L63 model)
 ---------------------------------------------------------------------
@@ -1398,31 +1393,33 @@ can wander entirely away from the truth, confident that it is correct in its est
 ensemble estimates may not diverge entirely from the truth but may still be too confident in their estimate. The result
 is that the truth ends up being farther away from the filter estimates than the spread of the filter ensemble would
 estimate. This type of behavior is commonly detected using rank histograms (also known as Talagrand diagrams). You can
-see the rank histograms for the L63 initial assimilation by using the matlab script *plot_bins*.
+see the rank histograms for the L63 initial assimilation by using the matlab script ``plot_bins``.
 
 A simple, but surprisingly effective way of dealing with filter divergence is known as covariance inflation. In this
 method, the prior ensemble estimate of the state is expanded around its mean by a constant factor, effectively
-increasing the prior estimate of uncertainty while leaving the prior mean estimate unchanged. The program *filter* has a
-group of namelist parameters that controls the application of covariance inflation. For a simple set of inflation
-values, you will set *inf_flavor*, and *inf_initial*. These values come in pairs; the first value controls inflation of
-the prior ensemble values, while the second controls inflation of the posterior values. Up to this point *inf_flavor*
-has been set to 0 indicating that the prior ensemble is left unchanged. Setting the first value of *inf_flavor* to 3
-enables one variety of inflation. Set *inf_initial* to different values (try 1.05 and 1.10 and other values). In each
-case, use the diagnostic matlab tools to examine the resulting changes to the error, the ensemble spread (via rank
-histogram bins, too), etc. What kind of relation between spread and error is seen in this model?
+increasing the prior estimate of uncertainty while leaving the prior mean estimate unchanged. The program ``filter`` has
+a group of namelist parameters that controls the application of covariance inflation. For a simple set of inflation
+values, you will set ``inf_flavor``, and ``inf_initial``. These values come in pairs; the first value controls inflation
+of the prior ensemble values, while the second controls inflation of the posterior values. Up to this point
+``inf_flavor`` has been set to 0 indicating that the prior ensemble is left unchanged. Setting the first value of
+``inf_flavor`` to 3 enables one variety of inflation. Set ``inf_initial`` to different values (try 1.05 and 1.10 and
+other values). In each case, use the diagnostic matlab tools to examine the resulting changes to the error, the ensemble
+spread (via rank histogram bins, too), etc. What kind of relation between spread and error is seen in this model?
 
 There are many more options for inflation, including spatially and temporarily varying values, with and without damping.
 See the discussion of all inflation-related namelist items
 `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/filter/filter.html#Inflation>`__ or `local
-file <../../../filter/filter.html#Inflation>`__.
+file </filter/filter.html#Inflation>`__.
 
 .. container::
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-Synthetic Observations
+.. _synthetic_observations:
+
+Synthetic observations
 ----------------------
 
 Synthetic observations are generated from a \`perfect' model integration, which is often referred to as the \`truth' or
@@ -1440,16 +1437,17 @@ capabilities of the ensemble filters with synthetic observations.
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-Notes for Current Users
+.. _notes_for_current_users:
+
+Notes for current users
 -----------------------
 
 If you have been updating from the head of the DART subversion repository (the "trunk") you will not notice much
 difference between that and the Kodiak release. If you are still running the Jamaica release there are many new models,
 new observation types, capabilities in the assimilation tools, new diagnostics, and new utilities. There is a very short
-list of non-backwards compatible changes (`see below <#Nonbackward>`__), and then a long list of new options and
-functions.
+list of non-backwards compatible changes (see below), and then a long list of new options and functions.
 
 In recent years we have been adding new functionality to the head of the subversion trunk and just testing it and
 keeping it in working order, maintaining backwards compatibility. We now have many development tasks which will require
@@ -1460,39 +1458,41 @@ either the Kodiak branch or the head of the repository is the recommended way to
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-Non-backwards Compatible Changes
+.. _non-backwards_compatible_changes:
+
+Non-backwards compatible changes
 --------------------------------
 
 Changes in the Kodiak release which are *not* backwards compatible with the Jamaica release (svn revision number 2857,
 12 April 2007):
 
 #. &filter_nml used to have a single entry to control whether to read in both the inflation values and standard
-   deviations from a file or use the settings in the namelist. The old namelist item, *inf_start_from_file*, has been
+   deviations from a file or use the settings in the namelist. The old namelist item, ``inf_start_from_file``, has been
    replaced by two items that allow the inflation values and the standard deviation to be read in separately. The new
-   namelist items are *inf_initial_from_file* and *inf_sd_initial_from_file*. See the filter namelist documentation
+   namelist items are ``inf_initial_from_file`` and ``inf_sd_initial_from_file``. See the filter namelist documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/filter/filter.html#Namelist>`__ or `local
-   file <../../../filter/filter.html#Namelist>`__ for more details.
+   file </filter/filter.html#Namelist>`__ for more details.
 
-#. The WRF/DART converter program used to be called *dart_tf_wrf*, had no namelist, and you entered ``T`` or ``F`` to
-   indicate which direction you were converting. Now we have *dart_to_wrf* and *wrf_to_dart* (documentation
+#. The WRF/DART converter program used to be called ``dart_tf_wrf``, had no namelist, and you entered ``T`` or ``F`` to
+   indicate which direction you were converting. Now we have ``dart_to_wrf`` and ``wrf_to_dart`` (documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/wrf/models/wrf/WRF_DART_utilities/dart_to_wrf.html>`__
-   or `local file <../../../models/wrf/models/wrf/WRF_DART_utilities/dart_to_wrf.html>`__) each with a namelist to
-   control various options.
+   or `local file </models/wrf/models/wrf/WRF_DART_utilities/dart_to_wrf.html>`__) each with a namelist to control
+   various options.
 
-#. The CAM/DART converter programs used to be called *trans_sv_pv* and *trans_pv_sv*, with no namelists, and with
-   several specialized variants (e.g. *trans_pv_sv_time0*). Now we have *cam_to_dart* (documentation
+#. The CAM/DART converter programs used to be called ``trans_sv_pv`` and ``trans_pv_sv``, with no namelists, and with
+   several specialized variants (e.g. ``trans_pv_sv_time0``). Now we have ``cam_to_dart`` (documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/cam/cam_to_dart.html>`__ or `local
-   file <../../../models/cam/cam_to_dart.html>`__) and *dart_to_cam* (documentation
+   file </models/cam/cam_to_dart.html>`__) and ``dart_to_cam`` (documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/cam/dart_to_cam.html>`__ or `local
-   file <../../../models/cam/dart_to_cam.html>`__) each with a namelist to control various options.
+   file </models/cam/dart_to_cam.html>`__) each with a namelist to control various options.
 
-#. The *obs_def_radar_mod.f90* radar observation module was completely rewritten and the namelist has changed
+#. The ``obs_def_radar_mod.f90`` radar observation module was completely rewritten and the namelist has changed
    substantially. See the module documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/forward_operators/obs_def_radar_mod.html>`__
-   or `local file <../../../observations/forward_operators/obs_def_radar_mod.html>`__ for details. For example, the
-   defaults for the old code were:
+   or `local file </observations/forward_operators/obs_def_radar_mod.html>`__ for details. For example, the defaults for
+   the old code were:
 
    ::
 
@@ -1528,12 +1528,12 @@ Changes in the Kodiak release which are *not* backwards compatible with the Jama
          microphysics_type          =       3 ,
          allow_dbztowt_conv         = .false. /
 
-#. The WRF &model_mod namelist has changed. It now requires a *wrf_state_variables* list to choose which WRF fields are
-   put into the state vector. The order of the field names in the list sets the order of the fields in the state vector.
-   See the WRF model_mod documentation
+#. The WRF &model_mod namelist has changed. It now requires a ``wrf_state_variables`` list to choose which WRF fields
+   are put into the state vector. The order of the field names in the list sets the order of the fields in the state
+   vector. See the WRF model_mod documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/wrf/model_mod.html#Namelist>`__ or `local
-   file <../../../models/wrf/model_mod.html#Namelist>`__ for details. Although they haven't been removed from the
-   namelist, the following items have no effect on the code anymore:
+   file </models/wrf/model_mod.html#Namelist>`__ for details. Although they haven't been removed from the namelist, the
+   following items have no effect on the code anymore:
 
    -  num_moist_vars
    -  surf_obs
@@ -1541,64 +1541,66 @@ Changes in the Kodiak release which are *not* backwards compatible with the Jama
    -  h_diab
 
 #. The WRF model_mod now computes geometric heights instead of geopotential heights. It also uses the staggered grids as
-   read in from the *wrfinput_dNN* file(s) instead of interpolating in the non-staggered grid to get individual cell
+   read in from the ``wrfinput_dNN`` file(s) instead of interpolating in the non-staggered grid to get individual cell
    corners.
 
-#. The code in *filter.f90* was corrected to match the documentation for how the namelist item *input_qc_threshold* is
-   handled. (See filter namelist documentation
+#. The code in ``filter.f90`` was corrected to match the documentation for how the namelist item ``input_qc_threshold``
+   is handled. (See filter namelist documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/filter/filter.html#Namelist>`__ or `local
-   file <../../../filter/filter.html#Namelist>`__.) In the Jamaica release, observations with incoming data QC values
-   greater than or equal to the namelist setting were discarded. Now only incoming data QC values greater than the
-   *input_qc_threshold* are discarded (values equal to the threshold are now kept).
+   file </filter/filter.html#Namelist>`__.) In the Jamaica release, observations with incoming data QC values greater
+   than or equal to the namelist setting were discarded. Now only incoming data QC values greater than the
+   ``input_qc_threshold`` are discarded (values equal to the threshold are now kept).
 
-#. The *merge_obs_seq* utility has been replaced by the more comprehensive *obs_sequence_tool* utility. See the
+#. The ``merge_obs_seq`` utility has been replaced by the more comprehensive ``obs_sequence_tool`` utility. See the
    documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/programs/obs_sequence_tool/assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__
    or `local
-   file <../../../assimilation_code/programs/obs_sequence_tool/assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__.
+   file </assimilation_code/programs/obs_sequence_tool/assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__.
 
-#. The prepbufr observation converter was located in the *DART/ncep_obs* directory in the last release. It has been
+#. The prepbufr observation converter was located in the ``DART/ncep_obs`` directory in the last release. It has been
    moved to be with the other programs that convert various types of observation files into DART format. It is now
-   located in *DART/observations/NCEP*.
+   located in ``DART/observations/NCEP``.
 
-#. The sampling error correction generator program in *DART/system_simulation* now has a namelist &full_error_nml. See
+#. The sampling error correction generator program in ``DART/system_simulation`` now has a namelist &full_error_nml. See
    the documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/programs/system_simulation/system_simulation.html>`__
-   or `local file <../../../assimilation_code/programs/system_simulation/system_simulation.html>`__ for more details.
-   Tables for 40 common ensemble sizes are pregenerated in the *DART/system_simulation/final_full_precomputed_tables*
-   directory, and instructions for generating tables for other ensemble sizes are given.
+   or `local file </assimilation_code/programs/system_simulation/system_simulation.html>`__ for more details. Tables for
+   40 common ensemble sizes are pregenerated in the ``DART/system_simulation/final_full_precomputed_tables`` directory,
+   and instructions for generating tables for other ensemble sizes are given.
 
-#. Most *work* directories now have a *quickbuild.csh* script which recompiles all the executables instead of a
-   *workshop_setup.csh* script. (Those directories used in the tutorial have both.) To control whether *filter* is
-   compiled with or without MPI (as a parallel program or not) the *quickbuild.csh* script takes the optional arguments
-   *-mpi* or *-nompi*.
+#. Most ``work`` directories now have a ``quickbuild.csh`` script which recompiles all the executables instead of a
+   ``workshop_setup.csh`` script. (Those directories used in the tutorial have both.) To control whether ``filter`` is
+   compiled with or without MPI (as a parallel program or not) the ``quickbuild.csh`` script takes the optional
+   arguments ``-mpi`` or ``-nompi``.
 
-#. The *preprocess* program was changed so that any obs_def files with module definitions are directly included in the
-   single *obs_def_mod.f90* file. This means that as you add and delete obs_def modules from your &preprocess_nml
-   namelist and rerun *preprocess* you no longer have to add and delete different obs_def modules from your
-   *path_names_\** files.
+#. The ``preprocess`` program was changed so that any obs_def files with module definitions are directly included in the
+   single ``obs_def_mod.f90`` file. This means that as you add and delete obs_def modules from your &preprocess_nml
+   namelist and rerun ``preprocess`` you no longer have to add and delete different obs_def modules from your
+   ``path_names_*`` files.
 
 #. The utilities module now calls a function in the mpi_utilities code to exit MPI jobs cleanly. This requires that
-   non-mpi programs now include the *null_mpi_utilities_mod.f90* file in their *path_names_\** files.
+   non-mpi programs now include the ``null_mpi_utilities_mod.f90`` file in their ``path_names_*`` files.
 
-#. The *DART/mpi_utilities* directory as distributed now works with all compilers except for gfortran. In
-   *DART/mpi_utilities* is a *./fixsystem* script that when executed will change the source files so they will compile
-   with gfortran. Previous releases compiled with gfortran as distributed but no other compilers.
+#. The ``DART/mpi_utilities`` directory as distributed now works with all compilers except for gfortran. In
+   ``DART/mpi_utilities`` is a ``./fixsystem`` script that when executed will change the source files so they will
+   compile with gfortran. Previous releases compiled with gfortran as distributed but no other compilers.
 
-#. The GPS Radio Occultation observation forward operator code now requires a namelist, *&obs_def_gps_nml*. See the GPS
-   documentation
+#. The GPS Radio Occultation observation forward operator code now requires a namelist, ``&obs_def_gps_nml``. See the
+   GPS documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/forward_operators/obs_def_gps_mod.html#Namelist>`__
-   or `local file <../../../observations/forward_operators/obs_def_gps_mod.html#Namelist>`__ for details on what to add.
-   All *input.nml* files in the repository have had this added if they have the GPS module in their *&preprocess_nml*
+   or `local file </observations/forward_operators/obs_def_gps_mod.html#Namelist>`__ for details on what to add. All
+   ``input.nml`` files in the repository have had this added if they have the GPS module in their ``&preprocess_nml``
    namelist.
 
 .. container::
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-New Features
+.. _new_features:
+
+New features
 ------------
 
 -  Inflation Damping
@@ -1608,26 +1610,26 @@ New Features
       that region is no longer observed the inflation is not recomputed. Inflation damping shrinks the inflation values
       and compensates for this. See the inflation documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/filter/filter.html#Inflation>`__ or `local
-      file <../../../filter/filter.html#Inflation>`__ for more details and paper references.
+      file </filter/filter.html#Inflation>`__ for more details and paper references.
 
 -  Sampling Error Correction
 
    -  Compensates for the numbers of ensembles being small compared to the number of degrees of freedom in the system.
       See the last item in this section of the documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/filter/filter.html#GettingStarted>`__ or `local
-      file <../../../filter/filter.html#GettingStarted>`__ for more details.
+      file </filter/filter.html#GettingStarted>`__ for more details.
 
 -  Adaptive Localization and Localization Diagnostics
 
    -  See a discussion of localization-related issues
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assim_tools/assim_tools_mod.html#Localization>`__
-      or `local file <../../../assim_tools/assim_tools_mod.html#Localization>`__.
+      or `local file </assim_tools/assim_tools_mod.html#Localization>`__.
 
 -  Scale height vertical localization option in 3d models
 
    -  See a discussion of specifying vertical localization in terms of scale height
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/location/threed_sphere/location_mod.html#Namelist>`__
-      or `local file <../../../location/threed_sphere/location_mod.html#Namelist>`__. See the `Wikipedia
+      or `local file </location/threed_sphere/location_mod.html#Namelist>`__. See the `Wikipedia
       page <http://en.wikipedia.org/wiki/Scale_height>`__ for a discussion of how scale height is defined. Note that
       there is no support in the diagnostic Matlab routines for observations using scale height as the vertical
       coordinate.
@@ -1636,25 +1638,25 @@ New Features
 
    -  See details on the features of the CAM/DART system
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/cam/model_mod.html>`__ or `local
-      file <../../../models/cam/model_mod.html>`__.
+      file </models/cam/model_mod.html>`__.
 
 -  Boxcar Kernel Filter Option
 
    -  See how to select this filter option in the namelist
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assim_tools/assim_tools_mod.html#FilterTypes>`__
-      or `local file <../../../assim_tools/assim_tools_mod.html#FilterTypes>`__.
+      or `local file </assim_tools/assim_tools_mod.html#FilterTypes>`__.
 
 -  Option for "undefined vertical location" for obs using the 3d sphere locations
 
    -  See how to specify this option when creating observations
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/location/threed_sphere/location_mod.html>`__ or
-      `local file <../../../location/threed_sphere/location_mod.html>`__.
+      `local file </location/threed_sphere/location_mod.html>`__.
 
 -  Schedule module for repeated time intervals
 
    -  See documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/modules/utilities/schedule_mod.html>`__
-      or `local file <../../../assimilation_code/modules/utilities/schedule_mod.html>`__.
+      or `local file </assimilation_code/modules/utilities/schedule_mod.html>`__.
 
 -  Support for 2 different Mars calendars in time manager
 
@@ -1667,15 +1669,15 @@ New Features
 
    -  See the "Get Expected Obs From Def" section of the obs_def documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/forward_operators/observations/forward_operators/obs_def_mod.html>`__
-      or `local file <../../../observations/forward_operators/observations/forward_operators/obs_def_mod.html>`__ for
-      details on how to use these values. This change is fully backwards-compatible with existing forward operator code.
+      or `local file </observations/forward_operators/observations/forward_operators/obs_def_mod.html>`__ for details on
+      how to use these values. This change is fully backwards-compatible with existing forward operator code.
 
 -  Option to output all echo of namelist values to a separate log file
 
    -  See the utilities module documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/modules/utilities/utilities_mod.html#Namelist>`__
-      or `local file <../../../assimilation_code/modules/utilities/utilities_mod.html#Namelist>`__ for how to select
-      where the contents of all namelists are output.
+      or `local file </assimilation_code/modules/utilities/utilities_mod.html#Namelist>`__ for how to select where the
+      contents of all namelists are output.
 
 -  Large file support for netCDF
 
@@ -1686,32 +1688,31 @@ New Features
 
    -  See the Localization section of the assim_tools documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assim_tools/assim_tools_mod.html#Localization>`__
-      or `local file <../../../assim_tools/assim_tools_mod.html#Localization>`__ for details.
+      or `local file </assim_tools/assim_tools_mod.html#Localization>`__ for details.
 
 -  Option to localize with different distances based on observation type
 
    -  See the Localization section of the assim_tools documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assim_tools/assim_tools_mod.html#Localization>`__
-      or `local file <../../../assim_tools/assim_tools_mod.html#Localization>`__ for details.
+      or `local file </assim_tools/assim_tools_mod.html#Localization>`__ for details.
 
 -  The error handler can take up to 3 lines of text so you can give more informative error messages on exit
 
    -  See the utilities module documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/modules/utilities/utilities_mod.html#Interface>`__
-      or `local file <../../../assimilation_code/modules/utilities/utilities_mod.html#Interface>`__ for details.
+      or `local file </assimilation_code/modules/utilities/utilities_mod.html#Interface>`__ for details.
 
 -  Option to output ensemble mean in restart file format when filter exits
 
    -  See the filter program namelist documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/filter/filter.html#Namelist>`__ or `local
-      file <../../../filter/filter.html#Namelist>`__ for details.
+      file </filter/filter.html#Namelist>`__ for details.
 
 -  The start of a suite of forecast verification and evaluation tools
 
    -  See the verification tool documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/obs_sequence/assimilation_code/programs/obs_seq_verify/obs_seq_verify.html>`__
-      or `local file <../../../obs_sequence/assimilation_code/programs/obs_seq_verify/obs_seq_verify.html>`__ for
-      details.
+      or `local file </obs_sequence/assimilation_code/programs/obs_seq_verify/obs_seq_verify.html>`__ for details.
 
 -  Performance improvement in the internal transposes for very large state vectors. all_vars_to_all_copies() now has a
    single receiver and multiple senders, which is much faster than the converse.
@@ -1731,16 +1732,18 @@ New Features
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-New Models
+.. _new_models:
+
+New models
 ----------
 
 -  POP Ocean Model
 
    -  DART interface documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/POP/model_mod.html>`__ or `local
-      file <../../../models/POP/model_mod.html>`__. Documentation for the model itself `in
+      file </models/POP/model_mod.html>`__. Documentation for the model itself `in
       CESM <http://www.cesm.ucar.edu/models/ccsm2.0.1/pop/>`__ and `stand-alone version from Los
       Alamos <http://climate.lanl.gov/Models/POP/>`__.
 
@@ -1748,14 +1751,14 @@ New Models
 
    -  DART interface documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/NCOMMAS/model_mod.html>`__ or `local
-      file <../../../models/NCOMMAS/model_mod.html>`__. Documentation for the model itself from NSSL, Norman, OK. is at
+      file </models/NCOMMAS/model_mod.html>`__. Documentation for the model itself from NSSL, Norman, OK. is at
       `NCOMMAS <http://code.google.com/p/enkf-nssl-commas>`__.
 
 -  COAMPS Atmosphere Model
 
    -  Dart interface documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/coamps_next/model_mod.html>`__ or `local
-      file <../../../models/coamps_nest/model_mod.html>`__. Documentation for the model itself is at
+      file </models/coamps_nest/model_mod.html>`__. Documentation for the model itself is at
       `COAMPS <http://www.nrlmry.navy.mil/coamps-web/web/home>`__. The original version of the COAMPS interface code and
       scripts was contributed by Tim Whitcomb, NRL, Monterey. An updated version was contributed by Alex Reinecke, NRL,
       Monterey.
@@ -1777,21 +1780,21 @@ New Models
 
    -  Dart interface documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/AM2/model_mod.html>`__ or `local
-      file <../../../models/AM2/model_mod.html>`__. The GFDL atmosphere model documentation is at
+      file </models/AM2/model_mod.html>`__. The GFDL atmosphere model documentation is at
       `AM2 <http://data1.gfdl.noaa.gov/~arl/pubrel/m/am2/doc/>`__.
 
 -  MIT Global Ocean Model
 
    -  Dart interface documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/MITgcm_ocean/model_mod.html>`__ or
-      `local file <../../../models/MITgcm_ocean/model_mod.html>`__. The `ocean
+      `local file </models/MITgcm_ocean/model_mod.html>`__. The `ocean
       component <http://paoc2001.mit.edu/cmi/development/ocean.htm>`__ of the MIT global model suite.
 
 -  Simple Advection Model
 
    -  Dart interface documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/simple_avection/model_mod.html>`__ or
-      `local file <../../../models/simple_avection/model_mod.html>`__. A simple model of advecting tracers such as CO.
+      `local file </models/simple_avection/model_mod.html>`__. A simple model of advecting tracers such as CO.
 
 -  Global/Planet WRF
 
@@ -1801,10 +1804,10 @@ New Models
 
    -  Dart interface documentation
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/TIEgcm/model_mod.html>`__ or `local
-      file <../../../models/TIEgcm/model_mod.html>`__. Documentation for the thermosphere and ionosphere model from the
-      NCAR HAO (High Altitude Observatory) Division is at `TIEgcm <http://cism.hao.ucar.edu/models_tiegcm.html>`__.
+      file </models/TIEgcm/model_mod.html>`__. Documentation for the thermosphere and ionosphere model from the NCAR HAO
+      (High Altitude Observatory) Division is at `TIEgcm <http://cism.hao.ucar.edu/models_tiegcm.html>`__.
 
-The *DART/models/template* directory contains sample files for adding a new model. See `this
+The ``DART/models/template`` directory contains sample files for adding a new model. See `this
 section <http://www.image.ucar.edu/DAReS/DART/DART_Documentation.php#adding_a_model>`__ of the DART web pages for more
 help on adding a new model.
 
@@ -1812,9 +1815,11 @@ help on adding a new model.
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-Changed Models
+.. _changed_models:
+
+Changed models
 --------------
 
 -  WRF
@@ -1823,8 +1828,8 @@ Changed Models
       controlling the order in the state vector. No assumptions are made about number of moist variables; all WRF fields
       must be listed explicitly. The conversion tools dart_to_wrf and wrf_to_dart (Documented here
       `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/wrf/models/wrf/WRF_DART_utilities/dart_to_wrf.html>`__
-      or `local file <../../../models/wrf/models/wrf/WRF_DART_utilities/dart_to_wrf.html>`__) use this same namelist, so
-      it is simpler to avoid mismatches between the DART restart files and what the WRF model_mod is expecting.
+      or `local file </models/wrf/models/wrf/WRF_DART_utilities/dart_to_wrf.html>`__) use this same namelist, so it is
+      simpler to avoid mismatches between the DART restart files and what the WRF model_mod is expecting.
    -  Support for the single column version of WRF has been incorporated into the standard WRF model_mod.
    -  advance_model.csh script reworked by Josh Hacker, Ryan Torn, and Glen Romine to add function and simplify the
       script. It now supports a restart-file-per-member, simplifies the time computations by using the advance_time
@@ -1868,76 +1873,78 @@ Changed Models
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-New Observation Types/Sources
+.. _new_observation_types/sources:
+
+New observation types/sources
 -----------------------------
 
 -  MADIS
    Converters for METAR, Mesonet, Rawinsondes, ACARS, Marine, and Satellite Wind observations. Optionally output
    moisture obs as specific humidity, relative humidity, and/or dewpoint obs. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/observations/obs_converters/MADIS/MADIS.html>`__
-   or `local file <../../../observations/observations/obs_converters/MADIS/MADIS.html>`__.
+   or `local file </observations/observations/obs_converters/MADIS/MADIS.html>`__.
 -  SSEC
    Convert Satellite Wind obs to DART format. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/observations/obs_converters/SSEC/SSEC.html>`__
-   or `local file <../../../observations/observations/obs_converters/SSEC/SSEC.html>`__.
+   or `local file </observations/observations/obs_converters/SSEC/SSEC.html>`__.
 -  AIRS
    Satellite observed Temperature and Moisture obs. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/observations/obs_converters/AIRS/AIRS.html>`__
-   or `local file <../../../observations/observations/obs_converters/AIRS/AIRS.html>`__.
+   or `local file </observations/observations/obs_converters/AIRS/AIRS.html>`__.
 -  QUIKscat
    Satellite observed surface winds. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/quikscat/quikscat.html>`__ or `local
-   file <../../../observations/quikscat/quikscat.html>`__.
+   file </observations/quikscat/quikscat.html>`__.
 -  GTSPP
    Ocean obs. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/observations/obs_converters/GTSPP/GTSPP.html>`__
-   or `local file <../../../observations/observations/obs_converters/GTSPP/GTSPP.html>`__.
+   or `local file </observations/observations/obs_converters/GTSPP/GTSPP.html>`__.
 -  WOD
    World Ocean Database (currently 2009) Temperature and Salinity obs. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/observations/obs_converters/WOD/WOD.html>`__
-   or `local file <../../../observations/observations/obs_converters/WOD/WOD.html>`__.
+   or `local file </observations/observations/obs_converters/WOD/WOD.html>`__.
 -  CODAR
    High frequency radar obs of ocean surface velocity. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/obs_def/obs_def_ocean_mod.f90>`__ or `local
-   file <../../../obs_def/obs_def_ocean_mod.f90>`__.
+   file </obs_def/obs_def_ocean_mod.f90>`__.
 -  VAR
    Little-r and radar obs. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/obs_converters/var/var.html>`__ or
-   `local file <../../../observations/obs_converters/var/var.html>`__.
+   `local file </observations/obs_converters/var/var.html>`__.
 -  Text
    Reads text data files, a good template for converting obs stored in files without some kind of data library format
    (netCDF, HDF, etc). Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/obs_converters/observations/obs_converters/text/text_to_obs.html>`__
-   or `local file <../../../observations/obs_converters/observations/obs_converters/text/text_to_obs.html>`__.
+   or `local file </observations/obs_converters/observations/obs_converters/text/text_to_obs.html>`__.
 -  Altimeter
    Altimeter observation type available from a variety of sources. Forward operator code
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/obs_def/obs_def_altimeter_mod.f90>`__ or `local
-   file <../../../obs_def/obs_def_altimeter_mod.f90>`__.
+   file </obs_def/obs_def_altimeter_mod.f90>`__.
 -  Dewpoint
    Dewpoint observation type available from a variety of sources. Forward operator code
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/obs_def/obs_def_dewpoint_mod.f90>`__ or `local
-   file <../../../obs_def/obs_def_dewpoint_mod.f90>`__.
+   file </obs_def/obs_def_dewpoint_mod.f90>`__.
 -  Dropsonde
    Dropsonde observation type available to allow these observations to be distinguished from standard Radiosondes. Type
    defined in code
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/obs_def/obs_def_reanalysis_bufr_mod.f90>`__ or
-   `local file <../../../obs_def/obs_def_reanalysis_bufr_mod.f90>`__.
+   `local file </obs_def/obs_def_reanalysis_bufr_mod.f90>`__.
 -  TES Radiances
    TES satellite radiance observations of Mars. Forward operator code
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/obs_def/obs_def_TES_nadir_mod.f90>`__ or `local
-   file <../../../obs_def/obs_def_TES_nadir_mod.f90>`__.
+   file </obs_def/obs_def_TES_nadir_mod.f90>`__.
 -  Hurricane/Tropical Storm Vortex Position
    Storm location, minimum central pressure, and maximum windspeed. Currently only implemented in the WRF model_mod
    interface code. Code `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/wrf/model_mod.html>`__
-   or `local file <../../../models/wrf/model_mod.html>`__.
+   or `local file </models/wrf/model_mod.html>`__.
 
-All the observation converters have moved to their own top level directory *observations*. See the overview
+All the observation converters have moved to their own top level directory ``observations``. See the overview
 documentation
 `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/obs_converters/observations.html>`__ or
-`local file <../../../observations/obs_converters/observations.html>`__ for general information on creating observation
-files for use in the ensemble assimilation system.
+`local file </observations/obs_converters/observations.html>`__ for general information on creating observation files
+for use in the ensemble assimilation system.
 
 The GPS forward operators aren't new with this release, but the code has been revised several times. In particular,
 there is a new namelist to set the maximum number of GPS obs supported in a single execution of filter or the obs diag
@@ -1945,29 +1952,31 @@ program. Generally the default value is large enough for anything less than a co
 month or longer of diagnostics for a time series you can easily exceed the compiled in maximum. See the GPS
 documentation for creating GPS observation files
 `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/GPS/gps.html>`__ or `local
-file <../../../observations/GPS/gps.html>`__, and the forward operator documentation
+file </observations/GPS/gps.html>`__, and the forward operator documentation
 `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/forward_operators/obs_def_gps_mod.html>`__
-or `local file <../../../observations/forward_operators/obs_def_gps_mod.html>`__. There are also heavily revised scripts
-which download and convert multiple days of GPS obs at a time, with options to delete downloaded files automatically.
-The scripts are able to download GPS RO observations from any of about seven available satellites (in addition to the
-COSMIC array) from the CDAAC web site.
+or `local file </observations/forward_operators/obs_def_gps_mod.html>`__. There are also heavily revised scripts which
+download and convert multiple days of GPS obs at a time, with options to delete downloaded files automatically. The
+scripts are able to download GPS RO observations from any of about seven available satellites (in addition to the COSMIC
+array) from the CDAAC web site.
 
 There are two modules to set observation error values when creating new observation sequence files. One contains the
 default values used by NCEP, and the other contains the values used by ECMWF. See the README file
 `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/observations/obs_error/README>`__ or `local
-file <../../../observations/obs_error/README>`__ for more details.
+file </observations/obs_error/README>`__ for more details.
 
 The radar module was completely overhauled and the namelist changed substantially. See the item above in the
-`non-backward compatible <#Nonbackward>`__ changes section for details.
+non-backward compatible changes section for details.
 
 The scripting for converting NCEP prepbufr observations has been improved. There are options to enable or disable the
 'blocking' conversion, to create 6 hour or daily output files, to swap bytes for little-endian machines, and to run up
 to a month of conversions in parallel if you have parallel hardware available.
 
-There is a *DART/observations/utilities* directory where generic utilities can be built which are not dependent on any
+There is a ``DART/observations/utilities`` directory where generic utilities can be built which are not dependent on any
 particular model.
 
-New Diagnostics and Documentation
+.. _new_diagnostics_and_documentation:
+
+New diagnostics and documentation
 ---------------------------------
 
 | **Better Web Pages.** We've put a lot of effort into expanding our documentation. For example, please check out `the
@@ -1979,34 +1988,34 @@ New Diagnostics and Documentation
 
 Other new stuff:
 
--  There is now a main *index.html* file
+-  There is now a main ``index.html`` file
    (`Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/index.html>`__ or `local
-   file <../../../docs/index.html>`__) in the DART distribution to quickly guide you to any of the documentation for the
+   file </docs/index.html>`__) in the DART distribution to quickly guide you to any of the documentation for the
    routines or modules.
 -  DART_LAB
    Interactive Matlab GUI experiments and Powerpoint presentation of fundamental assimilation concepts
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/docs/DART_LAB/DART_LAB.html>`__ or `local
-   file <../../../docs/DART_LAB/DART_LAB.html>`__.
+   file </docs/DART_LAB/DART_LAB.html>`__.
 -  link_obs.m
    Allows one to view multiple observation attributes simultaneously and dynamically select subsets of observations in
    one view and have those same obs highlighted in the other views. Commonly called 'data brushing'. Matlab source
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/link_obs.m>`__ or `local
-   file <../../../diagnostics/matlab/link_obs.m>`__.
+   file </diagnostics/matlab/link_obs.m>`__.
 -  obs_diag
-   The *obs_diag* program has undergone extensive revision. User-defined levels for all coordinate
+   The ``obs_diag`` program has undergone extensive revision. User-defined levels for all coordinate
    (height/pressure/etc), arbitrary number of regions, the inclusion of separate copies for all DART QC values, can
-   creates rank histograms from the *obs_seq.final* files, if possible, and more. See the documentation
+   creates rank histograms from the ``obs_seq.final`` files, if possible, and more. See the documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/programs/obs_diag/oned/obs_diag.html%20assimilation_code/programs/obs_diag/threed_cartesian/obs_diag.html%20assimilation_code/programs/obs_diag/threed_sphere/obs_diag.html>`__
    or `local
-   file <../../../assimilation_code/programs/obs_diag/oned/obs_diag.html%20assimilation_code/programs/obs_diag/threed_cartesian/obs_diag.html%20assimilation_code/programs/obs_diag/threed_sphere/obs_diag.html>`__.
+   file </assimilation_code/programs/obs_diag/oned/obs_diag.html%20assimilation_code/programs/obs_diag/threed_cartesian/obs_diag.html%20assimilation_code/programs/obs_diag/threed_sphere/obs_diag.html>`__.
 -  Comparing two (or more) experiments
-   Matlab scripts to compare **multiple** (not just two) *obs_diag_output.nc* files on the same graphic to allow for
+   Matlab scripts to compare **multiple** (not just two) ``obs_diag_output.nc`` files on the same graphic to allow for
    easy examination of experiment attributes (rmse, biases, etc.). Some new utilities for subsetting observation
-   sequence files in order to make fair comparisons are described below. Matlab source for *two_experiments_profile.m*
+   sequence files in order to make fair comparisons are described below. Matlab source for ``two_experiments_profile.m``
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/two_experiments_profile.m>`__
-   or `local file <../../../diagnostics/matlab/two_experiments_profile.m>`__ and *two_experiments_evolution.m*
+   or `local file </diagnostics/matlab/two_experiments_profile.m>`__ and ``two_experiments_evolution.m``
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/two_experiments_evolution.m>`__
-   or `local file <../../../diagnostics/matlab/two_experiments_evolution.m>`__.
+   or `local file </diagnostics/matlab/two_experiments_evolution.m>`__.
 -  netCDF and Matlab
    The DART Matlab routines no longer depend on 4 third-party toolboxes; we are down to just
    `mexnc <http://mexcdf.sourceforge.net/downloads/>`__ and `snctools <http://mexcdf.sourceforge.net/downloads/>`__.
@@ -2015,36 +2024,36 @@ Other new stuff:
    file <http://www.image.ucar.edu/DAReS/DART/DART_Documentation.php#configure_matlab>`__.
 -  Matlab support for CAM.
    CAM is now fully supported for all the Matlab interfaces that are used in the demos - this includes the state-space
-   tools in *DART/matlab* that allow for determining correlations among state variables, among other things.
+   tools in ``DART/matlab`` that allow for determining correlations among state variables, among other things.
 -  Matlab support for WRF.
    WRF is now fully supported for all the Matlab interfaces that are used in the demos. This predominantly includes the
-   state-space tools in the *DART/matlab* directory like *plot_total_err*. The *map_wrf.m* script
+   state-space tools in the ``DART/matlab`` directory like ``plot_total_err``. The ``map_wrf.m`` script
    (`Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/wrf/matlab/map_wrf.m>`__ or `local
-   file <../../../models/wrf/matlab/map_wrf.m>`__) can finally plot WRF fields now that the required metadata is part of
-   the *Posterior_Diag.nc*, *Prior_Diag.nc*, and (not required) *True_State.nc* files. It's a small step to augment this
-   routine to make publication-quality figures of WRF fields.
+   file </models/wrf/matlab/map_wrf.m>`__) can finally plot WRF fields now that the required metadata is part of the
+   ``Posterior_Diag.nc``, ``Prior_Diag.nc``, and (not required) ``True_State.nc`` files. It's a small step to augment
+   this routine to make publication-quality figures of WRF fields.
 -  Regression tests for WRF
    WRF test cases for WRF V2 and V3 for CONUS (Continental or Contiguous United States), a Global WRF case, and a Radar
    test case. The data files are on a web server because they are too large to add to the repository. The README files
    in each directory gives instructions on how to download them.
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/wrf/regression>`__ or `local
-   file <../../../models/wrf/regression>`__.
+   file </models/wrf/regression>`__.
 -  Other New Model Support
-   The *simple_advection* and *MITgcm_ocean* are fully supported in the Matlab diagnostics.
+   The ``simple_advection`` and ``MITgcm_ocean`` are fully supported in the Matlab diagnostics.
 -  Better execution traces
-   Optional detailed execution trace messages from filter by setting the namelist variable *trace_execution*. See the
+   Optional detailed execution trace messages from filter by setting the namelist variable ``trace_execution``. See the
    details of the filter namelist
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/filter/filter.html>`__ or `local
-   file <../../../filter/filter.html>`__ .
--  *input.nml* contents saved
-   The contents of the *input.nml* namelist file are now preserved in the *True_State.nc*, *Prior_Diag.nc*, and
-   *Posterior_Diag.nc* diagnostic files in variable *inputnml*.
+   file </filter/filter.html>`__ .
+-  ``input.nml`` contents saved
+   The contents of the ``input.nml`` namelist file are now preserved in the ``True_State.nc``, ``Prior_Diag.nc``, and
+   ``Posterior_Diag.nc`` diagnostic files in variable ``inputnml``.
 -  Better error checking in obs_sequence creation subroutines to avoid out-of-time-order observations being inserted by
    incorrect programs.
--  Better error checking in *open_file()*
-   Better error checking in the *utilities_mod* subroutine *open_file()*. See documentation
+-  Better error checking in ``open_file()``
+   Better error checking in the ``utilities_mod`` subroutine ``open_file()``. See documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/modules/utilities/utilities_mod.html#open_file>`__
-   or `local file <../../../assimilation_code/modules/utilities/utilities_mod.html#open_file>`__.
+   or `local file </assimilation_code/modules/utilities/utilities_mod.html#open_file>`__.
 -  In the DART code tree, individual html pages have links back to the index page, the namelists are moved up to be more
    prominent, and have other minor formatting improvements.
 -  The following Matlab observation-space diagnostic routines have been **removed**:
@@ -2066,105 +2075,106 @@ Other new stuff:
    |                             | observation density and number of observations assimilated. Matlab source             |
    |                             | `Website <https://s                                                                   |
    |                             | vn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/plot_profile.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/plot_profile.m>`__.                       |
+   |                             | or `local file </diagnostics/matlab/plot_profile.m>`__.                               |
    +-----------------------------+---------------------------------------------------------------------------------------+
    | plot_rmse_xxx_profile.m     | plots the vertical profile of the rmse and any quantity for any copy with an overlay  |
    |                             | of the observation density and number of observations assimilated. Matlab source      |
    |                             | `Website <https://svn-dares-                                                          |
    |                             | dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/plot_rmse_xxx_profile.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/plot_rmse_xxx_profile.m>`__.              |
+   |                             | or `local file </diagnostics/matlab/plot_rmse_xxx_profile.m>`__.                      |
    +-----------------------------+---------------------------------------------------------------------------------------+
    | plot_bias_xxx_profile.m     | plots the vertical profile of the bias and any quantity for any copy with an overlay  |
    |                             | of the observation density and number of observations assimilated. Matlab source      |
    |                             | `Website <https://svn-dares-                                                          |
    |                             | dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/plot_bias_xxx_profile.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/plot_bias_xxx_profile.m>`__.              |
+   |                             | or `local file </diagnostics/matlab/plot_bias_xxx_profile.m>`__.                      |
    +-----------------------------+---------------------------------------------------------------------------------------+
    | two_experiments_profile.m   | plots the vertical profile of any quantity for any copy for multiple experiments with |
    |                             | an overlay of the observation density and number of observations assimilated in each  |
    |                             | experiment. Matlab source                                                             |
    |                             | `Website <https://svn-dares-da                                                        |
    |                             | rt.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/two_experiments_profile.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/two_experiments_profile.m>`__.            |
+   |                             | or `local file </diagnostics/matlab/two_experiments_profile.m>`__.                    |
    +-----------------------------+---------------------------------------------------------------------------------------+
    | plot_evolution.m            | plots the temporal evolution of any quantity for any copy with an overlay of the      |
    |                             | observation density and number of observations assimilated. Matlab source             |
    |                             | `Website <https://svn                                                                 |
    |                             | -dares-dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/plot_evolution.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/plot_evolution.m>`__.                     |
+   |                             | or `local file </diagnostics/matlab/plot_evolution.m>`__.                             |
    +-----------------------------+---------------------------------------------------------------------------------------+
    | plot_rmse_xxx_evolution.m   | plots the temporal evolution of the rmse and any quantity for any copy with an        |
    |                             | overlay of the observation density and number of observations assimilated. Matlab     |
    |                             | source                                                                                |
    |                             | `Website <https://svn-dares-da                                                        |
    |                             | rt.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/plot_rmse_xxx_evolution.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/plot_rmse_xxx_evolution.m>`__.            |
+   |                             | or `local file </diagnostics/matlab/plot_rmse_xxx_evolution.m>`__.                    |
    +-----------------------------+---------------------------------------------------------------------------------------+
    | two_experiments_evolution.m | plots the temporal evolution for any quantity for any copy for multiple experiements  |
    |                             | with an overlay of the observation density and number of observations assimilated in  |
    |                             | each experiment. Matlab source                                                        |
    |                             | `Website <https://svn-dares-dart                                                      |
    |                             | .cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/two_experiments_evolution.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/two_experiments_evolution.m>`__.          |
+   |                             | or `local file </diagnostics/matlab/two_experiments_evolution.m>`__.                  |
    +-----------------------------+---------------------------------------------------------------------------------------+
    | read_obs_netcdf.m           | reads a netCDF format observation sequence file. Simply need a single copy and a      |
    |                             | single qc - no actual observation required. Matlab source                             |
    |                             | `Website <https://svn-                                                                |
    |                             | dares-dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/read_obs_netcdf.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/read_obs_netcdf.m>`__.                    |
+   |                             | or `local file </diagnostics/matlab/read_obs_netcdf.m>`__.                            |
    +-----------------------------+---------------------------------------------------------------------------------------+
    | plot_obs_netcdf.m           | reads and plots the locations and values of any copy of the observations in a DART    |
    |                             | netCDF format observation sequence file. Matlab source                                |
    |                             | `Website <https://svn-                                                                |
    |                             | dares-dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/plot_obs_netcdf.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/plot_obs_netcdf.m>`__.                    |
+   |                             | or `local file </diagnostics/matlab/plot_obs_netcdf.m>`__.                            |
    +-----------------------------+---------------------------------------------------------------------------------------+
    | plot_obs_netcdf_diffs.m     | reads and plots the locations and the difference of any two copies of the             |
    |                             | observations in a DART netCDF format observation sequence file. Matlab source         |
    |                             | `Website <https://svn-dares-                                                          |
    |                             | dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/plot_obs_netcdf_diffs.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/plot_obs_netcdf_diffs.m>`__.              |
+   |                             | or `local file </diagnostics/matlab/plot_obs_netcdf_diffs.m>`__.                      |
    +-----------------------------+---------------------------------------------------------------------------------------+
    | plot_wind_vectors.m         | reads and plots the wind vectors of the observations in a DART netCDF format          |
-   |                             | observation sequence file (created by *obs_seq_to_netcdf*, documentation              |
+   |                             | observation sequence file (created by ``obs_seq_to_netcdf``, documentation            |
    |                             | `Website <https://svn-dares-dart.cgd.ucar.edu/DART/re                                 |
    |                             | leases/Kodiak/assimilation_code/programs/obs_seq_to_netcdf/obs_seq_to_netcdf.html>`__ |
    |                             | or `local                                                                             |
-   |                             | fi                                                                                    |
-   |                             | le <../../../assimilation_code/programs/obs_seq_to_netcdf/obs_seq_to_netcdf.html>`__) |
+   |                             | file </assimilation_code/programs/obs_seq_to_netcdf/obs_seq_to_netcdf.html>`__)       |
    |                             | Matlab source                                                                         |
    |                             | `Website <https://svn-da                                                              |
    |                             | res-dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/plot_wind_vectors.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/plot_wind_vectors.m>`__.                  |
+   |                             | or `local file </diagnostics/matlab/plot_wind_vectors.m>`__.                          |
    +-----------------------------+---------------------------------------------------------------------------------------+
    | link_obs.m                  | data brushing tool. Explores many facets of the observations simultaneously. Multiple |
    |                             | plots allow groups of observations to be selected in one view and the corresponding   |
    |                             | observations are indicated in all the other views. Matlab source                      |
    |                             | `Website <https                                                                       |
    |                             | ://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/link_obs.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/link_obs.m>`__.                           |
+   |                             | or `local file </diagnostics/matlab/link_obs.m>`__.                                   |
    +-----------------------------+---------------------------------------------------------------------------------------+
-   | plot_rank_histogram.m       | If the individual ensemble member observation values were output from *filter*        |
-   |                             | (selected by namelist option in the filter namelist) into the *obs_seq.final* file,   |
-   |                             | *obs_diag* will create rank histogram information and store it in the                 |
-   |                             | *obs_diag_output.nc* file. *plot_rank_histogram.m* will then plot it. There are       |
-   |                             | instructions on how to view the results with *ncview* or with this Matlab script on   |
+   | plot_rank_histogram.m       | If the individual ensemble member observation values were output from ``filter``      |
+   |                             | (selected by namelist option in the filter namelist) into the ``obs_seq.final`` file, |
+   |                             | ``obs_diag`` will create rank histogram information and store it in the               |
+   |                             | ``obs_diag_output.nc`` file. ``plot_rank_histogram.m`` will then plot it. There are   |
+   |                             | instructions on how to view the results with ``ncview`` or with this Matlab script on |
    |                             | the `DART Observation-space                                                           |
    |                             | Diagnos                                                                               |
    |                             | tics <http://www.image.ucar.edu/DAReS/DART/DART_Documentation.php#obs_diagnostics>`__ |
    |                             | web page. Matlab source                                                               |
    |                             | `Website <https://svn-dare                                                            |
    |                             | s-dart.cgd.ucar.edu/DART/releases/Kodiak/diagnostics/matlab/plot_rank_histogram.m>`__ |
-   |                             | or `local file <../../../diagnostics/matlab/plot_rank_histogram.m>`__.                |
+   |                             | or `local file </diagnostics/matlab/plot_rank_histogram.m>`__.                        |
    +-----------------------------+---------------------------------------------------------------------------------------+
 
 .. container::
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-New Utilities
+.. _new_utilities:
+
+New utilities
 -------------
 
 -  obs_seq_to_netcdf
@@ -2173,38 +2183,38 @@ New Utilities
    non-local operator. But all core observation data such as location, time, type, QC, observation value and error will
    be converted. This allows for variety of new diagnostics. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/programs/obs_seq_to_netcdf/obs_seq_to_netcdf.html>`__
-   or `local file <../../../assimilation_code/programs/obs_seq_to_netcdf/obs_seq_to_netcdf.html>`__.
+   or `local file </assimilation_code/programs/obs_seq_to_netcdf/obs_seq_to_netcdf.html>`__.
 -  obs_seq_coverage
    A step towards determining what locations and quantities are repeatedly observed during a specific time interval.
    This may be used to determine a network of observations that will be used to verify forecasts. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/obs_sequence/assimilation_code/programs/obs_seq_coverage/obs_seq_coverage.html>`__
-   or `local file <../../../obs_sequence/assimilation_code/programs/obs_seq_coverage/obs_seq_coverage.html>`__.
+   or `local file </obs_sequence/assimilation_code/programs/obs_seq_coverage/obs_seq_coverage.html>`__.
 -  obs_selection
-   An optional companion routine to *obs_seq_coverage*. This thins the observation sequence files to contain just the
+   An optional companion routine to ``obs_seq_coverage``. This thins the observation sequence files to contain just the
    desired set of observations to use in the forecast step. This speeds performance by avoiding the cost of evaluating
    observations that will not be used in the verification. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/obs_sequence/assimilation_code/programs/obs_selection/obs_selection.html>`__
-   or `local file <../../../obs_sequence/assimilation_code/programs/obs_selection/obs_selection.html>`__.
+   or `local file </obs_sequence/assimilation_code/programs/obs_selection/obs_selection.html>`__.
 -  obs_seq_verify
-   is a companion routine to *obs_seq_coverage*. This creates a netCDF file with variables that should make the
+   is a companion routine to ``obs_seq_coverage``. This creates a netCDF file with variables that should make the
    calculation of skill scores, etc. easier. It creates variables of the form:
    ``METAR_U_10_METER_WIND(analysisT, stations, levels, copy, nmembers, forecast_lead)``
    Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/obs_sequence/assimilation_code/programs/obs_seq_verify/obs_seq_verify.html>`__
-   or `local file <../../../obs_sequence/assimilation_code/programs/obs_seq_verify/obs_seq_verify.html>`__.
+   or `local file </obs_sequence/assimilation_code/programs/obs_seq_verify/obs_seq_verify.html>`__.
 -  Select common observation subsets
-   A tool that operates on two (will be extended to more) *obs_seq.final* files which were output from two different
-   runs of filter. Assumes the same *obs_seq.out* input file was used in both cases. Outputs two new *obs_seq.final.new*
-   files containing only the observations which were assimilated in both experiments. It allows for a fair comparision
-   with the diagnostic tools. Documentation
+   A tool that operates on two (will be extended to more) ``obs_seq.final`` files which were output from two different
+   runs of filter. Assumes the same ``obs_seq.out`` input file was used in both cases. Outputs two new
+   ``obs_seq.final.new`` files containing only the observations which were assimilated in both experiments. It allows
+   for a fair comparision with the diagnostic tools. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/programs/obs_common_subset/obs_common_subset.html>`__
-   or `local file <../../../assimilation_code/programs/obs_common_subset/obs_common_subset.html>`__.
+   or `local file </assimilation_code/programs/obs_common_subset/obs_common_subset.html>`__.
 -  Restart File tool
    Generic tool that works on any DART restart file. It is compiled with the corresponding model_mod which tells it how
    large the state vector is. It can alter the timestamps on the data, add or remove model advance times, split a single
    file into 1-per-ensemble or the reverse, and can be used to convert between ASCII and binary formats. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/programs/restart_file_tool/restart_file_tool.html>`__
-   or `local file <../../../assimilation_code/programs/restart_file_tool/restart_file_tool.html>`__.
+   or `local file </assimilation_code/programs/restart_file_tool/restart_file_tool.html>`__.
 -  Advance Time tool
    A generic utility for adding intervals to a Gregorian calendar date and printing out the new date, including handling
    leap year and month and year rollovers. An earlier version of this program was taken from the WRF distribution. This
@@ -2213,49 +2223,49 @@ New Utilities
    compiler-independent manner, and outputs in various formats depending on what is requested via additional flags.
    Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/programs/advance_time/advance_time.html>`__
-   or `local file <../../../assimilation_code/programs/advance_time/advance_time.html>`__.
+   or `local file </assimilation_code/programs/advance_time/advance_time.html>`__.
 -  WRF observation preprocessor tool
    Observation preprocessor which is WRF aware, contributed by Ryan Torn. Will select obs only within the WRF domain,
    will superob, will select only particular obs types based on the namelist. Source is in the
-   *DART/models/wrf/WRF_DART_utilities* directory.
+   ``DART/models/wrf/WRF_DART_utilities`` directory.
 -  Closest Member tool
    Used in combination with the new option in filter to output the ensemble mean values in a DART restart file format,
    this tool allows you to select the N *closest* members, where there are multiple choices for how that metric is
    computed. There are also ways to select a subset of the state vector by item kind as returned from the
-   *get_state_meta_data()* routine from the corresponding model interface code in *model_mod.f90* (see subroutine
+   ``get_state_meta_data()`` routine from the corresponding model interface code in ``model_mod.f90`` (see subroutine
    documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/model_mod.html#get_state_meta_data>`__ or
-   `local file <../../../models/model_mod.html#get_state_meta_data>`__) and compute the metric based only on those
-   values. Tool documentation
+   `local file </models/model_mod.html#get_state_meta_data>`__) and compute the metric based only on those values. Tool
+   documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/programs/closest_member_tool/closest_member_tool.html>`__
-   or `local file <../../../assimilation_code/programs/closest_member_tool/closest_member_tool.html>`__.
+   or `local file </assimilation_code/programs/closest_member_tool/closest_member_tool.html>`__.
 -  Fill Inflation restart file tool
    Simple tool that creates an inflation restart file with constant initial inflation and standard deviation values.
    Often the first step of a multi-step assimilation job differs in the namelist only for how the initial inflation
    values are defined. Running this tool creates the equivalent of an IC file for inflation, so the first job step can
-   start from a restart file as all subsequent job steps do and allows the use of a single *input.nml* file.
+   start from a restart file as all subsequent job steps do and allows the use of a single ``input.nml`` file.
    Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/adaptive_inflate/fill_inflation_restart.html>`__
-   or `local file <../../../adaptive_inflate/fill_inflation_restart.html>`__.
+   or `local file </adaptive_inflate/fill_inflation_restart.html>`__.
 -  Replace WRF fields tool
    WRF-specific tool that copies netCDF variables from one file to another. The field must exist in the target file and
    the data will be overwritten by data from the source file. Field names to be copied can be specified directly in the
    namelist or can be listed in a separate file. Missing fields can be ignored or cause the program to stop with a fatal
    error depending on namelist settings. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/models/wrf/WRF_DART_utilities/replace_wrf_fields.html>`__
-   or `local file <../../../models/wrf/WRF_DART_utilities/replace_wrf_fields.html>`__.
+   or `local file </models/wrf/WRF_DART_utilities/replace_wrf_fields.html>`__.
 -  model_mod Verification/Check tool
-   Tool to help when creating a new model interface file (usually named *model_mod.f90*). Calls routines to help with
+   Tool to help when creating a new model interface file (usually named ``model_mod.f90``). Calls routines to help with
    debugging. Documentation
    `Website <https://svn-dares-dart.cgd.ucar.edu/DART/releases/Kodiak/assimilation_code/programs/model_mod_check/model_mod_check.html%20models/POP/model_mod_check.html>`__
    or `local
-   file <../../../assimilation_code/programs/model_mod_check/model_mod_check.html%20models/POP/model_mod_check.html>`__.
+   file </assimilation_code/programs/model_mod_check/model_mod_check.html%20models/POP/model_mod_check.html>`__.
 
 Minor items:
 
 -  Most tools which work with observation sequence files now have a namelist option to specify the input files in one of
    two methods: an explicit list of input obs_seq files, or the name of a file which contains the list of obs_seq files.
--  The *DART/shell_scripts* directory contains example scripts which loop over multiple days, in formats for various
+-  The ``DART/shell_scripts`` directory contains example scripts which loop over multiple days, in formats for various
    shell syntaxes. They are intended as an example for use in advance_model or job scripts, or observation conversion
    programs contributed by users.
 
@@ -2263,12 +2273,14 @@ Minor items:
 
    --------------
 
-   `[top] <#>`__
+   [top]
 
-Known Problems
+.. _known_problems:
+
+Known problems
 --------------
 
--  We get an internal compiler error when compiling the *obs_diag* program on a Linux machine using the gfortran
+-  We get an internal compiler error when compiling the ``obs_diag`` program on a Linux machine using the gfortran
    compiler version 4.1.2. If you get this error try a newer version of the Gnu compiler tools. We have used 4.3 and 4.4
    successfully.
 
@@ -2276,13 +2288,4 @@ Known Problems
 
    --------------
 
-   `[top] <#>`__
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../../images/Dartboard7.png
-   :height: 70px
+   [top]

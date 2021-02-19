@@ -1,5 +1,12 @@
+.. _module_sat_vapor_pres_mod:
+
 Module sat_vapor_pres_mod
 -------------------------
+
+Contents
+~~~~~~~~
+
+-  `Module sat_vapor_pres_mod <#module_sat_vapor_pres_mod>`__
 
 .. container::
 
@@ -9,7 +16,7 @@ Module sat_vapor_pres_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 Routines for determining the saturation vapor pressure (``ES``) and the derivative of ``ES`` with respect to
@@ -20,15 +27,14 @@ temperature.
    This module contains routines for determining the saturation vapor pressure (``ES``) from lookup tables constructed
    using equations given in the Smithsonian tables. The ``ES`` lookup tables are valid between -160C and +100C (approx
    113K to 373K). The values of ``ES`` are computed over ice from -160C to -20C, over water from 0C to 100C, and a
-   blended value (over water and ice) from -20C to 0C. This version was written for non-vector machines. See the
-   `notes <#NOTES>`__ section for details on vectorization.
+   blended value (over water and ice) from -20C to 0C. This version was written for non-vector machines. See the notes
+   section for details on vectorization.
 
-| 
 | 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -40,28 +46,27 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
 
    Description summarizing public interface.
 
-   `lookup_es <#lookup_es>`__:
+   lookup_es:
       For the given temperatures, returns the saturation vapor pressures.
-   `lookup_des <#lookup_des>`__:
+   lookup_des:
       For the given temperatures, returns the derivative of saturation vapor pressure with respect to temperature.
-   `compute_es <#compute_es>`__:
+   compute_es:
       For the given temperatures, computes the saturation vapor pressures.
-   `sat_vapor_pres_init <#sat_vapor_pres_init>`__:
+   sat_vapor_pres_init:
       Initializes the lookup tables for saturation vapor pressure.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -70,12 +75,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: lookup_es
+a. .. rubric:: Lookup_es
       :name: lookup_es
 
    ::
@@ -105,9 +108,7 @@ a.
       |                                                           |    [real, dimension(:,:,:)]                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: lookup_des
+b. .. rubric:: Lookup_des
       :name: lookup_des
 
    ::
@@ -137,9 +138,7 @@ b.
       |                                                           |    [real, dimension(:,:,:)]                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-c. 
-
-   .. rubric:: compute_es
+c. .. rubric:: Compute_es
       :name: compute_es
 
    ::
@@ -169,9 +168,7 @@ c.
       |                                                           |    [real, dimension(:,:,:)]                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-d. 
-
-   .. rubric:: sat_vapor_pres_init
+d. .. rubric:: Sat_vapor_pres_init
       :name: sat_vapor_pres_init
 
    ::
@@ -185,7 +182,7 @@ d.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -194,7 +191,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -208,7 +205,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -216,11 +213,10 @@ REFERENCES
    #. Smithsonian Meteorological Tables Page 350.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -228,11 +224,10 @@ COMPILER SPECIFICS
    None.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -240,11 +235,10 @@ PRECOMPILER OPTIONS
    None.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -253,7 +247,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -308,11 +302,10 @@ TEST PROGRAM
          end program test_sat_vapor_pres
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -320,11 +313,10 @@ KNOWN BUGS
    No error checking is done to make sure that the size of the input and output fields match.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -363,11 +355,10 @@ NOTES
                     [integer, default: tcmin = +100]
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -380,4 +371,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

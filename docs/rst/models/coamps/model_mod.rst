@@ -2,7 +2,7 @@ MODULE model_mod (COAMPS)
 =========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Other modules used <#other_modules_used>`__

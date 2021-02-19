@@ -2,7 +2,7 @@ MODULE model_mod
 ================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

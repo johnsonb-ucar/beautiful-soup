@@ -1,5 +1,12 @@
-module fft_mod
+.. _module_fft_mod:
+
+Module fft_mod
 --------------
+
+Contents
+~~~~~~~~
+
+-  `Module fft_mod <#module_fft_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module fft_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 Performs simultaneous fast Fourier transforms (FFTs) between real grid space and complex Fourier space.
@@ -23,11 +30,10 @@ Performs simultaneous fast Fourier transforms (FFTs) between real grid space and
    library version or stand-alone version using Temperton's FFT.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -40,7 +46,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -52,23 +58,22 @@ PUBLIC INTERFACE
                             fft_init,
                             fft_end ]
 
-   `fft_grid_to_fourier <#fft_grid_to_fourier>`__:
+   fft_grid_to_fourier:
       Given multiple sequences of real data values, this routine computes the complex Fourier transform for all
       sequences.
-   `fft_fourier_to_grid <#fft_fourier_to_grid>`__:
+   fft_fourier_to_grid:
       Given multiple sequences of Fourier space transforms, this routine computes the inverse transform and returns the
       real data values for all sequences.
-   `fft_init <#fft_init>`__:
+   fft_init:
       This routine must be called to initialize the size of a single transform and setup trigonometric constants.
-   `fft_end <#fft_end>`__:
+   fft_end:
       This routine is called to unset the transform size and deallocate memory.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -77,12 +82,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: fft_grid_to_fourier
+a. .. rubric:: Fft_grid_to_fourier
       :name: fft_grid_to_fourier
 
    ::
@@ -130,9 +133,7 @@ a.
 
       where n = length of each real transform
 
-b. 
-
-   .. rubric:: fft_fourier_to_grid
+b. .. rubric:: Fft_fourier_to_grid
       :name: fft_fourier_to_grid
 
    ::
@@ -167,9 +168,7 @@ b.
       |                                                           | dimension(leng1,size(fourier,2),size(fourier,3))]         |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-c. 
-
-   .. rubric:: fft_init
+c. .. rubric:: Fft_init
       :name: fft_init
 
    ::
@@ -187,9 +186,7 @@ c.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-d. 
-
-   .. rubric:: fft_end
+d. .. rubric:: Fft_end
       :name: fft_end
 
    ::
@@ -202,7 +199,7 @@ d.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -211,7 +208,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -256,7 +253,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -265,11 +262,10 @@ REFERENCES
    #. For the NAG version refer to the NAG documentation for routines C06FPF, C06FQF, and C06GQF.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -277,11 +273,10 @@ COMPILER SPECIFICS
    None.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -294,11 +289,10 @@ PRECOMPILER OPTIONS
       transformed to Fourier space and back to real data, then compared to the original real data.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -317,7 +311,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -325,11 +319,10 @@ TEST PROGRAM
    None.
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -337,11 +330,10 @@ KNOWN BUGS
    None.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -357,11 +349,10 @@ NOTES
    single (32-bit) real precision then FFT's cannot be computed at full (64-bit) precision.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -374,4 +365,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

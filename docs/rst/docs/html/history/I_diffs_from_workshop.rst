@@ -1,9 +1,12 @@
 DART Iceland revisions
 ======================
 
-=================== ============================================================
-|DART project logo| Jump to `DART Documentation Main Index <../../index.html>`__
-=================== ============================================================
+Contents
+--------
+
+-  `Improvements <#improvements>`__
+-  `Changes <#changes>`__
+-  `Future enhancements / work <#future_enhancements_/_work>`__
 
 The DART Iceland release (23 Nov 2005) is expected to be the last update that makes major modifications to the user
 interfaces to DART and the DART interfaces to models or observations. The primary purpose of this release is to improve
@@ -210,7 +213,9 @@ A summary list of changes occurring in each DART directory follows:
 | utilities_mod.f90               | Namelist error detection added.                                                   |
 +---------------------------------+-----------------------------------------------------------------------------------+
 
-Future Enhancements / Work
+.. _future_enhancements_/_work:
+
+Future enhancements / work
 --------------------------
 
 -  Extend PBL_1d support for all matlab scripts.
@@ -223,12 +228,3 @@ Future Enhancements / Work
    Will incorporate an additional argument to the 'check' routine to append a string to the netCDF error library string.
 
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../../images/Dartboard7.png
-   :height: 70px

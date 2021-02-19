@@ -2,7 +2,7 @@ MODULE filter_mod
 =================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

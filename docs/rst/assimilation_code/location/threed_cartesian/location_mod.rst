@@ -2,7 +2,7 @@ MODULE location_mod (threed_cartesian)
 ======================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

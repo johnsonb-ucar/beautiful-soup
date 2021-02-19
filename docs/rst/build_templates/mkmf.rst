@@ -1,7 +1,17 @@
-Contents
-========
+mkmf - a tool for making makefiles
+==================================
 
--  `mkmf - a tool for making makefiles <#mkmf_-_a_tool_for_making_makefiles>`__
+Contents
+--------
+
+-  `Makefile structure: <#makefile_structure:>`__
+-  `Treatment of [args]: <#treatment_of_%5Bargs%5D:>`__
+-  `Treatment of [-c cppdefs]: <#treatment_of_%5B-c_cppdefs%5D:>`__
+-  `Treatment of includefiles: <#treatment_of_includefiles:>`__
+-  `Examples: <#examples:>`__
+-  `Caveats: <#caveats:>`__
+-  `Changes <#changes>`__
+-  `Todo: <#todo:>`__
 
 Features of ``mkmf`` include:
 
@@ -39,8 +49,10 @@ The calling syntax is:
 #. ``-x`` executes the makefile immediately;
 #. ``args`` are a list of directories and files to be searched for targets and dependencies.
 
+.. _makefile_structure::
+
 Makefile structure:
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 A *sourcefile* is any file with a source file suffix (currently ``.F, .F90, .c, .f. .f90``). An *includefile* is any
 file with an include file suffix (currently ``.H, .fh, .h, .inc``). A valid sourcefile can also be an includefile.
@@ -78,8 +90,10 @@ working directory.
 All the object files are linked to a single executable. It is therefore desirable that there be a single main program
 source among the arguments to ``mkmf``, otherwise, the loader is likely to complain.
 
+.. _treatment_of_[args]::
+
 Treatment of [args]:
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 The argument list ``args`` is treated sequentially from left to right. Arguments can be of three kinds:
 
@@ -102,253 +116,254 @@ The argument list ``args`` is treated sequentially from left to right. Arguments
    generic command ``$(FC) $(FFLAGS)``. But when the make requires ``c.f90`` to be compiled, it will be compiled with
    ``f90 -Oaggress``.
 
-The current working directory is always the first (and top-precedence) argument, even if ``args`` is not supplied.
+   The current working directory is always the first (and top-precedence) argument, even if ``args`` is not supplied.
 
-Treatment of [-c cppdefs]:
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+   .. rubric:: Treatment of [-c cppdefs]:
+      :name: treatment_of_[-c_cppdefs]:
 
-The argument ``cppdefs`` is treated as follows. ``cppdefs`` should contain a comprehensive list of the ``cpp``
-``#define``\ s to be preprocessed. This list is compared against the current "state", maintained in the file
-``.cppdefs`` in the current working directory. If there are any changes to this state, ``mkmf`` will remove all object
-files affected by this change, so that the subsequent ``make`` will recompile those files. Previous versions of ``mkmf``
-attempted to ``touch`` the relevant source, an operation that was only possible with the right permissions. The current
-version works even with read-only source.
+   The argument ``cppdefs`` is treated as follows. ``cppdefs`` should contain a comprehensive list of the ``cpp``
+   ``#define``\ s to be preprocessed. This list is compared against the current "state", maintained in the file
+   ``.cppdefs`` in the current working directory. If there are any changes to this state, ``mkmf`` will remove all
+   object files affected by this change, so that the subsequent ``make`` will recompile those files. Previous versions
+   of ``mkmf`` attempted to ``touch`` the relevant source, an operation that was only possible with the right
+   permissions. The current version works even with read-only source.
 
-The file ``.cppdefs`` is created if it does not exist. If you wish to edit it by hand (don't!) it merely contains a list
-of the ``cpp`` flags separated by blanks, in a single record, with no newline at the end.
+   The file ``.cppdefs`` is created if it does not exist. If you wish to edit it by hand (don't!) it merely contains a
+   list of the ``cpp`` flags separated by blanks, in a single record, with no newline at the end.
 
-``cppdefs`` also sets the ``make`` macro ``CPPDEFS``. If this was set in a template file and also in the ``-c`` flag to
-``mkmf``, the value in ``-c`` takes precedence. Typically, you should set only ``CPPFLAGS`` in the template file, and
-``CPPDEFS`` via ``mkmf -c``.
+   ``cppdefs`` also sets the ``make`` macro ``CPPDEFS``. If this was set in a template file and also in the ``-c`` flag
+   to ``mkmf``, the value in ``-c`` takes precedence. Typically, you should set only ``CPPFLAGS`` in the template file,
+   and ``CPPDEFS`` via ``mkmf -c``.
 
-Treatment of includefiles:
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+   .. rubric:: Treatment of includefiles:
+      :name: treatment_of_includefiles:
 
-Include files are often specified without an explicit path, e.g
-
-::
-
-   #include "config.h"
-
-``mkmf`` first attempts to locate the includefile in the same directory as the source file. If it is not found there, it
-looks in the directories listed as arguments, maintaining the same left-to-right precedence as described above.
-
-This follows the behaviour of most f90 compilers: includefiles inherit the path to the source, or else follow the order
-of include directories specified from left to right on the ``f90`` command line, with the ``-I`` flags *descending* in
-precedence from left to right.
-
-| If you have includefiles in a directory ``dir`` other than those listed above, you can specify it yourself by
-  including ``-Idir`` in ``$(FFLAGS)`` in your template file. Includepaths in the template file take precedence over
-  those generated by ``mkmf``. (I suggest using ``FFLAGS`` for this rather than ``CPPFLAGS`` because fortran
-  ``include``\ s can occur even in source requiring no preprocessing).
-
-Examples:
-^^^^^^^^^
-
-#. The template file for the SGI MIPSpro compiler contains:
+   Include files are often specified without an explicit path, e.g
 
    ::
 
-      FC = f90
-      LD = f90
-      CPPFLAGS = -macro_expand
-      FFLAGS = -d8 -64 -i4 -r8 -mips4 -O3
-      LDFLAGS = -64 -mips4 $(LIBS)
-      LIST = -listing
+      #include "config.h"
 
-   The meaning of the various flags may be divined by reading the manual. A line defining the ``make`` macro LIBS, e.g:
+   ``mkmf`` first attempts to locate the includefile in the same directory as the source file. If it is not found there,
+   it looks in the directories listed as arguments, maintaining the same left-to-right precedence as described above.
 
-   ::
+   This follows the behaviour of most f90 compilers: includefiles inherit the path to the source, or else follow the
+   order of include directories specified from left to right on the ``f90`` command line, with the ``-I`` flags
+   *descending* in precedence from left to right.
 
-      LIBS = -lmpi
+   | If you have includefiles in a directory ``dir`` other than those listed above, you can specify it yourself by
+     including ``-Idir`` in ``$(FFLAGS)`` in your template file. Includepaths in the template file take precedence over
+     those generated by ``mkmf``. (I suggest using ``FFLAGS`` for this rather than ``CPPFLAGS`` because fortran
+     ``include``\ s can occur even in source requiring no preprocessing).
 
-   may be added anywhere in the template to have it added to the link command line.
+   .. rubric:: Examples:
+      :name: examples:
 
-   Sample template files for different OSs and compilers are available in the directory ``/net/vb/public/bin``.
+   #. The template file for the SGI MIPSpro compiler contains:
 
-#. This example illustrates the effective use of ``mkmf``'s precedence rules. Let the current working directory contain
-   a file named ``path_names`` containing the lines:
+      ::
 
-   ::
+         FC = f90
+         LD = f90
+         CPPFLAGS = -macro_expand
+         FFLAGS = -d8 -64 -i4 -r8 -mips4 -O3
+         LDFLAGS = -64 -mips4 $(LIBS)
+         LIST = -listing
 
-      updates/a.f90
-      updates/b.f90
+      The meaning of the various flags may be divined by reading the manual. A line defining the ``make`` macro LIBS,
+      e.g:
 
-   The directory ``/home/src/base`` contains the files:
+      ::
 
-   ::
+         LIBS = -lmpi
 
-      a.f90
-      b.f90
-      c.f90
+      may be added anywhere in the template to have it added to the link command line.
 
-   Typing
+      Sample template files for different OSs and compilers are available in the directory ``/net/vb/public/bin``.
 
-   ::
+   #. This example illustrates the effective use of ``mkmf``'s precedence rules. Let the current working directory
+      contain a file named ``path_names`` containing the lines:
 
-      mkmf path_names /home/src/base
+      ::
 
-   produces the following ``Makefile``:
+         updates/a.f90
+         updates/b.f90
 
-   ::
+      The directory ``/home/src/base`` contains the files:
 
-      # Makefile created by mkmf $Id$
+      ::
 
+         a.f90
+         b.f90
+         c.f90
 
-      .DEFAULT:
-          -touch $@
-      all: a.out
-      c.o: /home/src/base/c.f90
-          $(FC) $(FFLAGS) -c  /home/src/base/c.f90
-      a.o: updates/a.f90
-          $(FC) $(FFLAGS) -c  updates/a.f90
-      b.o: updates/b.f90
-          $(FC) $(FFLAGS) -c  updates/b.f90
-      ./c.f90: /home/src/base/c.f90
-          cp /home/src/base/c.f90 .
-      ./a.f90: updates/a.f90
-          cp updates/a.f90 .
-      ./b.f90: updates/b.f90
-          cp updates/b.f90 .
-      SRC = /home/src/base/c.f90 updates/a.f90 updates/b.f90
-      OBJ = c.o a.o b.o
-      OFF = /home/src/base/c.f90 updates/a.f90 updates/b.f90
-      clean: neat
-          -rm -f .cppdefs $(OBJ) a.out
-      neat:
-          -rm -f $(TMPFILES)
-      localize: $(OFF)
-          cp $(OFF) .
-      TAGS: $(SRC)
-          etags $(SRC)
-      tags: $(SRC)
-          ctags $(SRC)
-      a.out: $(OBJ)
-          $(LD) $(OBJ) -o a.out $(LDFLAGS)
+      Typing
 
-   Note that when files of the same name recur in the target list, the files in the ``updates`` directory (specified in
-   ``path_names``) are used rather than those in the base source repository ``/home/src/base``. Assume that now you want
-   to test some changes to ``c.f90``. You don't want to make changes to the base source repository itself prior to
-   testing; so you make yourself a local copy.
+      ::
 
-   ::
+         mkmf path_names /home/src/base
 
-      make ./c.f90
+      produces the following ``Makefile``:
 
-   You didn't even need to know where ``c.f90`` originally was. Now you can make changes to your local copy ``./c.f90``.
-   To compile using your changed copy, type:
+      ::
 
-   ::
-
-      mkmf path_names /home/src/base
-      make
-
-   The new Makefile looks like this:
-
-   ::
-
-      # Makefile created by mkmf $Id$
+         # Makefile created by mkmf $Id$
 
 
-      .DEFAULT:
-          -touch $@
-      all: a.out
-      c.o: c.f90
-          $(FC) $(FFLAGS) -c  c.f90
-      a.o: updates/a.f90
-          $(FC) $(FFLAGS) -c  updates/a.f90
-      b.o: updates/b.f90
-          $(FC) $(FFLAGS) -c  updates/b.f90
-      ./a.f90: updates/a.f90
-          cp updates/a.f90 .
-      ./b.f90: updates/b.f90
-          cp updates/b.f90 .
-      SRC = c.f90 updates/a.f90 updates/b.f90
-      OBJ = c.o a.o b.o
-      OFF = updates/a.f90 updates/b.f90
-      clean: neat
-          -rm -f .cppdefs $(OBJ) a.out
-      neat:
-          -rm -f $(TMPFILES)
-      localize: $(OFF)
-          cp $(OFF) .
-      TAGS: $(SRC)
-          etags $(SRC)
-      tags: $(SRC)
-          ctags $(SRC)
-      a.out: $(OBJ)
-          $(LD) $(OBJ) -o a.out $(LDFLAGS)
+         .DEFAULT:
+             -touch $@
+         all: a.out
+         c.o: /home/src/base/c.f90
+             $(FC) $(FFLAGS) -c  /home/src/base/c.f90
+         a.o: updates/a.f90
+             $(FC) $(FFLAGS) -c  updates/a.f90
+         b.o: updates/b.f90
+             $(FC) $(FFLAGS) -c  updates/b.f90
+         ./c.f90: /home/src/base/c.f90
+             cp /home/src/base/c.f90 .
+         ./a.f90: updates/a.f90
+             cp updates/a.f90 .
+         ./b.f90: updates/b.f90
+             cp updates/b.f90 .
+         SRC = /home/src/base/c.f90 updates/a.f90 updates/b.f90
+         OBJ = c.o a.o b.o
+         OFF = /home/src/base/c.f90 updates/a.f90 updates/b.f90
+         clean: neat
+             -rm -f .cppdefs $(OBJ) a.out
+         neat:
+             -rm -f $(TMPFILES)
+         localize: $(OFF)
+             cp $(OFF) .
+         TAGS: $(SRC)
+             etags $(SRC)
+         tags: $(SRC)
+             ctags $(SRC)
+         a.out: $(OBJ)
+             $(LD) $(OBJ) -o a.out $(LDFLAGS)
 
-   Note that you are now using your local copy of ``c.f90`` for the compile, since the files in the current working
-   directory always take precedence. To revert to using the base copy, just remove the local copy and run ``mkmf``
-   again.
+      Note that when files of the same name recur in the target list, the files in the ``updates`` directory (specified
+      in ``path_names``) are used rather than those in the base source repository ``/home/src/base``. Assume that now
+      you want to test some changes to ``c.f90``. You don't want to make changes to the base source repository itself
+      prior to testing; so you make yourself a local copy.
 
-#. This illustrates the use of ``mkmf -c``:
+      ::
 
-   ::
+         make ./c.f90
 
-      mkmf -c "-Dcppflag -Dcppflag2=2 -Dflag3=string ..."
+      You didn't even need to know where ``c.f90`` originally was. Now you can make changes to your local copy
+      ``./c.f90``. To compile using your changed copy, type:
 
-   will set ``CPPDEFS`` to this value, and also save this state in the file ``.cppdefs``. If the argument to ``-c`` is
-   changed in a subsequent call:
+      ::
 
-   ::
+         mkmf path_names /home/src/base
+         make
 
-      mkmf -c "-Dcppflag -Dcppflag2=3 -Dflag3=string ..."
+      The new Makefile looks like this:
 
-   ``mkmf`` will scan the source list for sourcefiles that make references to ``cppflag2``, and the corresponding object
-   files will be removed.
+      ::
 
-Caveats:
-^^^^^^^^
+         # Makefile created by mkmf $Id$
 
-#. In F90, the module name must occur on the same source line as the ``module`` or ``use`` keyword. That is to say, if
-   your code contained:
 
-   ::
+         .DEFAULT:
+             -touch $@
+         all: a.out
+         c.o: c.f90
+             $(FC) $(FFLAGS) -c  c.f90
+         a.o: updates/a.f90
+             $(FC) $(FFLAGS) -c  updates/a.f90
+         b.o: updates/b.f90
+             $(FC) $(FFLAGS) -c  updates/b.f90
+         ./a.f90: updates/a.f90
+             cp updates/a.f90 .
+         ./b.f90: updates/b.f90
+             cp updates/b.f90 .
+         SRC = c.f90 updates/a.f90 updates/b.f90
+         OBJ = c.o a.o b.o
+         OFF = updates/a.f90 updates/b.f90
+         clean: neat
+             -rm -f .cppdefs $(OBJ) a.out
+         neat:
+             -rm -f $(TMPFILES)
+         localize: $(OFF)
+             cp $(OFF) .
+         TAGS: $(SRC)
+             etags $(SRC)
+         tags: $(SRC)
+             ctags $(SRC)
+         a.out: $(OBJ)
+             $(LD) $(OBJ) -o a.out $(LDFLAGS)
 
-      use &
+      Note that you are now using your local copy of ``c.f90`` for the compile, since the files in the current working
+      directory always take precedence. To revert to using the base copy, just remove the local copy and run ``mkmf``
+      again.
 
-         this_module
+   #. This illustrates the use of ``mkmf -c``:
 
-   it would confuse ``mkmf``. Similarly, a fortran ``include`` statement must not be split across lines.
+      ::
 
-#. Two ``use`` statements on the same line is not currently recognized, that is:
+         mkmf -c "-Dcppflag -Dcppflag2=2 -Dflag3=string ..."
 
-   ::
+      will set ``CPPDEFS`` to this value, and also save this state in the file ``.cppdefs``. If the argument to ``-c``
+      is changed in a subsequent call:
 
-      use module1; use module2
+      ::
 
-   is to be avoided.
+         mkmf -c "-Dcppflag -Dcppflag2=3 -Dflag3=string ..."
 
-#. I currently provide a default action for files listed as dependencies but not found: in this case, I ``touch`` the
-   file, creating a null file of that name in the current directory. I am willing to debate the wisdom of this, if you
-   are disturbed. But it is currently the least annoying way I've found to take care of a situation when cpp
-   ``#include``\ s buried within obsolete ``ifdef``\ s ask for files that don't exist:
+      ``mkmf`` will scan the source list for sourcefiles that make references to ``cppflag2``, and the corresponding
+      object files will be removed.
 
-   ::
+   .. rubric:: Caveats:
+      :name: caveats:
 
-      #ifdef obsolete
-      #include "nonexistent.h"
-      #endif
+   #. In F90, the module name must occur on the same source line as the ``module`` or ``use`` keyword. That is to say,
+      if your code contained:
 
-#. If the formatting flag ``-f`` is used, long lines will be broken up at intervals of 256 characters. This can lead to
-   problems if individual paths are longer than 256 characters.
+      ::
 
-Changes
-^^^^^^^
+         use &
 
-The `RCS log <>`__ for ``mkmf`` contains a comprehensive list of changes. In the unlikely event that you should wish to
-check out a retro version, please get in touch with me, `Balaji <>`__.
+            this_module
 
-Todo:
-^^^^^
+      it would confuse ``mkmf``. Similarly, a fortran ``include`` statement must not be split across lines.
 
-#. An option to write a dependency graph, perhaps in HTML.
+   #. Two ``use`` statements on the same line is not currently recognized, that is:
 
-| Please address all inquires to `Balaji <>`__, SGI/GFDL.
+      ::
 
---------------
+         use module1; use module2
 
-| Author: `V. Balaji <>`__
-| Document last modified
+      is to be avoided.
+
+   #. I currently provide a default action for files listed as dependencies but not found: in this case, I ``touch`` the
+      file, creating a null file of that name in the current directory. I am willing to debate the wisdom of this, if
+      you are disturbed. But it is currently the least annoying way I've found to take care of a situation when cpp
+      ``#include``\ s buried within obsolete ``ifdef``\ s ask for files that don't exist:
+
+      ::
+
+         #ifdef obsolete
+         #include "nonexistent.h"
+         #endif
+
+   #. If the formatting flag ``-f`` is used, long lines will be broken up at intervals of 256 characters. This can lead
+      to problems if individual paths are longer than 256 characters.
+
+   .. rubric:: Changes
+      :name: changes
+
+   The `RCS log <>`__ for ``mkmf`` contains a comprehensive list of changes. In the unlikely event that you should wish
+   to check out a retro version, please get in touch with me, `Balaji <>`__.
+
+   .. rubric:: Todo:
+      :name: todo:
+
+   #. An option to write a dependency graph, perhaps in HTML.
+
+   | Please address all inquires to `Balaji <>`__, SGI/GFDL.
+
+   --------------
+
+   | Author: `V. Balaji <>`__
+   | Document last modified

@@ -1,5 +1,12 @@
-module atmos_carbon_aerosol_mod
+.. _module_atmos_carbon_aerosol_mod:
+
+Module atmos_carbon_aerosol_mod
 -------------------------------
+
+Contents
+~~~~~~~~
+
+-  `Module atmos_carbon_aerosol_mod <#module_atmos_carbon_aerosol_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module atmos_carbon_aerosol_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 This code allows the implementation of black and organic carbon tracers in the FMS framework.
@@ -24,11 +31,10 @@ This code allows the implementation of black and organic carbon tracers in the F
    user wishes to try to reproduce those works.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -45,7 +51,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -57,21 +63,20 @@ PUBLIC INTERFACE
                                              atmos_carbon_aerosol_init,
                                              atmos_carbon_aerosol_end ]
 
-   `atmos_blackc_sourcesink <#atmos_blackc_sourcesink>`__:
+   atmos_blackc_sourcesink:
       A subroutine to calculate the source and sinks of black carbon aerosol.
-   `atmos_organic_sourcesink <#atmos_organic_sourcesink>`__:
+   atmos_organic_sourcesink:
       A subroutine to calculate the source and sinks of organic carbon aerosol.
-   `atmos_carbon_aerosol_init <#atmos_carbon_aerosol_init>`__:
+   atmos_carbon_aerosol_init:
       Subroutine to initialize the carbon aerosol module.
-   `atmos_carbon_aerosol_end <#atmos_carbon_aerosol_end>`__:
+   atmos_carbon_aerosol_end:
       The destructor routine for the carbon aerosol module.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -80,12 +85,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: atmos_blackc_sourcesink
+a. .. rubric:: Atmos_blackc_sourcesink
       :name: atmos_blackc_sourcesink
 
    ::
@@ -160,9 +163,7 @@ a.
       |                                                           |    [real, dimension(:,:,:)]                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: atmos_organic_sourcesink
+b. .. rubric:: Atmos_organic_sourcesink
       :name: atmos_organic_sourcesink
 
    ::
@@ -228,9 +229,7 @@ b.
       |                                                           |    [real, dimension(:,:,:)]                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-c. 
-
-   .. rubric:: atmos_carbon_aerosol_init
+c. .. rubric:: Atmos_carbon_aerosol_init
       :name: atmos_carbon_aerosol_init
 
    ::
@@ -267,9 +266,7 @@ c.
       |                                                           |    [real, dimension(:,:,:,:)]                             |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-d. 
-
-   .. rubric:: atmos_carbon_aerosol_end
+d. .. rubric:: Atmos_carbon_aerosol_end
       :name: atmos_carbon_aerosol_end
 
    ::
@@ -281,7 +278,7 @@ d.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -295,7 +292,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -304,7 +301,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -317,11 +314,10 @@ REFERENCES
       Geophys. Res., 107, accepted, 2002
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -329,11 +325,10 @@ COMPILER SPECIFICS
    None.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -341,11 +336,10 @@ PRECOMPILER OPTIONS
    None.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -354,7 +348,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -362,11 +356,10 @@ TEST PROGRAM
    None.
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -374,11 +367,10 @@ KNOWN BUGS
    None.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -386,11 +378,10 @@ NOTES
    None.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -403,4 +394,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

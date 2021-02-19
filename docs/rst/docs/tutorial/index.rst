@@ -1,9 +1,8 @@
 DART Tutorial
 =============
 
-=================== =========================================================
-|DART project logo| Jump to `DART Documentation Main Index <../index.html>`__
-=================== =========================================================
+Contents
+--------
 
 The DART Tutorial is intended to aid in the understanding of ensemble data assimilation theory and consists of
 step-by-step concepts and companion exercises with DART. The diagnostics in the tutorial use Matlab® (to see how to
@@ -65,12 +64,3 @@ configure your environment to use Matlab and the DART diagnostics, see the docum
 +------------+------------------------------+------------------------------------------------------------------------+
 
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../images/Dartboard7.png
-   :height: 70px

@@ -2,7 +2,7 @@ PROGRAM ``obs_impact_tool``
 ===========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

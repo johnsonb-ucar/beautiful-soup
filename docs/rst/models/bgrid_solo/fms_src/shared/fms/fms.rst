@@ -1,5 +1,12 @@
+.. _module_fms_mod:
+
 Module fms_mod
 --------------
+
+Contents
+~~~~~~~~
+
+-  `Module fms_mod <#module_fms_mod>`__
 
 .. container::
 
@@ -9,7 +16,7 @@ Module fms_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 The fms module provides routines that are commonly used by most FMS modules.
@@ -32,11 +39,10 @@ The fms module provides routines that are commonly used by most FMS modules.
    module. These are routines for getting processor numbers, commonly used I/O unit numbers, and error handling.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -50,42 +56,41 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
 
-   `fms_init <#fms_init>`__:
+   fms_init:
       Initializes the FMS module and also calls the initialization routines for all modules in the MPP package. Will be
       called automatically if the user does not call it.
-   `fms_end <#fms_end>`__:
+   fms_end:
       Calls the termination routines for all modules in the MPP package.
-   `file_exist <#file_exist>`__:
+   file_exist:
       Checks the existence of a given file name.
-   `error_mesg <#error_mesg>`__:
+   error_mesg:
       Print notes, warnings and error messages; terminates program for warning and error messages. (use error levels
       NOTE,WARNING,FATAL, see example below)
-   `check_nml_error <#check_nml_error>`__:
+   check_nml_error:
       Checks the iostat argument that is returned after reading a namelist and determines if the error code is valid.
-   `write_version_number <#write_version_number>`__:
+   write_version_number:
       Prints to the log file (or a specified unit) the (cvs) version id string and (cvs) tag name.
-   `mpp_clock_init <#mpp_clock_init>`__:
+   mpp_clock_init:
       Returns an identifier for performance timing a section of code (similar to mpp_clock_id).
-   `lowercase <#lowercase>`__:
+   lowercase:
       Convert character strings to all lower case.
-   `uppercase <#uppercase>`__:
+   uppercase:
       Convert character strings to all upper case.
-   `string_array_index <#string_array_index>`__:
+   string_array_index:
       match the input character string to a string in an array/list of character strings
-   `monotonic_array <#monotonic_array>`__:
+   monotonic_array:
       Determines if a real input array has monotonically increasing or decreasing values.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -94,12 +99,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: fms_init
+a. .. rubric:: Fms_init
       :name: fms_init
 
    ::
@@ -112,9 +115,7 @@ a.
       explicitly call fms_init. If this routine is called more than once it will return silently. There are no
       arguments.
 
-b. 
-
-   .. rubric:: fms_end
+b. .. rubric:: Fms_end
       :name: fms_end
 
    ::
@@ -125,9 +126,7 @@ b.
       Termination routine for the fms module. It also calls destructor routines for the mpp, mpp_domains, and mpp_io
       modules. If this routine is called more than once it will return silently. There are no arguments.
 
-c. 
-
-   .. rubric:: file_exist
+c. .. rubric:: File_exist
       :name: file_exist
 
    ::
@@ -155,9 +154,7 @@ c.
       |                                                           |    []                                                     |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-d. 
-
-   .. rubric:: error_mesg
+d. .. rubric:: Error_mesg
       :name: error_mesg
 
    ::
@@ -191,9 +188,7 @@ d.
                  call error_mesg ('fms_mod', 'initialization not called', FATAL)
                  call error_mesg ('fms_mod', 'fms_mod message', NOTE)
 
-e. 
-
-   .. rubric:: check_nml_error
+e. .. rubric:: Check_nml_error
       :name: check_nml_error
 
    ::
@@ -246,9 +241,7 @@ e.
                  10    call close_file (unit)
                    endif
 
-f. 
-
-   .. rubric:: write_version_number
+f. .. rubric:: Write_version_number
       :name: write_version_number
 
    ::
@@ -272,9 +265,7 @@ f.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-g. 
-
-   .. rubric:: mpp_clock_init
+g. .. rubric:: Mpp_clock_init
       :name: mpp_clock_init
 
    ::
@@ -291,9 +282,9 @@ g.
       |                                                           |    [character]                                            |
       +-----------------------------------------------------------+-----------------------------------------------------------+
       | ``level   ``                                              | Level of timing. When level > timing_level, which is set  |
-      |                                                           | by namelist `&fms_nml <#NAMELIST>`__, an identifier of    |
-      |                                                           | zero is returned. This will turn off performance timing   |
-      |                                                           | for the code section.                                     |
+      |                                                           | by namelist &fms_nml, an identifier of zero is returned.  |
+      |                                                           | This will turn off performance timing for the code        |
+      |                                                           | section.                                                  |
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
       | ``flags   ``                                              | Use the flags published via the mpp_mod to control        |
@@ -350,9 +341,7 @@ g.
                                  :
                    call mpp_clock_end (id_mycode)
 
-h. 
-
-   .. rubric:: lowercase
+h. .. rubric:: Lowercase
       :name: lowercase
 
    ::
@@ -376,9 +365,7 @@ h.
       |                                                           |    [character(len=len(cs)), scalar]                       |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-i. 
-
-   .. rubric:: uppercase
+i. .. rubric:: Uppercase
       :name: uppercase
 
    ::
@@ -402,9 +389,7 @@ i.
       |                                                           |    [character(len=len(cs)), scalar]                       |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-j. 
-
-   .. rubric:: string_array_index
+j. .. rubric:: String_array_index
       :name: string_array_index
 
    ::
@@ -445,9 +430,7 @@ j.
                 string_array_index ( string, string_array, index )
                 Returns: TRUE, index = 2
 
-k. 
-
-   .. rubric:: monotonic_array
+k. .. rubric:: Monotonic_array
       :name: monotonic_array
 
    ::
@@ -480,7 +463,7 @@ k.
 
 --------------
 
-NAMELIST
+Namelist
 ^^^^^^^^
 
 .. container::
@@ -492,7 +475,7 @@ NAMELIST
       ``timing_level``
       The level of performance timing. If calls to the performance timing routines have been inserted into the code then
       code sections with a level <= timing_level will be timed. The resulting output will be printed to STDOUT. See the
-      MPP module or `mpp_clock_init <#mpp_clock_init>`__ for more details.
+      MPP module or mpp_clock_init for more details.
       [integer, default: 0]
       ``read_all_pe``
       Read global data on all processors extracting local part needed (TRUE) or read global data on PE0 and broadcast to
@@ -516,11 +499,10 @@ NAMELIST
       [integer, default: 0]
 
 | 
-| 
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -529,7 +511,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -548,7 +530,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -556,11 +538,10 @@ REFERENCES
    None.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -568,11 +549,10 @@ COMPILER SPECIFICS
    None.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -580,11 +560,10 @@ PRECOMPILER OPTIONS
    None.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -593,7 +572,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -601,11 +580,10 @@ TEST PROGRAM
    None.
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -616,11 +594,10 @@ KNOWN BUGS
      calls to read_data.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -631,11 +608,10 @@ NOTES
    will probably be insufficient.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -652,4 +628,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

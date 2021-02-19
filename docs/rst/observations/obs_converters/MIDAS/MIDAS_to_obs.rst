@@ -2,7 +2,7 @@ PROGRAM ``MIDAS_to_obs``
 ========================
 
 Contents
-========
+--------
 
 -  `Data sources <#data_sources>`__
 -  `Programs <#programs>`__

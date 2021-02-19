@@ -1,43 +1,43 @@
 PROGRM OR MODULE name_of_thing
 ==============================
 
-=================== ============================================================
-|DART project logo| Jump to `DART Documentation Main Index <../../index.html>`__
-=================== ============================================================
+Contents
+--------
 
-`NAMELIST <#Namelist>`__ / `MODULES USED <#ModulesUsed>`__ / `INTERFACES <#Interface>`__ / `FILES <#FilesUsed>`__ /
-`REFERENCES <#References>`__ / `ERRORS <#Errors>`__ / `PLANS <#FuturePlans>`__ / `PRIVATE
-COMPONENTS <#PrivateComponents>`__ / `TERMS OF USE <#Legalese>`__
+-  `Overview <#overview>`__
+-  `Namelist <#namelist>`__
+-  `Modules used <#modules_used>`__
+-  `Public interfaces <#public_interfaces>`__
+-  `Files <#files>`__
+-  `References <#references>`__
+-  `Error codes and conditions <#error_codes_and_conditions>`__
+-  `Private components <#private_components>`__
+
+NAMELIST / MODULES USED / INTERFACES / FILES / REFERENCES / ERRORS / PLANS / PRIVATE COMPONENTS /
 
 Overview
 --------
 
 Explain in general terms what this is.
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
 
-NAMELIST
+Namelist
 --------
 
-DART namelists are always read from file *input.nml*.
+DART namelists are always read from file ``input.nml``.
 
 We adhere to the F90 standard of starting a namelist with an ampersand '&' and terminating with a slash '/' for all our
 namelist input. Character strings that contain a '/' must be enclosed in quotes to prevent them from prematurely
 terminating the namelist.
 
-.. container:: namelist
+::
 
-   ::
-
-      &NAMELIST_NML 
-         name=value,
-         name=value, 
-         name=value
-      /
+   &NAMELIST_NML 
+      name=value,
+      name=value, 
+      name=value
+   /
 
 Any comments about the namelist as a whole.
 
@@ -45,28 +45,19 @@ Any comments about the namelist as a whole.
 
 .. container::
 
-   Item
-
-Type
-
-Description
-
-name
-
-type
-
-(often multi-line) description
+   ==== ==== ==============================
+   Item Type Description
+   ==== ==== ==============================
+   name type (often multi-line) description
+   ==== ==== ==============================
 
 | 
-| 
-
-.. container:: top
-
-   [`top <#>`__]
 
 --------------
 
-MODULES USED
+.. _modules_used:
+
+Modules used
 ------------
 
 ::
@@ -77,26 +68,18 @@ MODULES USED
    time_manager_mod
    ensemble_manager_mod
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
 
-PUBLIC INTERFACES
+.. _public_interfaces:
+
+Public interfaces
 -----------------
 
-*use this_module_name_mod, only :*
-
-`subr/function name <#tag>`__
-
- 
-
-`name2 <#tag2>`__
-
- 
-
-`name3 <#tag3>`__
+================================== ==================
+*use this_module_name_mod, only :* subr/function name
+                                   name2
+                                   name3
+================================== ==================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
 
@@ -114,15 +97,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    describe what this subroutine does.
 
-   *arg1*
+   ======== =======================
+   ``arg1`` Describe arg1.
+   *arg2*   Describe optional arg2.
+   ======== =======================
 
-Describe arg1.
-
-*arg2*
-
-Describe optional arg2.
-
-| 
 | 
 
 .. container:: routine
@@ -137,15 +116,11 @@ Describe optional arg2.
 
    Describe function.
 
-   *function1*
+   ============= ===================================
+   ``function1`` describe what this function returns
+   ``arg1``      describe function argument
+   ============= ===================================
 
-describe what this function returns
-
-*arg1*
-
-describe function argument
-
-| 
 | 
 
 .. container:: type
@@ -162,105 +137,50 @@ describe function argument
 
    describe bob
 
-   Component
-
-Description
-
-bob1
-
-Describe bob1.
-
-bob2
-
-Describe bob2.
+   ========= ==============
+   Component Description
+   ========= ==============
+   bob1      Describe bob1.
+   bob2      Describe bob2.
+   ========= ==============
 
 | 
-| 
-
-.. container:: top
-
-   [`top <#>`__]
 
 --------------
 
-FILES
+Files
 -----
 
 describe files used by code
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
 
-REFERENCES
+References
 ----------
 
 -  author, title. publication, volume, pages.
    `doi: nn.yyyy/rest_of_number <http://dx.doi.org/nn.yyyy/rest_of_number>`__
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
 
-ERROR CODES and CONDITIONS
+.. _error_codes_and_conditions:
+
+Error codes and conditions
 --------------------------
 
 .. container:: errors
 
-   Routine
+   =============== ================== ==============================
+   Routine         Message            Comment
+   =============== ================== ==============================
+   subroutine_name error message text what it means to the end user.
+   =============== ================== ==============================
 
-Message
+.. _private_components:
 
-Comment
-
-subroutine_name
-
-error message text
-
-what it means to the end user.
-
-KNOWN BUGS
-----------
-
-none at this time
-
-.. container:: top
-
-   [`top <#>`__]
-
---------------
-
-FUTURE PLANS
-------------
-
-none at this time
-
-.. container:: top
-
-   [`top <#>`__]
-
---------------
-
-PRIVATE COMPONENTS
+Private components
 ------------------
 
 no discussion
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../../images/Dartboard7.png
-   :height: 70px

@@ -1,5 +1,12 @@
-module atmos_tracer_utilities_mod
+.. _module_atmos_tracer_utilities_mod:
+
+Module atmos_tracer_utilities_mod
 ---------------------------------
+
+Contents
+~~~~~~~~
+
+-  `Module atmos_tracer_utilities_mod <#module_atmos_tracer_utilities_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module atmos_tracer_utilities_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 This code provides some utility routines for atmospheric tracers in the FMS framework.
@@ -22,11 +29,10 @@ This code provides some utility routines for atmospheric tracers in the FMS fram
    In particular it provides schemes for wet and dry deposiiton that can be easily utilized.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -43,7 +49,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -56,23 +62,22 @@ PUBLIC INTERFACE
                                                interp_emiss,
                                                tracer_utilities_end ]
 
-   `atmos_tracer_utilities_init <#atmos_tracer_utilities_init>`__:
+   atmos_tracer_utilities_init:
       This is a routine to create and register the dry and wet deposition fields of the tracers.
-   `dry_deposition <#dry_deposition>`__:
+   dry_deposition:
       Routine to calculate the fraction of tracer to be removed by dry deposition.
-   `wet_deposition <#wet_deposition>`__:
+   wet_deposition:
       Routine to calculate the fraction of tracer removed by wet deposition
-   `interp_emiss <#interp_emiss>`__:
+   interp_emiss:
       A routine to interpolate emission fields of arbitrary resolution onto the resolution of the model.
-   `tracer_utilities_end <#tracer_utilities_end>`__:
+   tracer_utilities_end:
       The destructor routine for the tracer utilities module.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -81,12 +86,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: atmos_tracer_utilities_init
+a. .. rubric:: Atmos_tracer_utilities_init
       :name: atmos_tracer_utilities_init
 
    ::
@@ -113,9 +116,7 @@ a.
       |                                                           |    [type(time_type)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: dry_deposition
+b. .. rubric:: Dry_deposition
       :name: dry_deposition
 
    ::
@@ -189,9 +190,7 @@ b.
       |                                                           |    [real, dimension(:,:)]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-c. 
-
-   .. rubric:: wet_deposition
+c. .. rubric:: Wet_deposition
       :name: wet_deposition
 
    ::
@@ -265,9 +264,7 @@ c.
       |                                                           |    [real, dimension(:,:,:)]                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-d. 
-
-   .. rubric:: interp_emiss
+d. .. rubric:: Interp_emiss
       :name: interp_emiss
 
    ::
@@ -306,9 +303,7 @@ d.
       |                                                           |    [real, dimension(:,:)]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-e. 
-
-   .. rubric:: tracer_utilities_end
+e. .. rubric:: Tracer_utilities_end
       :name: tracer_utilities_end
 
    **DESCRIPTION**
@@ -316,7 +311,7 @@ e.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -325,7 +320,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -336,4 +331,4 @@ ERROR MESSAGES
 
 .. container::
 
-   `top <#TOP>`__
+   top

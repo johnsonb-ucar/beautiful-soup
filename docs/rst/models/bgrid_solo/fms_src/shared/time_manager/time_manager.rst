@@ -1,5 +1,12 @@
-module time_manager_mod
+.. _module_time_manager_mod:
+
+Module time_manager_mod
 -----------------------
+
+Contents
+~~~~~~~~
+
+-  `Module time_manager_mod <#module_time_manager_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module time_manager_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 A software package that provides a set of simple interfaces for modelers to perform computations related to time and
@@ -20,7 +27,7 @@ dates.
 
    The module defines a type that can be used to represent discrete times (accurate to one second) and to map these
    times into dates using a variety of calendars. A time is mapped to a date by representing the time with respect to an
-   arbitrary base date (refer to <B>NOTES</B> section for the `base date <#base%20date>`__ setting).
+   arbitrary base date (refer to <B>NOTES</B> section for the base date setting).
    The time_manager provides a single defined type, time_type, which is used to store time and date quantities. A
    time_type is a positive definite quantity that represents an interval of time. It can be most easily thought of as
    representing the number of seconds in some time interval. A time interval can be mapped to a date under a given
@@ -33,11 +40,10 @@ dates.
    calendar.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -48,7 +54,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -89,82 +95,81 @@ PUBLIC INTERFACE
                                      print_time,
                                      print_date ]
 
-   `set_time <#set_time>`__:
+   set_time:
       Given some number of seconds and days, returns the corresponding time_type.
-   `get_time <#get_time>`__:
+   get_time:
       Given a time interval, returns the corresponding seconds and days.
-   `increment_time <#increment_time>`__:
+   increment_time:
       Given a time and an increment of days and seconds, returns a time that adds this increment to an input time.
-   `decrement_time <#decrement_time>`__:
+   decrement_time:
       Given a time and a decrement of days and seconds, returns a time that subtracts this decrement from an input time.
-   `time_gt <#time_gt>`__:
+   time_gt:
       Returns true if time1 > time2.
-   `time_ge <#time_ge>`__:
+   time_ge:
       Returns true if time1 >= time2.
-   `time_lt <#time_lt>`__:
+   time_lt:
       Returns true if time1 < time2.
-   `time_le <#time_le>`__:
+   time_le:
       Returns true if time1 <= time2.
-   `time_eq <#time_eq>`__:
+   time_eq:
       Returns true if time1 == time2.
-   `time_ne <#time_ne>`__:
+   time_ne:
       Returns true if time1 /= time2.
-   `time_plus <#time_plus>`__:
+   time_plus:
       Returns sum of two time_types.
-   `time_minus <#time_minus>`__:
+   time_minus:
       Returns difference of two time_types.
-   `time_scalar_mult <#time_scalar_mult>`__:
+   time_scalar_mult:
       Returns time multiplied by integer factor n.
-   `scalar_time_mult <#scalar_time_mult>`__:
+   scalar_time_mult:
       Returns time multiplied by integer factor n.
-   `time_divide <#time_divide>`__:
+   time_divide:
       Returns the largest integer, n, for which time1 >= time2 \* n.
-   `time_real_divide <#time_real_divide>`__:
+   time_real_divide:
       Returns the double precision quotient of two times.
-   `time_scalar_divide <#time_scalar_divide>`__:
+   time_scalar_divide:
       Returns the largest time, t, for which n \* t <= time.
-   `interval_alarm <#interval_alarm>`__:
+   interval_alarm:
       Given a time, and a time interval, this function returns true if this is the closest time step to the alarm time.
-   `repeat_alarm <#repeat_alarm>`__:
+   repeat_alarm:
       Repeat_alarm supports an alarm that goes off with alarm_frequency and lasts for alarm_length.
-   `set_calendar_type <#set_calendar_type>`__:
+   set_calendar_type:
       Sets the default calendar type for mapping time intervals to dates.
-   `get_calendar_type <#get_calendar_type>`__:
+   get_calendar_type:
       Returns the value of the default calendar type for mapping from time to date.
-   `get_date <#get_date>`__:
+   get_date:
       Given a time_interval, returns the corresponding date under the selected calendar.
-   `set_date <#set_date>`__:
+   set_date:
       Given an input date in year, month, days, etc., creates a time_type that represents this time interval from the
       internally defined base date.
-   `increment_date <#increment_date>`__:
+   increment_date:
       Increments the date represented by a time interval and the default calendar type by a number of seconds, etc.
-   `decrement_date <#decrement_date>`__:
+   decrement_date:
       Decrements the date represented by a time interval and the default calendar type by a number of seconds, etc.
-   `days_in_month <#days_in_month>`__:
+   days_in_month:
       Given a time interval, gives the number of days in the month corresponding to the default calendar.
-   `leap_year <#leap_year>`__:
+   leap_year:
       Returns true if the year corresponding to the date for the default calendar is a leap year. Returns false for
       THIRTY_DAY_MONTHS and NO_LEAP.
-   `length_of_year <#length_of_year>`__:
+   length_of_year:
       Returns the mean length of the year in the default calendar setting.
-   `days_in_year <#days_in_year>`__:
+   days_in_year:
       Returns the number of days in the calendar year corresponding to the date represented by time for the default
       calendar.
-   `month_name <#month_name>`__:
+   month_name:
       Returns a character string containing the name of the month corresponding to month number n.
-   `time_manager_init <#time_manager_init>`__:
+   time_manager_init:
       Write the version information to the log file.
-   `print_time <#print_time>`__:
+   print_time:
       Prints the given time_type argument as a time (using days and seconds).
-   `print_date <#print_date>`__:
+   print_date:
       prints the time to standard output (or optional unit) as a date.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -178,12 +183,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: set_time
+a. .. rubric:: Set_time
       :name: set_time
 
    ::
@@ -209,9 +212,7 @@ a.
       |                                                           |    [, dimension]                                          |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: get_time
+b. .. rubric:: Get_time
       :name: get_time
 
    ::
@@ -235,9 +236,7 @@ b.
       |                                                           |    [integer, dimension(scalar)]                           |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-c. 
-
-   .. rubric:: increment_time
+c. .. rubric:: Increment_time
       :name: increment_time
 
    ::
@@ -267,9 +266,7 @@ c.
       |                                                           |    [, dimension]                                          |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-d. 
-
-   .. rubric:: decrement_time
+d. .. rubric:: Decrement_time
       :name: decrement_time
 
    ::
@@ -300,9 +297,7 @@ d.
       |                                                           |    [, dimension]                                          |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-e. 
-
-   .. rubric:: time_gt
+e. .. rubric:: Time_gt
       :name: time_gt
 
    ::
@@ -326,9 +321,7 @@ e.
       |                                                           |    [logical, dimension]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-f. 
-
-   .. rubric:: time_ge
+f. .. rubric:: Time_ge
       :name: time_ge
 
    ::
@@ -352,9 +345,7 @@ f.
       |                                                           |    [logical, dimension]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-g. 
-
-   .. rubric:: time_lt
+g. .. rubric:: Time_lt
       :name: time_lt
 
    ::
@@ -378,9 +369,7 @@ g.
       |                                                           |    [logical, dimension]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-h. 
-
-   .. rubric:: time_le
+h. .. rubric:: Time_le
       :name: time_le
 
    ::
@@ -404,9 +393,7 @@ h.
       |                                                           |    [logical, dimension]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-i. 
-
-   .. rubric:: time_eq
+i. .. rubric:: Time_eq
       :name: time_eq
 
    ::
@@ -430,9 +417,7 @@ i.
       |                                                           |    [logical, dimension]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-j. 
-
-   .. rubric:: time_ne
+j. .. rubric:: Time_ne
       :name: time_ne
 
    ::
@@ -456,9 +441,7 @@ j.
       |                                                           |    [logical, dimension]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-k. 
-
-   .. rubric:: time_plus
+k. .. rubric:: Time_plus
       :name: time_plus
 
    ::
@@ -482,9 +465,7 @@ k.
       |                                                           |    [time_type, dimension]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-l. 
-
-   .. rubric:: time_minus
+l. .. rubric:: Time_minus
       :name: time_minus
 
    ::
@@ -509,9 +490,7 @@ l.
       |                                                           |    [time_type, dimension]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-m. 
-
-   .. rubric:: time_scalar_mult
+m. .. rubric:: Time_scalar_mult
       :name: time_scalar_mult
 
    ::
@@ -535,9 +514,7 @@ m.
       |                                                           |    [time_type, dimension]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-n. 
-
-   .. rubric:: scalar_time_mult
+n. .. rubric:: Scalar_time_mult
       :name: scalar_time_mult
 
    ::
@@ -561,9 +538,7 @@ n.
       |                                                           |    [time_type, dimension]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-o. 
-
-   .. rubric:: time_divide
+o. .. rubric:: Time_divide
       :name: time_divide
 
    ::
@@ -588,9 +563,7 @@ o.
       |                                                           |    [integer, dimension]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-p. 
-
-   .. rubric:: time_real_divide
+p. .. rubric:: Time_real_divide
       :name: time_real_divide
 
    ::
@@ -614,9 +587,7 @@ p.
       |                                                           |    [integer, dimensiondouble precision]                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-q. 
-
-   .. rubric:: time_scalar_divide
+q. .. rubric:: Time_scalar_divide
       :name: time_scalar_divide
 
    ::
@@ -640,9 +611,7 @@ q.
       |                                                           |    [integer, dimensiondouble precision]                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-r. 
-
-   .. rubric:: interval_alarm
+r. .. rubric:: Interval_alarm
       :name: interval_alarm
 
    ::
@@ -683,9 +652,7 @@ r.
       |                                                           |    [logical]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-s. 
-
-   .. rubric:: repeat_alarm
+s. .. rubric:: Repeat_alarm
       :name: repeat_alarm
 
    ::
@@ -716,9 +683,7 @@ s.
       |                                                           |    [logical]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-t. 
-
-   .. rubric:: set_calendar_type
+t. .. rubric:: Set_calendar_type
       :name: set_calendar_type
 
    ::
@@ -744,9 +709,7 @@ t.
       and GREGORIAN. However, GREGORIAN CALENDAR is not completely implemented. Selection of this type will result in
       illegal type error.
 
-u. 
-
-   .. rubric:: get_calendar_type
+u. .. rubric:: Get_calendar_type
       :name: get_calendar_type
 
    ::
@@ -758,9 +721,7 @@ u.
       There are no arguments in this function. It returns the value of the default calendar type for mapping from time
       to date.
 
-v. 
-
-   .. rubric:: get_date
+v. .. rubric:: Get_date
       :name: get_date
 
    ::
@@ -794,9 +755,7 @@ v.
       For all but the thirty_day_months calendar, increments to months and years must be made separately from other
       units because of the non-associative nature of the addition. All the input increments must be positive.
 
-w. 
-
-   .. rubric:: set_date
+w. .. rubric:: Set_date
       :name: set_date
 
    ::
@@ -831,9 +790,7 @@ w.
       |                                                           |    [time_type]                                            |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-x. 
-
-   .. rubric:: increment_date
+x. .. rubric:: Increment_date
       :name: increment_date
 
    ::
@@ -877,9 +834,7 @@ x.
       |                                                           |    [time_type]                                            |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-y. 
-
-   .. rubric:: decrement_date
+y. .. rubric:: Decrement_date
       :name: decrement_date
 
    ::
@@ -928,9 +883,7 @@ y.
       units because of the non-associative nature of addition. All the input decrements must be positive. If the result
       is a negative time (i.e. date before the base date) it is considered a fatal error.
 
-z. 
-
-   .. rubric:: days_in_month
+z. .. rubric:: Days_in_month
       :name: days_in_month
 
    ::
@@ -952,9 +905,7 @@ z.
       |                                                           |    [integer, dimension]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-a. 
-
-   .. rubric:: leap_year
+a. .. rubric:: Leap_year
       :name: leap_year
 
    ::
@@ -979,9 +930,7 @@ a.
       |                                                           |    [calendar_type, dimension]                             |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: length_of_year
+b. .. rubric:: Length_of_year
       :name: length_of_year
 
    ::
@@ -992,9 +941,7 @@ b.
    **DESCRIPTION**
       There are no arguments in this function. It returns the mean length of the year in the default calendar setting.
 
-c. 
-
-   .. rubric:: days_in_year
+c. .. rubric:: Days_in_year
       :name: days_in_year
 
    ::
@@ -1016,9 +963,7 @@ c.
       ``   `` The number of days in this year for the default calendar type.
       ======= ==============================================================
 
-d. 
-
-   .. rubric:: month_name
+d. .. rubric:: Month_name
       :name: month_name
 
    ::
@@ -1042,9 +987,7 @@ d.
       |                                                           |    [character]                                            |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-e. 
-
-   .. rubric:: time_manager_init
+e. .. rubric:: Time_manager_init
       :name: time_manager_init
 
    ::
@@ -1056,9 +999,7 @@ e.
       Initialization routine. This routine does not have to be called, all it does is write the version information to
       the log file.
 
-f. 
-
-   .. rubric:: print_time
+f. .. rubric:: Print_time
       :name: print_time
 
    ::
@@ -1082,9 +1023,7 @@ f.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-g. 
-
-   .. rubric:: print_date
+g. .. rubric:: Print_date
       :name: print_date
 
    ::
@@ -1110,7 +1049,7 @@ g.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -1119,7 +1058,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -1128,7 +1067,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -1136,11 +1075,10 @@ REFERENCES
    None.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -1148,11 +1086,10 @@ COMPILER SPECIFICS
    None.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -1160,11 +1097,10 @@ PRECOMPILER OPTIONS
    None.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -1173,7 +1109,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -1270,11 +1206,10 @@ TEST PROGRAM
       end program time_main2
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -1282,11 +1217,10 @@ KNOWN BUGS
    None.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -1301,11 +1235,10 @@ NOTES
    manager.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -1318,4 +1251,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

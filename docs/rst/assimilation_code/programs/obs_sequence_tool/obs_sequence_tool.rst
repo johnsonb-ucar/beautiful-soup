@@ -2,7 +2,7 @@ program ``obs_sequence_tool``
 =============================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

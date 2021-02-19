@@ -1,5 +1,12 @@
-module atmos_sulfur_hex_mod
+.. _module_atmos_sulfur_hex_mod:
+
+Module atmos_sulfur_hex_mod
 ---------------------------
+
+Contents
+~~~~~~~~
+
+-  `Module atmos_sulfur_hex_mod <#module_atmos_sulfur_hex_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module atmos_sulfur_hex_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 This code allows the implementation of sulfur hexafluoride tracer in the FMS framework.
@@ -18,11 +25,10 @@ This code allows the implementation of sulfur hexafluoride tracer in the FMS fra
 .. container::
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -39,7 +45,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -50,19 +56,18 @@ PUBLIC INTERFACE
                                          atmos_sulfur_hex_init,
                                          sulfur_hex_end ]
 
-   `atmos_sf6_sourcesink <#atmos_sf6_sourcesink>`__:
+   atmos_sf6_sourcesink:
       A routine to calculate the sources and sinks of sulfur hexafluoride.
-   `atmos_sulfur_hex_init <#atmos_sulfur_hex_init>`__:
+   atmos_sulfur_hex_init:
       The constructor routine for the sulfur hexafluoride module.
-   `sulfur_hex_end <#sulfur_hex_end>`__:
+   sulfur_hex_end:
       The destructor routine for the sulfur hexafluoride module.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -71,12 +76,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: atmos_sf6_sourcesink
+a. .. rubric:: Atmos_sf6_sourcesink
       :name: atmos_sf6_sourcesink
 
    ::
@@ -120,9 +123,7 @@ a.
       |                                                           |    [real, dimension(:,:,:)]                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: atmos_sulfur_hex_init
+b. .. rubric:: Atmos_sulfur_hex_init
       :name: atmos_sulfur_hex_init
 
    ::
@@ -158,9 +159,7 @@ b.
       |                                                           |    [real, dimension(:,:,:,:)]                             |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-c. 
-
-   .. rubric:: sulfur_hex_end
+c. .. rubric:: Sulfur_hex_end
       :name: sulfur_hex_end
 
    ::
@@ -172,7 +171,7 @@ c.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -186,7 +185,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -195,7 +194,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -204,11 +203,10 @@ REFERENCES
       tracer distributions of 85Krypton and Sulfur Hexafluoride (SF6). Submitted to the Journal of Geophysical Research.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -216,11 +214,10 @@ COMPILER SPECIFICS
    None.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -228,11 +225,10 @@ PRECOMPILER OPTIONS
    None.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -241,7 +237,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -249,11 +245,10 @@ TEST PROGRAM
    None.
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -261,11 +256,10 @@ KNOWN BUGS
    None.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -273,11 +267,10 @@ NOTES
    None.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -290,4 +283,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

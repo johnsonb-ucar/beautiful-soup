@@ -1,9 +1,10 @@
 Forward Operator
 ================
 
-=================== =========================================================
-|DART project logo| Jump to `DART Documentation Main Index <../index.html>`__
-=================== =========================================================
+Contents
+--------
+
+-  `State access <#_state_access_>`__
 
 In Lanai the forward operator is performed by the first ens_size processors. This was because access to the whole state
 vector is required for the forward operator, and only the first ens_size processors had the whole state vector. The
@@ -42,7 +43,9 @@ To transpose and do the forward operators like Lanai, you can use the filter_nml
 Note, that if you have fewer tasks than ensemble members some tasks will still be doing vectorized forward operators
 (because they own more than one ensemble member).
 
-State Access
+.. __state_access_:
+
+State access
 ------------
 
 Model_mod routines no longer get an array containing the state. The state is accessed through the function
@@ -53,18 +56,6 @@ Model_mod routines no longer get an array containing the state. The state is acc
 where x is the state at index i. ``state_handle`` is passed from above. During model_interpolate ``get_state`` returns
 an array. Durring ``get_state`` returns a single value (the mean state).
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
 
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../images/Dartboard7.png
-   :height: 70px
 .. |image1| image:: ../Graphs/forward_operator.gv.svg

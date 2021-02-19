@@ -1,9 +1,8 @@
 Distributed State
 =================
 
-=================== =========================================================
-|DART project logo| Jump to `DART Documentation Main Index <../index.html>`__
-=================== =========================================================
+Contents
+--------
 
 The key part of RMA DART is having a state that is physically distributed across processors. The location in memory of
 any part of the state vector (which processor and where in memory on that processor) is completely under the control of
@@ -22,7 +21,7 @@ Implications of this:
 So, how does the model_mod access the state without having the vector and not knowing the state order? - state accessor
 routines.
 
-State Accessor Routines
+State accessor routines
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Getting the dart index
@@ -82,18 +81,6 @@ mpi and non-mpi filter. This is taken care of automatically when you run quickbu
   no_cray_win_mod.f90 is the default since some versions of gfortran (4.9.0) do not support cray pointers. These
   different modules will go away when we swap to MPI 3.
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
 
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../images/Dartboard7.png
-   :height: 70px
 .. |image1| image:: ./Graphs/window.gv.svg

@@ -1,5 +1,12 @@
-module constants_mod
+.. _module_constants_mod:
+
+Module constants_mod
 --------------------
+
+Contents
+~~~~~~~~
+
+-  `Module constants_mod <#module_constants_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module constants_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 Defines useful constants for Earth in mks units.
@@ -21,11 +28,10 @@ Defines useful constants for Earth in mks units.
    constant may be changed, their values can not be redefined.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -36,7 +42,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -45,16 +51,15 @@ PUBLIC INTERFACE
 
       use constants_mod [, only:  constants_init ]
 
-   `constants_init <#constants_init>`__:
+   constants_init:
       A optional initialization routine. The only purpose of this routine is to write the version and tag name
       information to the log file.
 
 | 
-| 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -81,12 +86,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: constants_init
+a. .. rubric:: Constants_init
       :name: constants_init
 
    ::
@@ -100,7 +103,7 @@ a.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -109,7 +112,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -118,7 +121,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -126,11 +129,10 @@ REFERENCES
    None.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -138,11 +140,10 @@ COMPILER SPECIFICS
    None.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -150,11 +151,10 @@ PRECOMPILER OPTIONS
    None.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -163,7 +163,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -171,11 +171,10 @@ TEST PROGRAM
    None.
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -183,11 +182,10 @@ KNOWN BUGS
    None.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -207,11 +205,10 @@ NOTES
            geopotential(:,:) = height(:,:) * grav_new
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -226,4 +223,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

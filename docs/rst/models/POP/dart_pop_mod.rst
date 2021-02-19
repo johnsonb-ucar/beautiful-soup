@@ -2,7 +2,7 @@ MODULE dart_pop_mod (POP)
 =========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

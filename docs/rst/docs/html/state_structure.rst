@@ -1,9 +1,8 @@
 State Stucture
 ==============
 
-=================== =========================================================
-|DART project logo| Jump to `DART Documentation Main Index <../index.html>`__
-=================== =========================================================
+Contents
+--------
 
 State_structure_mod is a module that holds all the domain, variable, dimension info about the model_mods in the state.
 Note it stores only *metadata* about the state, not the actual state variables themselves.
@@ -50,25 +49,12 @@ DART index
 **Note** That (i,j,k) needs to be converted to (lon, lat, lev) or to whatever grid the variable is on. ``get_dim_name``
 can be used to get the dimension name from i,j,k if needed.
 
-Unlimited Dimensions: IO vs model_mod routines.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Unlimited dimensions: io vs model_mod routines
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Some model restart files have an unlimited dimension. For IO purposes, e.g. creating netcdf files, the unlimited
 dimension is used. For state structure accessor functions called be the model_mod the unlimited dimension is ignored. So
 if you have a variable TEMPARATURE in your netcdf file, with dimensions (lon, lat, level, time) the IO routines will see
 a 4D variable, but ``get_num_dims`` used in model_mod will return 3D.
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../images/Dartboard7.png
-   :height: 70px

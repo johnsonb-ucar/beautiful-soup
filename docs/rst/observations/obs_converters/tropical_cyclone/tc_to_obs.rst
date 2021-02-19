@@ -2,7 +2,7 @@ PROGRAM ``tc_to_obs``
 =====================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Data sources <#data_sources>`__

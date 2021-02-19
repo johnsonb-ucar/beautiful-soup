@@ -2,7 +2,7 @@ program ``obs_loop``
 ====================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Usage <#usage>`__

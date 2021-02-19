@@ -1,5 +1,12 @@
-module mpp_domains_mod
+.. _module_mpp_domains_mod:
+
+Module mpp_domains_mod
 ----------------------
+
+Contents
+~~~~~~~~
+
+-  `Module mpp_domains_mod <#module_mpp_domains_mod>`__
 
 .. container::
 
@@ -12,7 +19,7 @@ module mpp_domains_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 ``mpp_domains_mod`` is a set of simple calls for domain decomposition and domain updates on rectilinear grids. It
@@ -76,11 +83,10 @@ requires the module ` <models/bgrid_solo/fms_src/shared/mpp/mpp.html>`__, upon w
    domain are also contained in a linked list of neighbours.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -91,7 +97,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -117,49 +123,48 @@ PUBLIC INTERFACE
                                     mpp_domains_exit,
                                     mpp_get_domain_components ]
 
-   `mpp_define_domains <#mpp_define_domains>`__:
+   mpp_define_domains:
       Set up a domain decomposition.
-   `mpp_update_domains <#mpp_update_domains>`__:
+   mpp_update_domains:
       Halo updates.
-   `mpp_redistribute <#mpp_redistribute>`__:
+   mpp_redistribute:
       Reorganization of distributed global arrays.
-   `mpp_global_field <#mpp_global_field>`__:
+   mpp_global_field:
       Fill in a global array from domain-decomposed arrays.
-   `mpp_global_max <#mpp_global_max>`__:
+   mpp_global_max:
       Global max/min of domain-decomposed arrays.
-   `mpp_global_sum <#mpp_global_sum>`__:
+   mpp_global_sum:
       Global sum of domain-decomposed arrays.
-   `operator <#operator>`__:
+   operator:
       Equality/inequality operators for domaintypes.
-   `mpp_get_compute_domain <#mpp_get_compute_domain>`__:
+   mpp_get_compute_domain:
       These routines retrieve the axis specifications associated with the compute domains.
-   `mpp_get_compute_domains <#mpp_get_compute_domains>`__:
+   mpp_get_compute_domains:
       Retrieve the entire array of compute domain extents associated with a decomposition.
-   `mpp_get_data_domain <#mpp_get_data_domain>`__:
+   mpp_get_data_domain:
       These routines retrieve the axis specifications associated with the data domains.
-   `mpp_get_global_domain <#mpp_get_global_domain>`__:
+   mpp_get_global_domain:
       These routines retrieve the axis specifications associated with the global domains.
-   `mpp_define_layout <#mpp_define_layout>`__:
+   mpp_define_layout:
       Retrieve layout associated with a domain decomposition.
-   `mpp_get_pelist <#mpp_get_pelist>`__:
+   mpp_get_pelist:
       Retrieve list of PEs associated with a domain decomposition.
-   `mpp_get_layout <#mpp_get_layout>`__:
+   mpp_get_layout:
       Retrieve layout associated with a domain decomposition.
-   `mpp_domains_init <#mpp_domains_init>`__:
+   mpp_domains_init:
       Initialize domain decomp package.
-   `mpp_domains_set_stack_size <#mpp_domains_set_stack_size>`__:
+   mpp_domains_set_stack_size:
       Set user stack size.
-   `mpp_domains_exit <#mpp_domains_exit>`__:
+   mpp_domains_exit:
       Exit ``mpp_domains_mod``.
-   `mpp_get_domain_components <#mpp_get_domain_components>`__:
+   mpp_get_domain_components:
       Retrieve 1D components of 2D decomposition.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -168,12 +173,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: mpp_define_domains
+a. .. rubric:: Mpp_define_domains
       :name: mpp_define_domains
 
    ::
@@ -323,9 +326,7 @@ a.
              |Data domain   |0,101,1,25|0,101,26,50|0,101,51,75|1,101,76,100|
              |--------------|----------|-----------|-----------|------------|
 
-b. 
-
-   .. rubric:: mpp_update_domains
+b. .. rubric:: Mpp_update_domains
       :name: mpp_update_domains
 
    ::
@@ -374,9 +375,7 @@ b.
       buffer area can be set by the user by calling
       ` <models/bgrid_solo/fms_src/shared/mpp/mpp_domains.html#mpp_domains_set_stack_size>`__ .
 
-c. 
-
-   .. rubric:: mpp_redistribute
+c. .. rubric:: Mpp_redistribute
       :name: mpp_redistribute
 
    ::
@@ -396,9 +395,7 @@ c.
       ``field_out   `` ``field_out`` on the data domain of ``domain_out``.
       ================ ===================================================
 
-d. 
-
-   .. rubric:: mpp_global_field
+d. .. rubric:: Mpp_global_field
       :name: mpp_global_field
 
    ::
@@ -422,9 +419,7 @@ d.
       ``global   `` ``global`` is dimensioned on the corresponding global domain.
       ============= =============================================================
 
-e. 
-
-   .. rubric:: mpp_global_max
+e. .. rubric:: Mpp_global_max
       :name: mpp_global_max
 
    ::
@@ -450,9 +445,7 @@ e.
       |              | intrinsic of f90).                                                                                   |
       +--------------+------------------------------------------------------------------------------------------------------+
 
-f. 
-
-   .. rubric:: mpp_global_sum
+f. .. rubric:: Mpp_global_sum
       :name: mpp_global_sum
 
    ::
@@ -479,9 +472,7 @@ f.
    **NOTE**
       All PEs in a domain decomposition must call ``mpp_global_sum``, and each will have the result upon exit.
 
-g. 
-
-   .. rubric:: operator
+g. .. rubric:: Operator
       :name: operator
 
    **DESCRIPTION**
@@ -502,9 +493,7 @@ g.
       Domains are considered equal if and only if the start and end indices of each of their component global, data and
       compute domains are equal.
 
-h. 
-
-   .. rubric:: mpp_get_compute_domain
+h. .. rubric:: Mpp_get_compute_domain
       :name: mpp_get_compute_domain
 
    ::
@@ -515,9 +504,7 @@ h.
       The domain is a derived type with private elements. These routines retrieve the axis specifications associated
       with the compute domains The 2D version of these is a simple extension of 1D.
 
-i. 
-
-   .. rubric:: mpp_get_compute_domains
+i. .. rubric:: Mpp_get_compute_domains
       :name: mpp_get_compute_domains
 
    ::
@@ -538,9 +525,7 @@ i.
       ``xsize,ysize   ``   
       ====================
 
-j. 
-
-   .. rubric:: mpp_get_data_domain
+j. .. rubric:: Mpp_get_data_domain
       :name: mpp_get_data_domain
 
    ::
@@ -551,9 +536,7 @@ j.
       The domain is a derived type with private elements. These routines retrieve the axis specifications associated
       with the data domains. The 2D version of these is a simple extension of 1D.
 
-k. 
-
-   .. rubric:: mpp_get_global_domain
+k. .. rubric:: Mpp_get_global_domain
       :name: mpp_get_global_domain
 
    ::
@@ -564,9 +547,7 @@ k.
       The domain is a derived type with private elements. These routines retrieve the axis specifications associated
       with the global domains. The 2D version of these is a simple extension of 1D.
 
-l. 
-
-   .. rubric:: mpp_define_layout
+l. .. rubric:: Mpp_define_layout
       :name: mpp_define_layout
 
    ::
@@ -591,9 +572,7 @@ l.
       | ``layout   ``                                             |    [integer, dimension(2)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-m. 
-
-   .. rubric:: mpp_get_pelist
+m. .. rubric:: Mpp_get_pelist
       :name: mpp_get_pelist
 
    **DESCRIPTION**
@@ -617,9 +596,7 @@ m.
       |                                                           |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-n. 
-
-   .. rubric:: mpp_get_layout
+n. .. rubric:: Mpp_get_layout
       :name: mpp_get_layout
 
    ::
@@ -641,9 +618,7 @@ n.
       |                                                           |    [integer, dimension(2)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-o. 
-
-   .. rubric:: mpp_domains_init
+o. .. rubric:: Mpp_domains_init
       :name: mpp_domains_init
 
    ::
@@ -661,9 +636,7 @@ o.
       | ``flags   ``                                              |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-p. 
-
-   .. rubric:: mpp_domains_set_stack_size
+p. .. rubric:: Mpp_domains_set_stack_size
       :name: mpp_domains_set_stack_size
 
    ::
@@ -679,9 +652,7 @@ p.
       | ``n   ``                                                  |    [integer]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-q. 
-
-   .. rubric:: mpp_domains_exit
+q. .. rubric:: Mpp_domains_exit
       :name: mpp_domains_exit
 
    ::
@@ -692,9 +663,7 @@ q.
       Serves no particular purpose, but is provided should you require to re-initialize ``mpp_domains_mod``, for some
       odd reason.
 
-r. 
-
-   .. rubric:: mpp_get_domain_components
+r. .. rubric:: Mpp_get_domain_components
       :name: mpp_get_domain_components
 
    ::
@@ -716,7 +685,7 @@ r.
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
@@ -725,7 +694,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -734,7 +703,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -742,11 +711,10 @@ REFERENCES
    None.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -762,11 +730,10 @@ COMPILER SPECIFICS
       module. <models/bgrid_solo/fms_src/shared/mpp/mpp.html#COMPILING%20AND%20LINKING%20SOURCE>`__
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -777,11 +744,10 @@ PRECOMPILER OPTIONS
       built on top of it. Contact me, Balaji, SGI/GFDL, with questions.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -796,7 +762,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -804,11 +770,10 @@ TEST PROGRAM
    None.
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -816,11 +781,10 @@ KNOWN BUGS
    None.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -828,11 +792,10 @@ NOTES
    None.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -845,4 +808,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

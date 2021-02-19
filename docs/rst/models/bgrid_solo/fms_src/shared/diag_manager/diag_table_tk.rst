@@ -1,7 +1,12 @@
 --------------
 
-diag_table_tk
+Diag_table_tk
 -------------
+
+Contents
+~~~~~~~~
+
+-  `Diag_table_tk <#diag_table_tk>`__
 
 .. container::
 
@@ -14,7 +19,7 @@ diag_table_tk
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 .. container::
@@ -76,7 +81,7 @@ OVERVIEW
 
 --------------
 
-INSTALLATION
+Installation
 ^^^^^^^^^^^^
 
 .. container::
@@ -105,7 +110,7 @@ INSTALLATION
 
 --------------
 
-USAGE
+Usage
 ^^^^^
 
 #. **Load and edit previously saved diag tables.**
@@ -125,7 +130,7 @@ USAGE
 
 --------------
 
-BUGS AND FUTURE PLANS
+Bugs and future plans
 ^^^^^^^^^^^^^^^^^^^^^
 
 .. container::

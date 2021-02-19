@@ -2,7 +2,7 @@ DART_LAB Tutorial
 =================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `DART tutorial presentations <#dart_tutorial_presentations>`__

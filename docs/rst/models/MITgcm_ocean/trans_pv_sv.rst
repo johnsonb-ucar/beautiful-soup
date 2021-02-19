@@ -1,38 +1,50 @@
-PROGRAM *trans_pv_sv*
-=====================
+PROGRAM ``trans_pv_sv``
+=======================
+
+Contents
+--------
+
+-  `Usage <#usage>`__
+-  `Modules used <#modules_used>`__
+-  `Namelist <#namelist>`__
+-  `Files <#files>`__
+-  `References <#references>`__
+-  `Error codes and conditions <#error_codes_and_conditions>`__
+-  `Private components <#private_components>`__
 
 $Id$
 
-| *trans_pv_sv* is responsible for converting the ocean model 'snapshot' files to a DART 'initial conditions' file. In
+| ``trans_pv_sv`` is responsible for converting the ocean model 'snapshot' files to a DART 'initial conditions' file. In
   order to do that, the valid time for the snapshot files must be calculated from several pieces of information: the
-  filename contains a timestep index, the *data&PARM03* namelist contains information about the amount of time per
-  timestep, and the *data.cal&CAL_NML* namelist contains the start time. Additionally, the grid characteristics must be
-  read from *data&PARM04*. Consequently, the files *data*, and *data.cal* as well as the general *input.nml* are needed
-  in addition to the snapshot files.
+  filename contains a timestep index, the ``data``\ ``&PARM03`` namelist contains information about the amount of time
+  per timestep, and the ``data.cal``\ ``&CAL_NML`` namelist contains the start time. Additionally, the grid
+  characteristics must be read from ``data``\ ``&PARM04``. Consequently, the files ``data``, and ``data.cal`` as well as
+  the general ``input.nml`` are needed in addition to the snapshot files.
 | This program has a number of options that are driven from namelists and **one** piece of input read from STDIN: the
   integer representing the timestep index of the snapshot file set.
 
 Usage
 -----
 
-| The output filename is hardwired to that expected by *filter*. This example creates an output file named
-  *assim_model_state_ud* from the following files in the local directory:
-| *S.0000000096.data*
-| *T.0000000096.data*
-| *U.0000000096.data*
-| *V.0000000096.data*
-| *Eta.0000000096.data*
+| The output filename is hardwired to that expected by ``filter``. This example creates an output file named
+  ``assim_model_state_ud`` from the following files in the local directory:
+| ``S.0000000096.data``
+| ``T.0000000096.data``
+| ``U.0000000096.data``
+| ``V.0000000096.data``
+| ``Eta.0000000096.data``
 
 .. container:: unix
 
    ./trans_pv_sv < 96
 
 | 
-| 
 
 --------------
 
-MODULES USED
+.. _modules_used:
+
+Modules used
 ------------
 
 ::
@@ -45,7 +57,7 @@ MODULES USED
 
 --------------
 
-NAMELIST
+Namelist
 --------
 
 This program has no namelist of its own, but some of the underlying modules require namelists. To avoid duplication and,
@@ -55,10 +67,10 @@ hyperlink to the full documentation for each namelist.
 +----------------------------------------------------------+----------------------------------------------------------+
 | Namelist                                                 | Primary Purpose                                          |
 +==========================================================+==========================================================+
-| `utilities_nml <../../assimilatio                        | set the termination level and file name for the run-time |
+| `utilities_nml </assimilatio                             | set the termination level and file name for the run-time |
 | n_code/modules/utilities/utilities_mod.html#Namelist>`__ | log                                                      |
 +----------------------------------------------------------+----------------------------------------------------------+
-| `assim_model_mod_nml <../../assimilation_cod             | write DART restart files in binary or ASCII              |
+| `assim_model_mod_nml </assimilation_cod                  | write DART restart files in binary or ASCII              |
 | e/modules/assimilation/assim_model_mod.html#Namelist>`__ |                                                          |
 +----------------------------------------------------------+----------------------------------------------------------+
 | `model_nml <model_mod.html#Namelist>`__                  | write netCDF files with prognostic variables             |
@@ -73,23 +85,25 @@ hyperlink to the full documentation for each namelist.
 
 --------------
 
-FILES
+Files
 -----
 
--  input namelist files: *data, data.cal, input.nml*
--  input snapshot files: *[S,T,U,V,Eta].nnnnnnnnnn.[data[,.meta]]*
--  output initial conditions file: *assim_model_state_ud*
+-  input namelist files: ``data, data.cal, input.nml``
+-  input snapshot files: ``[S,T,U,V,Eta].nnnnnnnnnn.[data[,.meta]]``
+-  output initial conditions file: ``assim_model_state_ud``
 
 --------------
 
-REFERENCES
+References
 ----------
 
 -  none
 
 --------------
 
-ERROR CODES and CONDITIONS
+.. _error_codes_and_conditions:
+
+Error codes and conditions
 --------------------------
 
 | The most common problem is trying to read the Fortran direct-access big-endian snapshot files on a little-endian
@@ -99,41 +113,17 @@ ERROR CODES and CONDITIONS
 
 .. container:: errors
 
-   Routine
+   =========== =================================== ===========================================
+   Routine     Message                             Comment
+   =========== =================================== ===========================================
+   trans_sv_pv unable to read timestep from stdin. look at the example in the 'Usage' section.
+   =========== =================================== ===========================================
 
-Message
+.. _private_components:
 
-Comment
-
-trans_sv_pv
-
-unable to read timestep from stdin.
-
-look at the example in the 'Usage' section.
-
-KNOWN BUGS
-----------
-
-There are no known bugs.
-
---------------
-
-FUTURE PLANS
-------------
-
-None at this time. Feel free to suggest improvements.
-
---------------
-
-PRIVATE COMPONENTS
+Private components
 ------------------
 
 N/A
 
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download

@@ -2,7 +2,7 @@ PROGRAM ``advance_time``
 ========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Usage <#usage>`__

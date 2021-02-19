@@ -2,7 +2,7 @@ PROGRAM ``snow_to_obs``
 =======================
 
 Contents
-========
+--------
 
 -  `MODIS snowcover fraction observation converter <#modis_snowcover_fraction_observation_converter>`__
 -  `Data sources <#data_sources>`__

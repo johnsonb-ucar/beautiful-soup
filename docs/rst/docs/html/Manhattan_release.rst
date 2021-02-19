@@ -2,7 +2,7 @@ DART Manhattan Release Notes
 ============================
 
 Contents
-========
+--------
 
 -  `Dart overview <#dart_overview>`__
 -  `Notes for current users <#notes_for_current_users>`__

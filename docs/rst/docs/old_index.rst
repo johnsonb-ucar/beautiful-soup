@@ -2,7 +2,7 @@ DART Documentation Main Index
 =============================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Software updates <#software_updates>`__

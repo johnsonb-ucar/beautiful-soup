@@ -2,7 +2,7 @@ PROGRAM ``littler_tf_dart``
 ===========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Modules used <#modules_used>`__

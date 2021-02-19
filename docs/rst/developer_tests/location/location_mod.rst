@@ -2,7 +2,7 @@ MODULE location_mod
 ===================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Introduction <#introduction>`__

@@ -2,7 +2,7 @@ PROGRAM ``cam_to_dart``
 =======================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

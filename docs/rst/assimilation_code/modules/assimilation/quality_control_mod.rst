@@ -2,7 +2,7 @@ MODULE quality_control_mod
 ==========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Usage <#usage>`__

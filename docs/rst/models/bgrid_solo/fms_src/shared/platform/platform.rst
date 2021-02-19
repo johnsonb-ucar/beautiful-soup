@@ -1,7 +1,14 @@
 --------------
 
-module platform_mod
+.. _module_platform_mod:
+
+Module platform_mod
 -------------------
+
+Contents
+~~~~~~~~
+
+-  `Module platform_mod <#module_platform_mod>`__
 
 .. container::
 
@@ -12,11 +19,10 @@ module platform_mod
    **Last Modified:**  $Date$
 
 | 
-| 
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 .. container::
@@ -43,7 +49,7 @@ OVERVIEW
 
 --------------
 
-OTHER OTHER MODULES USED
+Other other modules used
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -51,11 +57,10 @@ OTHER OTHER MODULES USED
    None.
 
 | 
-| 
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -63,11 +68,10 @@ PUBLIC INTERFACE
    None.
 
 | 
-| 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -75,11 +79,10 @@ PUBLIC DATA
    None.
 
 | 
-| 
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
 .. container::
@@ -87,11 +90,10 @@ PUBLIC ROUTINES
    None.
 
 | 
-| 
 
 --------------
 
-NAMELIST
+Namelist
 ^^^^^^^^
 
 .. container::
@@ -99,11 +101,10 @@ NAMELIST
    None.
 
 | 
-| 
 
 --------------
 
-COMPILING AND LINKING SOURCE
+Compiling and linking source
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -115,7 +116,7 @@ COMPILING AND LINKING SOURCE
 
 --------------
 
-PORTABILITY
+Portability
 ^^^^^^^^^^^
 
 .. container::
@@ -123,11 +124,10 @@ PORTABILITY
    None.
 
 | 
-| 
 
 --------------
 
-ACQUIRING SOURCE
+Acquiring source
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -142,11 +142,10 @@ ACQUIRING SOURCE
    is ``fez``. Public access to the GFDL CVS repository will soon be made available.
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::

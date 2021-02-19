@@ -1,9 +1,8 @@
 RMA notes
 =========
 
-=================== =========================================================
-|DART project logo| Jump to `DART Documentation Main Index <../index.html>`__
-=================== =========================================================
+Contents
+--------
 
 In the RMA version of DART, the state vector is not required to be stored completely on any process. This is achieved
 using Remote Memory Access (RMA). The RMA programing model allows processes to read (and write) memory on other
@@ -34,7 +33,7 @@ There are six major differences between Lanai and RMA DART:
 
 Before bitwise testing with Lanai please read `bitwise considerations <bitwise_considerations.html>`__
 
-NetCDF Restarts
+NetCDF restarts
 ^^^^^^^^^^^^^^^
 
 The programs filter and perfect_model_obs now read/write directly from NetCDF files, rather than having to run
@@ -62,7 +61,7 @@ lets DART read the NetCDF dimensions for a list of variables from a file (``info
 that can be used together to create a domain from a description:
 ``add_domain, add_dimension_to_variable, finished_adding_domain``. This can be used in models such as bgrid_solo where
 the model is spun up in perfect_model_obs, but the model itself has variable structure (3D variables with names). See
-`Additions/Changes to existing namelists for how to use NetCDF IO <#namelist_changes>`__.
+Additions/Changes to existing namelists for how to use NetCDF IO.
 
 **Note** when using NetCDF restarts, inflation files are NetCDF also. The inflation mean and inflation standard
 deviation are in separate files when you use NetCDF restarts. See `NetCDF inflation
@@ -118,8 +117,8 @@ For Posterior_Diag.nc:
 
 The ``num_output_state_members`` are not written separately from the restarts. Note that restarts will have been clamped
 if any clamping is applied (given as an arguement to add_domain). This is *different* to Posterior_Diag.nc which
-contains unclamped values. Note also that there are 2 more `"stages" <#STAGES_TO_WRITE>`__ which might be output, in
-addition to the preassim and postassim discussed here.
+contains unclamped values. Note also that there are 2 more "stages" which might be output, in addition to the preassim
+and postassim discussed here.
 
 For models with multiple domains the filenames above are appended with the domain number, e.g. preassim_mean.nc becomes
 preassim_mean_d01.nc, preassim_mean_d02.nc, etc.
@@ -142,70 +141,64 @@ vector is available. If a model_mod does not provide a perturb interface, filter
 amplitude set in filter_nml:perturbation_amplitude. Note the perturb namelist options have been removed from
 ensemble_manager_nml
 
-state_vector_io_nml
+State_vector_io_nml
 ^^^^^^^^^^^^^^^^^^^
 
-.. container:: namelist
+::
 
-   ::
-
-      &state_vector_io_nml
-         buffer_state_io         = .false.,
-         single_precision_output = .false.,
-      /
+   &state_vector_io_nml
+      buffer_state_io         = .false.,
+      single_precision_output = .false.,
+   /
 
 When ``buffer_state_io`` is ``.false.`` the entire state is read into memory at once if .true. variables are read one at
 a time. If your model can not fit into memory at once this must be set to ``.true.`` .
 
 ``single_precision_output`` allows you to run filter in double precision but write NetCDF files in single precision.
 
-quality_control_nml
+Quality_control_nml
 ^^^^^^^^^^^^^^^^^^^
 
 These namelist options used to be in filter_nml, now they are in quality_control_nml.
 
-.. container:: namelist
+::
 
-   ::
+   &quality_control_nml
+      input_qc_threshold          = 3,
+      outlier_threshold           = 4,
+      enable_special_outlier_code = .false.
+   /
 
-      &quality_control_nml
-         input_qc_threshold          = 3,
-         outlier_threshold           = 4,
-         enable_special_outlier_code = .false.
-      /
-
-Additions/Changes to existing namelists
+Additions/changes to existing namelists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 New namelist variables
 
-filter_nml
+Filter_nml
 ^^^^^^^^^^
 
-.. container:: namelist
+::
 
-   ::
+   &filter_nml
+      single_file_in               = .false.,
+      single_file_out              = .false.,
 
-      &filter_nml
-         single_file_in               = .false.,
-         single_file_out              = .false.,
+      input_state_file_list        = 'null',
+      output_state_file_list       = 'null',
+      input_state_files            = 'null',
+      output_state_files           = 'null',
 
-         input_state_file_list        = 'null',
-         output_state_file_list       = 'null',
-         input_state_files            = 'null',
-         output_state_files           = 'null',
+      stages_to_write              = 'output'
+      write_all_stages_at_end      = .false.
+      output_restarts              = .true.
+      output_mean                  = .true.
+      output_sd                    = .true.
 
-         stages_to_write              = 'output'
-         write_all_stages_at_end      = .false.
-         output_restarts              = .true.
-         output_mean                  = .true.
-         output_sd                    = .true.
+      perturb_from_single_instance = .false.,
+      perturbation_amplitude       = 0.2_r8,
 
-         perturb_from_single_instance = .false.,
-         perturbation_amplitude       = 0.2_r8,
-
-         distributed_state            = .true.
-      /
+      distributed_state            = .true.
+   /
 
 | 
 
@@ -291,14 +284,14 @@ output_mean
 logical
 
 True means output a restart file which contains the ensemble mean for the stages that have been turned on in
-``stages_to_write``. The file name will have the stage with *\_mean* appended.
+``stages_to_write``. The file name will have the stage with ``_mean`` appended.
 
 output_sd
 
 logical
 
 True means output a restart file which contains the ensemble standard deviation for the stages that have been turned on
-in ``stages_to_write``. The file name will have the stage with *\_sd* appended.
+in ``stages_to_write``. The file name will have the stage with ``_sd`` appended.
 
 perturb_from_single_instance
 
@@ -335,16 +328,14 @@ For **output** file names:
 For small models you may want to use ``single_file_in``, ``single_file_out`` which contains all copies needed to run
 filter.
 
-assim_tools_nml
+Assim_tools_nml
 ^^^^^^^^^^^^^^^
 
-.. container:: namelist
+::
 
-   ::
-
-      &assim_tools_nml
-         distribute_mean  = .true.
-      /
+   &assim_tools_nml
+      distribute_mean  = .true.
+   /
 
 In previous DART releases, each processor gets a copy of the mean (in ens_mean_for_model). In RMA DART, the mean is
 distributed across all processors. However, a user can choose to have a copy of the mean on each processor by setting
@@ -382,17 +373,4 @@ only writes inflation files if ``inf_flavor > 1``
       netCDF_large_file_support  = .false.
       /
 
-.. container:: top
-
-   [`top <#>`__]
-
 --------------
-
-Terms of Use
-------------
-
-DART software - Copyright UCAR. This open source software is provided by UCAR, "as is", without charge, subject to all
-terms of use at http://www.image.ucar.edu/DAReS/DART/DART_download
-
-.. |DART project logo| image:: ../images/Dartboard7.png
-   :height: 70px

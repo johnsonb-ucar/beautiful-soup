@@ -2,7 +2,7 @@ MODULE ensemble_manager_mod
 ===========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

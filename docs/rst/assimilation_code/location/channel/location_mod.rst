@@ -2,7 +2,7 @@ MODULE location_mod (channel)
 =============================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

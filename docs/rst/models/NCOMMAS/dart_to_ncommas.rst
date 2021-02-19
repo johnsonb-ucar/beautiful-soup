@@ -2,7 +2,7 @@ PROGRAM ``dart_to_ncommas``
 ===========================
 
 Contents
-========
+--------
 
 -  `Namelist <#namelist>`__
 -  `Modules used <#modules_used>`__

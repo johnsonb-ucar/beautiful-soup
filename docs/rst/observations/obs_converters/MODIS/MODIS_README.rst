@@ -2,7 +2,7 @@ DART observations and MODIS products.
 =====================================
 
 Contents
-========
+--------
 
 -  `Programs <#programs>`__
 -  `Plans <#plans>`__

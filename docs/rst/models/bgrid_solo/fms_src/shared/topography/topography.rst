@@ -1,5 +1,12 @@
-module topography_mod
+.. _module_topography_mod:
+
+Module topography_mod
 ---------------------
+
+Contents
+~~~~~~~~
+
+-  `Module topography_mod <#module_topography_mod>`__
 
 .. container::
 
@@ -10,7 +17,7 @@ module topography_mod
 
 --------------
 
-OVERVIEW
+Overview
 ^^^^^^^^
 
 Routines for creating land surface topography fields and land-water masks for latitude-longitude grids.
@@ -26,11 +33,10 @@ Routines for creating land surface topography fields and land-water masks for la
    `gaussian_topog_mod <gaussian_topog.html>`__.
 
 | 
-| 
 
 --------------
 
-OTHER MODULES USED
+Other modules used
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -43,7 +49,7 @@ OTHER MODULES USED
 
 --------------
 
-PUBLIC INTERFACE
+Public interface
 ^^^^^^^^^^^^^^^^
 
 .. container::
@@ -57,25 +63,24 @@ PUBLIC INTERFACE
                                    get_water_frac,
                                    get_water_mask ]
 
-   `get_topog_mean <#get_topog_mean>`__:
+   get_topog_mean:
       Returns a "realistic" mean surface height field.
-   `get_topog_stdev <#get_topog_stdev>`__:
+   get_topog_stdev:
       Returns a standard deviation of higher resolution topography with the given model grid boxes.
-   `get_ocean_frac <#get_ocean_frac>`__:
+   get_ocean_frac:
       Returns fractional area covered by ocean in a grid box.
-   `get_ocean_mask <#get_ocean_mask>`__:
+   get_ocean_mask:
       Returns a land-ocean mask in a grid box.
-   `get_water_frac <#get_water_frac>`__:
+   get_water_frac:
       Returns fractional area covered by water.
-   `get_water_mask <#get_water_mask>`__:
+   get_water_mask:
       Returns a land-water mask in a grid box.
 
-| 
 | 
 
 --------------
 
-PUBLIC DATA
+Public data
 ^^^^^^^^^^^
 
 .. container::
@@ -84,12 +89,10 @@ PUBLIC DATA
 
 --------------
 
-PUBLIC ROUTINES
+Public routines
 ^^^^^^^^^^^^^^^
 
-a. 
-
-   .. rubric:: get_topog_mean
+a. .. rubric:: Get_topog_mean
       :name: get_topog_mean
 
    ::
@@ -122,9 +125,7 @@ a.
       |                                                           |    [logical]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-b. 
-
-   .. rubric:: get_topog_stdev
+b. .. rubric:: Get_topog_stdev
       :name: get_topog_stdev
 
    ::
@@ -157,9 +158,7 @@ b.
       |                                                           |    [logical]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-c. 
-
-   .. rubric:: get_ocean_frac
+c. .. rubric:: Get_ocean_frac
       :name: get_ocean_frac
 
    ::
@@ -191,9 +190,7 @@ c.
       |                                                           |    [logical]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-d. 
-
-   .. rubric:: get_ocean_mask
+d. .. rubric:: Get_ocean_mask
       :name: get_ocean_mask
 
    ::
@@ -225,9 +222,7 @@ d.
       |                                                           |    [logical]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-e. 
-
-   .. rubric:: get_water_frac
+e. .. rubric:: Get_water_frac
       :name: get_water_frac
 
    ::
@@ -259,9 +254,7 @@ e.
       |                                                           |    [logical]                                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
-f. 
-
-   .. rubric:: get_water_mask
+f. .. rubric:: Get_water_mask
       :name: get_water_mask
 
    ::
@@ -294,7 +287,7 @@ f.
 
 --------------
 
-NAMELIST
+Namelist
 ^^^^^^^^
 
 .. container::
@@ -308,18 +301,17 @@ NAMELIST
    [character, default: DATA/navy_pctwater.data]
 
 | 
-| 
 
 --------------
 
-DATA SETS
+Data sets
 ^^^^^^^^^
 
 .. container::
 
       | This module uses the 1/6 degree U.S. Navy mean topography and percent water data sets.
       | These data sets have been re-formatted to separate 32-bit IEEE files. The names of these files is specified by
-        the `namelist <#NAMELIST>`__ input.
+        the namelist input.
       | The format for both files is as follows:
 
       ::
@@ -343,7 +335,7 @@ DATA SETS
 
 --------------
 
-ERROR MESSAGES
+Error messages
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -357,7 +349,7 @@ ERROR MESSAGES
 
 --------------
 
-REFERENCES
+References
 ^^^^^^^^^^
 
 .. container::
@@ -365,11 +357,10 @@ REFERENCES
    None.
 
 | 
-| 
 
 --------------
 
-COMPILER SPECIFICS
+Compiler specifics
 ^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -377,11 +368,10 @@ COMPILER SPECIFICS
    None.
 
 | 
-| 
 
 --------------
 
-PRECOMPILER OPTIONS
+Precompiler options
 ^^^^^^^^^^^^^^^^^^^
 
 .. container::
@@ -389,11 +379,10 @@ PRECOMPILER OPTIONS
    None.
 
 | 
-| 
 
 --------------
 
-LOADER OPTIONS
+Loader options
 ^^^^^^^^^^^^^^
 
 .. container::
@@ -402,7 +391,7 @@ LOADER OPTIONS
 
 --------------
 
-TEST PROGRAM
+Test PROGRAM
 ^^^^^^^^^^^^
 
 .. container::
@@ -487,11 +476,10 @@ TEST PROGRAM
            end program test
 
 | 
-| 
 
 --------------
 
-KNOWN BUGS
+Known bugs
 ^^^^^^^^^^
 
 .. container::
@@ -499,11 +487,10 @@ KNOWN BUGS
    Water mask produces some possible erroneous water points along the coast of Antarctic (at about 90W).
 
 | 
-| 
 
 --------------
 
-NOTES
+Notes
 ^^^^^
 
 .. container::
@@ -511,11 +498,10 @@ NOTES
    None.
 
 | 
-| 
 
 --------------
 
-FUTURE PLANS
+Future plans
 ^^^^^^^^^^^^
 
 .. container::
@@ -530,4 +516,4 @@ FUTURE PLANS
 
 .. container::
 
-   `top <#TOP>`__
+   top

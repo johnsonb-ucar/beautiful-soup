@@ -2,7 +2,7 @@ MODULE model_mod (TIEGCM)
 =========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Quickstart guide to running <#quickstart_guide_to_running>`__

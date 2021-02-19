@@ -2,7 +2,7 @@ PROGRAM ``model_to_dart`` for MPAS OCN
 ======================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

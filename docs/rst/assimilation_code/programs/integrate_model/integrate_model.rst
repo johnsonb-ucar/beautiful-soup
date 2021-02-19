@@ -2,7 +2,7 @@ PROGRAM ``integrate_model``
 ===========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

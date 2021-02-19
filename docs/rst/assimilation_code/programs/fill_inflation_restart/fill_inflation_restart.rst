@@ -2,7 +2,7 @@ PROGRAM ``fill_inflation_restart``
 ==================================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

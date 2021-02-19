@@ -2,7 +2,7 @@ MODULE ``obs_def_gps_mod``
 ==========================
 
 Contents
-========
+--------
 
 -  `Overview <#overview>`__
 -  `Namelist <#namelist>`__

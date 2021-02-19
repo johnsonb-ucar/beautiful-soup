@@ -28,3 +28,6 @@ Temporary Items
 
 # sphinx build folder
 _build
+
+# python directories
+__pycache__

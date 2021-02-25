@@ -1,14 +1,6 @@
 SSUSI F16 EDR-DSK format to observation sequence converters
 ===========================================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Errors <#errors>`__
-
 Overview
 --------
 
@@ -47,18 +39,12 @@ sense the ionosphere and thermosphere. The following is repeated from the SSUSI 
       ncatted -a _FillValue,ON2_UNCERTAINTY,o,f,NaN        input_file.nc
       ncatted -a _FillValue,ON2_UNCERTAINTY,m,f,-1.0       input_file.nc
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
 http://ssusi.jhuapl.edu/data_products
 
 Please read their `data usage <http://ssusi.jhuapl.edu/home_data_usage>`__ policy.
-
---------------
 
 Programs
 --------
@@ -73,13 +59,9 @@ ON2_UNCERTAINTY variable in the ``shell_scripts`` directory. These are *NOT* int
 certainly need to be customized for your use. There are comments at the top of the scripts saying what options they
 include, and should be commented enough to indicate where changes will be likely to need to be made.
 
---------------
-
 Errors
 ------
 
 The code for setting observation error variances is using fixed values, and we are not certain if they are correct.
 Incoming QC values larger than 0 are suspect, but it is not clear if they really signal unusable values or whether there
 are some codes we should accept.
-
---------------

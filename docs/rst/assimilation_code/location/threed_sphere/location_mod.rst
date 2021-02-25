@@ -1,21 +1,6 @@
 MODULE location_mod (threed_sphere)
 ===================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Usage <#usage>`__
--  `Namelist <#namelist>`__
--  `Discussion <#discussion>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Future plans <#future_plans>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -31,8 +16,6 @@ longitude plus a vertical component with choices of vertical coordinate type suc
 type that abstracts the location is provided along with operators to set, get, read, write, and compute great circle
 distances between locations. This is a member of a class of similar location modules that provide the same abstraction
 for different represenations of physical space.
-
---------------
 
 Usage
 -----
@@ -61,17 +44,17 @@ Vertical issues
 ^^^^^^^^^^^^^^^
 
 The localization distance during an assimilation -- the maximum separation between an observation and a state vector
-item potentially affected by the assimilation -- is set in the
-`&assim_tools_nml </assimilation_code/modules/assimilation/assim_tools_mod.html>`__ namelist (the ``cutoff`` item).
+item potentially affected by the assimilation -- is set in the :doc:`../../modules/assimilation/assim_tools_mod`
+namelist (the ``cutoff`` item).
 
-Setting ``horiz_dist_only = .TRUE.`` in the namelist means the great circle distances will be computed using only the
+Setting ``horiz_dist_only = .TRUE.`` in the namelist means the great circle distances will be computed using only the
 latitude and longitudes of the two locations, ignoring the vertical components of the locations. The cutoff is specified
 in radians to be independent of the radius of the sphere. For the Earth the radius is nominally 6,371 Km. To compute the
 horizontal only localization distance, multiply 6,371 Km by the cutoff to get the distance in Km. The cutoff is by
 definition 1/2 the distance to where the increments go to 0, so multiply that result by 2 to get the maximum distance at
 which an observation can alter the state.
 
-Setting ``horiz_dist_only = .FALSE.`` in the namelist means the code will compute a 3D distance, including the vertical
+Setting ``horiz_dist_only = .FALSE.`` in the namelist means the code will compute a 3D distance, including the vertical
 separation. In this case, the ``vert_normalization_xxx`` namelist values will be used to convert from pressure, height,
 model level, or scale heights into radians so the distances are computed in a consistent unit system. In practice,
 multiply the cutoff by the normalization factor (and then again by 2) to get the maximum vertical separation in each of
@@ -90,9 +73,9 @@ Generally a single cutoff value and a single set of normalization factors are su
 localization distances define the maximum range of impact of an observation, but there still must be a positive or
 negative correlation between the state ensemble and the forward operator/expected obs ensemble for the values to change.
 
-However, the `&assim_tools_nml </assimilation_code/modules/assimilation/assim_tools_mod.html>`__ namelist includes the
-option to set a different cutoff on a per-observation-type basis. There are corresponding items in the location module
-namelist to similiarly control the vertical distance contribution on a per-observation, per-vertical-type basis.
+However, the :doc:`../../modules/assimilation/assim_tools_mod` namelist includes the option to set a different cutoff on
+a per-observation-type basis. There are corresponding items in the location module namelist to similiarly control the
+vertical distance contribution on a per-observation, per-vertical-type basis.
 
 Model-dependent vertical conversion issues
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -188,8 +171,6 @@ vertical coordinate used in the state is not the same as the desired vertical lo
 converted using a convert_vertical_state() routine.
 
 | 
-
---------------
 
 Namelist
 --------
@@ -298,9 +279,9 @@ Items in this namelist either control the way in which distances are computed an
    |                                       |                                       | array of boxes. ``print_box_level``   |
    |                                       |                                       | controls how much detail is printed.  |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | print_box_level                       | integer                               | If ``output_box_info = .true.``,      |
+   | print_box_level                       | integer                               | If ``output_box_info = .true.``,      |
    |                                       |                                       | ``print_box_level`` controls how much |
-   |                                       |                                       | detail is printed. 0 = no detail.     |
+   |                                       |                                       | detail is printed. 0 = no detail.     |
    |                                       |                                       | 1,2,3 are progressively more and more |
    |                                       |                                       | detail.                               |
    +---------------------------------------+---------------------------------------+---------------------------------------+
@@ -350,8 +331,6 @@ Items in this namelist either control the way in which distances are computed an
    |                                       |                                       | special_vert_normalization_obs_types' |
    |                                       |                                       | list.                                 |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-
---------------
 
 Discussion
 ----------
@@ -483,34 +462,30 @@ distributed across the entire surface of the sphere. For local or regional model
 the the extent of the local grid.
 
 For efficiency in the case where the boxes span less than half the globe, the 3D location module needs to be able to
-determine the greatest longitude difference between a base point at latitude ``φs`` and all points that are separated
-from that point by a central angle of ``θ``. We might also want to know the latitude, ``φf`` , at which the largest
-separation occurs. Note also that an intermediate form below allows the computation of the maximum longitude difference
-at a particular latitude.
+determine the greatest longitude difference between a base point at latitude ```` and all points that are separated from
+that point by a central angle of ``θ``. We might also want to know the latitude, ```` , at which the largest separation
+occurs. Note also that an intermediate form below allows the computation of the maximum longitude difference at a
+particular latitude.
 
-| The central angle between a point at latitude ``φs`` and a second point at latitude ``φf`` that are separated in
-  longitude by ``Δλ`` is
-| ``  θ = cos-1(sinφssinφf +     cosφscosφfcosΔλ)``
+| The central angle between a point at latitude ```` and a second point at latitude ```` that are separated in longitude
+  by ``Δλ`` is
+| ````
 | Taking the cos of both sides gives
-| ``  cosθ = (sinφssinφf +    cosφscosφfcosΔλ)``
+| ````
 | Solving for ``cosΔλ`` gives
-| ``  cosΔλ      = (a - b sinφf)/(c cosφf)     = a/c secφf -        b/c tanφf``
-| where ``a = cosθ`` , ``b = sinφs`` , and ``c = cosφs`` . We want to maximize ``Δλ`` which implies minimizing ``cosΔλ``
-  subject to constraints. Taking the derivative with respect to ``φf`` gives
-| ``  (d cosΔλ)/(dφf) =     a/c secφf tanφf  - b/c sec2φf = 0``
-| Factoring out ``secφf`` which can never be 0 and using the definitions of ``sec`` and ``tan`` gives
-| ``  (a sinφf)/(c cosφf) - b/(c cosφf) = 0``
+| ````
+| where ```` , ```` , and ```` . We want to maximize ``Δλ`` which implies minimizing ``cosΔλ`` subject to constraints.
+  Taking the derivative with respect to ```` gives
+| ````
+| Factoring out ```` which can never be 0 and using the definitions of ``sec`` and ``tan`` gives
+| ````
 | Solving in the constrained range from 0 to PI/2 gives
-| ``   sinφf = b/a =     sinφs/cosθ``
-| So knowing base point (``φs``, ``λs``), latitude ``φf``, and distance ``θ`` we can use the great circle equation to
-  find the longitude difference at the greatest separation point
-| ``   Δλ = cos-1((a -  (b sinφf)) / (c cosφf))``
+| ````
+| So knowing base point (````, ````), latitude ````, and distance ``θ`` we can use the great circle equation to find the
+  longitude difference at the greatest separation point
+| ````
 | Note that if the angle between the base point and a pole is less than or equal to the central angle, all longitude
   differences will occur as the pole is approached.
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -523,46 +498,42 @@ Other modules used
    obs_kind_mod
    ensemble_manager_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ============================ ====================
 ``use location_mod, only :`` location_type
-                             get_close_type
-                             get_location
-                             set_location
-                             write_location
-                             read_location
-                             interactive_location
-                             set_location_missing
-                             query_location
-                             get_close_init
-                             get_close_obs
-                             get_close_destroy
-                             get_dist
-                             get_maxdist
-                             LocationDims
-                             LocationName
-                             LocationLName
-                             horiz_dist_only
-                             vert_is_undef
-                             vert_is_surface
-                             vert_is_pressure
-                             vert_is_scale_height
-                             vert_is_level
-                             vert_is_height
-                             VERTISUNDEF
-                             VERTISSURFACE
-                             VERTISLEVEL
-                             VERTISPRESSURE
-                             VERTISHEIGHT
-                             VERTISSCALEHEIGHT
-                             operator(==)
-                             operator(/=)
+\                            get_close_type
+\                            get_location
+\                            set_location
+\                            write_location
+\                            read_location
+\                            interactive_location
+\                            set_location_missing
+\                            query_location
+\                            get_close_init
+\                            get_close_obs
+\                            get_close_destroy
+\                            get_dist
+\                            get_maxdist
+\                            LocationDims
+\                            LocationName
+\                            LocationLName
+\                            horiz_dist_only
+\                            vert_is_undef
+\                            vert_is_surface
+\                            vert_is_pressure
+\                            vert_is_scale_height
+\                            vert_is_level
+\                            vert_is_height
+\                            VERTISUNDEF
+\                            VERTISSURFACE
+\                            VERTISLEVEL
+\                            VERTISPRESSURE
+\                            VERTISHEIGHT
+\                            VERTISSCALEHEIGHT
+\                            operator(==)
+\                            operator(/=)
 ============================ ====================
 
 Namelist interface ``&location_nml`` must be read from file ``input.nml``.
@@ -816,9 +787,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    If the last optional argument is not specified, ``maxdist`` applies to all locations. If the last argument is
    specified, it must be a list of exactly the length of the number of specific types in the ``obs_kind_mod.f90`` file.
    This length can be queried with the
-   `get_num_types_of_obs() </assimilation_code/modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__ function
-   to get count of obs types. It allows a different maximum distance to be set per base type when ``get_close()`` is
-   called.
+   `get_num_types_of_obs() <../../modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__ function to get count
+   of obs types. It allows a different maximum distance to be set per base type when ``get_close()`` is called.
 
    +-------------+-------------------------------------------------------------------------------------------------------+
    | ``gc``      | Data for efficiently finding close locations.                                                         |
@@ -831,10 +801,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    +-------------+-------------------------------------------------------------------------------------------------------+
    | *maxdist*   | If specified, must be a list of real values. The length of the list must be exactly the same length   |
    |             | as the number of observation types defined in the obs_def_kind.f90 file. (See                         |
-   |             | `get_n                                                                                                |
-   |             | um_types_of_obs() </assimilation_code/modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__ |
-   |             | to get count of obs types.) The values in this list are used for the obs types as the close distance  |
-   |             | instead of the maxdist argument.                                                                      |
+   |             | `get_num_types_of_obs() <../../modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__ to get |
+   |             | count of obs types.) The values in this list are used for the obs types as the close distance instead |
+   |             | of the maxdist argument.                                                                              |
    +-------------+-------------------------------------------------------------------------------------------------------+
 
 | 
@@ -1184,8 +1153,6 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    This is a **constant**. A parameter set to "threed sphere locations: lon, lat, vertical" used to identify this
    location module in output long name metadata.
 
---------------
-
 Files
 -----
 
@@ -1195,16 +1162,10 @@ filename  purpose
 input.nml to read the location_mod namelist
 ========= =================================
 
---------------
-
 References
 ----------
 
 #. none
-
---------------
-
-.. _error_codes_and_conditions:
 
 Error codes and conditions
 --------------------------
@@ -1245,8 +1206,6 @@ Error codes and conditions
    |                                       | messages                              | nc_write_location                     |
    +---------------------------------------+---------------------------------------+---------------------------------------+
 
-.. _future_plans:
-
 Future plans
 ------------
 
@@ -1262,13 +1221,7 @@ The use of 'obs' in all these routine names should probably be changed to 'loc' 
 that they be observations. They may need to have an associated DART kind, but these routines are used for DART state
 vector entries so it's misleading to always call them 'obs'.
 
---------------
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

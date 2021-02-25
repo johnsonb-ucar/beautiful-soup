@@ -1,15 +1,6 @@
 program ``create_fixed_network_seq``
 ====================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -23,16 +14,11 @@ sequence (option 2). For the fixed period, the total number of observation times
 period of the observations is input and an output observation sequence is generated. For the arbitrary period, the user
 is queried for the number of observing times and then a set of monotonically increasing times. Finally, the user selects
 a file name (traditionally obs_seq.in) to which the output file is written. The format of the output file is controlled
-by the namelist options in
-`obs_sequence_mod </assimilation_code/modules/observations/obs_sequence_mod.html#Namelist>`__.
+by the namelist options in `obs_sequence_mod <../../modules/observations/obs_sequence_mod.html#Namelist>`__.
 
 Any data values or quality control flags associated with the input set are replicated to the output, but this program is
 typically used with perfect model experiments to create observations without data, which are then filled in by running
-`perfect_model_obs </assimilation_code/programs/perfect_model_obs/perfect_model_obs.html>`__.
-
---------------
-
-.. _modules_used:
+:doc:`../../../assimilation_code/programs/perfect_model_obs/perfect_model_obs`.
 
 Modules used
 ------------
@@ -46,32 +32,13 @@ Modules used
    time_manager_mod
    model_mod
 
---------------
-
 Files
 -----
 
 -  Input observation sequence (set_def.out is standard).
 -  Output observation sequence (obs_seq.in is standard).
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ======= ======= =======
-   Routine Message Comment
-   ======= ======= =======
-                    
-   ======= ======= =======

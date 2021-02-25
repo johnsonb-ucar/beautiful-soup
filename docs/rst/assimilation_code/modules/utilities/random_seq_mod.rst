@@ -1,18 +1,6 @@
 MODULE random_seq_mod
 =====================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -26,10 +14,6 @@ is in the C language and the conversion to Fortran was done by the DART team.
 There are test programs in the ``developer_tests/random_seq`` directory which show examples of calling these routines.
 Build and run these tests in the ``test`` subdirectory.
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -38,23 +22,19 @@ Other modules used
    types_mod
    utilities_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ============================ ========================
 *use random_seq_mod, only :* random_seq_type
-                             init_random_seq
-                             random_uniform
-                             random_gaussian
-                             several_random_gaussians
-                             twod_gaussians
-                             random_gamma
-                             random_inverse_gamma
-                             random_exponential
+\                            init_random_seq
+\                            random_uniform
+\                            random_gaussian
+\                            several_random_gaussians
+\                            twod_gaussians
+\                            random_gamma
+\                            random_inverse_gamma
+\                            random_exponential
 ============================ ========================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -84,7 +64,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call init_random_seq(r, [,  seed])*
+   *call init_random_seq(r, [, seed])*
    ::
 
       type(random_seq_type),           intent(inout) :: r
@@ -217,9 +197,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Note that there are three different parameterizations in common use:
 
    #. With shape parameter κ (kappa) and scale parameter θ (theta).
-   #. With shape parameter α (alpha) and rate parameter β (beta). Alpha is the same as kappa, and beta is an inverse
-      scale parameter so β = 1/θ.
-   #. With shape parameter κ (kappa) and mean parameter μ (mu). μ = κ/β, so β = κ/μ.
+   #. With shape parameter α (alpha) and rate parameter β (beta).
+      Alpha is the same as kappa, and beta is an inverse scale parameter so β = 1/θ.
+   #. With shape parameter κ (kappa) and mean parameter μ (mu).
+      μ = κ/β, so β = κ/μ.
 
    This form uses the first parameterization, shape (κ) and scale (θ). The distribution mean is κθ and the variance is
    κ(θ²).
@@ -298,21 +279,15 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Namelist
 --------
 
 This module has no namelist input.
 
---------------
-
 Files
 -----
 
 -  NONE
-
---------------
 
 References
 ----------
@@ -321,32 +296,15 @@ References
 #. `GNU Scientific Library Reference
    Manual <http://www.gnu.org/software/gsl/manual/html_node/Random-Number-Generation.html>`__
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ======= ======= =======
-   Routine Message Comment
-   ======= ======= =======
-                    
-   ======= ======= =======
-
-.. _private_components:
-
 Private components
 ------------------
 
-= =========
-  init_ran
-  ran_unif
-  ran_gauss
-  ran_gamma
-= =========
+== =========
+\  init_ran
+\  ran_unif
+\  ran_gauss
+\  ran_gamma
+== =========
 
 | 
 
@@ -432,5 +390,3 @@ Private components
    ============= ===========================================================
 
 | 
-
---------------

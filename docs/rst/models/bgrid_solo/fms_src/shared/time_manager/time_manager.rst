@@ -1,24 +1,8 @@
-.. _module_time_manager_mod:
-
-Module time_manager_mod
------------------------
-
-Contents
-~~~~~~~~
-
--  `Module time_manager_mod <#module_time_manager_mod>`__
-
-.. container::
-
-   **Contact:**  `fms <mailto:fms@gfdl.noaa.gov>`__
-   **Reviewers:** 
-   **Change History:**  `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/>`__
-   **Last Modified:** 2002/04/16 21:00:57
-
---------------
+module time_manager_mod
+=======================
 
 Overview
-^^^^^^^^
+--------
 
 A software package that provides a set of simple interfaces for modelers to perform computations related to time and
 dates.
@@ -41,10 +25,8 @@ dates.
 
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -52,10 +34,8 @@ Other modules used
 
       fms_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -167,10 +147,8 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
@@ -181,10 +159,8 @@ Public data
    |           |              |       |       | contains two PRIVATE variables: seconds and days.                     |
    +-----------+--------------+-------+-------+-----------------------------------------------------------------------+
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Set_time
       :name: set_time
@@ -197,19 +173,19 @@ a. .. rubric:: Set_time
       Given some number of seconds and days, returns the corresponding time_type.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``seconds   ``                                            | A number of seconds (can be greater than 86400), must be  |
+      | ``seconds``                                               | A number of seconds (can be greater than 86400), must be  |
       |                                                           | positive.                                                 |
-      |                                                           |    [integer, dimension(scalar)]                           |
+      |                                                           | [integer, dimension(scalar)]                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``days   ``                                               | A number of days, must be positive.                       |
-      |                                                           |    [integer, dimension(scalar)]                           |
+      | ``days``                                                  | A number of days, must be positive.                       |
+      |                                                           | [integer, dimension(scalar)]                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | A time interval corresponding to this number of days and  |
+      |                                                           | A time interval corresponding to this number of days and  |
       |                                                           | seconds.                                                  |
-      |                                                           |    [, dimension]                                          |
+      |                                                           | [, dimension]                                             |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 b. .. rubric:: Get_time
@@ -223,17 +199,17 @@ b. .. rubric:: Get_time
       Given a time interval, returns the corresponding seconds and days.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type]                                            |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``seconds   ``                                            | A number of seconds (< 86400).                            |
-      |                                                           |    [integer, dimension(scalar)]                           |
+      | ``seconds``                                               | A number of seconds (< 86400).                            |
+      |                                                           | [integer, dimension(scalar)]                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``days   ``                                               | A number of days, must be positive.                       |
-      |                                                           |    [integer, dimension(scalar)]                           |
+      | ``days``                                                  | A number of days, must be positive.                       |
+      |                                                           | [integer, dimension(scalar)]                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 c. .. rubric:: Increment_time
@@ -249,21 +225,21 @@ c. .. rubric:: Increment_time
       Increments a time by seconds and days; increments cannot be negative.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``seconds   ``                                            | Increment of seconds (can be greater than 86400); must be |
+      | ``seconds``                                               | Increment of seconds (can be greater than 86400); must be |
       |                                                           | positive.                                                 |
-      |                                                           |    [integer, dimension(scalar)]                           |
+      |                                                           | [integer, dimension(scalar)]                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``days   ``                                               | Increment of days; must be positive.                      |
-      |                                                           |    [integer, dimension(scalar)]                           |
+      | ``days``                                                  | Increment of days; must be positive.                      |
+      |                                                           | [integer, dimension(scalar)]                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | A time that adds this increment to the input time.        |
-      |                                                           |    [, dimension]                                          |
+      |                                                           | A time that adds this increment to the input time.        |
+      |                                                           | [, dimension]                                             |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 d. .. rubric:: Decrement_time
@@ -278,23 +254,23 @@ d. .. rubric:: Decrement_time
       Decrements a time by seconds and days; decrements cannot be negative.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``seconds   ``                                            | Decrement of seconds (can be greater than 86400); must be |
+      | ``seconds``                                               | Decrement of seconds (can be greater than 86400); must be |
       |                                                           | positive.                                                 |
-      |                                                           |    [integer, dimension(scalar)]                           |
+      |                                                           | [integer, dimension(scalar)]                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``days   ``                                               | Decrement of days; must be positive.                      |
-      |                                                           |    [integer, dimension(scalar)]                           |
+      | ``days``                                                  | Decrement of days; must be positive.                      |
+      |                                                           | [integer, dimension(scalar)]                              |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | A time that subtracts this decrement from an input time.  |
+      |                                                           | A time that subtracts this decrement from an input time.  |
       |                                                           | If the result is negative, it is considered a fatal       |
       |                                                           | error.                                                    |
-      |                                                           |    [, dimension]                                          |
+      |                                                           | [, dimension]                                             |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 e. .. rubric:: Time_gt
@@ -308,17 +284,17 @@ e. .. rubric:: Time_gt
       Returns true if time1 > time2.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time1   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time1``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time2   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time2``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns true if time1 > time2                             |
-      |                                                           |    [logical, dimension]                                   |
+      |                                                           | Returns true if time1 > time2                             |
+      |                                                           | [logical, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 f. .. rubric:: Time_ge
@@ -332,17 +308,17 @@ f. .. rubric:: Time_ge
       Returns true if time1 >= time2.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time1   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time1``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time2   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time2``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns true if time1 >= time2                            |
-      |                                                           |    [logical, dimension]                                   |
+      |                                                           | Returns true if time1 >= time2                            |
+      |                                                           | [logical, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 g. .. rubric:: Time_lt
@@ -356,17 +332,17 @@ g. .. rubric:: Time_lt
       Returns true if time1 < time2.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time1   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time1``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time2   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time2``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns true if time1 < time2                             |
-      |                                                           |    [logical, dimension]                                   |
+      |                                                           | Returns true if time1 < time2                             |
+      |                                                           | [logical, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 h. .. rubric:: Time_le
@@ -380,17 +356,17 @@ h. .. rubric:: Time_le
       Returns true if time1 <= time2.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time1   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time1``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time2   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time2``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns true if time1 <= time2                            |
-      |                                                           |    [logical, dimension]                                   |
+      |                                                           | Returns true if time1 <= time2                            |
+      |                                                           | [logical, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 i. .. rubric:: Time_eq
@@ -404,17 +380,17 @@ i. .. rubric:: Time_eq
       Returns true if time1 == time2.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time1   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time1``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time2   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time2``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns true if time1 == time2                            |
-      |                                                           |    [logical, dimension]                                   |
+      |                                                           | Returns true if time1 == time2                            |
+      |                                                           | [logical, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 j. .. rubric:: Time_ne
@@ -428,17 +404,17 @@ j. .. rubric:: Time_ne
       Returns true if time1 /= time2.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time1   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time1``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time2   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time2``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns true if time1 /= time2                            |
-      |                                                           |    [logical, dimension]                                   |
+      |                                                           | Returns true if time1 /= time2                            |
+      |                                                           | [logical, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 k. .. rubric:: Time_plus
@@ -452,17 +428,17 @@ k. .. rubric:: Time_plus
       Returns sum of two time_types.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time1   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time1``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time2   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time2``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns sum of two time_types.                            |
-      |                                                           |    [time_type, dimension]                                 |
+      |                                                           | Returns sum of two time_types.                            |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 l. .. rubric:: Time_minus
@@ -477,17 +453,17 @@ l. .. rubric:: Time_minus
       as time2 - time1.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time1   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time1``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time2   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time2``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns difference of two time_types.                     |
-      |                                                           |    [time_type, dimension]                                 |
+      |                                                           | Returns difference of two time_types.                     |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 m. .. rubric:: Time_scalar_mult
@@ -501,17 +477,17 @@ m. .. rubric:: Time_scalar_mult
       Returns time multiplied by integer factor n.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  | A time interval.                                          |
-      |                                                           |    [integer, dimension]                                   |
+      | ``n``                                                     | A time interval.                                          |
+      |                                                           | [integer, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns time multiplied by integer factor n.              |
-      |                                                           |    [time_type, dimension]                                 |
+      |                                                           | Returns time multiplied by integer factor n.              |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 n. .. rubric:: Scalar_time_mult
@@ -525,17 +501,17 @@ n. .. rubric:: Scalar_time_mult
       Returns time multiplied by integer factor n.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  | An integer.                                               |
-      |                                                           |    [integer, dimension]                                   |
+      | ``n``                                                     | An integer.                                               |
+      |                                                           | [integer, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns time multiplied by integer factor n.              |
-      |                                                           |    [time_type, dimension]                                 |
+      |                                                           | Returns time multiplied by integer factor n.              |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 o. .. rubric:: Time_divide
@@ -549,18 +525,18 @@ o. .. rubric:: Time_divide
       Returns the largest integer, n, for which time1 >= time2 \* n.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time1   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time1``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time2   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time2``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns the largest integer, n, for which time1 >= time2  |
+      |                                                           | Returns the largest integer, n, for which time1 >= time2  |
       |                                                           | \* n.                                                     |
-      |                                                           |    [integer, dimension]                                   |
+      |                                                           | [integer, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 p. .. rubric:: Time_real_divide
@@ -574,17 +550,17 @@ p. .. rubric:: Time_real_divide
       Returns the double precision quotient of two times.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time1   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time1``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time2   ``                                              | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time2``                                                 | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns the double precision quotient of two times        |
-      |                                                           |    [integer, dimensiondouble precision]                   |
+      |                                                           | Returns the double precision quotient of two times        |
+      |                                                           | [integer, dimensiondouble precision]                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 q. .. rubric:: Time_scalar_divide
@@ -598,17 +574,17 @@ q. .. rubric:: Time_scalar_divide
       Returns the largest time, t, for which n \* t <= time.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  | An integer factor.                                        |
-      |                                                           |    [integer, dimension]                                   |
+      | ``n``                                                     | An integer factor.                                        |
+      |                                                           | [integer, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | Returns the largest time, t, for which n \* t <= time.    |
-      |                                                           |    [integer, dimensiondouble precision]                   |
+      |                                                           | Returns the largest time, t, for which n \* t <= time.    |
+      |                                                           | [integer, dimensiondouble precision]                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 r. .. rubric:: Interval_alarm
@@ -629,27 +605,27 @@ r. .. rubric:: Interval_alarm
       less than time + time_interval
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | Current time.                                             |
-      |                                                           |    [time_type]                                            |
+      | ``time``                                                  | Current time.                                             |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time_interval   ``                                      | A time interval.                                          |
-      |                                                           |    [time_type]                                            |
+      | ``time_interval``                                         | A time interval.                                          |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``alarm_interval   ``                                     | A time interval.                                          |
-      |                                                           |    [time_type]                                            |
+      | ``alarm_interval``                                        | A time interval.                                          |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **INPUT/OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``alarm   ``                                              | An alarm time, which is incremented by the alarm_interval |
+      | ``alarm``                                                 | An alarm time, which is incremented by the alarm_interval |
       |                                                           | if the function is true.                                  |
-      |                                                           |    [time_type]                                            |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``interval_alarm   ``                                     | Returns either True or false.                             |
-      |                                                           |    [logical]                                              |
+      | ``interval_alarm``                                        | Returns either True or false.                             |
+      |                                                           | [logical]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 s. .. rubric:: Repeat_alarm
@@ -667,20 +643,20 @@ s. .. rubric:: Repeat_alarm
       2300 on day n to time 0100 on day n + 1 for all n.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | Current time.                                             |
-      |                                                           |    [time_type]                                            |
+      | ``time``                                                  | Current time.                                             |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``alarm_frequency   ``                                    | A time interval for alarm_frequency.                      |
-      |                                                           |    [time_type]                                            |
+      | ``alarm_frequency``                                       | A time interval for alarm_frequency.                      |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``alarm_length   ``                                       | A time interval for alarm_length.                         |
-      |                                                           |    [time_type]                                            |
+      | ``alarm_length``                                          | A time interval for alarm_length.                         |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``repeat_alarm   ``                                       | Returns either True or false.                             |
-      |                                                           |    [logical]                                              |
+      | ``repeat_alarm``                                          | Returns either True or false.                             |
+      |                                                           | [logical]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 t. .. rubric:: Set_calendar_type
@@ -694,14 +670,14 @@ t. .. rubric:: Set_calendar_type
       A constant number for setting the calendar type.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``type   ``                                               | A constant number for setting the calendar type.          |
-      |                                                           |    [integer, dimension]                                   |
+      | ``type``                                                  | A constant number for setting the calendar type.          |
+      |                                                           | [integer, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``calendar_type   ``                                      | A constant number for default calendar type.              |
-      |                                                           |    [integer]                                              |
+      | ``calendar_type``                                         | A constant number for default calendar type.              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **NOTE**
@@ -732,23 +708,23 @@ v. .. rubric:: Get_date
       Given a time_interval, returns the corresponding date under the selected calendar.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type]                                            |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``day   ``                                                |    [integer]                                              |
+      | ``day``                                                   | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``month   ``                                              |    [integer]                                              |
+      | ``month``                                                 | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``year   ``                                               |    [integer]                                              |
+      | ``year``                                                  | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``second   ``                                             |    [integer]                                              |
+      | ``second``                                                | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``minute   ``                                             |    [integer]                                              |
+      | ``minute``                                                | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``hour   ``                                               |    [integer]                                              |
+      | ``hour``                                                  | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **NOTE**
@@ -768,26 +744,26 @@ w. .. rubric:: Set_date
       possible to specify any number of illegal dates; these should be checked for and generate errors as appropriate.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type]                                            |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``day   ``                                                |    [integer]                                              |
+      | ``day``                                                   | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``month   ``                                              |    [integer]                                              |
+      | ``month``                                                 | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``year   ``                                               |    [integer]                                              |
+      | ``year``                                                  | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``second   ``                                             |    [integer]                                              |
+      | ``second``                                                | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``minute   ``                                             |    [integer]                                              |
+      | ``minute``                                                | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``hour   ``                                               |    [integer]                                              |
+      | ``hour``                                                  | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``set_date   ``                                           | A time interval.                                          |
-      |                                                           |    [time_type]                                            |
+      | ``set_date``                                              | A time interval.                                          |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 x. .. rubric:: Increment_date
@@ -805,33 +781,33 @@ x. .. rubric:: Increment_date
       an error).
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type]                                            |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``day   ``                                                | An increment of days.                                     |
-      |                                                           |    [integer]                                              |
+      | ``day``                                                   | An increment of days.                                     |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``month   ``                                              | An increment of months.                                   |
-      |                                                           |    [integer]                                              |
+      | ``month``                                                 | An increment of months.                                   |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``year   ``                                               | An increment of years.                                    |
-      |                                                           |    [integer]                                              |
+      | ``year``                                                  | An increment of years.                                    |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``second   ``                                             | An increment of seconds.                                  |
-      |                                                           |    [integer]                                              |
+      | ``second``                                                | An increment of seconds.                                  |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``minute   ``                                             | An increment of minutes.                                  |
-      |                                                           |    [integer]                                              |
+      | ``minute``                                                | An increment of minutes.                                  |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``hour   ``                                               | An increment of hours.                                    |
-      |                                                           |    [integer]                                              |
+      | ``hour``                                                  | An increment of hours.                                    |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``increment_date   ``                                     | A new time based on the input time interval and the       |
+      | ``increment_date``                                        | A new time based on the input time interval and the       |
       |                                                           | default calendar type.                                    |
-      |                                                           |    [time_type]                                            |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 y. .. rubric:: Decrement_date
@@ -849,33 +825,33 @@ y. .. rubric:: Decrement_date
       an error).
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type]                                            |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``day   ``                                                | A decrement of days.                                      |
-      |                                                           |    [integer]                                              |
+      | ``day``                                                   | A decrement of days.                                      |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``month   ``                                              | A deincrement of months.                                  |
-      |                                                           |    [integer]                                              |
+      | ``month``                                                 | A deincrement of months.                                  |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``year   ``                                               | A deincrement of years.                                   |
-      |                                                           |    [integer]                                              |
+      | ``year``                                                  | A deincrement of years.                                   |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``second   ``                                             | A deincrement of seconds.                                 |
-      |                                                           |    [integer]                                              |
+      | ``second``                                                | A deincrement of seconds.                                 |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``minute   ``                                             | A deincrement of minutes.                                 |
-      |                                                           |    [integer]                                              |
+      | ``minute``                                                | A deincrement of minutes.                                 |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``hour   ``                                               | A deincrement of hours.                                   |
-      |                                                           |    [integer]                                              |
+      | ``hour``                                                  | A deincrement of hours.                                   |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``decrement_date   ``                                     | A new time based on the input time interval and the       |
+      | ``decrement_date``                                        | A new time based on the input time interval and the       |
       |                                                           | default calendar type.                                    |
-      |                                                           |    [time_type]                                            |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **NOTE**
@@ -894,15 +870,15 @@ z. .. rubric:: Days_in_month
       Given a time, computes the corresponding date given the selected date time mapping algorithm.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``days_in_month   ``                                      | The number of days in the month given the selected time   |
+      | ``days_in_month``                                         | The number of days in the month given the selected time   |
       |                                                           | mapping algorithm.                                        |
-      |                                                           |    [integer, dimension]                                   |
+      |                                                           | [integer, dimension]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 a. .. rubric:: Leap_year
@@ -918,16 +894,16 @@ a. .. rubric:: Leap_year
       default calendar is a leap year. Returns false for THIRTY_DAY_MONTHS and NO_LEAP.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type, dimension]                                 |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type, dimension]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``leap_year   ``                                          | True if the year corresponding to the date for the        |
+      | ``leap_year``                                             | True if the year corresponding to the date for the        |
       |                                                           | default calendar is a leap year. False for                |
       |                                                           | THIRTY_DAY_MONTHS and NO_LEAP and otherwise.              |
-      |                                                           |    [calendar_type, dimension]                             |
+      |                                                           | [calendar_type, dimension]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 b. .. rubric:: Length_of_year
@@ -954,14 +930,14 @@ c. .. rubric:: Days_in_year
       calendar.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | A time interval.                                          |
-      |                                                           |    [time_type]                                            |
+      | ``time``                                                  | A time interval.                                          |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
-      ======= ==============================================================
-      ``   `` The number of days in this year for the default calendar type.
-      ======= ==============================================================
+      == ==============================================================
+      \  The number of days in this year for the default calendar type.
+      == ==============================================================
 
 d. .. rubric:: Month_name
       :name: month_name
@@ -976,15 +952,15 @@ d. .. rubric:: Month_name
       same for all calendar types.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  | Month number.                                             |
-      |                                                           |    [integer]                                              |
+      | ``n``                                                     | Month number.                                             |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``month_name   ``                                         | The character string associated with a month. For now all |
+      | ``month_name``                                            | The character string associated with a month. For now all |
       |                                                           | calendars have 12 months and will return standard names.  |
-      |                                                           |    [character]                                            |
+      |                                                           | [character]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 e. .. rubric:: Time_manager_init
@@ -1012,15 +988,15 @@ f. .. rubric:: Print_time
       number.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | Time that will be printed.                                |
-      |                                                           |    [time_type]                                            |
+      | ``time``                                                  | Time that will be printed.                                |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``str   ``                                                | Character string that precedes the printed time or date.  |
-      |                                                           |    [character (len=*)]                                    |
+      | ``str``                                                   | Character string that precedes the printed time or date.  |
+      |                                                           | [character (len=*)]                                       |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``unit   ``                                               | Unit number for printed output. The default unit is       |
+      | ``unit``                                                  | Unit number for printed output. The default unit is       |
       |                                                           | stdout.                                                   |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 g. .. rubric:: Print_date
@@ -1036,61 +1012,51 @@ g. .. rubric:: Print_date
       check for PE number.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               | Time that will be printed.                                |
-      |                                                           |    [time_type]                                            |
+      | ``time``                                                  | Time that will be printed.                                |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``str   ``                                                | Character string that precedes the printed time or date.  |
-      |                                                           |    [character (len=*)]                                    |
+      | ``str``                                                   | Character string that precedes the printed time or date.  |
+      |                                                           | [character (len=*)]                                       |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``unit   ``                                               | Unit number for printed output. The default unit is       |
+      | ``unit``                                                  | Unit number for printed output. The default unit is       |
       |                                                           | stdout.                                                   |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-
---------------
 
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
-
---------------
 
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
-
---------------
 
 References
-^^^^^^^^^^
+----------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Compiler specifics
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Precompiler options
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 .. container::
 
@@ -1098,19 +1064,15 @@ Precompiler options
 
 | 
 
---------------
-
 Loader options
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
 
---------------
-
 Test PROGRAM
-^^^^^^^^^^^^
+------------
 
 .. container::
 
@@ -1207,21 +1169,8 @@ Test PROGRAM
 
 | 
 
---------------
-
-Known bugs
-^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
-
 Notes
-^^^^^
+-----
 
 .. container::
 
@@ -1235,20 +1184,3 @@ Notes
    manager.
 
 | 
-
---------------
-
-Future plans
-^^^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
-
-.. container::
-
-   top

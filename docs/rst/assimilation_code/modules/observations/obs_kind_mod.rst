@@ -1,17 +1,6 @@
 MODULE ``obs_kind_mod``
 =======================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -65,7 +54,7 @@ Multiple name-value pairs can be specified for a quantity but are not required. 
 ``! QTY_TEMPERATURE units="K" minval=0.0``. Comments are allowed between quantity definitions or on the same line as the
 definition. The code snippet below shows acceptable formats for quantity definitions
 
-``! BEGIN DART PREPROCESS QUANTITY DEFINITIONS  !  ! Formats accepted: ! ! QTY_string ! QTY_string name=value ! QTY_string name=value name2=value2 ! ! QTY_string ! comments ! ! ! comment ! ! END DART PREPROCESS QUANTITY DEFINITIONS``
+``! BEGIN DART PREPROCESS QUANTITY DEFINITIONS ! ! Formats accepted: ! ! QTY_string ! QTY_string name=value ! QTY_string name=value name2=value2 ! ! QTY_string ! comments ! ! ! comment ! ! END DART PREPROCESS QUANTITY DEFINITIONS``
 
 Implementation details
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -82,8 +71,6 @@ second derived type ``obs_qty_type`` maps the integer parameter for a quantity t
 stores any additional pair-value metadata for that quantity.
 
 | 
-
---------------
 
 Namelist
 --------
@@ -149,10 +136,6 @@ For example:
   Radiance observations have precomputed values for each ensemble member in the input observation sequence file which
   would be used instead of calling the forward operator code.
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -162,30 +145,26 @@ Modules used
 
 | 
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ========================= ============================
 *use obs_def_mod, only :* max_defined_types_of_obs
-                          get_num_types_of_obs
-                          get_num_quantities
-                          get_name_for_type_of_obs
-                          get_name_for_quantity
-                          get_index_for_type_of_obs
-                          get_index_for_quantity
-                          assimilate_this_type_of_obs
-                          evaluate_this_type_of_obs
-                          get_quantity_for_type_of_obs
-                          write_type_of_obs_table
-                          read_type_of_obs_table
-                          get_type_of_obs_from_menu
-                          map_type_of_obs_table
-                          GENERIC_QTY_DEFINITIONS
-                          OBSERVATION_TYPES
+\                         get_num_types_of_obs
+\                         get_num_quantities
+\                         get_name_for_type_of_obs
+\                         get_name_for_quantity
+\                         get_index_for_type_of_obs
+\                         get_index_for_quantity
+\                         assimilate_this_type_of_obs
+\                         evaluate_this_type_of_obs
+\                         get_quantity_for_type_of_obs
+\                         write_type_of_obs_table
+\                         read_type_of_obs_table
+\                         get_type_of_obs_from_menu
+\                         map_type_of_obs_table
+\                         GENERIC_QTY_DEFINITIONS
+\                         OBSERVATION_TYPES
 ========================= ============================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -200,7 +179,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    The total number of available observation types in the obs_type_type table. This value is added by the preprocess
    program and depends on which ``obs_def_xxx_mod.f90`` files are listed in the
-   `&preprocess_nml </assimilation_code/programs/preprocess/preprocess.html#Namelist>`__ namelist.
+   `&preprocess_nml <../../programs/preprocess/preprocess.html#Namelist>`__ namelist.
 
    There is also a function interface which is an alternate method to get this value. In some cases the code requires a
    parameter value known at compile time (for declaring a fixed length array, for example). For an array allocated at
@@ -371,7 +350,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    type.
 
    ================ =========================================================================
-   ``var``          Returns true if this entry in the obs_type_type table is to be evaluated.
+   ``var``\ </ TD>  Returns true if this entry in the obs_type_type table is to be evaluated.
    ``obs_type_ind`` An integer index into the obs_type_type table.
    ================ =========================================================================
 
@@ -393,7 +372,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    to return the generic quantity associated with this type.
 
    ================ =========================================================================
-   ``var``          Returns the integer GENERIC quantity index associated with this obs type.
+   ``var``\ </ TD>  Returns the integer GENERIC quantity index associated with this obs type.
    ``obs_type_ind`` An integer index into the obs_type_type table.
    ================ =========================================================================
 
@@ -401,7 +380,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call write_type_of_obs_table(ifile [, fform, use_list])*
+   *call write_type_of_obs_table(ifile [, fform, use_list])*
    ::
 
       integer,                    intent(in) :: ifile
@@ -431,7 +410,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call read_type_of_obs_table(ifile, pre_I_format [, fform])*
+   *call read_type_of_obs_table(ifile, pre_I_format [, fform])*
    ::
 
       integer,                    intent(in) :: ifile
@@ -495,11 +474,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *integer, parameter :: QTY_.....*
+   ``integer, parameter :: QTY_.....``
 
 .. container:: indent1
 
-   All generic quantities available are public parameters that begin with QTY_.
+   All generic quantities available are public parameters that begin with ``QTY_``.
 
 | 
 
@@ -514,8 +493,6 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Files
 -----
 
@@ -524,46 +501,9 @@ Files
 
 | 
 
---------------
-
 References
 ----------
 
 -  none
 
 | 
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +------------------------+---------------------------------------------+---------------------------------------------+
-   | Routine                | Message                                     | Comment                                     |
-   +========================+=============================================+=============================================+
-   | initialize_module      | \_____\_ from obs_kind_nml is not a legal   | An observation type name that is not in the |
-   |                        | observation type                            | obs_type_type table has been specified to   |
-   |                        |                                             | be assimilated or evaluted.                 |
-   +------------------------+---------------------------------------------+---------------------------------------------+
-   | initialize_module      | Illegal to evaluate and assimilate the same | The same observation type name has been     |
-   |                        | type \_____\_                               | specified in both namelist entries.         |
-   +------------------------+---------------------------------------------+---------------------------------------------+
-   | map_type_of_obs_table  | Could not find obs_def_index \_\_ in        | An attempt to use an observation type that  |
-   |                        | obs_type map.                               | was NOT in the obs_sequence header.         |
-   +------------------------+---------------------------------------------+---------------------------------------------+
-   | read_type_of_obs_table | Did not find obs_type_definition string     | An obs_sequence file that was expected to   |
-   |                        |                                             | contain an obs_type_definition list in its  |
-   |                        |                                             | header did not.                             |
-   +------------------------+---------------------------------------------+---------------------------------------------+
-   | read_type_of_obs_table | Did not find observation type \____\_ in    | An observation type specified by name in an |
-   |                        | obs_kind_mod list                           | observation sequence file header was NOT    |
-   |                        |                                             | found in the obs_type_type table.           |
-   +------------------------+---------------------------------------------+---------------------------------------------+
-
-| 
-
---------------

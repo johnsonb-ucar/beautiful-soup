@@ -1,18 +1,6 @@
 MODULE types_mod
 ================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -20,20 +8,12 @@ Provides some commonly used mathematical constants, and a set of Fortran integer
 the right variable size (e.g. 4 bytes, 8 bytes) to match the rest of the DART interfaces. (DART does not depend on
 compiler flags to set precision, but explicitly specifies a kind for each variable in the public interfaces.)
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
 ::
 
    none
-
---------------
-
-.. _public_interfaces:
 
 Public interfaces
 -----------------
@@ -45,32 +25,32 @@ Public interfaces
 
 ======================= ==============
 *use types_mod, only :* i4
-                        i8
-                        r4
-                        r8
-                        c4
-                        c8
-                        digits12
-                        PI
-                        DEG2RAD
-                        RAD2DEG
-                        SECPERDAY
-                        MISSING_R4
-                        MISSING_R8
-                        MISSING_I
-                        MISSING_DATA
-                        metadatalength
-                        obstypelength
-                        t_kelvin
-                        es_alpha
-                        es_beta
-                        es_gamma
-                        gas_constant_v
-                        gas_constant
-                        L_over_Rv
-                        ps0
-                        earth_radius
-                        gravity
+\                       i8
+\                       r4
+\                       r8
+\                       c4
+\                       c8
+\                       digits12
+\                       PI
+\                       DEG2RAD
+\                       RAD2DEG
+\                       SECPERDAY
+\                       MISSING_R4
+\                       MISSING_R8
+\                       MISSING_I
+\                       MISSING_DATA
+\                       metadatalength
+\                       obstypelength
+\                       t_kelvin
+\                       es_alpha
+\                       es_beta
+\                       es_gamma
+\                       gas_constant_v
+\                       gas_constant
+\                       L_over_Rv
+\                       ps0
+\                       earth_radius
+\                       gravity
 ======================= ==============
 
 | 
@@ -177,41 +157,22 @@ Public interfaces
 
 | 
 
---------------
-
 Namelist
 --------
 
 There is no namelist for this module.
-
---------------
 
 Files
 -----
 
 None.
 
---------------
-
 References
 ----------
 
 #. none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-none
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

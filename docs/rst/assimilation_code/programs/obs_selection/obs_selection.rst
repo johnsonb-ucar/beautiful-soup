@@ -1,28 +1,15 @@
 program ``obs_selection``
 =========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Building <#building>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
 This specialized tool selects a subset of input observations from an observation sequence file. For a more general
-purpose observation sequence file tool, see the
-`obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__. This tool takes a selected
-list of observation types, times, and locations, and extracts only the matching observations out of one or more
+purpose observation sequence file tool, see the :doc:`../obs_sequence_tool/obs_sequence_tool`. This tool takes a
+selected list of observation types, times, and locations, and extracts only the matching observations out of one or more
 obs_sequence files. The tool which creates the input selection file is usually
-`obs_seq_coverage </assimilation_code/programs/obs_seq_coverage/obs_seq_coverage.html>`__. Alternatively, the selection
-file can be a full observation sequence file, in which case the types, times, and locations of those observations are
-used as the selection criteria.
+:doc:`../obs_seq_coverage/obs_seq_coverage`. Alternatively, the selection file can be a full observation sequence file,
+in which case the types, times, and locations of those observations are used as the selection criteria.
 
 This tool processes each observation sequence file listed in the input namelist ``filename_seq`` or
 ``filename_seq_list``. If the observation type, time and location matches an entry in the selection file, it is copied
@@ -31,8 +18,6 @@ through to the output. Otherwise it is ignored.
 The actions of the ``obs_selection`` program are controlled by a Fortran namelist, read from a file named ``input.nml``
 in the current directory. A detailed description of each namelist item is described in the namelist section of this
 document. The names used in this discussion refer to these namelist items.
-
---------------
 
 Namelist
 --------
@@ -96,8 +81,7 @@ namelist.
    +-----------------------+------------------------------------+-------------------------------------------------------+
    | selections_file       | character(len=256)                 | The name of the input file containing the mask of     |
    |                       |                                    | observation definitions (the textfile output of       |
-   |                       |                                    | `obs_seq_coverage </assimilation_code/                |
-   |                       |                                    | programs/obs_seq_coverage/obs_seq_coverage.html>`__). |
+   |                       |                                    | :doc:`../obs_seq_coverage/obs_seq_coverage`).         |
    |                       |                                    | Alternatively, this can be the name of a full         |
    |                       |                                    | observation sequence file. In this case, the types,   |
    |                       |                                    | times, and locations are extracted from this file and |
@@ -190,30 +174,23 @@ namelist.
 
 | 
 
---------------
-
 Building
 --------
 
 Most ``$DART/models/*/work`` directories contain files needed to build this tool along with the other executable
 programs. It is also possible to build this tool in the ``$DART/observations/utilities`` directory. In either case the
 ``preprocess`` program must be built and run first to define what set of observation types will be supported. See the
-`preprocess documentation </assimilation_code/programs/preprocess/preprocess.html>`__ for more details on how to define
-the list and run it. The ``&preprocess_nml`` namelist in the ``input.nml`` file must contain files with definitions for
-the combined set of all observation types which will be encountered over all input obs_seq files. The other important
-choice when building the tool is to include a compatible locations module in the ``path_names_obs_selection`` file. For
-the low-order models the ``oned`` module should be used; for real-world observations the ``threed_sphere`` module should
-be used.
+:doc:`../../../assimilation_code/programs/preprocess/preprocess` for more details on how to define the list and run it.
+The ``&preprocess_nml`` namelist in the ``input.nml`` file must contain files with definitions for the combined set of
+all observation types which will be encountered over all input obs_seq files. The other important choice when building
+the tool is to include a compatible locations module in the ``path_names_obs_selection`` file. For the low-order models
+the ``oned`` module should be used; for real-world observations the ``threed_sphere`` module should be used.
 
 Usually the directories where executables are built will include a ``quickbuild.csh`` script which builds and runs
 preprocess and then builds the rest of the executables by executing all files with names starting with ``mkmf_``. If the
 obs_selection tool is not built because there is no ``mkmf_obs_selection`` and ``path_names_obs_selection`` file in the
 current directory they can be copied from another model. The ``path_names_obs_selection`` file will need to be edited to
 be consistent with the model you are building.
-
---------------
-
-.. _modules_used:
 
 Modules used
 ------------
@@ -226,8 +203,6 @@ Modules used
    obs_def_mod
    obs_sequence_mod
 
---------------
-
 Files
 -----
 
@@ -235,28 +210,7 @@ Files
 -  The input files specified in the ``filename_seq`` namelist variable.
 -  The output file specified in the ``filename_out`` namelist variable.
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------+-------------------------------------------------+-------------------------------------------------+
-   | Routine       | Message                                         | Comment                                         |
-   +===============+=================================================+=================================================+
-   | obs_selection | num_input_files > max_num_input_files. change   | The default is 500 files.                       |
-   |               | max_num_input_files in source file              |                                                 |
-   +---------------+-------------------------------------------------+-------------------------------------------------+
-   | obs_selection | num_input_files and filename_seq mismatch       | The number of filenames does not match the      |
-   |               |                                                 | filename count.                                 |
-   +---------------+-------------------------------------------------+-------------------------------------------------+

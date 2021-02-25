@@ -1,25 +1,11 @@
 MODULE utilities_mod
 ====================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
 Provides a number of tools used by most DART modules including tools for file IO, diagnostic tools for registering
 modules and recording namelist arguments, and an error handler.
-
---------------
 
 Namelist
 --------
@@ -76,10 +62,6 @@ The namelist controls how the logging, namelist, messages, and general utility r
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -88,42 +70,38 @@ Other modules used
    types_mod
    netCDF
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ======================= =====================
 *use utilities, only :* file_exist
-                        get_unit
-                        open_file
-                        close_file
-                        timestamp
-                        register_module
-                        error_handler
-                        to_upper
-                        nc_check
-                        logfileunit
-                        nmlfileunit
-                        initialize_utilities
-                        finalize_utilities
-                        dump_unit_attributes
-                        find_namelist_in_file
-                        check_namelist_read
-                        find_textfile_dims
-                        file_to_text
-                        is_longitude_between
-                        get_next_filename
-                        set_filename_list
-                        set_tasknum
-                        set_output
-                        do_output
-                        E_DBG, DEBUG
-                        E_MSG, MESSAGE
-                        E_WARN, WARNING
-                        E_ERR, FATAL
+\                       get_unit
+\                       open_file
+\                       close_file
+\                       timestamp
+\                       register_module
+\                       error_handler
+\                       to_upper
+\                       nc_check
+\                       logfileunit
+\                       nmlfileunit
+\                       initialize_utilities
+\                       finalize_utilities
+\                       dump_unit_attributes
+\                       find_namelist_in_file
+\                       check_namelist_read
+\                       find_textfile_dims
+\                       file_to_text
+\                       is_longitude_between
+\                       get_next_filename
+\                       set_filename_list
+\                       set_tasknum
+\                       set_output
+\                       do_output
+\                       E_DBG, DEBUG
+\                       E_MSG, MESSAGE
+\                       E_WARN, WARNING
+\                       E_ERR, FATAL
 ======================= =====================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -142,10 +120,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns true if file_name exists in the working directory, else false.
 
-   =============== ==============================================
-   ``var  ``       True if file_name exists in working directory.
-   ``file_name  `` Name of file to look for.
-   =============== ==============================================
+   ============= ==============================================
+   ``var``       True if file_name exists in working directory.
+   ``file_name`` Name of file to look for.
+   ============= ==============================================
 
 | 
 
@@ -160,9 +138,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns an unused unit number for IO.
 
-   ========= ======================
-   ``var  `` An unused unit number.
-   ========= ======================
+   ======= ======================
+   ``var`` An unused unit number.
+   ======= ======================
 
 | 
 
@@ -182,18 +160,18 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    "FORMATTED", file is opened for formatted IO. Otherwise, it is unformatted. The action string is the standard action
    string for Fortran IO (see F90 language description).
 
-   =========== ======================================================================================================
-   ``var  ``   Unit number opened to file fname.
-   ``fname  `` Name of file to be opened.
-   *form  *    Format: 'formatted' or 'FORMATTED' give formatted, anything else is unformatted. Default is formatted.
-   *action  *  Standard fortran string description of requested file open action.
-   =========== ======================================================================================================
+   ========= ======================================================================================================
+   ``var``   Unit number opened to file fname.
+   ``fname`` Name of file to be opened.
+   *form*    Format: 'formatted' or 'FORMATTED' give formatted, anything else is unformatted. Default is formatted.
+   *action*  Standard fortran string description of requested file open action.
+   ========= ======================================================================================================
 
 | 
 
 .. container:: routine
 
-   *call timestamp([string1, string2, string3,]  \ pos)*
+   *call timestamp([string1, string2, string3,] pos)*
    ::
 
       character(len=*), optional, intent(in) :: string1
@@ -206,12 +184,12 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Prints the message 'Time is YYYY MM DD HH MM SS' to the logfile along with three optional message strings. If the pos
    argument is 'end', the message printed is 'Finished... at YYYY MM DD HH MM SS' and the logfile is closed.
 
-   =========== ====================================
-   *string1  * An optional message to be printed.
-   *string2  * An optional message to be printed.
-   *string3  * An optional message to be printed.
-   ``pos  ``   If 'end' terminates log_file output.
-   =========== ====================================
+   ========= ====================================
+   *string1* An optional message to be printed.
+   *string2* An optional message to be printed.
+   *string3* An optional message to be printed.
+   ``pos``   If 'end' terminates log_file output.
+   ========= ====================================
 
 | 
 
@@ -226,9 +204,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Closes the given unit number. If the unit is not open, nothing happens.
 
-   =========== =======================
-   ``iunit  `` File unit to be closed.
-   =========== =======================
+   ========= =======================
+   ``iunit`` File unit to be closed.
+   ========= =======================
 
 | 
 
@@ -246,11 +224,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Writes the source name to both the logfileunit and to standard out. The rev and revdate are deprecated as they are
    unsupported by git.
 
-   =========== =================
-   ``src  ``   source file name.
-   ``rev  ``   ignored
-   ``rdate  `` ignored
-   =========== =================
+   ========= =================
+   ``src``   source file name.
+   ``rev``   ignored
+   ``rdate`` ignored
+   ========= =================
 
 | 
 
@@ -276,17 +254,17 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    debug, warning, or error. If the level is greater than or equal to the TERMLEVEL (set in the namelist), execution is
    terminated. The default TERMLEVEL only stops for ERRORS.
 
-   ============= ===============================================================================
-   ``level  ``   Error severity (message, debug, warning, error). See below for specific ations.
-   ``routine  `` Name of routine generating error.
-   ``text  ``    Error message.
-   ``src  ``     Source file containing routine generating message.
-   ``rev  ``     Revision number of source file.
-   ``rdate  ``   Revision date of source file.
-   *aut  *       Author of routine.
-   *text2  *     If specified, the second line of text for the error message.
-   *text3  *     If specified, the third line of text for the error message.
-   ============= ===============================================================================
+   =========== ===============================================================================
+   ``level``   Error severity (message, debug, warning, error). See below for specific ations.
+   ``routine`` Name of routine generating error.
+   ``text``    Error message.
+   ``src``     Source file containing routine generating message.
+   ``rev``     Revision number of source file.
+   ``rdate``   Revision date of source file.
+   *aut*       Author of routine.
+   *text2*     If specified, the second line of text for the error message.
+   *text3*     If specified, the third line of text for the error message.
+   =========== ===============================================================================
 
 | 
 
@@ -307,18 +285,18 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    containing ONLY the string &nml_name (for instance &filter_nml if nml_name is "filter_nml"). If this line is found,
    the file is rewound and the routine returns. Otherwise, a fatal error message is issued.
 
-   +-------------------------+-------------------------------------------------------------------------------------------+
-   | ``namelist  ``          | Name of file assumed to hold the namelist.                                                |
-   +-------------------------+-------------------------------------------------------------------------------------------+
-   | ``nml_name  ``          | Name of the namelist to be searched for in the file, for instance, filter_nml.            |
-   +-------------------------+-------------------------------------------------------------------------------------------+
-   | ``iunit  ``             | Channel number on which file is opened.                                                   |
-   +-------------------------+-------------------------------------------------------------------------------------------+
-   | *write_to_logfile_in  * | When the namelist for the utilities module is read, the logfile has not yet been open     |
-   |                         | because its name is in the namelist. If errors are found, have to write to standard out.  |
-   |                         | So, when utilities module calls this internally, this optional argument is set to false.  |
-   |                         | For all other applications, it is normally not used (default is false).                   |
-   +-------------------------+-------------------------------------------------------------------------------------------+
+   +-----------------------+---------------------------------------------------------------------------------------------+
+   | ``namelist``          | Name of file assumed to hold the namelist.                                                  |
+   +-----------------------+---------------------------------------------------------------------------------------------+
+   | ``nml_name``          | Name of the namelist to be searched for in the file, for instance, filter_nml.              |
+   +-----------------------+---------------------------------------------------------------------------------------------+
+   | ``iunit``             | Channel number on which file is opened.                                                     |
+   +-----------------------+---------------------------------------------------------------------------------------------+
+   | *write_to_logfile_in* | When the namelist for the utilities module is read, the logfile has not yet been open       |
+   |                       | because its name is in the namelist. If errors are found, have to write to standard out.    |
+   |                       | So, when utilities module calls this internally, this optional argument is set to false.    |
+   |                       | For all other applications, it is normally not used (default is false).                     |
+   +-----------------------+---------------------------------------------------------------------------------------------+
 
 | 
 
@@ -341,18 +319,18 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    rewinding fails, it is assumed that the original read (before the call to this subroutine) failed by reaching the end
    of the file. An error message stating that the namelist started but was never terminated is issued.
 
-   +-------------------------+-------------------------------------------------------------------------------------------+
-   | ``iunit  ``             | Channel number on which file is opened.                                                   |
-   +-------------------------+-------------------------------------------------------------------------------------------+
-   | ``iostat_in  ``         | Error status return from an attempted read of a namelist from this file.                  |
-   +-------------------------+-------------------------------------------------------------------------------------------+
-   | ``nml_name  ``          | The name of the namelist that is being read (for instance filter_nml).                    |
-   +-------------------------+-------------------------------------------------------------------------------------------+
-   | *write_to_logfile_in  * | When the namelist for the utilities module is read, the logfile has not yet been open     |
-   |                         | because its name is in the namelist. If errors are found, have to write to standard out.  |
-   |                         | So, when utilities module calls this internally, this optional argument is set to false.  |
-   |                         | For all other applications, it is normally not used (default is false).                   |
-   +-------------------------+-------------------------------------------------------------------------------------------+
+   +-----------------------+---------------------------------------------------------------------------------------------+
+   | ``iunit``             | Channel number on which file is opened.                                                     |
+   +-----------------------+---------------------------------------------------------------------------------------------+
+   | ``iostat_in``         | Error status return from an attempted read of a namelist from this file.                    |
+   +-----------------------+---------------------------------------------------------------------------------------------+
+   | ``nml_name``          | The name of the namelist that is being read (for instance filter_nml).                      |
+   +-----------------------+---------------------------------------------------------------------------------------------+
+   | *write_to_logfile_in* | When the namelist for the utilities module is read, the logfile has not yet been open       |
+   |                       | because its name is in the namelist. If errors are found, have to write to standard out.    |
+   |                       | So, when utilities module calls this internally, this optional argument is set to false.    |
+   |                       | For all other applications, it is normally not used (default is false).                     |
+   +-----------------------+---------------------------------------------------------------------------------------------+
 
 | 
 
@@ -416,7 +394,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    first.
 
    +-------------+-------------------------------------------------------------------------------------------------------+
-   | ``var  ``   | True if lon is between min and max.                                                                   |
+   | ``var``     | True if lon is between min and max.                                                                   |
    +-------------+-------------------------------------------------------------------------------------------------------+
    | ``lon``     | Location to test.                                                                                     |
    +-------------+-------------------------------------------------------------------------------------------------------+
@@ -532,14 +510,14 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
       call nc_check(nf90_create(path = trim(ncFileID%fname), cmode = nf90_share, ncid = ncFileID%ncid), &
                    'init_diag_output', 'create '//trim(ncFileID%fname))
 
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``istatus  ``   | The return value from any netCDF call.                                                            |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``subr_name  `` | String name of the current subroutine, used in case of error.                                     |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | *context  *     | Additional text to be used in the error message, for example to indicate which file or which      |
-   |                 | variable is being processed.                                                                      |
-   +-----------------+---------------------------------------------------------------------------------------------------+
+   +---------------+-----------------------------------------------------------------------------------------------------+
+   | ``istatus``   | The return value from any netCDF call.                                                              |
+   +---------------+-----------------------------------------------------------------------------------------------------+
+   | ``subr_name`` | String name of the current subroutine, used in case of error.                                       |
+   +---------------+-----------------------------------------------------------------------------------------------------+
+   | *context*     | Additional text to be used in the error message, for example to indicate which file or which        |
+   |               | variable is being processed.                                                                        |
+   +---------------+-----------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -555,10 +533,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Intended to be used in the MPI multi-task case. Sets the local task number, which is then prepended to subsequent
    messages.
 
-   +---------------+-----------------------------------------------------------------------------------------------------+
-   | ``tasknum  `` | Task number returned from MPI_Comm_Rank(). MPI task numbers are 0 based, so for a 4-task job these  |
-   |               | numbers are 0-3.                                                                                    |
-   +---------------+-----------------------------------------------------------------------------------------------------+
+   +-------------+-------------------------------------------------------------------------------------------------------+
+   | ``tasknum`` | Task number returned from MPI_Comm_Rank(). MPI task numbers are 0 based, so for a 4-task job these    |
+   |             | numbers are 0-3.                                                                                      |
+   +-------------+-------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -575,10 +553,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    warnings and fatal errors will write to the log. The default in the multi-task case is controlled by the MPI module
    initialization code, which sets task 0 to .TRUE. and all other tasks to .FALSE.
 
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``doflag  `` | Sets, on a per-task basis, whether messages are to be written to the logfile or standard output.     |
-   |              | Warnings and errors are always output.                                                               |
-   +--------------+------------------------------------------------------------------------------------------------------+
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``doflag`` | Sets, on a per-task basis, whether messages are to be written to the logfile or standard output.       |
+   |            | Warnings and errors are always output.                                                                 |
+   +------------+--------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -600,9 +578,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
        write(*,*) 'At this point in the code'
       endif
 
-   ========= ======================================
-   ``var  `` True if this task should write output.
-   ========= ======================================
+   ======= ======================================
+   ``var`` True if this task should write output.
+   ======= ======================================
 
 | 
 
@@ -618,13 +596,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Reads the namelist and opens the logfile. Records the values of the namelist and registers this module.
 
-   +-------------------+-------------------------------------------------------------------------------------------------+
-   | *progname  *      | If given, use in the timestamp message in the log file to say which program is being started.   |
-   +-------------------+-------------------------------------------------------------------------------------------------+
-   | *alternatename  * | If given, log filename to use instead of the value in the namelist. This permits, for example,  |
-   |                   | different programs sharing the same input.nml file to have different logs. If not given here    |
-   |                   | and no value is specified in the namelist, this defaults to dart_log.out                        |
-   +-------------------+-------------------------------------------------------------------------------------------------+
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | *progname*      | If given, use in the timestamp message in the log file to say which program is being started.     |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | *alternatename* | If given, log filename to use instead of the value in the namelist. This permits, for example,    |
+   |                 | different programs sharing the same input.nml file to have different logs. If not given here and  |
+   |                 | no value is specified in the namelist, this defaults to dart_log.out                              |
+   +-----------------+---------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -649,9 +627,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Writes all information about the status of the IO unit to the error handler with error level message.
 
-   =========== ==========================================
-   ``iunit  `` Unit about which information is requested.
-   =========== ==========================================
+   ========= ==========================================
+   ``iunit`` Unit about which information is requested.
+   ========= ==========================================
 
 | 
 
@@ -666,10 +644,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: indent1
 
-   +--------+------------------------------------------------------------------------------------------------------------+
-   | ``  `` | Severity levels to be passed to error handler. Levels are debug, message, warning and fatal. The namelist  |
-   |        | parameter TERMLEVEL can be used to control at which level program termination should occur.                |
-   +--------+------------------------------------------------------------------------------------------------------------+
+   +------+--------------------------------------------------------------------------------------------------------------+
+   | ```` | Severity levels to be passed to error handler. Levels are debug, message, warning and fatal. The namelist    |
+   |      | parameter TERMLEVEL can be used to control at which level program termination should occur.                  |
+   +------+--------------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -703,68 +681,18 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Files
 -----
 
 -  assim_model_mod.nml in input.nml
 -  logfile, name specified in namelist
 
---------------
-
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | Routine               | Message                                     | Comment                                     |
-   +=======================+=============================================+=============================================+
-   | get_unit              | No available units                          | Unable to open enough IO channels           |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | check_nml_error       | while reading namelist \____\_              | Fatal error reading namelist. This could be |
-   |                       |                                             | caused by having an entry in the namelist   |
-   |                       |                                             | input file that is not in the namelist, by  |
-   |                       |                                             | having illegal values for namelist          |
-   |                       |                                             | variables, or by a variety of other         |
-   |                       |                                             | compiler dependent problems.                |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | find_namelist_in_file | Namelist entry &___\_ must exist in         | There must be an entry for the required     |
-   |                       | namelist_nml.                               | namelist, for instance &filter_nml, in the  |
-   |                       |                                             | input.nml namelist file. Even if no values  |
-   |                       |                                             | are to be changed from the default, an      |
-   |                       |                                             | entry like &filter_nml followed by a line   |
-   |                       |                                             | containing only / is required.              |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | find_namelist_in_file | Namelist input file: input.nml must exist   | The namelist input file (usually input.nml) |
-   |                       |                                             | must exist.                                 |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | check_namelist_read   | INVALID NAMELIST ENTRY: \__\_ in namelist   | While reading the namelist, either a bad    |
-   |                       | \___\_                                      | entry was found or an end of file was       |
-   |                       |                                             | encountered. The most confusing case is     |
-   |                       |                                             | when a namelist is being read successfully  |
-   |                       |                                             | but is not appropriately terminated with a  |
-   |                       |                                             | /. The line printed out by the error        |
-   |                       |                                             | message will be the start of the next       |
-   |                       |                                             | namelist in the input.nml file in this      |
-   |                       |                                             | case.                                       |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

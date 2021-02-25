@@ -1,16 +1,6 @@
 PROGRAM ``wrf_dart_obs_preprocess``
 ===================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -29,8 +19,6 @@ surface elevation.
 This program can exclude observations above a specified height or pressure.
 
 This program can overwrite the incoming Data QC value with another.
-
---------------
 
 Namelist
 --------
@@ -258,10 +246,6 @@ If true, replace the incoming Data QC value in surface observations with 2.0.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -275,13 +259,11 @@ Modules used
    model_mod
    netcdf
 
---------------
-
 Files
 -----
 
 -  Input namelist ; ``input.nml``
--  Input WRF state netCDF files; ``wrfinput_d01,    wrfinput_d02, ...``
+-  Input WRF state netCDF files; ``wrfinput_d01, wrfinput_d02, ...``
 -  Input obs_seq files (as specified in namelist)
 -  Output obs_seq file (as specified in namelist)
 
@@ -291,32 +273,7 @@ File formats
 This utility can read one or more obs_seq files and combine them while doing the rest of the processing. It uses the
 standard DART observation sequence file format.
 
---------------
-
 References
 ----------
 
 -  Generously contributed by Ryan Torn.
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   Routine
-
-Message
-
-Comment
-
-wrf_dart_obs_preprocess
-
-wrf_dart_obs_preprocess
-
-wrf_dart_obs_preprocess
-
-wrf_dart_obs_preprocess

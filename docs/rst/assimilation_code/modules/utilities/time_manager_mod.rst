@@ -1,18 +1,6 @@
 MODULE time_manager_mod
 =======================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -23,10 +11,6 @@ Overview
 | Calendars interpret time intervals in terms of years, months, days. Various calendars commonly in use in the
   scientific community are supported.
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -35,65 +19,61 @@ Other modules used
    types_mod
    utilities_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ============================== ===================
 *use time_manager_mod, only :* time_type
-                               operator(+)
-                               operator(-)
-                               operator(*)
-                               operator(/)
-                               operator(>)
-                               operator(>=)
-                               operator(==)
-                               operator(/=)
-                               operator(<)
-                               operator(<=)
-                               operator(//)
-                               set_time
-                               set_time_missing
-                               increment_time
-                               decrement_time
-                               get_time
-                               interval_alarm
-                               repeat_alarm
-                               THIRTY_DAY_MONTHS
-                               JULIAN
-                               GREGORIAN
-                               NOLEAP
-                               NO_CALENDAR
-                               GREGORIAN_MARS
-                               set_calendar_type
-                               get_calendar_type
-                               get_calendar_string
-                               set_date
-                               get_date
-                               increment_date
-                               decrement_date
-                               days_in_month
-                               leap_year
-                               length_of_year
-                               days_in_year
-                               month_name
-                               julian_day
-                               time_manager_init
-                               print_time
-                               print_date
-                               write_time
-                               read_time
-                               interactive_time
+\                              operator(+)
+\                              operator(-)
+\                              operator(*)
+\                              operator(/)
+\                              operator(>)
+\                              operator(>=)
+\                              operator(==)
+\                              operator(/=)
+\                              operator(<)
+\                              operator(<=)
+\                              operator(//)
+\                              set_time
+\                              set_time_missing
+\                              increment_time
+\                              decrement_time
+\                              get_time
+\                              interval_alarm
+\                              repeat_alarm
+\                              THIRTY_DAY_MONTHS
+\                              JULIAN
+\                              GREGORIAN
+\                              NOLEAP
+\                              NO_CALENDAR
+\                              GREGORIAN_MARS
+\                              set_calendar_type
+\                              get_calendar_type
+\                              get_calendar_string
+\                              set_date
+\                              get_date
+\                              increment_date
+\                              decrement_date
+\                              days_in_month
+\                              leap_year
+\                              length_of_year
+\                              days_in_year
+\                              month_name
+\                              julian_day
+\                              time_manager_init
+\                              print_time
+\                              print_date
+\                              write_time
+\                              read_time
+\                              interactive_time
 ============================== ===================
 
 | 
 
 .. container:: routine
 
-   *var = set_time(seconds [, days])*
+   *var = set_time(seconds [, days])*
    ::
 
       type(time_type)               :: set_time
@@ -733,47 +713,22 @@ Public interfaces
 
 | 
 
---------------
-
 Namelist
 --------
 
 No namelist is currently defined for the time manager code.
-
---------------
 
 Files
 -----
 
 -  none
 
---------------
-
 References
 ----------
 
 #. none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ======= ======= =======
-   Routine Message Comment
-   ======= ======= =======
-   \               
-   ======= ======= =======
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

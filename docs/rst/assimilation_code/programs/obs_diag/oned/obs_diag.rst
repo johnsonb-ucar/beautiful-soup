@@ -1,22 +1,6 @@
 PROGRAM ``obs_diag`` (for 1D observations)
 ==========================================
 
-Contents
---------
-
--  `Overview/usage <#overview/usage>`__
--  `What is new in the Manhattan release <#what_is_new_in_the_manhattan_release>`__
--  `What is new in the Lanai release <#what_is_new_in_the_lanai_release>`__
--  `Namelist <#namelist>`__
--  `Modules directly used <#modules_directly_used>`__
--  `Modules indirectly used <#modules_indirectly_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
-.. _overview/usage:
-
 Overview/usage
 --------------
 
@@ -39,9 +23,8 @@ set to zero.
 | Each ensemble member applies a forward observation operator to the state to compute the "expected" value of an
   observation. Please note: the forward observation operator is applied **AFTER** any prior inflation has taken place!
   Similarly, the forward observation operator is applied AFTER any posterior inflation. This has always been the case.
-  For a detailed look at the relationship between the observation operators and inflation, please look at the
-  `Detailed Program Execution Flow </assimilation_code/programs/filter/filter.html#DetailedProgramFlow>`__ section of
-  `filter.html </assimilation_code/programs/filter/filter.html>`__.
+  For a detailed look at the relationship between the observation operators and inflation, please look at the `Detailed
+  Program Execution Flow <../../filter/filter.html#DetailedProgramFlow>`__ section of :doc:`../../filter/filter`.
 | Given multiple estimates of the observation, several quantities can be calculated. It is possible to compute the
   expected observations from the state vector before assimilating (the "guess", "forecast", or "prior") or after the
   assimilation (the "analysis", or "posterior").
@@ -68,11 +51,11 @@ input variables pertaining to longitude are used.
 particular variable (this is the figure on the left), and sometimes 2) in terms of a rank histogram - "Where does the
 actual observation rank relative to the rest of the ensemble?" (figure on the right). The figures were created by
 Matlab® scripts that query the ``obs_diag_output.nc`` file:
-*DART/diagnostics/matlab/*\ `plot_evolution.m </diagnostics/matlab/plot_evolution.m>`__ and
-`plot_rank_histogram.m </diagnostics/matlab/plot_rank_histogram.m>`__. Both of these takes as input a file name and a
-'quantity' to plot ('rmse','spread','totalspread', ...) and exhaustively plots the quantity (for every variable, every
-region) in a single matlab figure window - and creates a series of .ps files with multiple pages for each of the
-figures. The directory gets cluttered with them.
+*DART/diagnostics/matlab/*\ `plot_evolution.m <../../../../diagnostics/matlab/plot_evolution.m>`__ and
+`plot_rank_histogram.m <../../../../diagnostics/matlab/plot_rank_histogram.m>`__. Both of these takes as input a file
+name and a 'quantity' to plot ('rmse','spread','totalspread', ...) and exhaustively plots the quantity (for every
+variable, every region) in a single matlab figure window - and creates a series of .ps files with multiple pages for
+each of the figures. The directory gets cluttered with them.
 
 The observation sequence files contain only the time of the observation, nothing of the assimilation interval, etc. - so
 it requires user guidance to declare what sort of temporal binning for the temporal evolution plots. I do a 'bunch' of
@@ -93,50 +76,50 @@ to use your own plotting routines.
 
 | 
 
-+--------------------+------------------------------------------------------------------------------------------------+
-| **Nposs**          | The number of observations available to be assimilated.                                        |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **Nused**          | The number of observations that were assimilated.                                              |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **rmse**           | The root-mean-squared error (the horizontal wind components are also used to calculate the     |
-|                    | vector wind velocity and its RMS error).                                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **bias**           | The simple sum of forecast - observation. The bias of the horizontal wind speed (not velocity) |
-|                    | is also computed.                                                                              |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **spread**         | The standard deviation of the univariate obs. DART does not exploit the bivariate nature of    |
-|                    | U,V winds and so the spread of the horizontal wind is defined as the sum of the spreads of the |
-|                    | U and V components.                                                                            |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **totalspread   ** | The total standard deviation of the estimate. We pool the ensemble variance of the observation |
-|                    | plus the observation error variance and take the square root.                                  |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **NbadDARTQC   **  | the number of observations that had a DART QC value (> 1 for a prior, > 3 for a posterior)     |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **observation**    | the mean of the observation values                                                             |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **ens_mean**       | the ensemble mean of the model estimates of the observation values                             |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_trusted**      | the number of implicitly trusted observations, regardless of DART QC                           |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_0**     | the number of observations that had a DART QC value of 0                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_1**     | the number of observations that had a DART QC value of 1                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_2**     | the number of observations that had a DART QC value of 2                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_3**     | the number of observations that had a DART QC value of 3                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_4**     | the number of observations that had a DART QC value of 4                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_5**     | the number of observations that had a DART QC value of 5                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_6**     | the number of observations that had a DART QC value of 6                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_7**     | the number of observations that had a DART QC value of 7                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_8**     | the number of observations that had a DART QC value of 8                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
++-----------------+---------------------------------------------------------------------------------------------------+
+| **Nposs**       | The number of observations available to be assimilated.                                           |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **Nused**       | The number of observations that were assimilated.                                                 |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **rmse**        | The root-mean-squared error (the horizontal wind components are also used to calculate the vector |
+|                 | wind velocity and its RMS error).                                                                 |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **bias**        | The simple sum of forecast - observation. The bias of the horizontal wind speed (not velocity) is |
+|                 | also computed.                                                                                    |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **spread**      | The standard deviation of the univariate obs. DART does not exploit the bivariate nature of U,V   |
+|                 | winds and so the spread of the horizontal wind is defined as the sum of the spreads of the U and  |
+|                 | V components.                                                                                     |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **totalspread** | The total standard deviation of the estimate. We pool the ensemble variance of the observation    |
+|                 | plus the observation error variance and take the square root.                                     |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **NbadDARTQC**  | the number of observations that had a DART QC value (> 1 for a prior, > 3 for a posterior)        |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **observation** | the mean of the observation values                                                                |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **ens_mean**    | the ensemble mean of the model estimates of the observation values                                |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_trusted**   | the number of implicitly trusted observations, regardless of DART QC                              |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_0**  | the number of observations that had a DART QC value of 0                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_1**  | the number of observations that had a DART QC value of 1                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_2**  | the number of observations that had a DART QC value of 2                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_3**  | the number of observations that had a DART QC value of 3                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_4**  | the number of observations that had a DART QC value of 4                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_5**  | the number of observations that had a DART QC value of 5                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_6**  | the number of observations that had a DART QC value of 6                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_7**  | the number of observations that had a DART QC value of 7                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_8**  | the number of observations that had a DART QC value of 8                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
 
 The DART QC flag is intended to provide information about whether the observation was assimilated, evaluated only,
 whether the assimilation resulted in a 'good' observation, etc. *DART QC values lower than*\ **2**\ *indicate the prior
@@ -155,8 +138,6 @@ observation assimilated
 
 observation evaluated only (because of namelist settings)
 
---------------
-
 2
 
 assimilated, but the posterior forward operator failed
@@ -164,8 +145,6 @@ assimilated, but the posterior forward operator failed
 3
 
 evaluated only, but the posterior forward operator failed
-
---------------
 
 4
 
@@ -191,10 +170,6 @@ rejected because of a failed outlier threshold test
 
 reserved for future use
 
---------------
-
-.. _what_is_new_in_the_manhattan_release:
-
 What is new in the Manhattan release
 ------------------------------------
 
@@ -203,8 +178,6 @@ What is new in the Manhattan release
 #. Simplified input file specification.
 #. Some of the internal variable names have been changed to make it easier to distinguish between variances and standard
    deviations.
-
-.. _what_is_new_in_the_lanai_release:
 
 What is new in the Lanai release
 --------------------------------
@@ -222,8 +195,6 @@ What is new in the Lanai release
    by the DART QC mechanism long ago.
 #. The creation of the rank histogram (if possible) is now namelist-controlled by namelist variable
    ``create_rank_histogram``.
-
---------------
 
 Namelist
 --------
@@ -275,19 +246,19 @@ logic used to resolve this is:
    |                                   |                                       | sequence files. These may be relative |
    |                                   |                                       | or absolute filenames. If this is     |
    |                                   |                                       | set, ``obs_sequence_list`` must be    |
-   |                                   |                                       | set to ' ' (empty string).            |
+   |                                   |                                       | set to ' ' (empty string).            |
    +-----------------------------------+---------------------------------------+---------------------------------------+
    | obs_sequence_list                 | character(len=256)                    | Name of an ascii text file which      |
    |                                   |                                       | contains a list of one or more        |
    |                                   |                                       | observation sequence files, one per   |
    |                                   |                                       | line. If this is specified,           |
    |                                   |                                       | ``obs_sequence_name`` must be set to  |
-   |                                   |                                       | ' '. Can be created by any method,    |
+   |                                   |                                       | ' '. Can be created by any method,    |
    |                                   |                                       | including sending the output of the   |
    |                                   |                                       | 'ls' command to a file, a text        |
    |                                   |                                       | editor, or another program. If this   |
    |                                   |                                       | is set, ``obs_sequence_name`` must be |
-   |                                   |                                       | set to ' ' (empty string).            |
+   |                                   |                                       | set to ' ' (empty string).            |
    +-----------------------------------+---------------------------------------+---------------------------------------+
    | bin_width_days, bin_width_seconds | integer                               | Specifies the width of the analysis   |
    |                                   |                                       | window. All observations within a     |
@@ -367,10 +338,6 @@ logic used to resolve this is:
    |                                   |                                       | output.                               |
    +-----------------------------------+---------------------------------------+---------------------------------------+
 
---------------
-
-.. _modules_directly_used:
-
 Modules directly used
 ---------------------
 
@@ -386,8 +353,6 @@ Modules directly used
    sort_mod
    random_seq_mod
 
-.. _modules_indirectly_used:
-
 Modules indirectly used
 -----------------------
 
@@ -397,8 +362,6 @@ Modules indirectly used
    cov_cutoff_mod
    model_mod
    null_mpi_utilities_mod
-
---------------
 
 Files
 -----
@@ -422,8 +385,6 @@ quantities available in the netCDF file for any possible observation type:
 
 The other is to explore the vertical profile of a particular observation kind. By default, each observation kind has a
 'guess/prior' value and an 'analysis/posterior' value - which shed some insight into the innovations.
-
---------------
 
 Temporal evolution
 ^^^^^^^^^^^^^^^^^^
@@ -466,58 +427,25 @@ provide additional annotation for the histogram.
 
 ::
 
-           :DART_QCs_in_histogram = 0, 1, 2, 3, 7 ;
-           :outliers_in_histogram = "TRUE" ;
+                   :DART_QCs_in_histogram = 0, 1, 2, 3, 7 ;
+                   :outliers_in_histogram = "TRUE" ;
 
 | Please note:
 | netCDF restricts variable names to 40 characters, so '_Rank_Hist' may be truncated.
-
---------------
 
 References
 ----------
 
 #. none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   Routine
-
-Message
-
-Comment
-
-get_last_obs
-
-No "last" observation in sequence.
-
-Generated by an incomplete observation sequence file.
-
-get_first_obs
-
-No Observations in sequence.
-
-Empty observation sequence file.
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
 
---------------
-
 .. |image1| image:: ../../../../docs/images/lorenz_63_rmse_evolution.png
    :width: 300px
-   :target: /docs/images/lorenz_63_rmse_evolution.png
+   :target: ../../../../docs/images/lorenz_63_rmse_evolution.png
 .. |image2| image:: ../../../../docs/images/lorenz_63_rank_histogram.png
    :width: 300px
-   :target: /docs/images/lorenz_63_rank_histogram.png
+   :target: ../../../../docs/images/lorenz_63_rank_histogram.png

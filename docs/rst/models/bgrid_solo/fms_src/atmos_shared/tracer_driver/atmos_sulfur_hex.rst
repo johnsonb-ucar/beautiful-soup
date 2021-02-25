@@ -1,41 +1,21 @@
-.. _module_atmos_sulfur_hex_mod:
-
-Module atmos_sulfur_hex_mod
----------------------------
-
-Contents
-~~~~~~~~
-
--  `Module atmos_sulfur_hex_mod <#module_atmos_sulfur_hex_mod>`__
-
-.. container::
-
-   **Contact:**  `Jeff Greenblatt <mailto:jbg@gfdl.noaa.gov>`__
-   **Reviewers:**  `William Cooke <mailto:wfc@gfdl.noaa.gov>`__
-   **Change History:**  `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/>`__
-   **Last Modified:** 2002/06/14 16:58:21
-
---------------
+module atmos_sulfur_hex_mod
+===========================
 
 Overview
-^^^^^^^^
+--------
 
 This code allows the implementation of sulfur hexafluoride tracer in the FMS framework.
 
-.. container::
-
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
    ::
 
-                   fms_mod
+      fms_mod
           time_manager_mod
           diag_manager_mod
         tracer_manager_mod
@@ -43,10 +23,8 @@ Other modules used
       tracer_utilities_mod
              constants_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -65,19 +43,15 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
    None.
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Atmos_sf6_sourcesink
       :name: atmos_sf6_sourcesink
@@ -90,37 +64,37 @@ a. .. rubric:: Atmos_sf6_sourcesink
       A routine to calculate the sources and sinks of sulfur hexafluoride.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lon   ``                                                | Longitude of the centre of the model gridcells.           |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``lon``                                                   | Longitude of the centre of the model gridcells.           |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lat   ``                                                | Latitude of the centre of the model gridcells.            |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``lat``                                                   | Latitude of the centre of the model gridcells.            |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``land   ``                                               | Land/sea mask.                                            |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``land``                                                  | Land/sea mask.                                            |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pwt   ``                                                | The pressure weighting array. = dP/grav                   |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``pwt``                                                   | The pressure weighting array. = dP/grav                   |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``sf6   ``                                                | The array of the sulfur hexafluoride mixing ratio.        |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``sf6``                                                   | The array of the sulfur hexafluoride mixing ratio.        |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``Time   ``                                               | Model time.                                               |
-      |                                                           |    [type(time_type)]                                      |
+      | ``Time``                                                  | Model time.                                               |
+      |                                                           | [type(time_type)]                                         |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``is, ie, js, je   ``                                     | Local domain boundaries.                                  |
-      |                                                           |    [integer]                                              |
+      | ``is, ie, js, je``                                        | Local domain boundaries.                                  |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``kbot   ``                                               | Integer array describing which model layer intercepts the |
+      | ``kbot``                                                  | Integer array describing which model layer intercepts the |
       |                                                           | surface.                                                  |
-      |                                                           |    [integer, optional, dimension(:,:)]                    |
+      |                                                           | [integer, optional, dimension(:,:)]                       |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``sf6_dt   ``                                             | The array of the tendency of the sulfur hexafluoride      |
+      | ``sf6_dt``                                                | The array of the tendency of the sulfur hexafluoride      |
       |                                                           | mixing ratio.                                             |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 b. .. rubric:: Atmos_sulfur_hex_init
@@ -134,29 +108,29 @@ b. .. rubric:: Atmos_sulfur_hex_init
       A routine to initialize the sulfur hexafluoride module.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lonb   ``                                               | The longitudes for the local domain.                      |
-      |                                                           |    [real, dimension(:)]                                   |
+      | ``lonb``                                                  | The longitudes for the local domain.                      |
+      |                                                           | [real, dimension(:)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``latb   ``                                               | The latitudes for the local domain.                       |
-      |                                                           |    [real, dimension(:)]                                   |
+      | ``latb``                                                  | The latitudes for the local domain.                       |
+      |                                                           | [real, dimension(:)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``mask   ``                                               | optional mask (0. or 1.) that designates which grid       |
+      | ``mask``                                                  | optional mask (0. or 1.) that designates which grid       |
       |                                                           | points are above (=1.) or below (=0.) the ground          |
       |                                                           | dimensioned as (nlon,nlat,nlev).                          |
-      |                                                           |    [real, optional, dimension(:,:,:)]                     |
+      |                                                           | [real, optional, dimension(:,:,:)]                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``Time   ``                                               | Model time.                                               |
-      |                                                           |    [type(time_type)]                                      |
+      | ``Time``                                                  | Model time.                                               |
+      |                                                           | [type(time_type)]                                         |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``axes   ``                                               | The axes relating to the tracer array dimensioned as      |
+      | ``axes``                                                  | The axes relating to the tracer array dimensioned as      |
       |                                                           | (nlon, nlat, nlev, ntime)                                 |
-      |                                                           |    [integer, dimension(4)]                                |
+      |                                                           | [integer, dimension(4)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **INPUT/OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``r   ``                                                  | Tracer fields dimensioned as (nlon,nlat,nlev,ntrace).     |
-      |                                                           |    [real, dimension(:,:,:,:)]                             |
+      | ``r``                                                     | Tracer fields dimensioned as (nlon,nlat,nlev,ntrace).     |
+      |                                                           | [real, dimension(:,:,:,:)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 c. .. rubric:: Sulfur_hex_end
@@ -169,10 +143,8 @@ c. .. rubric:: Sulfur_hex_end
    **DESCRIPTION**
       This subroutine is the exit routine for the sulfur hexafluoride module.
 
---------------
-
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
@@ -183,19 +155,15 @@ Data sets
       previous 12 months.
       The dataset can be obtained from the contact person above.
 
---------------
-
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
 
---------------
-
 References
-^^^^^^^^^^
+----------
 
 .. container::
 
@@ -204,83 +172,45 @@ References
 
 | 
 
---------------
-
 Compiler specifics
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Precompiler options
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Loader options
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
-
---------------
 
 Test PROGRAM
-^^^^^^^^^^^^
+------------
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Known bugs
-^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
 
 Notes
-^^^^^
+-----
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Future plans
-^^^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
-
-.. container::
-
-   top

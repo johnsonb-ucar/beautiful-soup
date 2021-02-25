@@ -1,14 +1,6 @@
 CESM+DART setup
 ===============
 
-Contents
---------
-
--  `Cesm+dart setup overview <#cesm+dart_setup_overview>`__
--  `CESM component combinations <#cesm_component_combinations>`__
-
-.. _cesm+dart_setup_overview:
-
 Cesm+dart setup overview
 ------------------------
 
@@ -17,7 +9,7 @@ a good place to find pointers to those files. This document gives specific help 
 for the first time. Unless you just came from there, also see the ../{your_model(s)}/model_mod.html documentation about
 the code-level interfaces and namelist values.
 
-cesm context
+CESM context
 ^^^^^^^^^^^^
 
 Most other models are either called by DART (low order models), or are run by DART via a shell script command (e.g.
@@ -35,7 +27,7 @@ mechanism. SourceMods for selected versions of CESM are available from the DART 
 template for making a SourceMods for a different CESM version. If you have other CESM modifications, they must be merged
 with the DART modifications.
 
-cesm2
+CESM2
 ^^^^^
 
 CESM2 (expected release May, 2017) has several helpful improvements, from DART's perspective.
@@ -66,8 +58,6 @@ CESM restart file sets during the run. All of DART's output and user selected, r
   preassim_mean.nc from a CAM assimilation named Test0 will be renamed
 | Test0.cam.preassim_mean.2013-03-14-21600.nc
 | The obs_seq files remain an exception to this renaming, since they are not in NetCDF format (yet).
-
-.. _cesm_component_combinations:
 
 CESM component combinations
 ---------------------------
@@ -117,15 +107,136 @@ Cross-component assimilation (aka "strongly coupled")
 |                             | will use code in this models/CESM directory.                                          |
 +-----------------------------+---------------------------------------------------------------------------------------+
 
-`Go to cam-fv/model_mod page </models/cam-fv/model_mod.html>`__
+:doc:`../../cam-fv/model_mod`
 
-.. |CAM+DART flowchart| image:: ./CESM_DART_assim_modes/CAM_only.png
+$dart/models/{cesm components} organization
+-------------------------------------------
+
+.. container:: keepspace
+
+   ======================== ===================================================================
+   SCRIPT                   NOTES
+   ======================== ===================================================================
+   \                        
+   $DART/models/**cam-fv**/ A 'model' for each CAM dynamical core (see note below this outline)
+   model_mod.\*             The fortran interface between CAM-FV and DART
+   shell_scripts/           
+   no_assimilate.csh,...    **In**\ dependent_of_cesm_version
+   cesm\ **1_5**/           
+   setup_hybrid,...         **De**\ pendent on CESM version
+   cesm\ **2_0**/           
+   setup_hybrid,...         **De**\ pendent on CESM version
+   \                        
+   $DART/models/**pop**/    A 'model' for each ocean model (MOM may be interfaced next)
+   model_mod.\*             The fortran interface between CAM-FV and DART
+   shell_scripts/           
+   no_assimilate.csh,...    **In**\ dependent_of_cesm_version
+   cesm\ **1_5**/           
+   setup_hybrid,...         **De**\ pendent on CESM version
+   cesm\ **2_0**/           
+   setup_hybrid,...         **De**\ pendent on CESM version
+   ...                      
+   ======================== ===================================================================
+
+::
+
+   For each CAM dynamical core "model", e.g. "cam-fv",  the scripts  in cesm#_# will handle:
+      all CAM variants + vertical resolutions (*dy-core is NOT part of this.*):
+          CAM5.5, CAM6, ...
+          WACCM4, WACCM6, WACCM-X...
+          CAM-Chem,
+          ...
+      all horizontal resolutions of its dy-core:
+          1.9x2.5, 0.9x1.25, ..., for cam-fv
+          ne30np4, ne0_CONUS,..., for cam-se
+
+Assimilation set-up procedure
+-----------------------------
+
+Here is a list of steps to set up an assimilation from scratch, except that it assumes you have downloaded DART and
+learned how to use it with low order models. Some of the steps can be skipped if you have a suitable replacement, as
+noted.
+
+| 
+
+1.  Decide which component(s) you want to use as the assimilating model(s). (The rest of this example assumes that
+    you're building a cam-fv assimilation.) Look in models/cam-fv/shell_scripts to see which CESM versions are
+    supported.
+2.  CESM: locate that version on your system, or check it out from http://www.cesm.ucar.edu/models/current.html
+3.  Choose a start date for your assimilation. Choosing/creating the initial ensemble is a complicated issue.
+
+    -  It's simpler for CAM assimilations. If you don't have an initial state and/or ensemble for this date, build a
+       single instance of CESM (Fxxxx compset for cam-fv) and run it from the default Jan 1 start date until 2-4 weeks
+       before your start date. Be sure to set the cam namelist variable inithist = 'ENDOFRUN' during the last stage, so
+       that CAM will write an "initial" file, which DART needs.
+    -  For ocean and land assimilations,which use an ensemble of data atmospheres, creating usable initial ensemble is a
+       different process.
+
+4.  Put the entire cam-fv restart file set (including the initial file) where it won't be scrubbed before you want to
+    use it. Create a pseudo-ensemble by linking files with instance numbers in them to the restart file set (which has
+    no instance number) using CESM/shell_scripts/link_ens_to_single.csh
+5.  Choose the options in $dart/mkmf/mkmf.template that are best for your assimilation. These will not affect the CESM
+    build, only filter.
+6.  In models/cam-fv/work/input.nml, be sure to include all of your required obs_def_${platform}_mod.f90 file names in
+    preprocess_nml:input_files. It's also useful to modify the rest of input.nml to make it do what you want for the
+    first assimilation cycle. This input.nml will be copied to the $case_root directory and used by assimilate.csh.
+7.  Build the DART executables using quickbuild.csh.
+8.  Follow the directions in models/cam-fv/shell_scripts/cesm#_#/setup_hybrid to set up the assimilation and build of
+    CESM. We recommend a tiny ensemble to start with, to more quickly test whether everything is in order.
+9.  After convincing yourself that the CESM+DART framework is working with no_assimilate.csh, activate the assimilation
+    by changing CESM's env_run.xml:DATA_ASSIMILATION_SCRIPT to use assimilate.csh.
+10. After the first forecast+assimilation cycle finishes correctly, change the input.nml, env_run.xml and env_batch.xml
+    to do additional cycle(s) without the perturbation of the initial state, and with using the just created restart
+    files. You may also want to turn on the st_archive program. Instructions are in setup_hybrid and
+    cam-fv/work/input.nml.
+11. Finally, build a new case with the full ensemble, activate the assimilate.csh script and repeat the steps in step
+    10.
+
+Output directory
+----------------
+
+CESM's short term archiver (st_archive) is controlled by its ``env_archive.xml``. DART's setup scripts modify that file
+to archive DART output along with CESM's. (See the :doc:`../../../docs/html/rma` for a description of DART's output).
+DART's output is archived in ``$arch_dir/dart/{hist,rest,logs,...}``, where arch_dir is defined in
+``setup_{hybrid,advanced}``, ``hist`` contains all of the state space and observation space output, and ``rest``
+contains the inflation restart files.
+
++---------------------------------------+---------------------------------------+---------------------------------------+
+| ::                                    | User                                  | Location of scripts and pass-through  |
+|                                       |                                       | point for files during execution.     |
+|    Central directory                  |                                       | Typically named according defining    |
+|                                       |                                       | characteristics of a \*set\* of       |
+|                                       |                                       | experiments; resolution, model, obs   |
+|                                       |                                       | being assimilated, unique model state |
+|                                       |                                       | variables, etc.                       |
++---------------------------------------+---------------------------------------+---------------------------------------+
+
+| -->
+
+The cam-XX assimilate.csh scripts also make a copy of the obs_seq.final files in a scratch space
+($scratch/$case/Obs_seqs) which won't be removed by CESM's long term archiver, if that is run.
+
+Helpful hints
+-------------
+
+Space requirements
+------------------
+
+Space requirements (Gb per ensemble member) for several CAM resolutions.
+
+| 
+
+There are, no doubt, things missing from these lists, so don't struggle too long before contacting dart'at'ucar.edu.
+
+Useful terms found in this web page.
+
+.. |CAM+DART flowchart| image:: ../../../docs/images/science_nuggets/CAM_only.png
    :width: 300px
    :height: 400px
-.. |POP+DART flowchart| image:: ./CESM_DART_assim_modes/POP_only.png
+.. |POP+DART flowchart| image:: ../../../docs/images/science_nuggets/POP_only.png
    :width: 550px
    :height: 400px
-.. |Multi-component flowchart| image:: ./CESM_DART_assim_modes/multi-component.png
+.. |Multi-component flowchart| image:: ../../../docs/images/science_nuggets/multi-component.png
    :height: 400px
-.. |Cross-component flowchart| image:: ./CESM_DART_assim_modes/cross-component.png
+.. |Cross-component flowchart| image:: ../../../docs/images/science_nuggets/cross-component.png
    :height: 400px

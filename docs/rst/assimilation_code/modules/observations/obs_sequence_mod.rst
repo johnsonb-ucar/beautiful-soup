@@ -1,18 +1,6 @@
 MODULE obs_sequence_mod
 =======================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -25,12 +13,10 @@ are provided. For now, the observations are only ordered by time, but the abilit
 
 These routines are commonly used in conversion programs which read observation data from various formats and create a
 DART observation sequence in memory, and then write it out to a file. See the
-`observations </observations/obs_converters/README.md>`__ directory for examples of programs which create and manipulate
-observations using this routines.
+`observations <../../../observations/obs_converters/README.md>`__ directory for examples of programs which create and
+manipulate observations using this routines.
 
 | 
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -44,68 +30,64 @@ Other modules used
    utilities_mod
    obs_kind_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ============================== ===================================
 *use obs_sequence_mod, only :* obs_sequence_type
-                               init_obs_sequence
-                               interactive_obs_sequence
-                               get_num_copies
-                               get_num_qc
-                               get_num_obs
-                               get_max_num_obs
-                               get_copy_meta_data
-                               get_qc_meta_data
-                               get_next_obs
-                               get_prev_obs
-                               get_next_obs_from_key
-                               get_prev_obs_from_key
-                               insert_obs_in_seq
-                               delete_obs_from_seq
-                               set_copy_meta_data
-                               set_qc_meta_data
-                               get_first_obs
-                               get_last_obs
-                               add_copies
-                               add_qc
-                               write_obs_seq
-                               read_obs_seq
-                               append_obs_to_seq
-                               get_obs_from_key
-                               get_obs_time_range
-                               set_obs
-                               get_time_range_keys
-                               get_num_times
-                               static_init_obs_sequence
-                               destroy_obs_sequence
-                               read_obs_seq_header
-                               get_expected_obs
-                               delete_seq_head
-                               delete_seq_tail
-                               
-                               LINKS BELOW FOR OBS_TYPE INTERFACES
-                               
-                               obs_type
-                               init_obs
-                               destroy_obs
-                               get_obs_def
-                               set_obs_def
-                               get_obs_values
-                               set_obs_values
-                               replace_obs_values
-                               get_qc
-                               set_qc
-                               replace_qc
-                               write_obs
-                               read_obs
-                               interactive_obs
-                               copy_obs
-                               assignment(=)
+\                              init_obs_sequence
+\                              interactive_obs_sequence
+\                              get_num_copies
+\                              get_num_qc
+\                              get_num_obs
+\                              get_max_num_obs
+\                              get_copy_meta_data
+\                              get_qc_meta_data
+\                              get_next_obs
+\                              get_prev_obs
+\                              get_next_obs_from_key
+\                              get_prev_obs_from_key
+\                              insert_obs_in_seq
+\                              delete_obs_from_seq
+\                              set_copy_meta_data
+\                              set_qc_meta_data
+\                              get_first_obs
+\                              get_last_obs
+\                              add_copies
+\                              add_qc
+\                              write_obs_seq
+\                              read_obs_seq
+\                              append_obs_to_seq
+\                              get_obs_from_key
+\                              get_obs_time_range
+\                              set_obs
+\                              get_time_range_keys
+\                              get_num_times
+\                              static_init_obs_sequence
+\                              destroy_obs_sequence
+\                              read_obs_seq_header
+\                              get_expected_obs
+\                              delete_seq_head
+\                              delete_seq_tail
+\                              
+\                              LINKS BELOW FOR OBS_TYPE INTERFACES
+\                              
+\                              obs_type
+\                              init_obs
+\                              destroy_obs
+\                              get_obs_def
+\                              set_obs_def
+\                              get_obs_values
+\                              set_obs_values
+\                              replace_obs_values
+\                              get_qc
+\                              set_qc
+\                              replace_qc
+\                              write_obs
+\                              read_obs
+\                              interactive_obs
+\                              copy_obs
+\                              assignment(=)
 ============================== ===================================
 
 | 
@@ -182,37 +164,17 @@ Public interfaces
    qc fields. The cov_group is not yet implemented but will allow non-diagonal observation error covariances in a future
    release.
 
-   Component
-
-Description
-
-key
-
-Unique integer key when in an obs_sequence.
-
-def
-
-The definition of the observation (see obs_def_mod).
-
-values
-
-Values associated with the observation.
-
-qc
-
-Quality control fields associated with the observation.
-
-prev_time
-
-When in an obs_sequence, points to previous time sorted observation.
-
-next_time
-
-When in an obs_sequence, points to next time sorted observation.
-
-cov_group
-
-Not currently implemented.
+   ========= ====================================================================
+   Component Description
+   ========= ====================================================================
+   key       Unique integer key when in an obs_sequence.
+   def       The definition of the observation (see obs_def_mod).
+   values    Values associated with the observation.
+   qc        Quality control fields associated with the observation.
+   prev_time When in an obs_sequence, points to previous time sorted observation.
+   next_time When in an obs_sequence, points to next time sorted observation.
+   cov_group Not currently implemented.
+   ========= ====================================================================
 
 | 
 
@@ -234,12 +196,12 @@ Not currently implemented.
    observation must be specified. Also, an estimated upper bound on the number of observations to be stored in the
    sequence is helpful in making creation of the sequence efficient.
 
-   ========================== ============================================================================
-   ``seq  ``                  The observation sequence being constructed
-   ``num_copies  ``           Number of copies of data to be associated with each observation
-   ``num_qc  ``               Number of quality control fields associated with each observation
-   ``expected_max_num_obs  `` An estimate of the largest number of observations the sequence might contain
-   ========================== ============================================================================
+   ======================== ============================================================================
+   ``seq``                  The observation sequence being constructed
+   ``num_copies``           Number of copies of data to be associated with each observation
+   ``num_qc``               Number of quality control fields associated with each observation
+   ``expected_max_num_obs`` An estimate of the largest number of observations the sequence might contain
+   ======================== ============================================================================
 
 | 
 
@@ -255,9 +217,9 @@ Not currently implemented.
    Uses input from standard in to create an observation sequence. Initialization of the sequence is handled by the
    function.
 
-   ========= ===================================================
-   ``var  `` An observation sequence created from standard input
-   ========= ===================================================
+   ======= ===================================================
+   ``var`` An observation sequence created from standard input
+   ======= ===================================================
 
 | 
 
@@ -273,10 +235,10 @@ Not currently implemented.
 
    Returns number of copies of data associated with each observation in an observation sequence.
 
-   ========= =============================================================================
-   ``var  `` Returns number of copies of data associated with each observation in sequence
-   ``seq  `` An observation sequence
-   ========= =============================================================================
+   ======= =============================================================================
+   ``var`` Returns number of copies of data associated with each observation in sequence
+   ``seq`` An observation sequence
+   ======= =============================================================================
 
 | 
 
@@ -292,10 +254,10 @@ Not currently implemented.
 
    Returns number of quality control fields associated with each observation in an observation sequence.
 
-   ========= =====================================================================================
-   ``var  `` Returns number of quality control fields associated with each observation in sequence
-   ``seq  `` An observation sequence
-   ========= =====================================================================================
+   ======= =====================================================================================
+   ``var`` Returns number of quality control fields associated with each observation in sequence
+   ``seq`` An observation sequence
+   ======= =====================================================================================
 
 | 
 
@@ -311,10 +273,10 @@ Not currently implemented.
 
    Returns number of observations currently in an observation sequence.
 
-   ========= ===================================================================
-   ``var  `` Returns number of observations currently in an observation sequence
-   ``seq  `` An observation sequence
-   ========= ===================================================================
+   ======= ===================================================================
+   ``var`` Returns number of observations currently in an observation sequence
+   ``seq`` An observation sequence
+   ======= ===================================================================
 
 | 
 
@@ -330,10 +292,10 @@ Not currently implemented.
 
    Returns maximum number of observations an observation sequence can hold.
 
-   ========= =======================================================================
-   ``var  `` Returns maximum number of observations an observation sequence can hold
-   ``seq  `` An observation sequence
-   ========= =======================================================================
+   ======= =======================================================================
+   ``var`` Returns maximum number of observations an observation sequence can hold
+   ``seq`` An observation sequence
+   ======= =======================================================================
 
 | 
 
@@ -350,11 +312,11 @@ Not currently implemented.
 
    Returns metadata associated with a given copy of data in an observation sequence.
 
-   ============== =======================================================================
-   ``var  ``      Returns metadata associated with a copy of data in observation sequence
-   ``seq  ``      An observation sequence
-   ``copy_num  `` Return metadata for this copy
-   ============== =======================================================================
+   ============ =======================================================================
+   ``var``      Returns metadata associated with a copy of data in observation sequence
+   ``seq``      An observation sequence
+   ``copy_num`` Return metadata for this copy
+   ============ =======================================================================
 
 | 
 
@@ -372,11 +334,11 @@ Not currently implemented.
    Returns metadata associated with a given copy of quality control fields associated with observations in an
    observation sequence.
 
-   ============ ================================================
-   ``var  ``    Returns metadata associated with a given qc copy
-   ``seq  ``    An observation sequence
-   ``qc_num  `` Return metadata for this copy
-   ============ ================================================
+   ========== ================================================
+   ``var``    Returns metadata associated with a given qc copy
+   ``seq``    An observation sequence
+   ``qc_num`` Return metadata for this copy
+   ========== ================================================
 
 | 
 
@@ -395,12 +357,12 @@ Not currently implemented.
    Given an observation in a sequence, returns the next observation in the sequence. If there is no next observation,
    is_this_last is set to true.
 
-   ================== ========================================
-   ``seq  ``          An observation sequence
-   ``obs  ``          Find the next observation after this one
-   ``next_obs  ``     Return the next observation here
-   ``is_this_last  `` True if obs is the last obs in sequence
-   ================== ========================================
+   ================ ========================================
+   ``seq``          An observation sequence
+   ``obs``          Find the next observation after this one
+   ``next_obs``     Return the next observation here
+   ``is_this_last`` True if obs is the last obs in sequence
+   ================ ========================================
 
 | 
 
@@ -419,12 +381,12 @@ Not currently implemented.
    Given an observation in a sequence, returns the previous observation in the sequence. If there is no previous
    observation, is_this_first is set to true.
 
-   =================== =============================================
-   ``seq  ``           An observation sequence
-   ``obs  ``           Find the previous observation before this one
-   ``prev_obs  ``      Return the previous observation here
-   ``is_this_first  `` True if obs is the first obs in sequence
-   =================== =============================================
+   ================= =============================================
+   ``seq``           An observation sequence
+   ``obs``           Find the previous observation before this one
+   ``prev_obs``      Return the previous observation here
+   ``is_this_first`` True if obs is the first obs in sequence
+   ================= =============================================
 
 | 
 
@@ -443,12 +405,12 @@ Not currently implemented.
    Given the last key used in a sequence, returns the next observation in the sequence. If there is no next observation,
    is_this_last is set to true.
 
-   =================== ========================================
-   ``seq  ``           An observation sequence
-   ``last_key_used  `` Find the next observation after this key
-   ``next_obs  ``      Return the next observation here
-   ``is_this_last  ``  True if obs is the last obs in sequence
-   =================== ========================================
+   ================= ========================================
+   ``seq``           An observation sequence
+   ``last_key_used`` Find the next observation after this key
+   ``next_obs``      Return the next observation here
+   ``is_this_last``  True if obs is the last obs in sequence
+   ================= ========================================
 
 | 
 
@@ -467,12 +429,12 @@ Not currently implemented.
    Given the last key used in a sequence, returns the previous observation in the sequence. If there is no previous
    observation, is_this_first is set to true.
 
-   =================== =============================================
-   ``seq  ``           An observation sequence
-   ``last_key_used  `` Find the previous observation before this key
-   ``prev_obs  ``      Return the previous observation here
-   ``is_this_first  `` True if obs is the first obs in sequence
-   =================== =============================================
+   ================= =============================================
+   ``seq``           An observation sequence
+   ``last_key_used`` Find the previous observation before this key
+   ``prev_obs``      Return the previous observation here
+   ``is_this_first`` True if obs is the first obs in sequence
+   ================= =============================================
 
 | 
 
@@ -490,17 +452,17 @@ Not currently implemented.
    Each entry in an observation sequence has a unique integer key. This subroutine returns the observation given an
    integer key.
 
-   ========= ====================================
-   ``seq  `` An observation sequence
-   ``key  `` Return the observation with this key
-   ``obs  `` The returned observation
-   ========= ====================================
+   ======= ====================================
+   ``seq`` An observation sequence
+   ``key`` Return the observation with this key
+   ``obs`` The returned observation
+   ======= ====================================
 
 | 
 
 .. container:: routine
 
-   *call insert_obs_in_seq(seq, obs [, prev_obs])*
+   *call insert_obs_in_seq(seq, obs [, prev_obs])*
    ::
 
       type(obs_sequence_type),  intent(inout) :: seq
@@ -513,11 +475,11 @@ Not currently implemented.
    observation is inserted directly after the prev_obs. If an incorrect prev_obs is provided so that the sequence is no
    longer time ordered, bad things will happen.
 
-   ============ =======================================================================
-   ``seq  ``    An observation sequence
-   ``obs  ``    An observation to be inserted in the sequence
-   *prev_obs  * If present, says the new observation belongs immediately after this one
-   ============ =======================================================================
+   ========== =======================================================================
+   ``seq``    An observation sequence
+   ``obs``    An observation to be inserted in the sequence
+   *prev_obs* If present, says the new observation belongs immediately after this one
+   ========== =======================================================================
 
 | 
 
@@ -533,10 +495,10 @@ Not currently implemented.
 
    Given an observation and a sequence, removes the observation with the same key from the observation sequence.
 
-   ========= ===============================================
-   ``seq  `` An observation sequence
-   ``obs  `` The observation to be deleted from the sequence
-   ========= ===============================================
+   ======= ===============================================
+   ``seq`` An observation sequence
+   ``obs`` The observation to be deleted from the sequence
+   ======= ===============================================
 
 | 
 
@@ -553,11 +515,11 @@ Not currently implemented.
 
    Sets the copy metadata for this copy of the observations in an observation sequence.
 
-   =============== ==================================
-   ``seq  ``       An observation sequence
-   ``copy_num  ``  Set metadata for this copy of data
-   ``meta_data  `` The metadata
-   =============== ==================================
+   ============= ==================================
+   ``seq``       An observation sequence
+   ``copy_num``  Set metadata for this copy of data
+   ``meta_data`` The metadata
+   ============= ==================================
 
 | 
 
@@ -574,11 +536,11 @@ Not currently implemented.
 
    Sets the quality control metadata for this copy of the qc in an observation sequence.
 
-   =============== ===========================================
-   ``seq  ``       An observation sequence
-   ``qc_num  ``    Set metadata for this quality control field
-   ``meta_data  `` The metadata
-   =============== ===========================================
+   ============= ===========================================
+   ``seq``       An observation sequence
+   ``qc_num``    Set metadata for this quality control field
+   ``meta_data`` The metadata
+   ============= ===========================================
 
 | 
 
@@ -596,11 +558,11 @@ Not currently implemented.
    Returns the first observation in a sequence. If there are no observations in the sequence, the function returns
    false, else true.
 
-   ========= =============================================
-   ``var  `` Returns false if there are no obs in sequence
-   ``seq  `` An observation sequence
-   ``obs  `` The first observation in the sequence
-   ========= =============================================
+   ======= =============================================
+   ``var`` Returns false if there are no obs in sequence
+   ``seq`` An observation sequence
+   ``obs`` The first observation in the sequence
+   ======= =============================================
 
 | 
 
@@ -618,11 +580,11 @@ Not currently implemented.
    Returns the last observation in a sequence. If there are no observations in the sequence, the function returns false,
    else true.
 
-   ========= =============================================
-   ``var  `` Returns false if there are no obs in sequence
-   ``seq  `` An observation sequence
-   ``obs  `` The last observation in the sequence
-   ========= =============================================
+   ======= =============================================
+   ``var`` Returns false if there are no obs in sequence
+   ``seq`` An observation sequence
+   ``obs`` The last observation in the sequence
+   ======= =============================================
 
 | 
 
@@ -639,10 +601,10 @@ Not currently implemented.
    Increases the number of copies of data associated with each observation by num_to_add. The current implementation
    re-creates the entire observation sequence by deallocating and reallocating each entry with a larger size.
 
-   ================ ===============================
-   ``seq  ``        An observation sequence
-   ``num_to_add  `` Number of copies of data to add
-   ================ ===============================
+   ============== ===============================
+   ``seq``        An observation sequence
+   ``num_to_add`` Number of copies of data to add
+   ============== ===============================
 
 | 
 
@@ -660,10 +622,10 @@ Not currently implemented.
    implementation re-creates the entire observation sequence by deallocating and reallocating each entry with a larger
    size.
 
-   ================ =======================================
-   ``seq  ``        An observation sequence
-   ``num_to_add  `` Number of quality control fields to add
-   ================ =======================================
+   ============== =======================================
+   ``seq``        An observation sequence
+   ``num_to_add`` Number of quality control fields to add
+   ============== =======================================
 
 | 
 
@@ -689,13 +651,13 @@ Not currently implemented.
    observation type strings with an integer which was not present in previous versions. I format files are no longer
    supported.
 
-   ================ ================================================================================
-   ``file_name  ``  Read from this file
-   ``add_copies  `` Add this number of copies of data to the obs_sequence on file
-   ``add_qc  ``     Add this number of qc fields to the obs_sequence on file
-   ``add_obs  ``    Add space for this number of additional observations to the obs_sequence on file
-   ``seq  ``        The observation sequence read in with any additional space
-   ================ ================================================================================
+   ============== ================================================================================
+   ``file_name``  Read from this file
+   ``add_copies`` Add this number of copies of data to the obs_sequence on file
+   ``add_qc``     Add this number of qc fields to the obs_sequence on file
+   ``add_obs``    Add space for this number of additional observations to the obs_sequence on file
+   ``seq``        The observation sequence read in with any additional space
+   ============== ================================================================================
 
 | 
 
@@ -712,16 +674,16 @@ Not currently implemented.
    Write the observation sequence to file file_name. The format is controlled by the namelist parameter
    write_binary_obs_sequence.
 
-   =============== ===============================
-   ``seq  ``       An observation sequence
-   ``file_name  `` Write the sequence to this file
-   =============== ===============================
+   ============= ===============================
+   ``seq``       An observation sequence
+   ``file_name`` Write the sequence to this file
+   ============= ===============================
 
 | 
 
 .. container:: routine
 
-   *call set_obs(seq,obs [, key_in])*
+   *call set_obs(seq,obs [, key_in])*
    ::
 
       type(obs_sequence_type), intent(inout) :: seq
@@ -734,11 +696,11 @@ Not currently implemented.
    observation. If the optional key_in argument is present, the observation is instead copied into this element of the
    observation sequence (and the key is changed to be key_in).
 
-   ========== ===========================================================
-   ``seq  ``  An observation sequence
-   ``obs  ``  Observation to be put in sequence
-   *key_in  * If present, the obs is copied into this key of the sequence
-   ========== ===========================================================
+   ======== ===========================================================
+   ``seq``  An observation sequence
+   ``obs``  Observation to be put in sequence
+   *key_in* If present, the obs is copied into this key of the sequence
+   ======== ===========================================================
 
 | 
 
@@ -755,16 +717,16 @@ Not currently implemented.
    Append an observation to an observation sequence. An error results if the time of the observation is not equal to or
    later than the time of the last observation currently in the sequence.
 
-   ========= =======================================
-   ``seq  `` An observation sequence
-   ``obs  `` Append this observation to the sequence
-   ========= =======================================
+   ======= =======================================
+   ``seq`` An observation sequence
+   ``obs`` Append this observation to the sequence
+   ======= =======================================
 
 | 
 
 .. container:: routine
 
-   *call get_obs_time_range(seq, time1, time2, key_bounds, num_keys, out_of_range [, obs])*
+   *call get_obs_time_range(seq, time1, time2, key_bounds, num_keys, out_of_range [, obs])*
    ::
 
       type(obs_sequence_type),  intent(in)  :: seq
@@ -784,15 +746,15 @@ Not currently implemented.
    the efficiency of the search through the sequence by indicating that all observations before obs are definitely at
    times before the start of the time range.
 
-   ================== ====================================================================================
-   ``seq  ``          An observation sequence
-   ``time1  ``        Lower time bound
-   ``time2  ``        Upper time bound
-   ``key_bounds  ``   Lower and upper bounds on keys that are in the time range
-   ``num_keys  ``     Number of keys in the time range
-   ``out_of_range  `` Returns true if the time range is entirely past the time of the last obs in sequence
-   *obs  *            If present, can start search for time range from this observation
-   ================== ====================================================================================
+   ================ ====================================================================================
+   ``seq``          An observation sequence
+   ``time1``        Lower time bound
+   ``time2``        Upper time bound
+   ``key_bounds``   Lower and upper bounds on keys that are in the time range
+   ``num_keys``     Number of keys in the time range
+   ``out_of_range`` Returns true if the time range is entirely past the time of the last obs in sequence
+   *obs*            If present, can start search for time range from this observation
+   ================ ====================================================================================
 
 | 
 
@@ -813,12 +775,12 @@ Not currently implemented.
    range. Combining the two routines allows one to get a list of all observations in any time range by key. The ``keys``
    array must be at least ``num_keys`` long to hold the return values.
 
-   ================ ==================================================
-   ``seq  ``        An observation sequence
-   ``key_bounds  `` Keys of first and last observation in a time range
-   ``num_keys  ``   Number of obs in the time range
-   ``keys  ``       Output list of keys of all obs in the time range
-   ================ ==================================================
+   ============== ==================================================
+   ``seq``        An observation sequence
+   ``key_bounds`` Keys of first and last observation in a time range
+   ``num_keys``   Number of obs in the time range
+   ``keys``       Output list of keys of all obs in the time range
+   ============== ==================================================
 
 | 
 
@@ -834,10 +796,10 @@ Not currently implemented.
 
    Returns the number of unique times associated with observations in an observation sequence.
 
-   ========= =====================================================
-   ``var  `` Number of unique times for observations in a sequence
-   ``seq  `` An observation sequence
-   ========= =====================================================
+   ======= =====================================================
+   ``var`` Number of unique times for observations in a sequence
+   ``seq`` An observation sequence
+   ======= =====================================================
 
 | 
 
@@ -856,12 +818,12 @@ Not currently implemented.
    sequence file. This routine can be used to count the actual number of observations in a sequence and will be accurate
    even if the sequence has been trimmed with delete_seq_head() or delete_seq_tail().
 
-   ========== ===========================================================================
-   ``var  ``  Number of unique times for observations in a sequence
-   ``seq  ``  An observation sequence
-   ``key1  `` The starting key number. Defaults to the first observation in the sequence.
-   ``key2  `` The ending key number. Defaults to the last observation in the sequence.
-   ========== ===========================================================================
+   ======== ===========================================================================
+   ``var``  Number of unique times for observations in a sequence
+   ``seq``  An observation sequence
+   ``key1`` The starting key number. Defaults to the first observation in the sequence.
+   ``key2`` The ending key number. Defaults to the last observation in the sequence.
+   ======== ===========================================================================
 
 | 
 
@@ -886,16 +848,16 @@ Not currently implemented.
 
    Releases all allocated storage associated with an observation sequence.
 
-   ========= =======================
-   ``seq  `` An observation sequence
-   ========= =======================
+   ======= =======================
+   ``seq`` An observation sequence
+   ======= =======================
 
 | 
 
 .. container:: routine
 
-   *call read_obs_seq_header(file_name, num_copies, num_qc, num_obs, max_num_obs, file_id, read_format, pre_I_format
-   [, close_the_file])*
+   *call read_obs_seq_header(file_name, num_copies, num_qc, num_obs, max_num_obs, file_id, read_format, pre_I_format [,
+   close_the_file])*
    ::
 
       character(len=*),   intent(in)  :: file_name
@@ -913,27 +875,27 @@ Not currently implemented.
    Allows one to see the global metadata associated with an observation sequence that has been written to a file without
    reading the whole file.
 
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``file_name  ``    | File contatining an obs_sequence                                                               |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``num_copies  ``   | Number of copies of data associated with each observation                                      |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``num_qc  ``       | Number of quality control fields associated with each observation                              |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``num_obs  ``      | Number of observations in sequence                                                             |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``max_num_obs  ``  | Maximum number of observations sequence could hold                                             |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``file_id  ``      | File channel/descriptor returned from opening the file                                         |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``read_format  ``  | Either the string ``'unformatted'`` or ``'formatted'``                                         |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``pre_I_format  `` | Returns .true. if the file was written before the observation type string/index number table   |
-   |                    | was added to the standard header starting with the I release.                                  |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | *close_the_file  * | If specified and .TRUE. close the file after the header has been read. The default is to leave |
-   |                    | the file open.                                                                                 |
-   +--------------------+------------------------------------------------------------------------------------------------+
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``file_name``    | File contatining an obs_sequence                                                                 |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``num_copies``   | Number of copies of data associated with each observation                                        |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``num_qc``       | Number of quality control fields associated with each observation                                |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``num_obs``      | Number of observations in sequence                                                               |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``max_num_obs``  | Maximum number of observations sequence could hold                                               |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``file_id``      | File channel/descriptor returned from opening the file                                           |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``read_format``  | Either the string ``'unformatted'`` or ``'formatted'``                                           |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``pre_I_format`` | Returns .true. if the file was written before the observation type string/index number table was |
+   |                  | added to the standard header starting with the I release.                                        |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | *close_the_file* | If specified and .TRUE. close the file after the header has been read. The default is to leave   |
+   |                  | the file open.                                                                                   |
+   +------------------+--------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -951,11 +913,11 @@ Not currently implemented.
    Initializes an obs_type variable. This allocates storage for the observation type and creates the appropriate
    obs_def_type and related structures. IT IS ESSENTIAL THAT OBS_TYPE VARIABLES BE INITIALIZED BEFORE USE.
 
-   ================ ====================================================
-   ``obs  ``        An obs_type data structure to be initialized
-   ``num_copies  `` Number of copies of data associated with observation
-   ``num_qc  ``     Number of qc fields associated with observation
-   ================ ====================================================
+   ============== ====================================================
+   ``obs``        An obs_type data structure to be initialized
+   ``num_copies`` Number of copies of data associated with observation
+   ``num_qc``     Number of qc fields associated with observation
+   ============== ====================================================
 
 | 
 
@@ -970,9 +932,9 @@ Not currently implemented.
 
    Destroys an observation variable by releasing all associated storage.
 
-   ========= =======================================
-   ``obs  `` An observation variable to be destroyed
-   ========= =======================================
+   ======= =======================================
+   ``obs`` An observation variable to be destroyed
+   ======= =======================================
 
 | 
 
@@ -988,10 +950,10 @@ Not currently implemented.
 
    Extracts the definition portion of an observation.
 
-   ============= =========================================
-   ``obs  ``     An observation
-   ``obs_def  `` The definition portion of the observation
-   ============= =========================================
+   =========== =========================================
+   ``obs``     An observation
+   ``obs_def`` The definition portion of the observation
+   =========== =========================================
 
 | 
 
@@ -1007,16 +969,16 @@ Not currently implemented.
 
    Given an observation and an observation definition, insert the definition in the observation structure.
 
-   ============= =======================================================
-   ``obs  ``     An observation whose definition portion will be updated
-   ``obs_def  `` The observation definition that will be inserted in obs
-   ============= =======================================================
+   =========== =======================================================
+   ``obs``     An observation whose definition portion will be updated
+   ``obs_def`` The observation definition that will be inserted in obs
+   =========== =======================================================
 
 | 
 
 .. container:: routine
 
-   *call get_obs_values(obs, values [, copy_indx])*
+   *call get_obs_values(obs, values [, copy_indx])*
    ::
 
       type(obs_type),         intent(in)  :: obs
@@ -1026,21 +988,21 @@ Not currently implemented.
 .. container:: indent1
 
    Extract copies of the data from an observation. If *copy_indx* is present extract a single value indexed by
-   *copy_indx* into ``values(1)``.  *copy_indx* must be between 1 and ``num_copies``, inclusive. If *copy_indx* is not
+   *copy_indx* into ``values(1)``. *copy_indx* must be between 1 and ``num_copies``, inclusive. If *copy_indx* is not
    present extract all copies of data into the ``values`` array which must be ``num_copies`` long (See
    ``get_num_copies``.)
 
-   ============= ===============================================================
-   ``obs  ``     Observation from which to extract values
-   ``values  ``  The values extracted
-   *copy_indx  * If present extract only this copy, otherwise extract all copies
-   ============= ===============================================================
+   =========== ===============================================================
+   ``obs``     Observation from which to extract values
+   ``values``  The values extracted
+   *copy_indx* If present extract only this copy, otherwise extract all copies
+   =========== ===============================================================
 
 | 
 
 .. container:: routine
 
-   *call get_qc(obs, qc [, qc_indx])*
+   *call get_qc(obs, qc [, qc_indx])*
    ::
 
       type(obs_type),         intent(in)  :: obs
@@ -1050,20 +1012,20 @@ Not currently implemented.
 .. container:: indent1
 
    Extract quality control fields from an observation. If *qc_indx* is present extract a single field indexed by
-   *qc_indx* into ``qc(1)``.  *qc_indx* must be between 1 and ``num_qc``, inclusive. If *qc_indx* is not present extract
+   *qc_indx* into ``qc(1)``. *qc_indx* must be between 1 and ``num_qc``, inclusive. If *qc_indx* is not present extract
    all quality control fields into the ``qc`` array which must be ``num_qc`` long (See ``get_num_qc``.)
 
-   =========== ===================================================================
-   ``obs  ``   Observation from which to extract qc field(s)
-   ``qc  ``    Extracted qc fields
-   *qc_indx  * If present extract only this field, otherwise extract all qc fields
-   =========== ===================================================================
+   ========= ===================================================================
+   ``obs``   Observation from which to extract qc field(s)
+   ``qc``    Extracted qc fields
+   *qc_indx* If present extract only this field, otherwise extract all qc fields
+   ========= ===================================================================
 
 | 
 
 .. container:: routine
 
-   *call set_obs_values(obs, values [, copy_indx])*
+   *call set_obs_values(obs, values [, copy_indx])*
    ::
 
       type(obs_type),         intent(out) :: obs
@@ -1073,20 +1035,20 @@ Not currently implemented.
 .. container:: indent1
 
    Set value(s) of data in this observation. If *copy_indx* is present set the single value indexed by *copy_indx* to
-   ``values(1)``.  *copy_indx* must be between 1 and ``num_copies``, inclusive. If *copy_indx* is not present set all
+   ``values(1)``. *copy_indx* must be between 1 and ``num_copies``, inclusive. If *copy_indx* is not present set all
    copies of data from the ``values`` array which must be ``num_copies`` long (See ``get_num_copies``.)
 
-   ============= ===============================================================
-   ``obs  ``     Observation whose values are being set
-   ``values  ``  Array of value(s) to be set
-   *copy_indx  * If present set only this copy of data, otherwise set all copies
-   ============= ===============================================================
+   =========== ===============================================================
+   ``obs``     Observation whose values are being set
+   ``values``  Array of value(s) to be set
+   *copy_indx* If present set only this copy of data, otherwise set all copies
+   =========== ===============================================================
 
 | 
 
 .. container:: routine
 
-   *call replace_obs_values(seq, key, values [, copy_indx])*
+   *call replace_obs_values(seq, key, values [, copy_indx])*
    ::
 
       type(obs_sequence_type), intent(inout) :: seq
@@ -1097,22 +1059,22 @@ Not currently implemented.
 .. container:: indent1
 
    Set value(s) of data in the observation from a sequence with the given ``key``. If *copy_indx* is present set the
-   single value indexed by *copy_indx* to ``values(1)``.  *copy_indx* must be between 1 and ``num_copies``, inclusive.
-   If *copy_indx* is not present set all copies of data from the ``values`` array which must be ``num_copies`` long (See
+   single value indexed by *copy_indx* to ``values(1)``. *copy_indx* must be between 1 and ``num_copies``, inclusive. If
+   *copy_indx* is not present set all copies of data from the ``values`` array which must be ``num_copies`` long (See
    ``get_num_copies``.)
 
-   ============= ===============================================================
-   ``seq  ``     Sequence which contains observation to update
-   ``key  ``     Key to select which observation
-   ``values  ``  Array of value(s) to be set
-   *copy_indx  * If present set only this copy of data, otherwise set all copies
-   ============= ===============================================================
+   =========== ===============================================================
+   ``seq``     Sequence which contains observation to update
+   ``key``     Key to select which observation
+   ``values``  Array of value(s) to be set
+   *copy_indx* If present set only this copy of data, otherwise set all copies
+   =========== ===============================================================
 
 | 
 
 .. container:: routine
 
-   *call set_qc(obs, qc [, qc_indx])*
+   *call set_qc(obs, qc [, qc_indx])*
    ::
 
       type(obs_type),         intent(out) :: obs
@@ -1122,20 +1084,20 @@ Not currently implemented.
 .. container:: indent1
 
    Sets the quality control fields in an observation. If *qc_indx* is present set a single field indexed by *qc_indx* to
-   ``qc(1)``.  *qc_indx* must be between 1 and ``num_qc``, inclusive. If *qc_indx* is not present set all quality
-   control fields from the ``qc`` array which must be ``num_qc`` long (See ``get_num_qc``.)
+   ``qc(1)``. *qc_indx* must be between 1 and ``num_qc``, inclusive. If *qc_indx* is not present set all quality control
+   fields from the ``qc`` array which must be ``num_qc`` long (See ``get_num_qc``.)
 
-   =========== =================================================================
-   ``obs  ``   Observation having its qc fields set
-   ``qc  ``    Input values of qc fields
-   *qc_indx  * If present update only this field, otherwise update all qc fields
-   =========== =================================================================
+   ========= =================================================================
+   ``obs``   Observation having its qc fields set
+   ``qc``    Input values of qc fields
+   *qc_indx* If present update only this field, otherwise update all qc fields
+   ========= =================================================================
 
 | 
 
 .. container:: routine
 
-   *call replace_qc(seq, key, qc [, qc_indx])*
+   *call replace_qc(seq, key, qc [, qc_indx])*
    ::
 
       type(obs_sequence_type), intent(inout) :: seq
@@ -1146,16 +1108,16 @@ Not currently implemented.
 .. container:: indent1
 
    Set value(s) of the quality control fields in the observation from a sequence with the given ``key``. If *qc_indx* is
-   present set the single value indexed by *qc_indx* to ``qc(1)``.  *qc_indx* must be between 1 and ``num_qc``,
+   present set the single value indexed by *qc_indx* to ``qc(1)``. *qc_indx* must be between 1 and ``num_qc``,
    inclusive. If *qc_indx* is not present set all quality control fields from the ``qc`` array which must be ``num_qc``
    long (See ``get_num_qc``.)
 
-   =========== ==================================================================
-   ``seq  ``   Observation sequence containing observation to update
-   ``key  ``   Key to select which observation
-   ``qc  ``    Input values of qc fields
-   *qc_indx  * If present, only update single qc field, else update all qc fields
-   =========== ==================================================================
+   ========= ==================================================================
+   ``seq``   Observation sequence containing observation to update
+   ``key``   Key to select which observation
+   ``qc``    Input values of qc fields
+   *qc_indx* If present, only update single qc field, else update all qc fields
+   ========= ==================================================================
 
 | 
 
@@ -1174,18 +1136,18 @@ Not currently implemented.
    Writes an observation and all its associated metadata to a disk file that has been opened with a format consistent
    with the namelist parameter ``write_binary_obs_sequence``.
 
-   ================ =========================================================================
-   ``obs  ``        Observation to be written to file
-   ``file_id  ``    Channel open to file for writing
-   ``num_copies  `` The number of copies of data associated with the observation to be output
-   ``num_qc  ``     The number of qc fields associated with the observation to be output
-   ================ =========================================================================
+   ============== =========================================================================
+   ``obs``        Observation to be written to file
+   ``file_id``    Channel open to file for writing
+   ``num_copies`` The number of copies of data associated with the observation to be output
+   ``num_qc``     The number of qc fields associated with the observation to be output
+   ============== =========================================================================
 
 | 
 
 .. container:: routine
 
-   *call read_obs(file_id, num_copies, add_copies, num_qc, add_qc, key, obs, read_format [, max_obs])*
+   *call read_obs(file_id, num_copies, add_copies, num_qc, add_qc, key, obs, read_format [, max_obs])*
    ::
 
       integer,            intent(in)    :: file_id
@@ -1204,26 +1166,26 @@ Not currently implemented.
    with each observation must be provided. If additional copies of data or additional qc fields are needed, arguments
    allow them to be added. WARNING: The key argument is no longer used and should be removed.
 
-   +-------------------+-------------------------------------------------------------------------------------------------+
-   | ``file_id  ``     | Channel open to file from which to read                                                         |
-   +-------------------+-------------------------------------------------------------------------------------------------+
-   | ``num_copies  ``  | Number of copies of data associated with observation in file                                    |
-   +-------------------+-------------------------------------------------------------------------------------------------+
-   | ``add_copies  ``  | Number of additional copies of observation to be added                                          |
-   +-------------------+-------------------------------------------------------------------------------------------------+
-   | ``num_qc  ``      | Number of qc fields associated with observation in file                                         |
-   +-------------------+-------------------------------------------------------------------------------------------------+
-   | ``add_qc  ``      | Number of additional qc fields to be added                                                      |
-   +-------------------+-------------------------------------------------------------------------------------------------+
-   | ``key  ``         | No longer used, should be deleted                                                               |
-   +-------------------+-------------------------------------------------------------------------------------------------+
-   | ``obs  ``         | The observation being read in                                                                   |
-   +-------------------+-------------------------------------------------------------------------------------------------+
-   | ``read_format  `` | Either the string ``'formatted'`` or ``'unformatted'``                                          |
-   +-------------------+-------------------------------------------------------------------------------------------------+
-   | *max_obs  *       | If present, specifies the largest observation key number in the sequence. This is used only for |
-   |                   | additional error checks on the next and previous obs linked list values.                        |
-   +-------------------+-------------------------------------------------------------------------------------------------+
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``file_id``     | Channel open to file from which to read                                                           |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``num_copies``  | Number of copies of data associated with observation in file                                      |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``add_copies``  | Number of additional copies of observation to be added                                            |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``num_qc``      | Number of qc fields associated with observation in file                                           |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``add_qc``      | Number of additional qc fields to be added                                                        |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``key``         | No longer used, should be deleted                                                                 |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``obs``         | The observation being read in                                                                     |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``read_format`` | Either the string ``'formatted'`` or ``'unformatted'``                                            |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | *max_obs*       | If present, specifies the largest observation key number in the sequence. This is used only for   |
+   |                 | additional error checks on the next and previous obs linked list values.                          |
+   +-----------------+---------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -1243,12 +1205,12 @@ Not currently implemented.
    type-specific key associated with the observation are input. (Note that the key here is not the same as the key in an
    observation sequence.)
 
-   ================ =====================================================================================================
-   ``num_copies  `` Number of copies of data to be associated with observation
-   ``num_qc  ``     Number of qc fields to be associated with observation
-   ``obs  ``        Observation created via standard input
-   ``key  ``        An observation type-specific key can be associated with each observation for use by the obs_def code.
-   ================ =====================================================================================================
+   ============== =====================================================================================================
+   ``num_copies`` Number of copies of data to be associated with observation
+   ``num_qc``     Number of qc fields to be associated with observation
+   ``obs``        Observation created via standard input
+   ``key``        An observation type-specific key can be associated with each observation for use by the obs_def code.
+   ============== =====================================================================================================
 
 | 
 
@@ -1265,10 +1227,10 @@ Not currently implemented.
    Copies the observation type obs2 to obs1. If the sizes of obs fields are not compatible, the space in obs1 is
    deallocated and reallocated with the appropriate size. This is overloaded to assignment(=).
 
-   ========== ===============================
-   ``obs1  `` Copy obs2 to here (destination)
-   ``obs2  `` Copy into obs1 (source)
-   ========== ===============================
+   ======== ===============================
+   ``obs1`` Copy obs2 to here (destination)
+   ``obs2`` Copy into obs1 (source)
+   ======== ===============================
 
 | 
 
@@ -1325,11 +1287,11 @@ Not currently implemented.
    .true. If no observations fall into the time window (e.g. all before first_time or empty sequence to begin with), no
    deletions are done and all_gone is simply returned as .true.
 
-   ================ ==========================================================================================
-   ``first_time  `` Delete all observations with times before this
-   ``seq  ``        An observation sequence
-   ``all_gone  ``   Returns true if there are no valid observations remaining in the sequence after first_time
-   ================ ==========================================================================================
+   ============== ==========================================================================================
+   ``first_time`` Delete all observations with times before this
+   ``seq``        An observation sequence
+   ``all_gone``   Returns true if there are no valid observations remaining in the sequence after first_time
+   ============== ==========================================================================================
 
 | 
 
@@ -1348,15 +1310,13 @@ Not currently implemented.
    .true. If no observations fall into the time window (e.g. all after last_time or empty sequence to begin with), no
    deletions are done and all_gone is simply returned as .true.
 
-   =============== ==========================================================================================
-   ``last_time  `` Delete all observations with times after this
-   ``seq  ``       An observation sequence
-   ``all_gone  ``  Returns true if there are no valid observations remaining in the sequence before last_time
-   =============== ==========================================================================================
+   ============= ==========================================================================================
+   ``last_time`` Delete all observations with times after this
+   ``seq``       An observation sequence
+   ``all_gone``  Returns true if there are no valid observations remaining in the sequence before last_time
+   ============= ==========================================================================================
 
 | 
-
---------------
 
 Namelist
 --------
@@ -1390,47 +1350,18 @@ namelist.
 
 | 
 
---------------
-
 Files
 -----
 
 -  obs_sequence_mod.nml in input.nml
 -  Files for reading and writing obs_sequences and obs specified in filter_nml.
 
---------------
-
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +-------------------+-----------------------------------------------+-----------------------------------------------+
-   | Routine           | Message                                       | Comment                                       |
-   +===================+===============================================+===============================================+
-   | insert_obs_in_seq | ran out of room, num_obs # > max_num_obs #    | Overflowed number of obs in sequence. Called  |
-   |                   |                                               | from many public entries.                     |
-   +-------------------+-----------------------------------------------+-----------------------------------------------+
-   | append_obs_to_seq | tried to append an obs to sequence with bad   | Tried to append an obs with earlier time than |
-   |                   | time                                          | last obs in sequence.                         |
-   +-------------------+-----------------------------------------------+-----------------------------------------------+
-   | append_obs_to_seq | ran out of room, max_num_obs = #              | Overflowed the obs sequence.                  |
-   +-------------------+-----------------------------------------------+-----------------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

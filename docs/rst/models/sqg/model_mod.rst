@@ -1,17 +1,5 @@
-MODULE model_mod (SQG)
-======================
-
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
+SQG
+===
 
 Overview
 --------
@@ -20,10 +8,6 @@ This is a uniform PV two-surface QG+1 spectral model contributed by Rahul Majaha
 
 The underlying model is described in: Hakim, Gregory J., 2000: Role of Nonmodal Growth and Nonlinearity in Cyclogenesis
 Initial-Value Problems. J. Atmos. Sci., 57, 2951-2967. doi: 10.1175/1520-0469(2000)057<2951:RONGAN>2.0.CO;2
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -35,30 +19,26 @@ Other modules used
    threed_sphere/location_mod
    utilities_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ======================= ======================
 *use model_mod, only :* get_model_size
-                        adv_1step
-                        get_state_meta_data
-                        model_interpolate
-                        get_model_time_step
-                        static_init_model
-                        end_model
-                        init_time
-                        init_conditions
-                        nc_write_model_atts
-                        nc_write_model_vars
-                        pert_model_state
-                        get_close_maxdist_init
-                        get_close_obs_init
-                        get_close_obs
-                        ens_mean_for_model
+\                       adv_1step
+\                       get_state_meta_data
+\                       model_interpolate
+\                       get_model_time_step
+\                       static_init_model
+\                       end_model
+\                       init_time
+\                       init_conditions
+\                       nc_write_model_atts
+\                       nc_write_model_vars
+\                       pert_model_state
+\                       get_close_maxdist_init
+\                       get_close_obs_init
+\                       get_close_obs
+\                       ens_mean_for_model
 ======================= ======================
 
 Optional namelist interface ``&model_nml`` may be read from file ``input.nml``.
@@ -97,16 +77,16 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Advances the model for a single time step. The time associated with the initial model state is also input although it
    is not used for the computation.
 
-   =========== ==========================================
-   ``x``       State vector of length model_size.
-   ``time   `` Specifies time of the initial model state.
-   =========== ==========================================
+   ======== ==========================================
+   ``x``    State vector of length model_size.
+   ``time`` Specifies time of the initial model state.
+   ======== ==========================================
 
 | 
 
 .. container:: routine
 
-   *call get_state_meta_data (index_in, location, [, var_type] )*
+   *call get_state_meta_data (index_in, location, [, var_type] )*
    ::
 
       integer,             intent(in)  :: index_in
@@ -118,11 +98,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Returns metadata about a given element, indexed by index_in, in the model state vector. The location defines where
    the state variable is located.
 
-   =============== ==================================================================================
-   ``index_in   `` Index of state vector element about which information is requested.
-   ``location``    The location of state variable element.
-   *var_type*      Returns the type (always 1) of the indexed state variable as an optional argument.
-   =============== ==================================================================================
+   ============ ==================================================================================
+   ``index_in`` Index of state vector element about which information is requested.
+   ``location`` The location of state variable element.
+   *var_type*   Returns the type (always 1) of the indexed state variable as an optional argument.
+   ============ ==================================================================================
 
 | 
 
@@ -141,13 +121,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Given model state, returns the value interpolated to a given location.
 
-   =============== ===============================================
-   ``x``           A model state vector.
-   ``location   `` Location to which to interpolate.
-   ``itype``       Not used.
-   ``obs_val``     The interpolated value from the model.
-   ``istatus``     Quality control information, always returned 0.
-   =============== ===============================================
+   ============ ===============================================
+   ``x``        A model state vector.
+   ``location`` Location to which to interpolate.
+   ``itype``    Not used.
+   ``obs_val``  The interpolated value from the model.
+   ``istatus``  Quality control information, always returned 0.
+   ============ ===============================================
 
 | 
 
@@ -162,9 +142,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns the time step (forecast length) of the model;
 
-   ========== ============================
-   ``var   `` Smallest time step of model.
-   ========== ============================
+   ======= ============================
+   ``var`` Smallest time step of model.
+   ======= ============================
 
 | 
 
@@ -201,9 +181,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Returns the time at which the model will start if no input initial conditions are to be used. This is used to spin-up
    the model from rest.
 
-   =========== ===================
-   ``time   `` Initial model time.
-   =========== ===================
+   ======== ===================
+   ``time`` Initial model time.
+   ======== ===================
 
 | 
 
@@ -218,9 +198,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns default initial conditions for the model; generally used for spinning up initial model states.
 
-   ======== ====================================
-   ``x   `` Initial conditions for state vector.
-   ======== ====================================
+   ===== ====================================
+   ``x`` Initial conditions for state vector.
+   ===== ====================================
 
 | 
 
@@ -238,10 +218,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    diagnostic information. This is not a requirement, and models could choose to provide output in other formats. This
    function writes the metadata associated with the model to a NetCDF file opened to a file identified by ncFileID.
 
-   =============== =========================================================
-   ``ncFileID   `` Integer file descriptor to previously-opened netCDF file.
-   ``ierr``        Returns a 0 for successful completion.
-   =============== =========================================================
+   ============ =========================================================
+   ``ncFileID`` Integer file descriptor to previously-opened netCDF file.
+   ``ierr``     Returns a 0 for successful completion.
+   ============ =========================================================
 
 | 
 
@@ -261,13 +241,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Writes a copy of the state variables to a netCDF file. Multiple copies of the state for a given time are supported,
    allowing, for instance, a single file to include multiple ensemble estimates of the state.
 
-   ================ =================================================
-   ``ncFileID``     file descriptor to previously-opened netCDF file.
-   ``statevec``     A model state vector.
-   ``copyindex   `` Integer index of copy to be written.
-   ``timeindex``    The timestep counter for the given state.
-   ``ierr``         Returns 0 for normal completion.
-   ================ =================================================
+   ============= =================================================
+   ``ncFileID``  file descriptor to previously-opened netCDF file.
+   ``statevec``  A model state vector.
+   ``copyindex`` Integer index of copy to be written.
+   ``timeindex`` The timestep counter for the given state.
+   ``ierr``      Returns 0 for normal completion.
+   ============= =================================================
 
 | 
 
@@ -284,11 +264,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Given a model state, produces a perturbed model state.
 
-   ====================== =============================================
-   ``state``              State vector to be perturbed.
-   ``pert_state``         Perturbed state vector: NOT returned.
-   ``interf_provided   `` Returned false; interface is not implemented.
-   ====================== =============================================
+   =================== =============================================
+   ``state``           State vector to be perturbed.
+   ``pert_state``      Perturbed state vector: NOT returned.
+   ``interf_provided`` Returned false; interface is not implemented.
+   =================== =============================================
 
 | 
 
@@ -303,8 +283,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3D Sphere locations module. See
-   `get_close_maxdist_init() </location/threed_sphere/location_mod.html#get_close_maxdist_init>`__ for the documentation
-   of this subroutine.
+   `get_close_maxdist_init() <../../location/threed_sphere/location_mod.html#get_close_maxdist_init>`__ for the
+   documentation of this subroutine.
 
 | 
 
@@ -320,14 +300,14 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3D Sphere locations module. See
-   `get_close_obs_init() </location/threed_sphere/location_mod.html#get_close_obs_init>`__ for the documentation of this
-   subroutine.
+   `get_close_obs_init() <../../location/threed_sphere/location_mod.html#get_close_obs_init>`__ for the documentation of
+   this subroutine.
 
 | 
 
 .. container:: routine
 
-   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
+   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
    ::
 
       type(get_close_type), intent(in)  :: gc
@@ -342,7 +322,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3D Sphere locations module. See
-   `get_close_obs() </location/threed_sphere/location_mod.html#get_close_obs>`__ for the documentation of this
+   `get_close_obs() <../../location/threed_sphere/location_mod.html#get_close_obs>`__ for the documentation of this
    subroutine.
 
 | 
@@ -358,13 +338,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    A NULL INTERFACE in this model.
 
-   =============== ==========================================
-   ``ens_mean   `` State vector containing the ensemble mean.
-   =============== ==========================================
+   ============ ==========================================
+   ``ens_mean`` State vector containing the ensemble mean.
+   ============ ==========================================
 
 | 
-
---------------
 
 Namelist
 --------
@@ -387,52 +365,25 @@ namelist input.
 
    This namelist is read in a file called ``input.nml``
 
-   Contents
-
-Type
-
-Description
-
-output_state_vector
-
-logical
-
-If .true. write state vector as a 1D array to the diagnostic output file. If .false. break state vector up into fields
-before writing to the outputfile.
-
-channel_center
-
-real(r8)
-
-Channel center
-
-channel_width
-
-real(r8)
-
-Channel width
-
-assimilation_period_days
-
-integer
-
-Number of days for timestep
-
-assimilation_period_seconds
-
-integer
-
-Number of seconds for timestep
-
-debug
-
-logical
-
-Set to .true. for more output
+   +-----------------------------+----------+---------------------------------------------------------------------------+
+   | Contents                    | Type     | Description                                                               |
+   +=============================+==========+===========================================================================+
+   | output_state_vector         | logical  | If .true. write state vector as a 1D array to the diagnostic output file. |
+   |                             |          | If .false. break state vector up into fields before writing to the        |
+   |                             |          | outputfile.                                                               |
+   +-----------------------------+----------+---------------------------------------------------------------------------+
+   | channel_center              | real(r8) | Channel center                                                            |
+   +-----------------------------+----------+---------------------------------------------------------------------------+
+   | channel_width               | real(r8) | Channel width                                                             |
+   +-----------------------------+----------+---------------------------------------------------------------------------+
+   | assimilation_period_days    | integer  | Number of days for timestep                                               |
+   +-----------------------------+----------+---------------------------------------------------------------------------+
+   | assimilation_period_seconds | integer  | Number of seconds for timestep                                            |
+   +-----------------------------+----------+---------------------------------------------------------------------------+
+   | debug                       | logical  | Set to .true. for more output                                             |
+   +-----------------------------+----------+---------------------------------------------------------------------------+
 
 | 
-
---------------
 
 Files
 -----
@@ -442,12 +393,10 @@ filename                    purpose
 =========================== ===========================================================================
 input.nml                   to read the model_mod namelist
 preassim.nc                 the time-history of the model state before assimilation
-analysis.nc                 the time-history of the model state after assimilation
+analysis.nc                 the time-history of the model state after assimilation
 dart_log.out [default name] the run-time diagnostic output
 dart_log.nml [default name] the record of all the namelists actually USED - contains the default values
 =========================== ===========================================================================
-
---------------
 
 References
 ----------
@@ -456,27 +405,7 @@ References
 | Hakim, Gregory J., 2000: Role of Nonmodal Growth and Nonlinearity in Cyclogenesis Initial-Value Problems. J. Atmos.
   Sci., 57, 2951-2967. doi: 10.1175/1520-0469(2000)057<2951:RONGAN>2.0.CO;2
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | Routine                               | Message                               | Comment                               |
-   +=======================================+=======================================+=======================================+
-   | nc_write_model_atts                   | Various netCDF-f90 interface error    | From one of the netCDF calls in the   |
-   | nc_write_model_vars                   | messages                              | named routine                         |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

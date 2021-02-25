@@ -1,17 +1,6 @@
 system simulation programs
 ==========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  ` <#>`__
--  ` <#>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -28,17 +17,16 @@ A collection of standalone programs for simulating various properties of ensembl
 **The program of most interest here is ``gen_sampling_err_table.f90`` which generates the lookup table needed when using
 sampling error correction in ``filter``.** Talk to Jeff Anderson about the other programs in this directory.
 
-To enable the sampling error correction algorithm in ``filter``, set the namelist item
-`&assim_tools_nml : sampling_error_correction </assimilation_code/modules/assimilation/assim_tools_mod.html#Namelist>`__
-to *.true.*, and copy the netCDF file system_simulation/sampling_error_correction_table.nc into the run directory.
+To enable the sampling error correction algorithm in ``filter``, set the namelist item `&assim_tools_nml :
+sampling_error_correction <../../modules/assimilation/assim_tools_mod.html#Namelist>`__ to *.true.*, and copy the netCDF
+file system_simulation/sampling_error_correction_table.nc into the run directory.
 The supported set of precomputed ensemble sizes can be found by exploring the ``ens_sizes`` variable in
 sampling_error_correction_table.nc. To add support for another ensemble size, build the executables in the
-`work </assimilation_code/programs/system_simulation/work>`__ directory, (usually by running ``quickbuild.csh``) set the
-``ens_sizes`` (it takes a list, but keep it short) namelist item in ``work/input.nml``, and run
-``gen_sampling_err_table``. It generates a LARGE number of samples *per ensemble size* for statistical rigor. Larger
-ensemble sizes take longer to generate, and compiler optimizations matter - perhaps significantly. For example, the
-numbers below come from calculating one ensemble size at a time on my desktop machine with gfortran and basic
-optimization:
+`work <../system_simulation/work>`__ directory, (usually by running ``quickbuild.csh``) set the ``ens_sizes`` (it takes
+a list, but keep it short) namelist item in ``work/input.nml``, and run ``gen_sampling_err_table``. It generates a LARGE
+number of samples *per ensemble size* for statistical rigor. Larger ensemble sizes take longer to generate, and compiler
+optimizations matter - perhaps significantly. For example, the numbers below come from calculating one ensemble size at
+a time on my desktop machine with gfortran and basic optimization:
 
 ============= ==================
 ensemble size run-time (seconds)
@@ -74,15 +62,13 @@ The basic structure of sampling_error_correction_table.nc is shown below.
                       :reference = "Anderson, J., 2012: Localization and Sampling Error 
                                     Correction in Ensemble Kalman Filter Data Assimilation.
                                     Mon. Wea. Rev., 140, 2359-2371, doi: 10.1175/MWR-D-11-00013.1." ;
-                      :version = "$Id$" ;
+                      :version = "" ;
       data:
 
       These ensemble sizes are already supported!
        ens_sizes = 5,  6,  7,  8,  9, 10, 12, 14, 15, 16, 18, 20, 22, 24, 28, 30, 32, 36, 40, 44,
                   48, 49, 50, 52, 56, 60, 64, 70, 72, 80, 84, 88, 90, 96, 100, 120, 140, 160, 180, 200
       }
-
---------------
 
 Namelist
 --------
@@ -114,10 +100,6 @@ namelist.
 | debug     | logical      | A switch to add some run-time output. Generally not needed.                             |
 +-----------+--------------+-----------------------------------------------------------------------------------------+
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -126,8 +108,6 @@ Modules used
    types_mod
    utilities_mod
    random_seq_mod
-
---------------
 
 -  ``input.nml`` for the run-time input
 -  ``sampling_error_correction_table.nc`` is both read and written. Any new ensemble sizes are simply appended to the
@@ -140,42 +120,9 @@ Modules used
 -  ``final_full.N`` are created - N is the ensemble size.
 -  ``dart_log.out`` has the run-time output.
 
---------------
-
 References
 ----------
 
 -  **Anderson, J. L.**, 2012: Localization and Sampling Error Correction in Ensemble Kalman Filter Data Assimilation.
    *Mon. Wea. Rev.*, **140**, 2359-2371 `doi:
    10.1175/MWR-D-11-00013.1 <http://dx.doi.org/doi:10.1175/MWR-D-11-00013.1>`__
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +----------------------------+-------------------------------------------+-------------------------------------------+
-   | Routine                    | Message                                   | Comment                                   |
-   +============================+===========================================+===========================================+
-   | ``gen_sampling_err_table`` | duplicate ensemble size found             | no need to recompute an alpha for an      |
-   |                            |                                           | ensemble size already supported.          |
-   +----------------------------+-------------------------------------------+-------------------------------------------+
-   | ``gen_sampling_err_table`` | existing file used a different bin size   | The code has been modified to use a       |
-   |                            |                                           | different number of bins than the         |
-   |                            |                                           | existing netCDF file. If that's what you  |
-   |                            |                                           | intend, you need to make a new file.      |
-   +----------------------------+-------------------------------------------+-------------------------------------------+
-   | ``gen_sampling_err_table`` | existing file uses *N* samples, the       | The code has been modified to use a       |
-   |                            | program has *Y* samples.                  | different number of replicates used to    |
-   |                            |                                           | estimate the ``alphas``. If that's what   |
-   |                            |                                           | you intend, you need to make a new file.  |
-   +----------------------------+-------------------------------------------+-------------------------------------------+
-   | ``full_error``             | cannot handle task counts > 99999         | Ensemble size must be less than 100,000.  |
-   +----------------------------+-------------------------------------------+-------------------------------------------+
-   | ``full_error``             | empty bin                                 | The sample size must be large enough for  |
-   |                            |                                           | all bins to have counts                   |
-   +----------------------------+-------------------------------------------+-------------------------------------------+

@@ -1,19 +1,6 @@
 MODULE smoother_mod
 ===================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Example <#example>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -105,8 +92,6 @@ Here is an example matlab session which plots the lag=0 results and then odd num
    plot_total_err
    reply = input('Lag 09.  hit enter to continue ');
 
---------------
-
 Namelist
 --------
 
@@ -128,39 +113,35 @@ namelist.
 
 .. container::
 
-   +--------------------------+--------------------+--------------------------------------------------------------------+
-   | Item                     | Type               | Description                                                        |
-   +==========================+====================+====================================================================+
-   | num_lags                 | integer            | Number of smoother lags; < 1 means no smoother.                    |
-   +--------------------------+--------------------+--------------------------------------------------------------------+
-   | start_from_restart       | logical            | True if smoother states are to come from restart file(s). False if |
-   |                          |                    | they are to be spun up from scratch.                               |
-   +--------------------------+--------------------+--------------------------------------------------------------------+
-   | output_restart           | logical            | True if restart file(s) are to be written, else false.             |
-   +--------------------------+--------------------+--------------------------------------------------------------------+
-   | restart_in_file_name     | character(len=129) | String used to construct the file name from which to read restart  |
-   |                          |                    | data. 'Lag_NNNNN_' will be prepended to the specified value to     |
-   |                          |                    | create the actual filename. If each ensemble is to be read from a  |
-   |                          |                    | separate file, the .NNNN ensemble number will also be appended.    |
-   |                          |                    | e.g. specifying 'ics' here results in 'Lag_00001_ics' if all       |
-   |                          |                    | ensemble members are read from a single file,                      |
-   |                          |                    | 'Lag_00001_ics.0001', 'Lag_00001_ics.0002', etc for multiples.     |
-   +--------------------------+--------------------+--------------------------------------------------------------------+
-   | restart_out_file_name    | character(len=129) | String used to construct the file name to which to write restart   |
-   |                          |                    | data. 'Lag_NNNNN_' will be prepended to the specified value to     |
-   |                          |                    | create the actual filename. If each ensemble is to be written to a |
-   |                          |                    | separate file, the .NNNN ensemble number will also be appended.    |
-   |                          |                    | e.g. specifying 'restart' here results in 'Lag_00001_restart' if   |
-   |                          |                    | all ensemble members are written to a single file,                 |
-   |                          |                    | 'Lag_00001_restart.0001', 'Lag_00001_restart.0002', etc for        |
-   |                          |                    | multiples.                                                         |
-   +--------------------------+--------------------+--------------------------------------------------------------------+
+   +-----------------------+--------------------+-----------------------------------------------------------------------+
+   | Item                  | Type               | Description                                                           |
+   +=======================+====================+=======================================================================+
+   | num_lags              | integer            | Number of smoother lags; < 1 means no smoother.                       |
+   +-----------------------+--------------------+-----------------------------------------------------------------------+
+   | start_from_restart    | logical            | True if smoother states are to come from restart file(s). False if    |
+   |                       |                    | they are to be spun up from scratch.                                  |
+   +-----------------------+--------------------+-----------------------------------------------------------------------+
+   | output_restart        | logical            | True if restart file(s) are to be written, else false.                |
+   +-----------------------+--------------------+-----------------------------------------------------------------------+
+   | restart_in_file_name  | character(len=129) | String used to construct the file name from which to read restart     |
+   |                       |                    | data. ``Lag_NNNNN_`` will be prepended to the specified value to      |
+   |                       |                    | create the actual filename. If each ensemble is to be read from a     |
+   |                       |                    | separate file, the .NNNN ensemble number will also be appended. e.g.  |
+   |                       |                    | specifying 'ics' here results in 'Lag_00001_ics' if all ensemble      |
+   |                       |                    | members are read from a single file, 'Lag_00001_ics.0001',            |
+   |                       |                    | 'Lag_00001_ics.0002', etc for multiples.                              |
+   +-----------------------+--------------------+-----------------------------------------------------------------------+
+   | restart_out_file_name | character(len=129) | String used to construct the file name to which to write restart      |
+   |                       |                    | data. ``Lag_NNNNN_`` will be prepended to the specified value to      |
+   |                       |                    | create the actual filename. If each ensemble is to be written to a    |
+   |                       |                    | separate file, the .NNNN ensemble number will also be appended. e.g.  |
+   |                       |                    | specifying 'restart' here results in 'Lag_00001_restart' if all       |
+   |                       |                    | ensemble members are written to a single file,                        |
+   |                       |                    | 'Lag_00001_restart.0001', 'Lag_00001_restart.0002', etc for           |
+   |                       |                    | multiples.                                                            |
+   +-----------------------+--------------------+-----------------------------------------------------------------------+
 
 | 
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -177,25 +158,21 @@ Other modules used
    obs_sequence_mod
    adaptive_inflate_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ========================== ==============================
 *use smoother_mod, only :* smoother_read_restart
-                           advance_smoother
-                           smoother_gen_copy_meta_data
-                           smoother_write_restart
-                           init_smoother
-                           do_smoothing
-                           smoother_mean_spread
-                           smoother_assim
-                           filter_state_space_diagnostics
-                           smoother_ss_diagnostics
-                           smoother_end
+\                          advance_smoother
+\                          smoother_gen_copy_meta_data
+\                          smoother_write_restart
+\                          init_smoother
+\                          do_smoothing
+\                          smoother_mean_spread
+\                          smoother_assim
+\                          filter_state_space_diagnostics
+\                          smoother_ss_diagnostics
+\                          smoother_end
 ========================== ==============================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -217,13 +194,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Reads in ensemble of states for all lag estimates from a restart file.
 
-   ==================== =========================================================================================
-   ``ens_handle  ``     Handle of ensemble manager structure of single state; copied into all lags for startup.
-   ``ens_size  ``       Size of the ensemble.
-   ``model_size  ``     Size of the model state vector.
-   ``time1  ``          Overwrite the time in the restart file with this value if init_time_days is non-negative.
-   ``init_time_days  `` If non-negative, use time1 instead of time in restart file.
-   ==================== =========================================================================================
+   ================== =========================================================================================
+   ``ens_handle``     Handle of ensemble manager structure of single state; copied into all lags for startup.
+   ``ens_size``       Size of the ensemble.
+   ``model_size``     Size of the model state vector.
+   ``time1``          Overwrite the time in the restart file with this value if init_time_days is non-negative.
+   ``init_time_days`` If non-negative, use time1 instead of time in restart file.
+   ================== =========================================================================================
 
 | 
 
@@ -240,9 +217,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    contained in ens_handle, into the lag 1 smoother state and pushing back all other lags by 1 (i.e. lag 1 becomes lag
    2, etc.).
 
-   ================ ================================================
-   ``ens_handle  `` Ensemble handle with most recent filtered state.
-   ================ ================================================
+   ============== ================================================
+   ``ens_handle`` Ensemble handle with most recent filtered state.
+   ============== ================================================
 
 | 
 
@@ -258,11 +235,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Initializes the metadata required for the smoother state space diagnostic files.
 
-   +--------------------------------+--------------------------------------------------------------------------------------------+
-   | ``num_output_state_members  `` | Number of copies of smoother state vector that should be in state space diagnostic output. |
-   +--------------------------------+--------------------------------------------------------------------------------------------+
-   | ``output_inflation  ``         | True if smoother state space output should include inflation values.                       |
-   +--------------------------------+--------------------------------------------------------------------------------------------+
+   ============================ ==========================================================================================
+   ``num_output_state_members`` Number of copies of smoother state vector that should be in state space diagnostic output.
+   ``output_inflation``         True if smoother state space output should include inflation values.
+   ============================ ==========================================================================================
 
 | 
 
@@ -279,10 +255,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Outputs restart files for all lags of smoother state. Integer arguments specify the start and end global indices of a
    continguous set of copies that contain the ensemble members.
 
-   ================ ===================================================================================
-   ``start_copy  `` Global index of ensemble copy that starts the actual ensemble members for smoother.
-   ``end_copy  ``   Global index of ensemble copy that ends the actual ensemble members for smoother.
-   ================ ===================================================================================
+   ============== ===================================================================================
+   ``start_copy`` Global index of ensemble copy that starts the actual ensemble members for smoother.
+   ``end_copy``   Global index of ensemble copy that ends the actual ensemble members for smoother.
+   ============== ===================================================================================
 
 | 
 
@@ -300,11 +276,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Initializes the storage needed for a smoother. Also initializes an adaptive inflation type that does NO inflation
    (not currently supported for smoothers).
 
-   ====================== ==========================================================================================
-   ``ens_handle  ``       An ensemble handle for the filter that contains information about ensemble and model size.
-   ``POST_INF_COPY  ``    Global index of ensemble copy that holds posterior state space inflation values.
-   ``POST_INF_SD_COPY  `` Global index of ensemble copy that holds posterior inflation standard deviation values.
-   ====================== ==========================================================================================
+   ==================== ==========================================================================================
+   ``ens_handle``       An ensemble handle for the filter that contains information about ensemble and model size.
+   ``POST_INF_COPY``    Global index of ensemble copy that holds posterior state space inflation values.
+   ``POST_INF_SD_COPY`` Global index of ensemble copy that holds posterior inflation standard deviation values.
+   ==================== ==========================================================================================
 
 | 
 
@@ -319,9 +295,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns true if smoothing is to be done, else false.
 
-   ================== ========================================
-   ``do_smoothing  `` Returns true if smoothing is to be done.
-   ================== ========================================
+   ================ ========================================
+   ``do_smoothing`` Returns true if smoothing is to be done.
+   ================ ========================================
 
 | 
 
@@ -341,13 +317,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Computes the ensemble mean (and spread if required) of all state variables for all lagged ensembles. Spread is only
    computed if it is required for output.
 
-   ============================= ===================================================================
-   ``ens_size  ``                Size of ensemble.
-   ``ENS_MEAN_COPY  ``           Global index of copy that stores ensemble mean.
-   ``ENS_SD_COPY  ``             Global index of copy that stores ensemble spread.
-   ``output_state_ens_mean  ``   True if the ensemble mean is to be output to state diagnostic file.
-   ``output_state_ens_spread  `` True if ensemble spread is to be output to state diagnostic file.
-   ============================= ===================================================================
+   =========================== ===================================================================
+   ``ens_size``                Size of ensemble.
+   ``ENS_MEAN_COPY``           Global index of copy that stores ensemble mean.
+   ``ENS_SD_COPY``             Global index of copy that stores ensemble spread.
+   ``output_state_ens_mean``   True if the ensemble mean is to be output to state diagnostic file.
+   ``output_state_ens_spread`` True if ensemble spread is to be output to state diagnostic file.
+   =========================== ===================================================================
 
 | 
 
@@ -379,41 +355,40 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Does assimilation of a set of observations for each smoother lag.
 
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``obs_ens_handle  ``       | Handle for ensemble manager holding prior estimates of observations.                   |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``seq  ``                  | Observation sequence being assimilated.                                                |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``keys  ``                 | A one dimensional array containing indices in seq of observations to as similate at    |
-   |                            | current time.                                                                          |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``ens_size  ``             | Ensemble size.                                                                         |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``num_groups  ``           | Number of groups in filter.                                                            |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``obs_val_index  ``        | Integer index of copy of data in seq that contains the observed value from             |
-   |                            | instruments.                                                                           |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``ENS_MEAN_COPY  ``        | Global index in smoother's state ensemble that holds ensemble mean.                    |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``ENS_SD_COPY  ``          | Global index in smoother's state ensemble that holds ensemble standard deviation.      |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``PRIOR_INF_COPY  ``       | Global index in obs_ens_handle that holds inflation values (not used for smoother).    |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``PRIOR_INF_SD_COPY  ``    | Global index in obs_ens_handle that holds inflation sd values (not used for smoother). |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``OBS_KEY_COPY  ``         | Global index in obs_ens_handle that holds the key for the observation.                 |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``OBS_GLOBAL_QC_COPY  ``   | Global index in obs_ens_handle that holds the quality control value.                   |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``OBS_PRIOR_MEAN_START  `` | Global index in obs_ens_handle that holds the first group's prior mean.                |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``OBS_PRIOR_MEAN_END  ``   | Global index in obs_ens_handle that holds the last group's prior mean.                 |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``OBS_PRIOR_VAR_START  ``  | Global index in obs_ens_handle that holds the first group's prior variance.            |
-   +----------------------------+----------------------------------------------------------------------------------------+
-   | ``OBS_PRIOR_VAR_END  ``    | Global index in obs_ens_handle that holds the last group's prior variance.             |
-   +----------------------------+----------------------------------------------------------------------------------------+
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``obs_ens_handle``       | Handle for ensemble manager holding prior estimates of observations.                     |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``seq``                  | Observation sequence being assimilated.                                                  |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``keys``                 | A one dimensional array containing indices in seq of observations to as similate at      |
+   |                          | current time.                                                                            |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``ens_size``             | Ensemble size.                                                                           |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``num_groups``           | Number of groups in filter.                                                              |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``obs_val_index``        | Integer index of copy of data in seq that contains the observed value from instruments.  |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``ENS_MEAN_COPY``        | Global index in smoother's state ensemble that holds ensemble mean.                      |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``ENS_SD_COPY``          | Global index in smoother's state ensemble that holds ensemble standard deviation.        |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``PRIOR_INF_COPY``       | Global index in obs_ens_handle that holds inflation values (not used for smoother).      |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``PRIOR_INF_SD_COPY``    | Global index in obs_ens_handle that holds inflation sd values (not used for smoother).   |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``OBS_KEY_COPY``         | Global index in obs_ens_handle that holds the key for the observation.                   |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``OBS_GLOBAL_QC_COPY``   | Global index in obs_ens_handle that holds the quality control value.                     |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``OBS_PRIOR_MEAN_START`` | Global index in obs_ens_handle that holds the first group's prior mean.                  |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``OBS_PRIOR_MEAN_END``   | Global index in obs_ens_handle that holds the last group's prior mean.                   |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``OBS_PRIOR_VAR_START``  | Global index in obs_ens_handle that holds the first group's prior variance.              |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | ``OBS_PRIOR_VAR_END``    | Global index in obs_ens_handle that holds the last group's prior variance.               |
+   +--------------------------+------------------------------------------------------------------------------------------+
 
 | 
 
@@ -443,21 +418,21 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Writes state space diagnostic values including ensemble members, mean and spread, and inflation mean and spread to a
    netcdf file.
 
-   =============================== ==================================================================
-   ``out_unit  ``                  Descriptor for the netcdf file being written.
-   ``ens_handle  ``                Ensemble handle whose state space values are to be written.
-   ``model_size  ``                Size of the model state vector.
-   ``num_output_state_members  ``  Number of individual state members to be output.
-   ``output_state_mean_index  ``   Index in netcdf file for ensemble mean.
-   ``output_state_spread_index  `` Index in netcdf file for ensemble spread.
-   ``output_inflation  ``          True if the inflation values are to be output. Default is .TRUE.
-   ``temp_ens  ``                  Storage passed in to avoid having to allocate extra space.
-   ``ENS_MEAN_COPY  ``             Global index in ens_handle for ensemble mean.
-   ``ENS_SD_COPY  ``               Global index in ens_handle for ensemble spread.
-   ``inflate  ``                   Contains description and values of state space inflation.
-   ``INF_COPY  ``                  Global index in ens_handle of inflation values.
-   ``INF_SD_COPY  ``               Global index in ens_handle of inflation standard deviation values.
-   =============================== ==================================================================
+   ============================= ==================================================================
+   ``out_unit``                  Descriptor for the netcdf file being written.
+   ``ens_handle``                Ensemble handle whose state space values are to be written.
+   ``model_size``                Size of the model state vector.
+   ``num_output_state_members``  Number of individual state members to be output.
+   ``output_state_mean_index``   Index in netcdf file for ensemble mean.
+   ``output_state_spread_index`` Index in netcdf file for ensemble spread.
+   ``output_inflation``          True if the inflation values are to be output. Default is .TRUE.
+   ``temp_ens``                  Storage passed in to avoid having to allocate extra space.
+   ``ENS_MEAN_COPY``             Global index in ens_handle for ensemble mean.
+   ``ENS_SD_COPY``               Global index in ens_handle for ensemble spread.
+   ``inflate``                   Contains description and values of state space inflation.
+   ``INF_COPY``                  Global index in ens_handle of inflation values.
+   ``INF_SD_COPY``               Global index in ens_handle of inflation standard deviation values.
+   ============================= ==================================================================
 
 | 
 
@@ -480,25 +455,25 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Outputs state space diagnostics files for all smoother lags.
 
-   +--------------------------------+------------------------------------------------------------------------------------+
-   | ``model_size  ``               | Size of the model state vector.                                                    |
-   +--------------------------------+------------------------------------------------------------------------------------+
-   | ``num_output_state_members  `` | Number of state copies to be output in the state space diagnostics file.           |
-   +--------------------------------+------------------------------------------------------------------------------------+
-   | ``output_inflation  ``         | True if the inflation values are to be output. Default is .TRUE.                   |
-   +--------------------------------+------------------------------------------------------------------------------------+
-   | ``temp_ens  ``                 | Storage passed in to avoid having to allocate extra space.                         |
-   +--------------------------------+------------------------------------------------------------------------------------+
-   | ``ENS_MEAN_COPY  ``            | Global index of the ensemble mean in the lag smoother ensemble handles.            |
-   +--------------------------------+------------------------------------------------------------------------------------+
-   | ``ENS_SD_COPY  ``              | Global index of the ensemble spread in the lag smoother ensemble handles.          |
-   +--------------------------------+------------------------------------------------------------------------------------+
-   | ``POST_INF_COPY  ``            | Global index of the inflation value in the lag smoother ensemble handles (not      |
-   |                                | currently used).                                                                   |
-   +--------------------------------+------------------------------------------------------------------------------------+
-   | ``POST_INF_SD_COPY  ``         | Global index of the inflation spread in the lag smoother ensemble handles (not     |
-   |                                | currently used).                                                                   |
-   +--------------------------------+------------------------------------------------------------------------------------+
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``model_size``               | Size of the model state vector.                                                      |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``num_output_state_members`` | Number of state copies to be output in the state space diagnostics file.             |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``output_inflation``         | True if the inflation values are to be output. Default is .TRUE.                     |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``temp_ens``                 | Storage passed in to avoid having to allocate extra space.                           |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``ENS_MEAN_COPY``            | Global index of the ensemble mean in the lag smoother ensemble handles.              |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``ENS_SD_COPY``              | Global index of the ensemble spread in the lag smoother ensemble handles.            |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``POST_INF_COPY``            | Global index of the inflation value in the lag smoother ensemble handles (not        |
+   |                              | currently used).                                                                     |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``POST_INF_SD_COPY``         | Global index of the inflation spread in the lag smoother ensemble handles (not       |
+   |                              | currently used).                                                                     |
+   +------------------------------+--------------------------------------------------------------------------------------+
 
 | 
 
@@ -523,8 +498,6 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Files
 -----
 
@@ -532,34 +505,12 @@ Files
 -  smoother initial condition files
 -  smoother restart files
 
---------------
-
 References
 ----------
 
 #. none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +-----------------------------+------------------------------------------------+-------------------------------------+
-   | Routine                     | Message                                        | Comment                             |
-   +=============================+================================================+=====================================+
-   | smoother_gen_copy_meta_data | output metadata in smoother needs ensemble     | Can't output more than 9999 copies. |
-   |                             | size < 10000, not ###                          |                                     |
-   +-----------------------------+------------------------------------------------+-------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

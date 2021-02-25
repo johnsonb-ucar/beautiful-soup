@@ -1,16 +1,6 @@
 WOD Observations
 ================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Errors and known bugs <#errors_and_known_bugs>`__
-
 Overview
 --------
 
@@ -21,10 +11,6 @@ Overview
 | There are 2 sets of available files - the raw observations, and the observations binned onto standard levels. The
   recommended datasets are the ones on standard levels. The raw data can be very dense in the vertical and are not truly
   independent observations. This leads to too much certainty in the updated values during the assimilation.
-
---------------
-
-.. _data_sources:
 
 Data sources
 ------------
@@ -47,8 +33,6 @@ Requested citation if you use this data:
    Internal Report 20, NOAA Printing Office, Silver Spring, MD, 175 pp.  
    Available at http://www.nodc.noaa.gov/OC5/WOD09/pr_wod09.html. 
 
---------------
-
 Programs
 --------
 
@@ -58,8 +42,6 @@ ASCII files into DART obs_sequence files.
 
 As with most other DART directories, the ``work`` directory contains a ``quickbuild.csh`` script to build all necessary
 executables.
-
---------------
 
 Namelist
 --------
@@ -96,12 +78,12 @@ namelist.
    | wod_input_file       | character(len=128) | The input filename when converting a single file. Only one of the two  |
    |                      |                    | namelist items that specify input files can have a valid value, so to  |
    |                      |                    | use a single filename set the list name 'wod_input_filelist' to the    |
-   |                      |                    | empty string (' ').                                                    |
+   |                      |                    | empty string (' ').                                                    |
    +----------------------+--------------------+------------------------------------------------------------------------+
    | wod_input_filelist   | character(len=128) | To convert one or more files in a single execution create a text file  |
    |                      |                    | which contains each input filename, in ascii, one filename per line.   |
    |                      |                    | Set this item to the name of that file, and set 'wod_input_file' to    |
-   |                      |                    | the empty string (' ').                                                |
+   |                      |                    | the empty string (' ').                                                |
    +----------------------+--------------------+------------------------------------------------------------------------+
    | wod_out_file         | character(len=128) | The output file to be created. Note that unlike earlier versions of    |
    |                      |                    | some converters, this program will overwrite an existing output file   |
@@ -158,10 +140,6 @@ namelist.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -176,15 +154,9 @@ Modules used
    obs_def_ocean_mod
    obs_kind_mod
 
---------------
-
-.. _errors_and_known_bugs:
-
 Errors and known bugs
 ---------------------
 
 The code for setting observation error variances is using fixed values, and we are not certain if they are correct.
 Incoming QC values larger than 0 are suspect, but it is not clear if they really signal unusable values or whether there
 are some codes we should accept.
-
---------------

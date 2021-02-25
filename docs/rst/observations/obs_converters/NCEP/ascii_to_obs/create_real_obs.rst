@@ -1,30 +1,17 @@
 PROGRAM create_real_obs
 =======================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Instructions <#instructions>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
 Translating NCEP BUFR files into DART obs_seq.out files (input file to filter) is a 2 stage process. The first stage
 uses NCEP software to translate the BUFR file into an "intermediate" text file. This is described in
-`prep_bufr </observations/obs_converters/NCEP/prep_bufr/prep_bufr.html>`__. The second step is to translate the
-intermediate files into an ``obs_seq.out`` files, which is done by ``create_real_obs``, as described in this document.
+:doc:`../prep_bufr/prep_bufr`. The second step is to translate the intermediate files into an ``obs_seq.out`` files,
+which is done by ``create_real_obs``, as described in this document.
 
 This program provides a number of options to select several observation types (radiosonde, aircraft, and satellite data,
 etc.) and the DART observation variables (U, V, T, Q, Ps) which are specified in its optional namelist interface
 ``&ncepobs_nml`` which may be read from file ``input.nml``.
-
---------------
 
 Instructions
 ------------
@@ -85,8 +72,6 @@ This will produce daily observation sequence files for the period of March 2007,
 types and fields; T, U, and V from radiosondes (ADPUPA) and aircraft (AIRCFT). No surface pressure or specific humidity
 would appear in the obs_seq files, nor observations from ACARS, satellites, and surface stations. The output files look
 like "obs_seq200703dd", with dd = 1,...,31.
-
---------------
 
 Namelist
 --------
@@ -250,10 +235,6 @@ namelist.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -274,8 +255,6 @@ Modules used
    null_mpi_utilities_mod
    real_obs_mod
 
---------------
-
 Files
 -----
 
@@ -285,24 +264,7 @@ Files
 -  input.nml; the namelist file used by create_real_obs.
 -  obs_seqYYYYMMDD[HH]; (output) the obs_seq files used by DART.
 
---------------
-
 References
 ----------
 
 -  .../DART/observations/NCEP/prep_bufr/docs/\* (NCEP text files describing the BUFR files)
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ======= ======= =======
-   Routine Message Comment
-   ======= ======= =======
-                    
-   ======= ======= =======

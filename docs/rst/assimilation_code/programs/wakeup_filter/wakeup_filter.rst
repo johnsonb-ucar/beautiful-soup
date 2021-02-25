@@ -1,26 +1,12 @@
 PROGRAM ``wakeup_filter``
 =========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Modules used <#modules_used>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
 Small auxiliary program for use in the "async=4" case where the main filter program is an MPI program and the model
 being run with DART is also an MPI program. The main MPI job script runs each of the model advances for the ensemble
 members, and then runs this program to restart the filter program.
-
---------------
-
-.. _modules_used:
 
 Modules used
 ------------
@@ -29,15 +15,11 @@ Modules used
 
    mpi_utilities_mod
 
---------------
-
 Namelist
 --------
 
 There are no namelist options for this program. It must be run as an MPI program with the same number of tasks as filter
 was originally started with.
-
---------------
 
 Files
 -----
@@ -50,29 +32,9 @@ names are:
 -  model_to_filter.lock
 -  filter_lockNNNNN (where NNNNN is the task number with leading 0s)
 
---------------
-
 References
 ----------
 
--  Anderson, J., T. Hoar, K. Raeder, H. Liu, N. Collins, R. Torn, and A. Arellano, 2009:
+-  Anderson, J., T. Hoar, K. Raeder, H. Liu, N. Collins, R. Torn, and A. Arellano, 2009:
    The Data Assimilation Research Testbed: A Community Facility. Bull. Amer. Meteor. Soc., 90, 1283-1296.
    `DOI: 10.1175/2009BAMS2618.1 <http://dx.doi.org/10.1175%2F2009BAMS2618.1>`__
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ============ =============================================== =========================================
-   Routine      Message                                         Comment
-   ============ =============================================== =========================================
-   block_task   cannot handle task counts > 99999               Ensemble size must be less than 100,000.
-   block_task   initialize_mpi_utilities() must be called first The mpi init routine must be called first
-   restart_task cannot handle task counts > 99999               Ensemble size must be less than 100,000.
-   restart_task initialize_mpi_utilities() must be called first The mpi init routine must be called first
-   ============ =============================================== =========================================

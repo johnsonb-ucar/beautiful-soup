@@ -1,24 +1,12 @@
 SSEC Data Center
 ================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `References <#references>`__
-
 Overview
 --------
 
 The program in this directory takes satellite wind data from the University of Wisconsin-Madison Space Science and
 Engineering Center, and converts it into DART format observation sequence files, for use in assimilating with the DART
 filter program.
-
---------------
-
-.. _data_sources:
 
 Data sources
 ------------
@@ -28,11 +16,9 @@ center <http://www.ssec.wisc.edu/data>`__ with both real-time and archival weath
 
 The last 2 day's worth of data is available from ftp://cyclone.ssec.wisc.edu/pub/fnoc.
 
-There is a second satellite wind DART converter in the `MADIS </observations/obs_converters/MADIS/MADIS.html>`__
-directory which converts wind observations which originate from `NESDIS <http://www.nesdis.noaa.gov>`__. The data from
-this converter is processed at the SSEC and the observations will be different from the ones distributed by MADIS.
-
---------------
+There is a second satellite wind DART converter in the :doc:`../MADIS/MADIS` directory which converts wind observations
+which originate from `NESDIS <http://www.nesdis.noaa.gov>`__. The data from this converter is processed at the SSEC and
+the observations will be different from the ones distributed by MADIS.
 
 Programs
 --------
@@ -42,8 +28,6 @@ Programs
 | The program reads standard input for the data time range, which types of observations to convert, and then, if quality
   control information is found in the input file, what type of quality control algorithm to use when deciding whether
   the observation is of good quality or not. See the references below.
-
---------------
 
 References
 ----------
@@ -55,5 +39,3 @@ References
    vectors to derive quality indicators. Wea. Forecasting, 13, 1093-1104.
 -  Comparison of two methods: Holmlund, K., C.S. Velden, and M. Rohn, 2001: Enhanced Automated Quality Control Applied
    to High-Density Satellite-Derived Winds. Mon. Wea. Rev., 129, 517-529.
-
---------------

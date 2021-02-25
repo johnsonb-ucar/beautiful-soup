@@ -1,18 +1,13 @@
 MODULE DEFAULT_obs_def_mod
 ==========================
 
-Contents
---------
-
--  `Overview <#overview>`__
-
 Overview
 --------
 
 | DEFAULT_obs_def.F90 is a template used by the program ``preprocess`` to create ``obs_def_mod.f90``.
 | To read more detailed instructions on how to add new observation types, see the documentation for
-  `obs_def_mod <obs_def_mod.html>`__. ``obs_def_*_mod.f90`` files are specified as input to the ``preprocess`` program
-  by namelist, and a new ``obs_def_mod.f90`` file is generated which contains all the selected observation types.
+  :doc:`./obs_def_mod`. ``obs_def_*_mod.f90`` files are specified as input to the ``preprocess`` program by namelist,
+  and a new ``obs_def_mod.f90`` file is generated which contains all the selected observation types.
 | Information from zero or more special obs_def modules, such as ``obs_def_1d_state_mod.f90`` or
   ``obs_def_reanalyis_bufr_mod.f90``, (also documented in this directory) are incorporated into the
   DEFAULT_obs_def_mod.F90 template by ``preprocess``. If no special obs_def files are included in the preprocess
@@ -56,5 +51,3 @@ included *verbatim* in ``DEFAULT_obs_def_mod.F90``. These special comment lines 
 #. ``! DART PREPROCESS INTERACTIVE_OBS_DEF INSERTED HERE``
    Special observation definition modules must contain case statement code saying what to do to interactively create any
    additional information required for each observation type that they define. This code is inserted here.
-
---------------

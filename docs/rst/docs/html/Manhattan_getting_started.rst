@@ -1,25 +1,6 @@
 DART Manhattan Release Notes
 ============================
 
-Contents
---------
-
--  `Getting started <#getting_started>`__
--  `Document conventions <#document_conventions>`__
--  `Installation <#installation>`__
--  `Downloading the distribution <#downloading_the_distribution>`__
--  `Customizing the build scripts -- overview <#customizing_the_build_scripts_--_overview>`__
--  `Building the Lorenz_63 DART project <#building_the_lorenz_63_dart_project>`__
--  `Running lorenz_63 <#running_lorenz_63>`__
--  `Experiment overview <#experiment_overview>`__
--  `The tutorial <#the_tutorial>`__
--  `Matlab® diagnostics <#matlab®_diagnostics>`__
--  `Bias, filter divergence and covariance inflation (with the L63
-   model) <#bias,_filter_divergence_and_covariance_inflation_(with_the_l63_model)>`__
--  `Synthetic observations <#synthetic_observations>`__
-
-.. _getting_started:
-
 Getting started
 ---------------
 
@@ -77,34 +58,6 @@ namelist input file called ``input.nml`` in the directory in which the program i
 contain a sequence of individual Fortran90 namelists which specify values of particular parameters for modules that
 compose the executable program.
 
-.. _document_conventions:
-
-Document conventions
---------------------
-
-| Anything underlined is a URL.
-| ``All filenames look like this -- (typewriter font, green)``.
-| ``Program names look like this -- (italicized font, green)``.
-| *user input looks like this -- (bold, magenta)*.
-
-.. container:: unix
-
-   commands to be typed at the command line are contained in an indented gray box.
-
-And the contents of a file are enclosed in a box with a border:
-
-.. container:: routine
-
-   &hypothetical_nml
-     obs_seq_in_file_name = "obs_seq.in",
-     obs_seq_out_file_name = "obs_seq.out",
-     init_time_days = 0,
-     init_time_seconds = 0,
-     output_interval = 1
-   &end
-
---------------
-
 Installation
 ------------
 
@@ -118,8 +71,8 @@ process is summarized in the following steps:
 #. Build the executables.
 
 We have tried to make the code as portable as possible, but we do not have access to all compilers on all platforms, so
-there are no guarantees. We are interested in your experience building the system, so please email me (Tim Hoar)
-thoar 'at' ucar 'dot' edu (trying to cut down on the spam).
+there are no guarantees. We are interested in your experience building the system, so please email me (Tim Hoar) thoar
+'at' ucar 'dot' edu (trying to cut down on the spam).
 
 After the installation, you might want to peruse the following.
 
@@ -129,10 +82,8 @@ After the installation, you might want to peruse the following.
 -  And another one on synthetic observations.
 
 You should *absolutely* run the DARTLAB interactive tutorial (if you have Matlab available) and look at the DARTLAB
-presentation slides Website `local file </docs/DART_LAB/DART_LAB.html>`__ in the ``DART_LAB`` directory, and then take
-the tutorial in the ``DART/tutorial`` directory.
-
---------------
+presentation slides Website :doc:`../../docs/DART_LAB/DART_LAB` in the ``DART_LAB`` directory, and then take the
+tutorial in the ``DART/tutorial`` directory.
 
 Requirements: an F90 compiler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -143,8 +94,6 @@ Mac OS/X <http://software.intel.com/en-us/fortran-compilers>`__, `Portland Group
 Compiler <http://www.pgroup.com>`__, `Lahey Fortran Compiler <http://www.lahey.com>`__, `Pathscale Fortran
 Compiler <http://www.pathscale.com>`__, and the Cray native compiler. Since recompiling the code is a necessity to
 experiment with different models, there are no binaries to distribute.
-
---------------
 
 DART uses the `NetCDF <http://www.unidata.ucar.edu/packages/netcdf/>`__ self-describing data format for the results of
 assimilation experiments. These files have the extension ``.nc`` and can be read by a number of standard data analysis
@@ -162,10 +111,6 @@ The location of the NetCDF library, ``libnetcdf.a``, and the locations of both `
 be needed by the makefile template, as described in the compiling section. Depending on the NetCDF build options, the
 Fortran 90 interfaces may be built in a separate library named ``netcdff.a`` and you may need to add ``-lnetcdff`` to
 the library flags.
-
---------------
-
-.. _downloading_the_distribution:
 
 Downloading the distribution
 ----------------------------
@@ -194,11 +139,7 @@ The code tree is very "bushy"; there are many directories of support routines, e
 with the customization and installation of the DART software. If you can compile and run ONE of the low-order models,
 you should be able to compile and run ANY of the low-order models. For this reason, we can focus on the Lorenz \`63
 model. Subsequently, the only directories with files to be modified to check the installation are:
- ``DART/build_templates``,  ``DART/models/lorenz_63/work``, and  ``DART/diagnostics/matlab`` (but only for analysis).
-
---------------
-
-.. _customizing_the_build_scripts_--_overview:
+``DART/build_templates``, ``DART/models/lorenz_63/work``, and ``DART/diagnostics/matlab`` (but only for analysis).
 
 Customizing the build scripts -- overview
 -----------------------------------------
@@ -232,9 +173,9 @@ Building and customizing the 'mkmf.template' file
 A series of templates for different compilers/architectures exists in the ``DART/build_templates/`` directory and have
 names with extensions that identify the compiler, the architecture, or both. This is how you inform the build process of
 the specifics of your system. Our intent is that you copy one that is similar to your system into ``mkmf.template`` and
-customize it. For the discussion that follows, knowledge of the contents of one of these templates
-(i.e. ``mkmf.template.gfortran``) is needed. Note that only the LAST lines are shown here, the head of the file is just
-a big comment (worth reading, btw).
+customize it. For the discussion that follows, knowledge of the contents of one of these templates (i.e.
+``mkmf.template.gfortran``) is needed. Note that only the LAST lines are shown here, the head of the file is just a big
+comment (worth reading, btw).
 
 .. container:: routine
 
@@ -264,7 +205,7 @@ Netcdf
 | Change the string to reflect the location of your NetCDF installation containing ``netcdf.mod`` and ``typesizes.mod``.
   The value of the ``NETCDF`` variable will be used by the ``FFLAGS, LIBS,`` and ``LDFLAGS`` variables.
 
-Fflags
+FFLAGS
 ^^^^^^
 
 Each compiler has different compile flags, so there is really no way to exhaustively cover this other than to say the
@@ -287,10 +228,6 @@ Customizing the 'path_names_*' file
 Several ``path_names_*`` files are provided in the ``work`` directory for each specific model, in this case:
 ``DART/models/lorenz_63/work``. Since each model comes with its own set of files, the ``path_names_*`` files need no
 customization.
-
---------------
-
-.. _building_the_lorenz_63_dart_project:
 
 Building the Lorenz_63 DART project
 -----------------------------------
@@ -442,11 +379,7 @@ NetCDF libraries and include files (particularly ``typesizes.mod``) are not foun
 |                              | ASCII to binary or vice-versa. We will not cover its use in this document.           |
 +------------------------------+--------------------------------------------------------------------------------------+
 
---------------
-
-.. _running_lorenz_63:
-
-Running lorenz_63
+Running Lorenz_63
 -----------------
 
 This initial sequence of exercises includes detailed instructions on how to work with the DART code and allows
@@ -455,8 +388,6 @@ remarkable complexity of this simple model will also be used as a case study to 
 simple ensemble filter data assimilation system. To perform a synthetic observation assimilation experiment for the L63
 model, the following steps must be performed (an overview of the process is given first, followed by detailed procedures
 for each step):
-
-.. _experiment_overview:
 
 Experiment overview
 -------------------
@@ -1021,15 +952,15 @@ observed with an observational error variance of 1.0 for each observation. To do
 *0*           # number of quality control values per field (0 or greater)
 *0*           # -1 to exit/end observation definitions
 *-1*          # observe state variable 1
-*0   0*       # time -- days, seconds
+*0 0*         # time -- days, seconds
 *1.0*         # observational variance
 *0*           # -1 to exit/end observation definitions
 *-2*          # observe state variable 2
-*0   0*       # time -- days, seconds
+*0 0*         # time -- days, seconds
 *1.0*         # observational variance
 *0*           # -1 to exit/end observation definitions
 *-3*          # observe state variable 3
-*0   0*       # time -- days, seconds
+*0 0*         # time -- days, seconds
 *1.0*         # observational variance
 *-1*          # -1 to exit/end observation definitions
 *set_def.out* # Output file name
@@ -1132,19 +1063,11 @@ contains similar data for after the assimilation is applied (sometimes referred 
 
 Now try applying all of the matlab diagnostic functions described in the Matlab® Diagnostics section.
 
---------------
-
-.. _the_tutorial:
-
 The tutorial
 ------------
 
 The ``DART/tutorial`` documents are an excellent way to kick the tires on DART and learn about ensemble data
 assimilation. If you have gotten this far, you can run anything in the tutorial.
-
---------------
-
-.. _matlab®_diagnostics:
 
 Matlab® diagnostics
 -------------------
@@ -1242,11 +1165,7 @@ high-level routines.
 |                               | another variable at all times in an ensemble time sequence.                         |
 +-------------------------------+-------------------------------------------------------------------------------------+
 
---------------
-
-.. _bias,_filter_divergence_and_covariance_inflation_(with_the_l63_model):
-
-Bias, filter divergence and covariance inflation (with the L63 model)
+Bias, filter divergence and covariance inflation (with the l63 model)
 ---------------------------------------------------------------------
 
 One of the common problems with ensemble filters is filter divergence, which can also be an issue with a variety of
@@ -1274,11 +1193,7 @@ spread (via rank histogram bins, too), etc. What kind of relation between spread
 
 There are many more options for inflation, including spatially and temporarily varying values, with and without damping.
 See the discussion of all inflation-related namelist items `local
-file </assimilation_code/programs/filter/filter.html#Inflation>`__.
-
---------------
-
-.. _synthetic_observations:
+file <../../assimilation_code/programs/filter/filter.html#Inflation>`__.
 
 Synthetic observations
 ----------------------
@@ -1293,5 +1208,3 @@ unknown observational error characteristics. In other words, for the real-world 
 (often substantial) differences from what happens in the real system and the observational error distribution may be
 very complicated and is certainly not well known. Be careful to keep these issues in mind while exploring the
 capabilities of the ensemble filters with synthetic observations.
-
---------------

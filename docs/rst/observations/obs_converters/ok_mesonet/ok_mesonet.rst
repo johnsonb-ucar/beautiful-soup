@@ -1,21 +1,10 @@
 Oklahoma Mesonet MDF Data
 =========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
-
 Overview
 --------
 
 | Program to convert Oklahoma Mesonet MDF files into DART observation sequence files.
-
---------------
-
-.. _data_sources:
 
 Data sources
 ------------
@@ -29,8 +18,6 @@ information about access: http://www.mesonet.org/index.php/site/about/data_acces
 
 Static fields are drawn from the station description file provided by the OK Mesonet. Update the local file from:
 http://www.mesonet.org/index.php/api/siteinfo/from_all_active_with_geo_fields/format/csv
-
---------------
 
 Programs
 --------
@@ -63,5 +50,3 @@ often contains a timestamp in the name) to the fixed input name before conversio
 appropriate filename before the next invocation of the converter. If an existing observation sequence file of the same
 output name is found when the converter is run again, it will open that file and append the next set of observations to
 it.
-
---------------

@@ -1,19 +1,6 @@
 PROGRAM ``obs_diag`` (for observations that use the threed_cartesian location module)
 =====================================================================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `What is new in the Manhattan release <#what_is_new_in_the_manhattan_release>`__
--  `What is new in the Lanai release <#what_is_new_in_the_lanai_release>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Files <#files>`__
--  `Usage <#usage>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -33,9 +20,8 @@ set to zero.
 | Each ensemble member applies a forward observation operator to the state to compute the "expected" value of an
   observation. Please note: the forward observation operator is applied **AFTER** any prior inflation has taken place!
   Similarly, the forward observation operator is applied AFTER any posterior inflation. This has always been the case.
-  For a detailed look at the relationship between the observation operators and inflation, please look at the
-  `Detailed Program Execution Flow </assimilation_code/programs/filter/filter.html#DetailedProgramFlow>`__ section of
-  `filter.html </assimilation_code/programs/filter/filter.html>`__.
+  For a detailed look at the relationship between the observation operators and inflation, please look at the `Detailed
+  Program Execution Flow <../../filter/filter.html#DetailedProgramFlow>`__ section of :doc:`../../filter/filter`.
 | Given multiple estimates of the observation, several quantities can be calculated. It is possible to compute the
   expected observations from the state vector before assimilating (the "guess", "forecast", or "prior") or after the
   assimilation (the "analysis", or "posterior").
@@ -70,13 +56,13 @@ particular variable and level (this is the figure on the left), 2) as a time-ave
 middle), and sometimes 3) in terms of a rank histogram - "Where does the actual observation rank relative to the rest of
 the ensemble?" (figures on the right). The figures on the left and center were created by several Matlab® scripts that
 query the ``obs_diag_output.nc`` file:
-*DART/diagnostics/matlab/*\ `plot_evolution.m </diagnostics/matlab/plot_evolution.m>`__ and
-`plot_profile.m </diagnostics/matlab/plot_profile.m>`__. Both of these takes as input a file name and a 'quantity' to
-plot ('rmse','spread','totalspread', ...) and exhaustively plots the quantity (for every variable, every level, every
-region) in a single matlab figure window - and creates a series of .ps files with multiple pages for each of the
-figures. The directory gets cluttered with them. The rank histogram information can easily be plotted with
+*DART/diagnostics/matlab/*\ `plot_evolution.m <../../../../diagnostics/matlab/plot_evolution.m>`__ and
+`plot_profile.m <../../../../diagnostics/matlab/plot_profile.m>`__. Both of these takes as input a file name and a
+'quantity' to plot ('rmse','spread','totalspread', ...) and exhaustively plots the quantity (for every variable, every
+level, every region) in a single matlab figure window - and creates a series of .ps files with multiple pages for each
+of the figures. The directory gets cluttered with them. The rank histogram information can easily be plotted with
 `ncview <http://meteora.ucsd.edu/~pierce/ncview_home_page.html>`__, a free third-party piece of software or with
-`plot_rank_histogram.m </diagnostics/matlab/plot_rank_histogram.m>`__.
+`plot_rank_histogram.m <../../../../diagnostics/matlab/plot_rank_histogram.m>`__.
 
 ``obs_diag`` can be configured to compare the ensemble estimates against the 'observation' copy or the 'truth' copy
 based on the setting of the ``use_zero_error_obs`` namelist variable.
@@ -98,55 +84,55 @@ to use your own plotting routines.
 
 | 
 
-+--------------------+------------------------------------------------------------------------------------------------+
-| **Nposs**          | The number of observations available to be assimilated.                                        |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **Nused**          | The number of observations that were assimilated.                                              |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **NbadUV**         | the number of velocity observations that had a matching component that was not assimilated;    |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **NbadLV**         | the number of observations that were above or below the highest or lowest model level,         |
-|                    | respectively;                                                                                  |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **rmse**           | The root-mean-squared error (the horizontal wind components are also used to calculate the     |
-|                    | vector wind velocity and its RMS error).                                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **bias**           | The simple sum of forecast - observation. The bias of the horizontal wind speed (not velocity) |
-|                    | is also computed.                                                                              |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **spread**         | The standard deviation of the univariate obs. DART does not exploit the bivariate nature of    |
-|                    | U,V winds and so the spread of the horizontal wind is defined as the sum of the spreads of the |
-|                    | U and V components.                                                                            |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **totalspread   ** | The total standard deviation of the estimate. We pool the ensemble variance of the observation |
-|                    | plus the observation error variance and take the square root.                                  |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **NbadDARTQC   **  | the number of observations that had a DART QC value (> 1 for a prior, > 3 for a posterior)     |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **observation**    | the mean of the observation values                                                             |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **ens_mean**       | the ensemble mean of the model estimates of the observation values                             |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_trusted**      | the number of implicitly trusted observations, regardless of DART QC                           |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_0**     | the number of observations that had a DART QC value of 0                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_1**     | the number of observations that had a DART QC value of 1                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_2**     | the number of observations that had a DART QC value of 2                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_3**     | the number of observations that had a DART QC value of 3                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_4**     | the number of observations that had a DART QC value of 4                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_5**     | the number of observations that had a DART QC value of 5                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_6**     | the number of observations that had a DART QC value of 6                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_7**     | the number of observations that had a DART QC value of 7                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
-| **N_DARTqc_8**     | the number of observations that had a DART QC value of 8                                       |
-+--------------------+------------------------------------------------------------------------------------------------+
++-----------------+---------------------------------------------------------------------------------------------------+
+| **Nposs**       | The number of observations available to be assimilated.                                           |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **Nused**       | The number of observations that were assimilated.                                                 |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **NbadUV**      | the number of velocity observations that had a matching component that was not assimilated;       |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **NbadLV**      | the number of observations that were above or below the highest or lowest model level,            |
+|                 | respectively;                                                                                     |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **rmse**        | The root-mean-squared error (the horizontal wind components are also used to calculate the vector |
+|                 | wind velocity and its RMS error).                                                                 |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **bias**        | The simple sum of forecast - observation. The bias of the horizontal wind speed (not velocity) is |
+|                 | also computed.                                                                                    |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **spread**      | The standard deviation of the univariate obs. DART does not exploit the bivariate nature of U,V   |
+|                 | winds and so the spread of the horizontal wind is defined as the sum of the spreads of the U and  |
+|                 | V components.                                                                                     |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **totalspread** | The total standard deviation of the estimate. We pool the ensemble variance of the observation    |
+|                 | plus the observation error variance and take the square root.                                     |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **NbadDARTQC**  | the number of observations that had a DART QC value (> 1 for a prior, > 3 for a posterior)        |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **observation** | the mean of the observation values                                                                |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **ens_mean**    | the ensemble mean of the model estimates of the observation values                                |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_trusted**   | the number of implicitly trusted observations, regardless of DART QC                              |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_0**  | the number of observations that had a DART QC value of 0                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_1**  | the number of observations that had a DART QC value of 1                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_2**  | the number of observations that had a DART QC value of 2                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_3**  | the number of observations that had a DART QC value of 3                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_4**  | the number of observations that had a DART QC value of 4                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_5**  | the number of observations that had a DART QC value of 5                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_6**  | the number of observations that had a DART QC value of 6                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_7**  | the number of observations that had a DART QC value of 7                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
+| **N_DARTqc_8**  | the number of observations that had a DART QC value of 8                                          |
++-----------------+---------------------------------------------------------------------------------------------------+
 
 The temporal evolution of the above quantities for every observation type (RADIOSONDE_U_WIND_COMPONENT,
 AIRCRAFT_SPECIFIC_HUMIDITY, ...) is recorded in the output netCDF file - ``obs_diag_output.nc``. This netCDF file can
@@ -172,8 +158,6 @@ observation assimilated
 
 observation evaluated only (because of namelist settings)
 
---------------
-
 2
 
 assimilated, but the posterior forward operator failed
@@ -181,8 +165,6 @@ assimilated, but the posterior forward operator failed
 3
 
 evaluated only, but the posterior forward operator failed
-
---------------
 
 4
 
@@ -208,10 +190,6 @@ rejected because of a failed outlier threshold test
 
 reserved for future use
 
---------------
-
-.. _what_is_new_in_the_manhattan_release:
-
 What is new in the Manhattan release
 ------------------------------------
 
@@ -221,8 +199,6 @@ What is new in the Manhattan release
 #. Removed ``rat_cri`` and ``input_qc_threshold`` from the namelists. They had been deprecated for quite some time.
 #. Some of the internal variable names have been changed to make it easier to distinguish between variances and standard
    deviations.
-
-.. _what_is_new_in_the_lanai_release:
 
 What is new in the Lanai release
 --------------------------------
@@ -243,8 +219,6 @@ What is new in the Lanai release
    by the DART QC mechanism long ago.
 #. The creation of the rank histogram (if possible) is now namelist-controlled by namelist variable
    ``create_rank_histogram``.
-
---------------
 
 Namelist
 --------
@@ -296,19 +270,19 @@ empty string ... i.e. ``''``.
    |                                       |                                       | sequence files. These may be relative |
    |                                       |                                       | or absolute filenames. If this is     |
    |                                       |                                       | set, ``obs_sequence_list`` must be    |
-   |                                       |                                       | set to ' ' (empty string).            |
+   |                                       |                                       | set to ' ' (empty string).            |
    +---------------------------------------+---------------------------------------+---------------------------------------+
    | obs_sequence_list                     | character(len=256)                    | Name of an ascii text file which      |
    |                                       |                                       | contains a list of one or more        |
    |                                       |                                       | observation sequence files, one per   |
    |                                       |                                       | line. If this is specified,           |
    |                                       |                                       | ``obs_sequence_name`` must be set to  |
-   |                                       |                                       | ' '. Can be created by any method,    |
+   |                                       |                                       | ' '. Can be created by any method,    |
    |                                       |                                       | including sending the output of the   |
    |                                       |                                       | 'ls' command to a file, a text        |
    |                                       |                                       | editor, or another program. If this   |
    |                                       |                                       | is set, ``obs_sequence_name`` must be |
-   |                                       |                                       | set to ' ' (empty string).            |
+   |                                       |                                       | set to ' ' (empty string).            |
    +---------------------------------------+---------------------------------------+---------------------------------------+
    | first_bin_center                      | integer, dimension(6)                 | first timeslot of the first           |
    |                                       |                                       | obs_seq.final file to process. The    |
@@ -440,10 +414,6 @@ empty string ... i.e. ``''``.
    |                                       |                                       | output.                               |
    +---------------------------------------+---------------------------------------+---------------------------------------+
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -460,8 +430,6 @@ Other modules used
    time_manager_mod
    utilities_mod
    sort_mod
-
---------------
 
 Files
 -----
@@ -488,8 +456,6 @@ quantities available in the netCDF file for any possible observation type:
 
 The other is to explore the vertical profile of a particular observation kind. By default, each observation kind has a
 'guess/prior' value and an 'analysis/posterior' value - which shed some insight into the innovations.
-
---------------
 
 Temporal evolution
 ^^^^^^^^^^^^^^^^^^
@@ -537,8 +503,6 @@ There are several things to note:
 #. surface variables (i.e. ``MARINE_SFC_ALTIMETER`` have a coordinate called 'surface' as opposed to 'hlevel' for the
    others in this example).
 
---------------
-
 Vertical profiles
 ^^^^^^^^^^^^^^^^^
 
@@ -561,8 +525,6 @@ the observation kind - 'VPguess' and 'VPanaly' - 'VP' for Vertical Profile.
 Observations flagged as 'surface' do not participate in the vertical profiles (Because surface variables cannot exist on
 any other level, there's not much to plot!). Observations on the lowest level DO participate. There's a difference!
 
---------------
-
 Rank histograms
 ^^^^^^^^^^^^^^^
 
@@ -583,8 +545,8 @@ provide additional annotation for the histogram.
 
 ::
 
-           :DART_QCs_in_histogram = 0, 1, 2, 3, 7 ;
-           :outliers_in_histogram = "TRUE" ;
+                   :DART_QCs_in_histogram = 0, 1, 2, 3, 7 ;
+                   :outliers_in_histogram = "TRUE" ;
 
 Please note:
 
@@ -601,8 +563,6 @@ Please note:
 | |        | `Instructions for viewing the rank histogram with                                                        |
 | image10| | Matlab <http://www.image.ucar.edu/DAReS/DART/DART2_Documentation.php#mat_obs>`__.                        |
 +----------+----------------------------------------------------------------------------------------------------------+
-
---------------
 
 "trusted" observation types
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -627,7 +587,7 @@ the metrics appropriately for **observation types** listed in the ``trusted_obs`
 trusted observation types specified for ``obs_diag``, the ``obs_diag_output.nc`` has global metadata to indicate that a
 different set of criteria were used to calculate the metrics. The individual variables also have an extra attribute. In
 the following output, ``input.nml:obs_diag_nml:trusted_obs`` was set:
-``trusted_obs = 'RADIOSONDE_TEMPERATURE', 'RADIOSONDE_U_WIND_COMPONENT'``
+``trusted_obs = 'RADIOSONDE_TEMPERATURE', 'RADIOSONDE_U_WIND_COMPONENT'``
 
 ::
 
@@ -657,17 +617,17 @@ the following output, ``input.nml:obs_diag_nml:trusted_obs`` was set:
                    :AIRCRAFT_U_WIND_COMPONENT = 21 ;
      ...
 
-+-------------------------------------------------------------------------------------------------------+-------------+
-| The Matlab scripts try to ensure that the trusted observation graphics clarify that the metrics       |   |image13| |
-| plotted are somehow 'different' than the normal processing stream. Some text is added to indicate     |             |
-| that the values include the outlying observations. **IMPORTANT:** The interpretation of the number of |             |
-| observations 'possible' and 'used' still reflects what was used **in the assimilation!** The number   |             |
-| of observations rejected by the outlier threshhold is not explicilty plotted. To reinforce this, the  |             |
-| text for the observation axis on all graphics has been changed to ``"o=possible, *=assimilated"``. In |             |
-| short, the distance between the number of observations possible and the number assimilated still      |             |
-| reflects the number of observations rejected by the outlier threshhold and the number of failed       |             |
-| forward observation operators.                                                                        |             |
-+-------------------------------------------------------------------------------------------------------+-------------+
++---------------------------------------------------------------------------------------------------------+-----------+
+| The Matlab scripts try to ensure that the trusted observation graphics clarify that the metrics plotted | |image13| |
+| are somehow 'different' than the normal processing stream. Some text is added to indicate that the      |           |
+| values include the outlying observations. **IMPORTANT:** The interpretation of the number of            |           |
+| observations 'possible' and 'used' still reflects what was used **in the assimilation!** The number of  |           |
+| observations rejected by the outlier threshhold is not explicilty plotted. To reinforce this, the text  |           |
+| for the observation axis on all graphics has been changed to ``"o=possible, *=assimilated"``. In short, |           |
+| the distance between the number of observations possible and the number assimilated still reflects the  |           |
+| number of observations rejected by the outlier threshhold and the number of failed forward observation  |           |
+| operators.                                                                                              |           |
++---------------------------------------------------------------------------------------------------------+-----------+
 
 There is ONE ambiguous case for trusted observations. There may be instances in which the observation fails the outlier
 threshhold test (which is based on the prior) and the posterior forward operator fails. DART does not have a QC that
@@ -685,7 +645,7 @@ problem.
 
 ::
 
-            if ((qc_integer == 7) .and. (abs(posterior_mean(1) - MISSING_R8) < 1.0_r8)) then
+   if ((qc_integer == 7) .and. (abs(posterior_mean(1) - MISSING_R8) < 1.0_r8)) then
                write(string1,*)'WARNING ambiguous case for obs index ',obsindex
                string2 = 'obs failed outlier threshhold AND posterior operator failed.'
                string3 = 'Counting as a Prior QC == 7, Posterior QC == 4.'
@@ -696,8 +656,6 @@ problem.
                call error_handler(E_MSG,'obs_diag',string1,text2=string2,text3=string3)
                num_ambiguous = num_ambiguous + 1
             endif
-
---------------
 
 Usage
 -----
@@ -710,16 +668,16 @@ Multiple observation sequence files
 There are two ways to specify input files for ``obs_diag``. You can either specify the name of a file containing a list
 of files (in ``obs_sequence_list``), or you may specify a list of files via ``obs_sequence_name``.
 
-Example: observation sequence files spanning 30 days
+Example: observation sequence files spanning 30 days
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-+-------------------------------------------------------------------------------------------------------+-------------+
-| In this example, we will be accumulating metrics for 30 days. The ``obs_diag_output.nc`` file will    |   |image16| |
-| have exactly ONE timestep in it (so it won't be much use for the ``plot_evolution`` functions) - but  |             |
-| the ``plot_profile`` functions and the ``plot_rank_histogram`` function will be used to explore the   |             |
-| assimilation. By way of an example, we will NOT be using outlier observations in the rank histogram.  |             |
-| Lets presume that all your ``obs_seq.final`` files are in alphabetically-nice directories:            |             |
-+-------------------------------------------------------------------------------------------------------+-------------+
++---------------------------------------------------------------------------------------------------------+-----------+
+| In this example, we will be accumulating metrics for 30 days. The ``obs_diag_output.nc`` file will have | |image16| |
+| exactly ONE timestep in it (so it won't be much use for the ``plot_evolution`` functions) - but the     |           |
+| ``plot_profile`` functions and the ``plot_rank_histogram`` function will be used to explore the         |           |
+| assimilation. By way of an example, we will NOT be using outlier observations in the rank histogram.    |           |
+| Lets presume that all your ``obs_seq.final`` files are in alphabetically-nice directories:              |           |
++---------------------------------------------------------------------------------------------------------+-----------+
 
 ::
 
@@ -796,81 +754,55 @@ portion of the run-time output:
   plot_rmse_xxx_profile.m <http://www.image.ucar.edu/DAReS/DART/DART2_Documentation.php#mat_obs>`__, and look at the
   rank histograms with `ncview <http://meteora.ucsd.edu/~pierce/ncview_home_page.html>`__ or ``plot_rank_histogram.m``.
 
---------------
-
 References
 ----------
 
 #. none
 
---------------
+Private components
+------------------
 
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------------+----------------------------------------------+----------------------------------------------+
-   | Routine             | Message                                      | Comment                                      |
-   +=====================+==============================================+==============================================+
-   | obs_diag            | No first observation in sequence.            | get_first_obs couldn't find a "first obs" in |
-   |                     |                                              | the obs_seq.final.                           |
-   +---------------------+----------------------------------------------+----------------------------------------------+
-   | obs_diag            | No last observation in sequence              | get_last_obs couldn't find a "last obs" in   |
-   |                     |                                              | the obs_seq.final                            |
-   +---------------------+----------------------------------------------+----------------------------------------------+
-   | obs_diag            | metadata incomplete                          | Couldn't find the index for the observation  |
-   |                     |                                              | value in the observation sequence file. It   |
-   |                     |                                              | is the only one that is required.            |
-   +---------------------+----------------------------------------------+----------------------------------------------+
-   | filter_get_obs_info | Vertical coordinate not recognized           | It must be "surface", "pressure", or         |
-   |                     |                                              | "height"                                     |
-   +---------------------+----------------------------------------------+----------------------------------------------+
-   | Convert2Time        | namelist parameter out-of-bounds. Fix and    | bin_width, bin_separation, and time_to_skip  |
-   |                     | try again                                    | must have year = 0 and month = 0             |
-   +---------------------+----------------------------------------------+----------------------------------------------+
+N/A
 
 .. |image1| image:: ../../../../docs/images/obs_diag_evolution_example.png
    :width: 300px
-   :target: /docs/images/obs_diag_evolution_example.png
+   :target: ../../../../docs/images/obs_diag_evolution_example.png
 .. |image2| image:: ../../../../docs/images/obs_diag_profile_example.png
    :width: 300px
-   :target: /docs/images/obs_diag_profile_example.png
+   :target: ../../../../docs/images/obs_diag_profile_example.png
 .. |image3| image:: ../../../../docs/images/RankHistogram_ncview.png
    :width: 200px
-   :target: /docs/images/RankHistogram_ncview.png
+   :target: ../../../../docs/images/RankHistogram_ncview.png
 .. |image4| image:: ../../../../docs/images/RankHistogram_matlab.png
    :width: 200px
-   :target: /docs/images/RankHistogram_matlab.png
+   :target: ../../../../docs/images/RankHistogram_matlab.png
 .. |image5| image:: ../../../../docs/images/RankHistogram_ncview.png
    :width: 200px
-   :target: /docs/images/RankHistogram_ncview.png
+   :target: ../../../../docs/images/RankHistogram_ncview.png
 .. |image6| image:: ../../../../docs/images/RankHistogram_matlab.png
    :width: 200px
-   :target: /docs/images/RankHistogram_matlab.png
+   :target: ../../../../docs/images/RankHistogram_matlab.png
 .. |image7| image:: ../../../../docs/images/RankHistogram_ncview.png
    :width: 200px
-   :target: /docs/images/RankHistogram_ncview.png
+   :target: ../../../../docs/images/RankHistogram_ncview.png
 .. |image8| image:: ../../../../docs/images/RankHistogram_matlab.png
    :width: 200px
-   :target: /docs/images/RankHistogram_matlab.png
+   :target: ../../../../docs/images/RankHistogram_matlab.png
 .. |image9| image:: ../../../../docs/images/RankHistogram_ncview.png
    :width: 200px
-   :target: /docs/images/RankHistogram_ncview.png
+   :target: ../../../../docs/images/RankHistogram_ncview.png
 .. |image10| image:: ../../../../docs/images/RankHistogram_matlab.png
    :width: 200px
-   :target: /docs/images/RankHistogram_matlab.png
+   :target: ../../../../docs/images/RankHistogram_matlab.png
 .. |image11| image:: ../../../../docs/images/RAD_T_trusted_bias_evolution.png
    :width: 600px
-   :target: /docs/images/RAD_T_trusted_bias_evolution.png
+   :target: ../../../../docs/images/RAD_T_trusted_bias_evolution.png
 .. |image12| image:: ../../../../docs/images/RAD_T_trusted_bias_evolution.png
    :width: 600px
-   :target: /docs/images/RAD_T_trusted_bias_evolution.png
+   :target: ../../../../docs/images/RAD_T_trusted_bias_evolution.png
 .. |image13| image:: ../../../../docs/images/RAD_T_trusted_bias_evolution.png
    :width: 600px
-   :target: /docs/images/RAD_T_trusted_bias_evolution.png
+   :target: ../../../../docs/images/RAD_T_trusted_bias_evolution.png
 .. |image14| image:: ../../../../docs/images/RankHistogram_matlab.png
    :width: 200px
 .. |image15| image:: ../../../../docs/images/RankHistogram_matlab.png

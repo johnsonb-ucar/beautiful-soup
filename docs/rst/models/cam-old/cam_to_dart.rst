@@ -1,31 +1,20 @@
 PROGRAM ``cam_to_dart``
 =======================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files read <#files_read>`__
--  `Files written <#files_written>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
 | ``cam_to_dart`` is the program that reads a CAM restart file (usually ``caminput.nc``) and creates a single DART
-  output/restart file (e.g. ``perfect_ics, filter_ics, ...``). If you have multiple input files, you will need to rename
-  the output files as you create them.
+  output/restart file (e.g. ``perfect_ics, filter_ics, ...`` ). If you have multiple input files, you will need to
+  rename the output files as you create them.
 | The list of variables extracted from the CAM netCDF file and conveyed to DART is controlled by the set of
   ``input.nml`` ``&model_nml:state_names_*`` variables. The ``date`` and ``datesec`` variables in the CAM netcdf file
   are used to specify the valid time of the state vector. The time may be changed with the
-  `restart_file_tool </assimilation_code/programs/restart_file_tool/restart_file_tool.html>`__ if desired.
+  :doc:`../../assimilation_code/programs/restart_file_tool/restart_file_tool` if desired.
 | Some CAM restart files are from climatological runs and have a valid time that predates the use of the Gregorian
   calendar. In such instances, the year component of the original date is changed to be a valid Gregorian year (by
   adding 1601). A warning is issued to the screen and to the logfile. Please use the
-  `restart_file_tool </assimilation_code/programs/restart_file_tool/restart_file_tool.html>`__ to change this time.
+  :doc:`../../assimilation_code/programs/restart_file_tool/restart_file_tool` to change this time.
 | Conditions required for successful execution of ``cam_to_dart``:
 
 -  a valid ``input.nml`` namelist file for DART
@@ -35,8 +24,6 @@ Overview
 Since this program is called repeatedly for every ensemble member, we have found it convenient to link the CAM restart
 files to the default input filename (``caminput.nc``). The default DART output filename is ``dart_ics`` - this may be
 moved or linked as necessary.
-
---------------
 
 Namelist
 --------
@@ -67,10 +54,6 @@ namelist.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -86,10 +69,6 @@ Modules used
    time_manager_mod.f90
    utilities_mod.f90
 
---------------
-
-.. _files_read:
-
 Files read
 ----------
 
@@ -97,25 +76,12 @@ Files read
 -  CAM restart file; ``caminput.nc``
 -  CAM "phis" file specified in ``&model_nml::cam_phis`` (normally ``cam_phis.nc``)
 
-.. _files_written:
-
 Files written
 -------------
 
 -  DART initial conditions/restart file; e.g. ``dart_ics``
 
---------------
-
 References
 ----------
 
 none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-none - all error messages come from modules that have their own documentation.

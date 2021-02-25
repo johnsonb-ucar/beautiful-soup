@@ -1,17 +1,6 @@
 MODULE model_mod (pe2lyr)
 =========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -22,10 +11,6 @@ Overview
 | This model is a 2-layer, isentropic, primitive equation model on a sphere. TODO: add more detail here, including
   equations, etc.
 | Contact: Jeffrey.S.Whitaker@noaa.gov
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -38,30 +23,26 @@ Other modules used
    random_seq_mod
    threed_sphere/location_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ======================= ======================
 *use model_mod, only :* get_model_size
-                        adv_1step
-                        get_state_meta_data
-                        model_interpolate
-                        get_model_time_step
-                        static_init_model
-                        end_model
-                        init_time
-                        init_conditions
-                        nc_write_model_atts
-                        nc_write_model_vars
-                        pert_model_state
-                        get_close_maxdist_init
-                        get_close_obs_init
-                        get_close_obs
-                        ens_mean_for_model
+\                       adv_1step
+\                       get_state_meta_data
+\                       model_interpolate
+\                       get_model_time_step
+\                       static_init_model
+\                       end_model
+\                       init_time
+\                       init_conditions
+\                       nc_write_model_atts
+\                       nc_write_model_vars
+\                       pert_model_state
+\                       get_close_maxdist_init
+\                       get_close_obs_init
+\                       get_close_obs
+\                       ens_mean_for_model
 ======================= ======================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -101,16 +82,16 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Advances the model for a single time step. The time associated with the initial model state is also input although it
    is not used for the computation.
 
-   =========== ==========================================
-   ``x``       State vector of length model_size.
-   ``time   `` Specifies time of the initial model state.
-   =========== ==========================================
+   ======== ==========================================
+   ``x``    State vector of length model_size.
+   ``time`` Specifies time of the initial model state.
+   ======== ==========================================
 
 | 
 
 .. container:: routine
 
-   *call get_state_meta_data (index_in, location, [, var_type] )*
+   *call get_state_meta_data (index_in, location, [, var_type] )*
    ::
 
       integer,             intent(in)  :: index_in
@@ -131,11 +112,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Grids at twice and 4 times the resolution can be compiled in instead by using one of the alternative header files
    (see ``resolt31.h`` (the default), ``resolt63.h``, and ``resolt127.h``).
 
-   =============== ===================================================================
-   ``index_in   `` Index of state vector element about which information is requested.
-   ``location``    The location of state variable element.
-   *var_type*      The type of the state variable element.
-   =============== ===================================================================
+   ============ ===================================================================
+   ``index_in`` Index of state vector element about which information is requested.
+   ``location`` The location of state variable element.
+   *var_type*   The type of the state variable element.
+   ============ ===================================================================
 
 | 
 
@@ -155,13 +136,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Given a state vector, a location, and a model state variable type, interpolates the state variable field to that
    location and returns the value in obs_val. The istatus variable is always returned as 0 (OK).
 
-   =============== ===========================================================================================
-   ``x``           A model state vector.
-   ``location   `` Location to which to interpolate.
-   ``itype``       Type of state field to be interpolated.
-   ``obs_val``     The interpolated value from the model.
-   ``istatus``     Integer value returning 0 for successful, other values can be defined for various failures.
-   =============== ===========================================================================================
+   ============ ===========================================================================================
+   ``x``        A model state vector.
+   ``location`` Location to which to interpolate.
+   ``itype``    Type of state field to be interpolated.
+   ``obs_val``  The interpolated value from the model.
+   ``istatus``  Integer value returning 0 for successful, other values can be defined for various failures.
+   ============ ===========================================================================================
 
 | 
 
@@ -178,9 +159,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    state in a given implementation. For this model the default value is 20 minutes (1200 seconds), but also comes with
    header files with times steps of 10 and 5 minutes (for higher grid resolution and truncation constants).
 
-   ========== ============================
-   ``var   `` Smallest time step of model.
-   ========== ============================
+   ======= ============================
+   ``var`` Smallest time step of model.
+   ======= ============================
 
 | 
 
@@ -219,9 +200,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Returns the time at which the model will start if no input initial conditions are to be used. This model sets the
    time to 0.
 
-   =========== ===================
-   ``time   `` Initial model time.
-   =========== ===================
+   ======== ===================
+   ``time`` Initial model time.
+   ======== ===================
 
 | 
 
@@ -237,9 +218,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Returns default initial conditions for model; generally used for spinning up initial model states. This model sets
    the default state vector based on the initialized fields in the model. (TODO: which are what?)
 
-   ======== ====================================
-   ``x   `` Initial conditions for state vector.
-   ======== ====================================
+   ===== ====================================
+   ``x`` Initial conditions for state vector.
+   ===== ====================================
 
 | 
 
@@ -257,10 +238,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    metadata, but NOT the model state vector. This model writes out the data as U, V, and Z arrays on a lat/lon/height
    grid, so the attributes are organized in the same way.
 
-   =============== =========================================================
-   ``ncFileID   `` Integer file descriptor to previously-opened netCDF file.
-   ``ierr``        Returns a 0 for successful completion.
-   =============== =========================================================
+   ============ =========================================================
+   ``ncFileID`` Integer file descriptor to previously-opened netCDF file.
+   ``ierr``     Returns a 0 for successful completion.
+   ============ =========================================================
 
 | 
 
@@ -280,13 +261,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    This routine writes the model-specific state vector (data) to a netCDF file. This model writes out the data as U, V,
    and Z arrays on a lat/lon/height grid.
 
-   ================ =================================================
-   ``ncFileID``     file descriptor to previously-opened netCDF file.
-   ``statevec``     A model state vector.
-   ``copyindex   `` Integer index of copy to be written.
-   ``timeindex``    The timestep counter for the given state.
-   ``ierr``         Returns 0 for normal completion.
-   ================ =================================================
+   ============= =================================================
+   ``ncFileID``  file descriptor to previously-opened netCDF file.
+   ``statevec``  A model state vector.
+   ``copyindex`` Integer index of copy to be written.
+   ``timeindex`` The timestep counter for the given state.
+   ``ierr``      Returns 0 for normal completion.
+   ============= =================================================
 
 | 
 
@@ -305,11 +286,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    model has no code to generate these values, so it returns ``interf_provided`` as .false. and the default algorithms
    in filter are then used by the calling code.
 
-   ====================== =============================================
-   ``state``              State vector to be perturbed.
-   ``pert_state``         Perturbed state vector
-   ``interf_provided   `` Returned false; interface is not implemented.
-   ====================== =============================================
+   =================== =============================================
+   ``state``           State vector to be perturbed.
+   ``pert_state``      Perturbed state vector
+   ``interf_provided`` Returned false; interface is not implemented.
+   =================== =============================================
 
 | 
 
@@ -325,13 +306,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    In distance computations any two locations closer than the given ``maxdist`` will be considered close by the
    ``get_close_obs()`` routine. Pass-through to the 3-D sphere locations module. See
-   `get_close_maxdist_init() </location/threed_sphere/location_mod.html#get_close_maxdist_init>`__ for the documentation
-   of this subroutine.
+   `get_close_maxdist_init() <../../location/threed_sphere/location_mod.html#get_close_maxdist_init>`__ for the
+   documentation of this subroutine.
 
-   ============= =================================================================================================
-   ``gc  ``      The get_close_type which stores precomputed information about the locations to speed up searching
-   ``maxdist  `` Anything closer than this will be considered close.
-   ============= =================================================================================================
+   =========== =================================================================================================
+   ``gc``      The get_close_type which stores precomputed information about the locations to speed up searching
+   ``maxdist`` Anything closer than this will be considered close.
+   =========== =================================================================================================
 
 | 
 
@@ -347,14 +328,14 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3-D sphere locations module. See
-   `get_close_obs_init() </location/threed_sphere/location_mod.html#get_close_obs_init>`__ for the documentation of this
-   subroutine.
+   `get_close_obs_init() <../../location/threed_sphere/location_mod.html#get_close_obs_init>`__ for the documentation of
+   this subroutine.
 
 | 
 
 .. container:: routine
 
-   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
+   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
    ::
 
       type(get_close_type), intent(in)  :: gc
@@ -372,7 +353,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
      the number of items which are within maxdist of the base, the index numbers in the original obs list, and
      optionally the distances. The ``gc`` contains precomputed information to speed the computations.
    | Pass-through to the 3-D sphere locations module. See
-     `get_close_obs() </location/threed_sphere/location_mod.html#get_close_obs>`__ for the documentation of this
+     `get_close_obs() <../../location/threed_sphere/location_mod.html#get_close_obs>`__ for the documentation of this
      subroutine.
 
 | 
@@ -388,17 +369,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Stub only. Not needed by this model.
 
-   =============== ==========================================
-   ``ens_mean   `` State vector containing the ensemble mean.
-   =============== ==========================================
+   ============ ==========================================
+   ``ens_mean`` State vector containing the ensemble mean.
+   ============ ==========================================
 
 | 
 
---------------
-
 This model currently has no values settable by namelist.
-
---------------
 
 Files
 -----
@@ -406,28 +383,13 @@ Files
 -  The model source is in pe2lyr_mod.f90, and the spherical harmonic code is in spharmt_mod.f90. The various resolution
    settings are in resolt31.h, resolt63.h, and resolt127.h.
 
---------------
-
 References
 ----------
 
 Zou, X., Barcilon, A., Navon, I.M., Whitaker, J., Cacuci, D.G.. 1993: An Adjoint Sensitivity Study of Blocking in a
 Two-Layer Isentropic Model. Monthly Weather Review: Vol. 121, No. 10, pp. 2833-2857.
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-N/A
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

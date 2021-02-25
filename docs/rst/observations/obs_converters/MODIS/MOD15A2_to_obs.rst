@@ -1,20 +1,11 @@
 PROGRAM ``MOD15A2_to_obs``
 ==========================
 
-Contents
---------
-
--  `Namelist <#namelist>`__
--  `Data sources <#data_sources>`__
--  `Format <#format>`__
--  `Programs <#programs>`__
--  `Decisions you might need to make <#decisions_you_might_need_to_make>`__
+MODIS land product subsets (collection 5) to DART observation sequence converter
+--------------------------------------------------------------------------------
 
 Overview
-========
-
-MODIS land product subsets (collection 5) to DART observation sequence converter
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~
 
 This routine is designed to convert the `MODIS Land Product Subsets <http://daac.ornl.gov/MODIS/modis.shtml>`__ data of
 Leaf Area Index (**LAI**) and Fraction of Photosynthetically Active Radiation (**FPAR**) 8 day composite [MOD15A2] to a
@@ -61,13 +52,11 @@ The DART workflow is usually:
 #. provide basic information via the ``input.nml``:``MOD15A2_to_obs_nml`` namelist
 #. convert each MODIS data file individually using ``MOD15A2_to_obs``
 #. combine all output files for the region and timeframe of interest into one file using
-   `obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html%20>`__
+   :doc:`../../../assimilation_code/programs/obs_sequence_tool/obs_sequence_tool`
 
 For some models (CLM, for example), it is required to reorganize the observation sequence files into a series of files
 that contains ONLY the observations for each assimilation. This can be achieved with the `makedaily.sh <makedaily.sh>`__
 script.
-
---------------
 
 Namelist
 --------
@@ -112,10 +101,6 @@ namelist.
    | verbose         | logical            | Print extra information during the ``MOD15A2_to_obs`` execution.            |
    +-----------------+--------------------+-----------------------------------------------------------------------------+
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
@@ -131,7 +116,7 @@ Field site and flux tower
 -  I usually convert this to UNIX format with the UNIX utility ``dos2unix`` and rename it to
    ``MOD15A2_site_metadata.txt``
 
-| The data files have names like ``MOD15A2.fn_uswiirpi.txt`` or ``MOD15A2.fn_dehambur.txt``  and have very long lines.
+| The data files have names like ``MOD15A2.fn_uswiirpi.txt`` or ``MOD15A2.fn_dehambur.txt`` and have very long lines.
   The first line (i.e. record) of the file is a comma-separated list explaining the file format for all the remaining
   lines/records.
 | These files contain records with 49 pixel values where each pixel represents the values for a 1km by 1km voxel. The
@@ -146,7 +131,7 @@ Field site and flux tower
 
 The format of the ``Site`` in these files is the predominant difference between the files from the download methods. The
 ``Site`` fields in these files have specified site names that must have a case-sensitive match to a site in the metadata
-file specified by ``input.nml``:``metadata_file`` .
+file specified by ``input.nml``:``metadata_file`` .
 
 Global tool
 ~~~~~~~~~~~
@@ -168,20 +153,20 @@ Global tool
    #. or a specific latitude and longitude. Be precise. This will specify the center pixel location.
 
 #. click "Continue"
-#. Select the "[MOD15A2] Leaf Area Index (LAI) and Fraction of Photsyntetically Active Radiation (FPAR) 8 Day Composite"
+#. Select the "[MOD15A2] Leaf Area Index (LAI) and Fraction of Photsyntetically Active Radiation (FPAR) 8 Day Composite"
    from the pull-down menu.
-#. **Important:** Specify 3 **and only 3** kilometers to encompass the center location. This results in the 7 km by 7 km
+#. **Important:** Specify 3 **and only 3** kilometers to encompass the center location. This results in the 7 km by 7 km
    resolution required by ``MOD15A2_to_obs``.
 #. click "Continue"
 #. select the Starting Date and Ending Date from the list. You can convert the entire dataset into one long DART
    observation sequence file and then subset it later if need be.
-#. **Important:** Make sure you check the button "Generate GeoTIFF and Reproject to Geographic Lat/long"
+#. **Important:** Make sure you check the button "Generate GeoTIFF and Reproject to Geographic Lat/long"
 #. Supply your REAL email address
 #. click "Continue"
 #. Review the confirmation page. Make sure the requested resolution and area is correct. You should see something like
-   "The Requested Data Area is Approximately 7 Kilometers Wide and 7 Kilometers High"
+   "The Requested Data Area is Approximately 7 Kilometers Wide and 7 Kilometers High"
 #. click "Continue"
-#. At some point later (perhaps even days), you will get an email with the subject "ORNL DAAC MODIS MOD15A2 order",
+#. At some point later (perhaps even days), you will get an email with the subject "ORNL DAAC MODIS MOD15A2 order",
    follow the instructions to complete the download.
 
 The resulting ASCII files will have the same format as described below. The 'site name' column for these files is of the
@@ -192,8 +177,6 @@ Web service
 ~~~~~~~~~~~
 
 I have not used the `Web Service <https://lpdaac.usgs.gov/tools/lp_daac_web_services>`__.
-
---------------
 
 Format
 ------
@@ -261,8 +244,6 @@ QC flags are binary-coded ascii strings e.g., 10011101 bits 5,6,7 (the last thre
 
 Consequently, the last three digits are used by DART's data processing logic.
 
---------------
-
 Programs
 --------
 
@@ -286,15 +267,9 @@ the ``data`` directory. These are *NOT* intended to be turnkey scripts; they wil
 your use. There are comments at the top of the script saying what options they include, and should be commented enough
 to indicate where changes will be likely to need to be made.
 
---------------
-
-.. _decisions_you_might_need_to_make:
-
 Decisions you might need to make
 --------------------------------
 
-See the general discussion in the `obs_converters/README.md </observations/obs_converters/README.md#Decisions>`__ page
-about what options are available for the things you need to specify. These include setting a time, specifying an
-expected error, setting a location, and an observation type.
-
---------------
+See the general discussion in the `obs_converters/README.md <../README.md#Decisions>`__ page about what options are
+available for the things you need to specify. These include setting a time, specifying an expected error, setting a
+location, and an observation type.

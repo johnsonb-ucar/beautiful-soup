@@ -1,14 +1,6 @@
 QuikSCAT SeaWinds Data
 ======================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Namelist <#namelist>`__
-
 Overview
 --------
 
@@ -39,10 +31,6 @@ orbit) in HDF format into the DART observation sequence file makes several assum
 #. The above error characterstics can be simplified when deriving the horizontal wind components (i.e. U,V). **Note :**
    this may or may not be a good assumption, and efforts to assimilate the speed and direction directly are under way.
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
@@ -56,8 +44,6 @@ using the product labelled **L2B OWV 25km Swath**. They are organized in folders
 revolution) in one compressed file. There are 14 revolutions per day. The conversion to DART observation sequence format
 is done on each revolution, multiple revolutions may be combined 'after the fact' by any ``obs_sequence_tool`` in the
 ``work`` directory of any model.
-
---------------
 
 Programs
 --------
@@ -101,8 +87,6 @@ Obs_to_table.f90, plot_wind_vectors.m
 ``DART/diagnostics/threed_sphere/obs_to_table.f90`` is a potentially useful tool. You can run the observation sequence
 files through this filter to come up with a 'XYZ'-like file that can be readily plotted with
 ``DART/diagnostics/matlab/plot_wind_vectors.m``.
-
---------------
 
 Namelist
 --------
@@ -161,5 +145,3 @@ these namelist items.
    +------------------+--------------------+----------------------------------------------------------------------------+
 
 | 
-
---------------

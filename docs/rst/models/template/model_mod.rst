@@ -1,18 +1,6 @@
 MODULE model_mod
 ================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -32,8 +20,6 @@ Overview
   listing the appropriate choice from ``location/*/location_mod.f90`` in the corresponding ``path_names_*`` file at
   compilation time.
 
---------------
-
 Namelist
 --------
 
@@ -51,10 +37,6 @@ namelist.
 Models are free to include a model namelist which can be read when ``static_init_model`` is called. A good example can
 be found in the lorenz_96 ``model_mod.f90``.
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -66,32 +48,28 @@ Other modules used
    utilities_mod
    POSSIBLY MANY OTHERS DEPENDING ON MODEL DETAILS
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ======================= ===================================
 *use model_mod, only :* get_model_size
-                        adv_1step
-                        get_state_meta_data
-                        model_interpolate
-                        shortest_time_between_assimilations
-                        static_init_model
-                        init_time
-                        init_conditions
-                        nc_write_model_atts
-                        nc_write_model_vars
-                        pert_model_copies
-                        get_close_obs
-                        get_close_state
-                        convert_vertical_obs
-                        convert_vertical_state
-                        read_model_time
-                        write_model_time
-                        end_model
+\                       adv_1step
+\                       get_state_meta_data
+\                       model_interpolate
+\                       shortest_time_between_assimilations
+\                       static_init_model
+\                       init_time
+\                       init_conditions
+\                       nc_write_model_atts
+\                       nc_write_model_vars
+\                       pert_model_copies
+\                       get_close_obs
+\                       get_close_state
+\                       convert_vertical_obs
+\                       convert_vertical_state
+\                       read_model_time
+\                       write_model_time
+\                       end_model
 ======================= ===================================
 
 A namelist interface ``&model_nml`` may be defined by the module, in which case it will be read from file ``input.nml``.
@@ -145,7 +123,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call get_state_meta_data (index_in, location, [, var_type] )*
+   *call get_state_meta_data (index_in, location, [, var_type] )*
    ::
 
       integer,             intent(in)  :: index_in
@@ -184,10 +162,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    quantity interpolates the state variable field to that location and returns an ensemble-sized array of values in
    ``expected_obs(:)``. The ``istatus(:)`` array should be 0 for successful ensemble members and a positive value for
    failures. The ``obs_quantity`` variable is one of the quantity (QTY) parameters defined in the
-   `obs_kind_mod.f90 </assimilation_code/modules/observations/obs_kind_mod.html>`__ file and defines the quantity to
-   interpolate. In low-order models that have no notion of kinds of variables this argument may be ignored. For
-   applications in which only perfect model experiments with identity observations (i.e. only the value of a particular
-   state variable is observed), this can be a NULL INTERFACE. Otherwise it is required (which is the most common case).
+   :doc:`../../assimilation_code/modules/observations/obs_kind_mod` file and defines the quantity to interpolate. In
+   low-order models that have no notion of kinds of variables this argument may be ignored. For applications in which
+   only perfect model experiments with identity observations (i.e. only the value of a particular state variable is
+   observed), this can be a NULL INTERFACE. Otherwise it is required (which is the most common case).
 
    +------------------+--------------------------------------------------------------------------------------------------+
    | ``state_handle`` | The handle to the state structure containing information about the state vector about which      |
@@ -249,7 +227,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Companion interface to init_conditions. Returns a time that is somehow appropriate for starting up a long integration
    of the model. At present, this is only used if the ``perfect_model_obs`` namelist parameter
-   ``read_input_state_from_file = .false.`` If this option should not be used in ``perfect_model_obs``, calling this
+   ``read_input_state_from_file = .false.`` If this option should not be used in ``perfect_model_obs``, calling this
    routine should issue a fatal error.
 
    ======== ===================
@@ -269,7 +247,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns a model state vector, x, that is some sort of appropriate initial condition for starting up a long
    integration of the model. At present, this is only used if the ``perfect_model_obs`` namelist parameter
-   ``read_input_state_from_file = .false.`` If this option should not be used in ``perfect_model_obs``, calling this
+   ``read_input_state_from_file = .false.`` If this option should not be used in ``perfect_model_obs``, calling this
    routine should issue a fatal error.
 
    ===== ====================================
@@ -317,7 +295,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call nc_write_model_vars(ncFileID, domain_id, state_ens_handle [, memberindex] [, timeindex])*
+   *call nc_write_model_vars(ncFileID, domain_id, state_ens_handle [, memberindex] [, timeindex])*
    ::
 
       integer,             intent(in) :: ncFileID
@@ -329,7 +307,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    | This routine may be used to write the model-specific state vector (data) to a netCDF file. Only used if
-     ``model_mod_writes_state_variables = .true.``
+     ``model_mod_writes_state_variables = .true.``
    | Typical sequence for adding new dimensions,variables,attributes:
 
    ::
@@ -372,7 +350,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Given an ensemble handle, the ensemble size, and a perturbation amplitude; perturb the ensemble. Used to generate
    initial conditions for spinning up ensembles. If the ``model_mod`` does not want to do this, instead allowing the
-   default algorithms in ``filter`` to take effect, ``interf_provided =&nbps.false.`` and the routine can be trivial.
+   default algorithms in ``filter`` to take effect, ``interf_provided =&nbps;.false.`` and the routine can be trivial.
    Otherwise, ``interf_provided`` must be returned as ``.true.``
 
    +----------------------+----------------------------------------------------------------------------------------------+
@@ -390,8 +368,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call get_close_obs(gc, base_loc, base_type, locs, loc_qtys, loc_types, num_close, close_ind [, dist]
-   [, state_handle)*
+   *call get_close_obs(gc, base_loc, base_type, locs, loc_qtys, loc_types, num_close, close_ind [, dist] [,
+   state_handle)*
    ::
 
       type(get_close_type),          intent(in)  :: gc
@@ -476,8 +454,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call get_close_state(gc, base_loc, base_type, state_loc, state_qtys, state_indx, num_close, close_ind
-   [, dist, state_handle])*
+   *call get_close_state(gc, base_loc, base_type, state_loc, state_qtys, state_indx, num_close, close_ind [, dist,
+   state_handle])*
    ::
 
       type(get_close_type),          intent(in)    :: gc
@@ -596,7 +574,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    | ``which_vert``   | the desired vertical coordinate system. There is a table in the ``location_mod.f90`` that        |
    |                  | relates integers to vertical coordinate systems.                                                 |
    +------------------+--------------------------------------------------------------------------------------------------+
-   | ``status``       | Success or failure of the vertical conversion. If ``istatus = 0``, the conversion was a success. |
+   | ``status``       | Success or failure of the vertical conversion. If ``istatus = 0``, the conversion was a success. |
    |                  | Any other value is a failure.                                                                    |
    +------------------+--------------------------------------------------------------------------------------------------+
 
@@ -635,7 +613,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    | ``which_vert``   | the desired vertical coordinate system. There is a table in the ``location_mod.f90`` that        |
    |                  | relates integers to vertical coordinate systems.                                                 |
    +------------------+--------------------------------------------------------------------------------------------------+
-   | ``status``       | Success or failure of the vertical conversion. If ``istatus = 0``, the conversion was a success. |
+   | ``status``       | Success or failure of the vertical conversion. If ``istatus = 0``, the conversion was a success. |
    |                  | Any other value is a failure.                                                                    |
    +------------------+--------------------------------------------------------------------------------------------------+
 
@@ -695,34 +673,17 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Does any shutdown and clean-up needed for model. Can be a NULL INTERFACE if the model has no need to clean up
    storage, etc.
 
---------------
-
 Files
 -----
 
 -  Models are free to read and write files as they see fit.
-
---------------
 
 References
 ----------
 
 #. none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
--  Models are free to issue calls to the error handler as they see fit. No standard error handler calls are mandated.
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

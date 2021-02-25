@@ -1,14 +1,6 @@
 ROMS observations to DART observation sequences
 ===============================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
-
 Overview
 --------
 
@@ -45,8 +37,6 @@ Locations only specified by *obs_Xgrid, obs_Ygrid, obs_depth* are **not** suppor
 | **Important:** ``filter`` and ``perfect_model_obs`` must also be informed which DART observation types use precomputed
   forward operators. This is done by setting the ``input.nml``\ ``&obs_kind_nml`` namelist. An example is shown at the
   end of the PROGRAMS section below.
-
---------------
 
 Namelist
 --------
@@ -88,14 +78,14 @@ namelist.
    |                        |                                    | contain the observation values for each ensemble     |
    |                        |                                    | member. These are output from the ROMS program. If   |
    |                        |                                    | listing the files explicitly in this list,           |
-   |                        |                                    | 'roms_mod_obs_filelist' must be ' ' (null).          |
+   |                        |                                    | 'roms_mod_obs_filelist' must be ' ' (null).          |
    +------------------------+------------------------------------+------------------------------------------------------+
    | roms_mods_obs_filelist | character(len=256)                 | The name of an ASCII file which contains, one per    |
    |                        |                                    | line, a list of filenames, one per ensemble member,  |
    |                        |                                    | that contain the expected obs values for each        |
    |                        |                                    | ensemble member. The filenames should NOT be quoted. |
    |                        |                                    | These are output from the ROMS program. If using a   |
-   |                        |                                    | filelist, then 'roms_mod_obs_files' must be ' '      |
+   |                        |                                    | filelist, then 'roms_mod_obs_files' must be ' '      |
    |                        |                                    | (null).                                              |
    +------------------------+------------------------------------+------------------------------------------------------+
    | dart_output_obs_file   | character(len=256)                 | The name of the DART obs_seq file to create. If a    |
@@ -151,25 +141,19 @@ namelist.
 
 | 
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
 The origin of the input observation files used by ROMS are completely unknown to me.
 
---------------
-
 Programs
 --------
 
--  `convert_roms_obs </observations/obs_converters/convert_roms_obs.html>`__
--  `obs_seq_to_netcdf </assimilation_code/programs/obs_seq_to_netcdf/obs_seq_to_netcdf.html>`__
--  `obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__
--  `preprocess </assimilation_code/programs/preprocess/preprocess.html>`__
--  `advance_time </assimilation_code/programs/advance_time/advance_time.html>`__
+-  :doc:`../convert_roms_obs`
+-  :doc:`../../../assimilation_code/programs/obs_seq_to_netcdf/obs_seq_to_netcdf`
+-  :doc:`../../../assimilation_code/programs/obs_sequence_tool/assimilation_code/programs/obs_sequence_tool/obs_sequence_tool`
+-  :doc:`../../../assimilation_code/programs/preprocess/preprocess`
+-  :doc:`../../../assimilation_code/programs/advance_time/advance_time`
 
 Only ``convert_roms_obs`` will be discussed here.
 
@@ -260,7 +244,7 @@ to be able to convert from the integer value of the obs_provenance to th DART ty
      /
 
 A complete list of DART observation TYPES is available in
-`obs_def_ocean_mod.f90 </observations/forward_operators/obs_def_ocean_mod.f90>`__
+`obs_def_ocean_mod.f90 <../../forward_operators/obs_def_ocean_mod.f90>`__
 
 Any or all of the DART observation types that appear in the second column of ``type_translations`` must also be
 designated as observations that have precomputed forward operators. This is done by setting the
@@ -290,5 +274,3 @@ designated as observations that have precomputed forward operators. This is done
                                             'GLIDER_SALINITY',
                                             'SATELLITE_BLENDED_SST'
      /
-
---------------

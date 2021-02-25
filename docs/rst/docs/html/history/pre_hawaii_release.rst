@@ -1,23 +1,6 @@
 DART "pre_hawaii release" Documentation
 =======================================
 
-Contents
---------
-
--  `Document conventions <#document_conventions>`__
--  `Requirements: an F90 compiler <#requirements:_an_f90_compiler>`__
--  ` <#>`__
--  ` <#>`__
--  `Unpacking the distribution <#unpacking_the_distribution>`__
--  `Customizing the build scripts -- overview <#customizing_the_build_scripts_--_overview>`__
--  `Building the Lorenz_63 DART project <#building_the_lorenz_63_dart_project>`__
--  `Running lorenz_63 <#running_lorenz_63>`__
--  `Experiment overview <#experiment_overview>`__
--  `Matlab diagnostics <#matlab_diagnostics>`__
--  `Bias, filter divergence and covariance inflation (with the L63
-   model) <#bias,_filter_divergence_and_covariance_inflation_(with_the_l63_model)>`__
--  `Synthetic observations <#synthetic_observations>`__
-
 Overview of DART
 ================
 
@@ -55,64 +38,6 @@ are available. DART users have also used `ncview <http://meteora.ucsd.edu/~pierc
 rudimentary graphical displays of output data fields. The `NCO <http://nco.sourceforge.net>`__ tools, produced by UCAR's
 Unidata group, are available to do operations like concatenating, slicing, and dicing of netCDF files.
 
-.. _document_conventions:
-
-Document conventions
---------------------
-
-| Anything underlined is a URL.
-| ``All filenames look like this -- (typewriter font, green)``.
-| ``Program names look like this -- (italicized font, green)``.
-| *user input looks like this -- (bold, magenta)*.
-
-.. container:: unix
-
-   commands to be typed at the command line are contained in an indented gray box.
-
-And the contents of a file are enclosed in a box with a border:
-
-.. container:: routine
-
-   &hypothetical_nml
-     obs_seq_in_file_name = "obs_seq.in",
-     obs_seq_out_file_name = "obs_seq.out",
-     init_time_days = 0,
-     init_time_seconds = 0,
-     output_interval = 1
-   &end
-
---------------
-
-Installation
-============
-
-This document outlines the installation of the DART software and the system requirements. For convenience, some of the
-original colloquium exercises are repeated here, mostly just to check the installation. A few of the `exercises from the
-ASP summer 2003 Colloquium </DART/dart_exercise_doc.pdf>`__ are repeated here, primarily to serve as the verification of
-the installation. The entire installation process is summarized in the following steps:
-
-#. Determine which F90 compiler is available.
-#. Determine the location of the ``netCDF`` library.
-#. Determine the location of the ``udunits`` library.
-#. Download the DART software bundle and untar it into the expected source tree.
-#. Modify certain DART files to reflect the available F90 compiler and location of the appropriate libraries.
-#. Build the executables.
-
-We have tried to make the code as portable as possible, but we do not have access to all compilers on all platforms, so
-there are no guarantees. We are interested in your experience building the system, so please email me (Tim Hoar)
-thoar 'at' ucar 'dot' edu (trying to cut down on the spam).
-
-After the installation, you might want to peruse the following.
-
--  Running the Lorenz_63 Model.
--  Using the Matlab® diagnostic scripts.
--  A short discussion on bias, filter divergence and covariance inflation.
--  And another one on synthetic observations.
-
---------------
-
-.. _requirements:_an_f90_compiler:
-
 Requirements: an F90 compiler
 -----------------------------
 
@@ -121,8 +46,6 @@ Linux <http://www.intel.com/software/products/compilers/flin>`__, which is free 
 also been built and successfully run with the `Portland Group Fortran Compiler <http://www.pgroup.com>`__ (5.02), and
 again with the Intel 8.0.034 compiler. Since recompiling the code is a necessity to experiment with different models,
 there are no binaries to distribute.
-
---------------
 
 DART uses the `netCDF <http://www.unidata.ucar.edu/packages/netcdf/>`__ self-describing data format for the results of
 assimilation experiments. These files have the extension ``.nc`` and can be read by a number of standard data analysis
@@ -140,8 +63,6 @@ applied for the Intel Fortran Compiler. (Or the PG compiler, for that matter.)
 The location of the netCDF library, ``libnetcdf.a``, and the locations of both ``netcdf.mod`` and ``typesizes.mod`` will
 be needed by the makefile template, as described in the compiling section.
 
---------------
-
 .. _section-1:
 
 DART also uses the **very** common `udunits <http://my.unidata.ucar.edu/content/software/udunits/index.html>`__ library
@@ -150,10 +71,6 @@ it (instructions are available from `Unidata's Downloads <http://www.unidata.uca
 
 The location of the udunits library, ``libudunits.a``, will be needed by the makefile template, as described in the
 compiling section.
-
---------------
-
-.. _unpacking_the_distribution:
 
 Unpacking the distribution
 --------------------------
@@ -170,12 +87,8 @@ The DART source code is distributed as a compressed tar file `DART_hawaii.tar.gz
 The code tree is very "bushy"; there are many directories of support routines, etc. but only a few directories involved
 with the customization and installation of the DART software. If you can compile and run ONE of the low-order models,
 you should be able to compile and run ANY of the low-order models. For this reason, we can focus on the Lorenz \`63
-model. Subsequently, the only directories with files to be modified to check the installation are:  ``DART/mkmf``,
- ``DART/models/lorenz_63/work``, and  ``DART/matlab`` (but only for analysis).
-
---------------
-
-.. _customizing_the_build_scripts_--_overview:
+model. Subsequently, the only directories with files to be modified to check the installation are: ``DART/mkmf``,
+``DART/models/lorenz_63/work``, and ``DART/matlab`` (but only for analysis).
 
 Customizing the build scripts -- overview
 -----------------------------------------
@@ -233,7 +146,7 @@ netCDF and udunits libraries.
 
 ` <fflags>`__
 
-Fflags
+FFLAGS
 ^^^^^^
 
 Each compiler has different compile flags, so there is really no way to exhaustively cover this other than to say the
@@ -262,10 +175,6 @@ Several ``path_names_*`` files are provided in the ``work`` directory for each s
 #. ``path_names_filter``
 
 Since each model comes with its own set of files, no further customization is needed.
-
---------------
-
-.. _building_the_lorenz_63_dart_project:
 
 Building the Lorenz_63 DART project
 -----------------------------------
@@ -307,7 +216,7 @@ compile anything.
 
 .. container:: unix
 
-   csh   mkmf_create_obs_sequence
+   csh mkmf_create_obs_sequence
    make
 
 The first command generates an appropriate ``Makefile`` and the ``input.nml.create_obs_sequence_default`` file. The
@@ -319,11 +228,11 @@ You can proceed to create the other three programs needed to work with L63 in DA
 
 .. container:: unix
 
-   csh   mkmf_create_fixed_network_seq
+   csh mkmf_create_fixed_network_seq
    make
-   csh   mkmf_perfect_model_obs
+   csh mkmf_perfect_model_obs
    make
-   csh   mkmf_filter
+   csh mkmf_filter
    make
 
 | 
@@ -340,11 +249,7 @@ program                      purpose
 ``filter``                   perform experiments
 ============================ =========================================================================================
 
---------------
-
-.. _running_lorenz_63:
-
-Running lorenz_63
+Running Lorenz_63
 -----------------
 
 This initial sequence of exercises includes detailed instructions on how to work with the DART code and allows
@@ -353,8 +258,6 @@ remarkable complexity of this simple model will also be used as a case study to 
 simple ensemble filter data assimilation system. To perform a synthetic observation assimilation experiment for the L63
 model, the following steps must be performed (an overview of the process is given first, followed by detailed procedures
 for each step):
-
-.. _experiment_overview:
 
 Experiment overview
 -------------------
@@ -569,64 +472,65 @@ Two files are created. ``set_def.out`` is the empty template containing the meta
 1.3 Initialize the model onto the attractor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``perfect_model_obs`` can now advance the arbitrary initial state for 24,000 timesteps to move it onto the attractor.
-``perfect_model_obs`` uses the Fortran90 namelist input mechanism instead of (admittedly gory, but temporary)
-interactive input. All of the DART software expects the namelists to found in a file called ``input.nml``. When you
-built the executable, an example namelist was created ``input.nml.perfect_model_obs_default`` that contains all of the
-namelist input for the executable. We must now rename and customize the namelist file for ``perfect_model_obs``. Copy
-``input.nml.perfect_model_obs_default`` to ``input.nml`` and edit it to look like the following:
+| ``perfect_model_obs`` can now advance the arbitrary initial state for 24,000 timesteps to move it onto the attractor.
+| ``perfect_model_obs`` uses the Fortran90 namelist input mechanism instead of (admittedly gory, but temporary)
+  interactive input. All of the DART software expects the namelists to found in a file called ``input.nml``. When you
+  built the executable, an example namelist was created ``input.nml.perfect_model_obs_default`` that contains all of the
+  namelist input for the executable. We must now rename and customize the namelist file for ``perfect_model_obs``. Copy
+  ``input.nml.perfect_model_obs_default`` to ``input.nml`` and edit it to look like the following:
 
 .. container:: routineIndent1
 
    &perfect_model_obs_nml
-      async = 0,
-      adv_ens_command = "./advance_ens.csh",
-      obs_seq_in_file_name = "obs_seq.in",
-      obs_seq_out_file_name = "obs_seq.out",
-      start_from_restart = .false.,
-      output_restart = *.true.*,
-      restart_in_file_name = "perfect_ics",
-      restart_out_file_name = "perfect_restart",
-      init_time_days = 0,
-      init_time_seconds = 0,
-      output_interval = 1 /
+   async = 0,
+   adv_ens_command = "./advance_ens.csh",
+   obs_seq_in_file_name = "obs_seq.in",
+   obs_seq_out_file_name = "obs_seq.out",
+   start_from_restart = .false.,
+   output_restart = *.true.*,
+   restart_in_file_name = "perfect_ics",
+   restart_out_file_name = "perfect_restart",
+   init_time_days = 0,
+   init_time_seconds = 0,
+   output_interval = 1 /
    &ensemble_manager_nml
-      in_core = .true.,
-      single_restart_file_in = .true.,
-      single_restart_file_out = .true. /
+   in_core = .true.,
+   single_restart_file_in = .true.,
+   single_restart_file_out = .true. /
    &assim_tools_nml
-      filter_kind = 1,
-      sort_obs_inc = .false.,
-      cov_inflate = -1.0,
-      cov_inflate_sd = 0.05,
-      sd_lower_bound = 0.05,
-      deterministic_cov_inflate = .true.,
-      start_from_assim_restart = .false.,
-      assim_restart_in_file_name = 'assim_tools_ics'
-      assim_restart_out_file_name = 'assim_tools_restart'
-      do_parallel = 0,
-      num_domains = 1,
-      parallel_command = "./assim_filter.csh" /
+   filter_kind = 1,
+   sort_obs_inc = .false.,
+   cov_inflate = -1.0,
+   cov_inflate_sd = 0.05,
+   sd_lower_bound = 0.05,
+   deterministic_cov_inflate = .true.,
+   start_from_assim_restart = .false.,
+   assim_restart_in_file_name = 'assim_tools_ics'
+   assim_restart_out_file_name = 'assim_tools_restart'
+   do_parallel = 0,
+   num_domains = 1,
+   parallel_command = "./assim_filter.csh" /
    &cov_cutoff_nml
-      select_localization = 1 /
+   select_localization = 1 /
    &reg_factor_nml
-      select_regression = 1,
-      input_reg_file = "time_mean_reg" /
+   select_regression = 1,
+   input_reg_file = "time_mean_reg" /
    &obs_sequence_nml
-      read_binary_obs_sequence = .false.,
-      write_binary_obs_sequence = .false. /
+   read_binary_obs_sequence = .false.,
+   write_binary_obs_sequence = .false. /
    &assim_model_nml
-      read_binary_restart_files = .true.,
-      write_binary_restart_files = .true. /
+   read_binary_restart_files = .true.,
+   write_binary_restart_files = .true. /
    &model_nml
-      sigma = 10.0,
-      r = 28.0,
-      b = 2.6666666666667,
-      deltat = 0.01    time_step_days = 0
-      time_step_days = 3600 /
+   sigma = 10.0,
+   r = 28.0,
+   b = 2.6666666666667,
+   deltat = 0.01
+   time_step_days = 0
+   time_step_days = 3600 /
    &utilities_nml
-      TERMLEVEL = 1
-      logfilename = 'dart_log.out' /
+   TERMLEVEL = 1
+   logfilename = 'dart_log.out' /
 
 | 
 
@@ -663,7 +567,7 @@ accompanying the source code for the module. ``perfect_model_obs_nml``:
 ``utilities_nml``:
 
 +-------------------+-------------------------------------------------------------------------------------------------+
-| namelist variable | description                                                                                     |
+| namelist variable | description                                                                                     |
 +===================+=================================================================================================+
 | ``TERMLEVEL``     | When set to '1' the programs terminate when a 'warning' is generated. When set to '2' the       |
 |                   | programs terminate only with 'fatal' errors.                                                    |
@@ -681,25 +585,19 @@ Executing ``perfect_model_obs`` will integrate the model 24,000 steps and output
 
 Five files are created/updated:
 
-``True_State.nc``
-
-Contains the trajectory of the model
-
-``perfect_restart ``
-
-Contains the model state at the end of the integration.
-
-``obs_seq.out``
-
-Contains the 'perfect' observations (since this is a spinup, they are of questionable value, at best).
-
-``go_end_filter``
-
-A 'flag' file that is not used by this model.
-
-``dart_log.out``
-
-**Appends** the run-time diagnostic output to an existing file, or creates a new file with the output.
++---------------------+---+------------------------------------------------------------------------------------------+
+| ``True_State.nc``   |   | Contains the trajectory of the model                                                     |
++---------------------+---+------------------------------------------------------------------------------------------+
+| ``perfect_restart`` |   | Contains the model state at the end of the integration.                                  |
++---------------------+---+------------------------------------------------------------------------------------------+
+| ``obs_seq.out``     |   | Contains the 'perfect' observations (since this is a spinup, they are of questionable    |
+|                     |   | value, at best).                                                                         |
++---------------------+---+------------------------------------------------------------------------------------------+
+| ``go_end_filter``   |   | A 'flag' file that is not used by this model.                                            |
++---------------------+---+------------------------------------------------------------------------------------------+
+| ``dart_log.out``    |   | **Appends** the run-time diagnostic output to an existing file, or creates a new file    |
+|                     |   | with the output.                                                                         |
++---------------------+---+------------------------------------------------------------------------------------------+
 
 2. Generate a set of ensemble initial conditions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -716,44 +614,37 @@ A 'flag' file that is not used by this model.
 .. container:: routineIndent1
 
    &perfect_model_obs_nml
-      async = 0,
-      adv_ens_command = "./advance_ens.csh",
-      obs_seq_in_file_name = "obs_seq.in",
-      obs_seq_out_file_name = "obs_seq.out",
-      start_from_restart = *.true.*,
-      output_restart = .true.,
-      restart_in_file_name = "perfect_ics",
-      restart_out_file_name = "perfect_restart",
-      init_time_days = 0,
-      init_time_seconds = 0,
-      output_interval = 1 /
+   async = 0,
+   adv_ens_command = "./advance_ens.csh",
+   obs_seq_in_file_name = "obs_seq.in",
+   obs_seq_out_file_name = "obs_seq.out",
+   start_from_restart = *.true.*,
+   output_restart = .true.,
+   restart_in_file_name = "perfect_ics",
+   restart_out_file_name = "perfect_restart",
+   init_time_days = 0,
+   init_time_seconds = 0,
+   output_interval = 1 /
 
 .. container:: unix
 
-   cp   perfect_restart   perfect_ics
+   cp perfect_restart perfect_ics
    perfect_model_obs
 
 Five files are created/updated:
 
-``True_State.nc``
-
-Contains the trajectory of the model
-
-``perfect_restart ``
-
-Contains the model state at the end of the integration.
-
-``obs_seq.out``
-
-Contains the 'perfect' observations.
-
-``go_end_filter``
-
-A 'flag' file that is not used by this model.
-
-``dart_log.out``
-
-**Appends** the run-time diagnostic output to an existing file, or creates a new file with the output.
++---------------------+---+------------------------------------------------------------------------------------------+
+| ``True_State.nc``   |   | Contains the trajectory of the model                                                     |
++---------------------+---+------------------------------------------------------------------------------------------+
+| ``perfect_restart`` |   | Contains the model state at the end of the integration.                                  |
++---------------------+---+------------------------------------------------------------------------------------------+
+| ``obs_seq.out``     |   | Contains the 'perfect' observations.                                                     |
++---------------------+---+------------------------------------------------------------------------------------------+
+| ``go_end_filter``   |   | A 'flag' file that is not used by this model.                                            |
++---------------------+---+------------------------------------------------------------------------------------------+
+| ``dart_log.out``    |   | **Appends** the run-time diagnostic output to an existing file, or creates a new file    |
+|                     |   | with the output.                                                                         |
++---------------------+---+------------------------------------------------------------------------------------------+
 
 Generating the ensemble
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -767,79 +658,80 @@ blocks in it by copying the ``perfect_model_obs`` block into the ``input.nml.fil
 .. container:: routineIndent1
 
    &filter_nml
-      async = 0,
-      adv_ens_command = "./advance_ens.csh",
-      ens_size = 20,
-      cutoff = 0.20,
-      cov_inflate = 1.00,
-      start_from_restart = .false.,
-      output_restart = *.true.*,
-      obs_sequence_in_name = "obs_seq.out",
-      obs_sequence_out_name = "obs_seq.out",
-      restart_in_file_name = *"perfect_ics"*,
-      restart_out_file_name = "filter_restart",
-      init_time_days = 0,
-      init_time_seconds = 0,
-      output_state_ens_mean = .true.,
-      output_state_ens_spread = .true.,
-      output_obs_ens_mean = .true.,
-      output_obs_ens_spread = .true.,
-      num_output_state_members = *20*,
-      num_output_obs_members = *20*,
-      output_interval = 1,
-      num_groups = 1,
-      confidence_slope = 0.0,
-      outlier_threshold = -1.0,
-      save_reg_series = .false. /
+   async = 0,
+   adv_ens_command = "./advance_ens.csh",
+   ens_size = 20,
+   cutoff = 0.20,
+   cov_inflate = 1.00,
+   start_from_restart = .false.,
+   output_restart = *.true.*,
+   obs_sequence_in_name = "obs_seq.out",
+   obs_sequence_out_name = "obs_seq.out",
+   restart_in_file_name = *"perfect_ics"*,
+   restart_out_file_name = "filter_restart",
+   init_time_days = 0,
+   init_time_seconds = 0,
+   output_state_ens_mean = .true.,
+   output_state_ens_spread = .true.,
+   output_obs_ens_mean = .true.,
+   output_obs_ens_spread = .true.,
+   num_output_state_members = *20*,
+   num_output_obs_members = *20*,
+   output_interval = 1,
+   num_groups = 1,
+   confidence_slope = 0.0,
+   outlier_threshold = -1.0,
+   save_reg_series = .false. /
    &perfect_model_obs_nml
-      async = 0,
-      adv_ens_command = "./advance_ens.csh",
-      obs_seq_in_file_name = "obs_seq.in",
-      obs_seq_out_file_name = "obs_seq.out",
-      start_from_restart = .true.,
-      output_restart = .true.,
-      restart_in_file_name = "perfect_ics",
-      restart_out_file_name = "perfect_restart",
-      init_time_days = 0,
-      init_time_seconds = 0,
-      output_interval = 1 /
+   async = 0,
+   adv_ens_command = "./advance_ens.csh",
+   obs_seq_in_file_name = "obs_seq.in",
+   obs_seq_out_file_name = "obs_seq.out",
+   start_from_restart = .true.,
+   output_restart = .true.,
+   restart_in_file_name = "perfect_ics",
+   restart_out_file_name = "perfect_restart",
+   init_time_days = 0,
+   init_time_seconds = 0,
+   output_interval = 1 /
    &ensemble_manager_nml
-      in_core = .true.,
-      single_restart_file_in = .true.,
-      single_restart_file_out = .true. /
+   in_core = .true.,
+   single_restart_file_in = .true.,
+   single_restart_file_out = .true. /
    &assim_tools_nml
-      filter_kind = 1,
-      sort_obs_inc = .false.,
-      cov_inflate = -1.0,
-      cov_inflate_sd = 0.05,
-      sd_lower_bound = 0.05,
-      deterministic_cov_inflate = .true.,
-      start_from_assim_restart = .false.,
-      assim_restart_in_file_name = 'assim_tools_ics'
-      assim_restart_out_file_name = 'assim_tools_restart'
-      do_parallel = 0,
-      num_domains = 1,
-      parallel_command = "./assim_filter.csh" /
+   filter_kind = 1,
+   sort_obs_inc = .false.,
+   cov_inflate = -1.0,
+   cov_inflate_sd = 0.05,
+   sd_lower_bound = 0.05,
+   deterministic_cov_inflate = .true.,
+   start_from_assim_restart = .false.,
+   assim_restart_in_file_name = 'assim_tools_ics'
+   assim_restart_out_file_name = 'assim_tools_restart'
+   do_parallel = 0,
+   num_domains = 1,
+   parallel_command = "./assim_filter.csh" /
    &cov_cutoff_nml
-      select_localization = 1 /
+   select_localization = 1 /
    &reg_factor_nml
-      select_regression = 1,
-      input_reg_file = "time_mean_reg" /
+   select_regression = 1,
+   input_reg_file = "time_mean_reg" /
    &obs_sequence_nml
-      read_binary_obs_sequence = .false.,
-      write_binary_obs_sequence = .false. /
+   read_binary_obs_sequence = .false.,
+   write_binary_obs_sequence = .false. /
    &assim_model_nml
-      read_binary_restart_files = .true.,
-      write_binary_restart_files = .true. /
+   read_binary_restart_files = .true.,
+   write_binary_restart_files = .true. /
    &model_nml
-      sigma = 10.0,
-      r = 28.0,
-      b = 2.6666666666667,
-      deltat = 0.01    time_step_days = 0
-      time_step_days = 3600 /
+   sigma = 10.0,
+   r = 28.0,
+   b = 2.6666666666667,
+   deltat = 0.01
+   time_step_days = 0
+   time_step_days = 3600 /
    &utilities_nml
-      TERMLEVEL = 1
-      logfilename = 'dart_log.out' /
+   TERMLEVEL = 1
+   logfilename = 'dart_log.out' /
 
 Only the non-obvious(?) entries for ``filter_nml`` will be discussed.
 
@@ -935,16 +827,16 @@ step 2):
 .. container:: routineIndent1
 
    &perfect_model_obs_nml
-      async = 0,
-      obs_seq_in_file_name = "obs_seq.in",
-      obs_seq_out_file_name = "obs_seq.out",
-      start_from_restart = .true.,
-      output_restart = .true.,
-      restart_in_file_name = "perfect_ics",
-      restart_out_file_name = "perfect_restart",
-      init_time_days = 0,
-      init_time_seconds = 0,
-      output_interval = 1 /
+   async = 0,
+   obs_seq_in_file_name = "obs_seq.in",
+   obs_seq_out_file_name = "obs_seq.out",
+   start_from_restart = .true.,
+   output_restart = .true.,
+   restart_in_file_name = "perfect_ics",
+   restart_out_file_name = "perfect_restart",
+   init_time_days = 0,
+   init_time_seconds = 0,
+   output_interval = 1 /
 
 This integrates the model starting from the state in ``perfect_ics`` for 1000 12-hour intervals outputting synthetic
 observations of the three state variables every 12 hours and producing a netCDF diagnostic file, ``True_State.nc``.
@@ -957,26 +849,26 @@ Finally, ``filter`` can be run with its namelist set to:
 .. container:: routineIndent1
 
    &filter_nml
-      async = 0,
-      ens_size = 20,
-      cutoff = *22222222.0*,
-      cov_inflate = 1.00,
-      start_from_restart = *.true.*,
-      output_restart = .true.,
-      obs_sequence_file_name = "obs_seq.out",
-      restart_in_file_name = "*filter_ics*",
-      restart_out_file_name = "filter_restart",
-      init_time_days = 0,
-      init_time_seconds = 0,
-      output_state_ens_mean = .true.,
-      output_state_ens_spread = .true.,
-      num_output_ens_members = 20,
-      output_interval = 1,
-      num_groups = 1,
-      confidence_slope = 0.0,
-      output_obs_diagnostics = .false.,
-      get_mean_reg = .false.,
-      get_median_reg = .false. /
+   async = 0,
+   ens_size = 20,
+   cutoff = *22222222.0*,
+   cov_inflate = 1.00,
+   start_from_restart = *.true.*,
+   output_restart = .true.,
+   obs_sequence_file_name = "obs_seq.out",
+   restart_in_file_name = "*filter_ics*",
+   restart_out_file_name = "filter_restart",
+   init_time_days = 0,
+   init_time_seconds = 0,
+   output_state_ens_mean = .true.,
+   output_state_ens_spread = .true.,
+   num_output_ens_members = 20,
+   output_interval = 1,
+   num_groups = 1,
+   confidence_slope = 0.0,
+   output_obs_diagnostics = .false.,
+   get_mean_reg = .false.,
+   get_median_reg = .false. /
 
 The large value for the cutoff allows each observation to impact all other state variables (see Appendix V for
 localization). ``filter`` produces two output diagnostic files, ``Prior_Diag.nc`` which contains values of the ensemble
@@ -985,10 +877,6 @@ members, ensemble mean and ensemble spread for 12- hour lead forecasts before as
 analysis values).
 
 Now try applying all of the matlab diagnostic functions described in the Matlab Diagnostics section.
-
---------------
-
-.. _matlab_diagnostics:
 
 Matlab diagnostics
 ------------------
@@ -1086,11 +974,7 @@ high-level routines.
 |                               | another variable at all times in an ensemble time sequence.                         |
 +-------------------------------+-------------------------------------------------------------------------------------+
 
---------------
-
-.. _bias,_filter_divergence_and_covariance_inflation_(with_the_l63_model):
-
-Bias, filter divergence and covariance inflation (with the L63 model)
+Bias, filter divergence and covariance inflation (with the l63 model)
 ---------------------------------------------------------------------
 
 One of the common problems with ensemble filters is filter divergence, which can also be an issue with a variety of
@@ -1118,10 +1002,6 @@ discretion) and run the filter as above. In each case, use the diagnostic matlab
 to the error, the ensemble spread (via rank histogram bins, too), etc. What kind of relation between spread and error is
 seen in this model?
 
---------------
-
-.. _synthetic_observations:
-
 Synthetic observations
 ----------------------
 
@@ -1135,5 +1015,3 @@ unknown observational error characteristics. In other words, for the real-world 
 (often substantial) differences from what happens in the real system and the observational error distribution may be
 very complicated and is certainly not well known. Be careful to keep these issues in mind while exploring the
 capabilities of the ensemble filters with synthetic observations.
-
---------------

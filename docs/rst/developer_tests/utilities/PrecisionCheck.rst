@@ -1,12 +1,6 @@
 PROGRAM ``PrecisionCheck``
 ==========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Examples <#examples>`__
-
 Overview
 --------
 
@@ -18,8 +12,6 @@ Overview
 | All that is required is to compile the single file and run the resulting executable. There are no required libraries -
   any F90 compiler should have no trouble with this program. There is no input of any kind.
 | You are encouraged to view the source code. It's pretty obvious what is being tested.
-
---------------
 
 Examples
 --------
@@ -202,5 +194,3 @@ PowerPC chipset : Absoft Pro Fortran 9.0 : "-n113"
        HUGE      =   1.797693134862315E+308
        KIND      =   8
        PRECISION =   15
-
---------------

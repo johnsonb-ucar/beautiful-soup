@@ -1,17 +1,6 @@
 MODULE ``obs_def_1d_state_mod``
 ===============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -34,9 +23,9 @@ supports can be changed at any time by adding or removing items from the preproc
 | RAW_STATE_VAR_POWER is convenient for studying non-gaussian, non-linear assimilation problems. RAW_STATE_VAR_POWER can
   be used to do idealized studies related to remote sensing observations that are best thought of as weighted integrals
   of some quantity over a finite volume.
-| The RAW_STATE_1D_INTEGRAL has an associated half_width and localization type (see the `cov_cutoff
-  module </assimilation_code/modules/assimilation/cov_cutoff_mod.html>`__ documentation) and a number of points at which
-  to compute the associated integral by quadrature. The location of the observation defines the center of mass of the
+| The RAW_STATE_1D_INTEGRAL has an associated half_width and localization type (see the
+  :doc:`../../assimilation_code/modules/assimilation/cov_cutoff_mod` documentation) and a number of points at which to
+  compute the associated integral by quadrature. The location of the observation defines the center of mass of the
   integral. The integral is centered around the location and extends outward on each side to 2*half_width. The weight
   associated with the integral is defined by the weight of the localization function (for instance Gaspari Cohn) using
   the same localization options as defined by the cov_cutoff module. The number of points are used to equally divide the
@@ -48,13 +37,13 @@ supports can be changed at any time by adding or removing items from the preproc
 | The seven sections and their specific instances for the 1d_raw_state_mod are:
 
 #. A list of all observation types defined by this module and their associated generic quantities (see
-   `preprocess </assimilation_code/programs/preprocess/preprocess.html>`__ for details on quantity files). The header
-   line is followed by lines that have the observation type name (an all caps Fortran 90 identifier) and their
-   associated generic quantity identifier. If there is no special processing needed for an observation type, and no
-   additional data needed beyond the standard contents of an observation then a third word on the line, ``COMMON_CODE``,
-   will instruct the preprocess program to automatically generate all stubs and code needed for this type. For
-   observation types needing special code or additional data, this word should not be specified and the user must supply
-   the code manually.
+   :doc:`../../assimilation_code/programs/preprocess/preprocess` for details on quantity files). The header line is
+   followed by lines that have the observation type name (an all caps Fortran 90 identifier) and their associated
+   generic quantity identifier. If there is no special processing needed for an observation type, and no additional data
+   needed beyond the standard contents of an observation then a third word on the line, ``COMMON_CODE``, will instruct
+   the preprocess program to automatically generate all stubs and code needed for this type. For observation types
+   needing special code or additional data, this word should not be specified and the user must supply the code
+   manually.
 
    ::
 
@@ -150,10 +139,6 @@ supports can be changed at any time by adding or removing items from the preproc
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -166,24 +151,20 @@ Other modules used
    assim_model_mod
    cov_cutoff_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ========================= ========================
 *use obs_def_mod, only :* write_1d_integral
-                          read_1d_integral
-                          interactive_1d_integral
-                          get_expected_1d_integral
-                          set_1d_integral
-                          write_power
-                          read_power
-                          interactive_power
-                          get_expected_power
-                          set_power
+\                         read_1d_integral
+\                         interactive_1d_integral
+\                         get_expected_1d_integral
+\                         set_1d_integral
+\                         write_power
+\                         read_power
+\                         interactive_power
+\                         get_expected_power
+\                         set_power
 ========================= ========================
 
 | 
@@ -202,16 +183,16 @@ Public interfaces
    Writes out the extra information for observation with unique identifier key for a 1d_integral observation type. This
    includes the half-width, localization type and number of quadrature points for this observation.
 
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``igrkey  `` | Unique integer key associated with the 1d integral observation being processed. This is not the same |
-   |              | as the key that all types of observations have and uniquely distinguishes all observations from each |
-   |              | other; this is a key that is only set and retrieved by this code for 1d integral observations. It is |
-   |              | stored in the obs_def derived type, not in the main obs_type definition.                             |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``ifile  ``  | Unit number on which observation sequence file is open                                               |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``fform  ``  | String noting whether file is opened for 'formatted' or 'unformatted' IO.                            |
-   +--------------+------------------------------------------------------------------------------------------------------+
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``igrkey`` | Unique integer key associated with the 1d integral observation being processed. This is not the same   |
+   |            | as the key that all types of observations have and uniquely distinguishes all observations from each   |
+   |            | other; this is a key that is only set and retrieved by this code for 1d integral observations. It is   |
+   |            | stored in the obs_def derived type, not in the main obs_type definition.                               |
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``ifile``  | Unit number on which observation sequence file is open                                                 |
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``fform``  | String noting whether file is opened for 'formatted' or 'unformatted' IO.                              |
+   +------------+--------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -231,11 +212,11 @@ Public interfaces
    that is returned is uniquely associated with the definition that has been created and is used by this module to keep
    track of the associated parameters for this observation.
 
-   ============ =========================================================================
-   ``igrkey  `` Unique integer key associated with the observation being processed.
-   ``ifile  ``  Unit number on which observation sequence file is open
-   ``fform  ``  String noting whether file is opened for 'formatted' or 'unformatted' IO.
-   ============ =========================================================================
+   ========== =========================================================================
+   ``igrkey`` Unique integer key associated with the observation being processed.
+   ``ifile``  Unit number on which observation sequence file is open
+   ``fform``  String noting whether file is opened for 'formatted' or 'unformatted' IO.
+   ========== =========================================================================
 
 | 
 
@@ -252,9 +233,9 @@ Public interfaces
    uniquely associated with the definition that has been created and can be used by this module to keep track of the
    associated parameters (half_width, localization option, number of quadrature points) for this key.
 
-   ============ =========================================================================================
-   ``igrkey  `` Unique identifier associated with the created observation definition in the obs sequence.
-   ============ =========================================================================================
+   ========== =========================================================================================
+   ``igrkey`` Unique identifier associated with the created observation definition in the obs sequence.
+   ========== =========================================================================================
 
 | 
 
@@ -274,18 +255,18 @@ Public interfaces
    Computes the forward observation operator for a 1d integral observation. Calls the ``interpolate()`` routine multiple
    times to invoke the forward operator code in whatever model this has been compiled with.
 
-   +----------------+----------------------------------------------------------------------------------------------------+
-   | ``state  ``    | Model state vector (or extended state vector).                                                     |
-   +----------------+----------------------------------------------------------------------------------------------------+
-   | ``location  `` | Location of this observation.                                                                      |
-   +----------------+----------------------------------------------------------------------------------------------------+
-   | ``igrkey  ``   | Unique integer key associated with this observation.                                               |
-   +----------------+----------------------------------------------------------------------------------------------------+
-   | ``val  ``      | Returned value of forward observation operator.                                                    |
-   +----------------+----------------------------------------------------------------------------------------------------+
-   | ``istatus  ``  | Returns 0 if forward operator was successfully computed, else returns a positive value. (Negative  |
-   |                | values are reserved for system use.)                                                               |
-   +----------------+----------------------------------------------------------------------------------------------------+
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``state``    | Model state vector (or extended state vector).                                                       |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``location`` | Location of this observation.                                                                        |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``igrkey``   | Unique integer key associated with this observation.                                                 |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``val``      | Returned value of forward observation operator.                                                      |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``istatus``  | Returns 0 if forward operator was successfully computed, else returns a positive value. (Negative    |
+   |              | values are reserved for system use.)                                                                 |
+   +--------------+------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -309,13 +290,13 @@ Public interfaces
    which all observation types have. This key is unique to this observation type and is used when reading in the
    observation sequence to match the corresponding metadata with each observation of this type.
 
-   ========================= ====================================================================
-   ``integral_half_width  `` Real value setting the half-width of the integral.
-   ``num_eval_pts  ``        Integer, number of evaluation points. 5-20 recommended.
-   ``localize_type  ``       Integer localization type: 1=Gaspari-Cohn; 2=Boxcar; 3=Ramped Boxcar
-   ``igrkey  ``              Unique integer key associated with the observation being processed.
-   ``istatus  ``             Return code. 0 means success, any other value is an error
-   ========================= ====================================================================
+   ======================= ====================================================================
+   ``integral_half_width`` Real value setting the half-width of the integral.
+   ``num_eval_pts``        Integer, number of evaluation points. 5-20 recommended.
+   ``localize_type``       Integer localization type: 1=Gaspari-Cohn; 2=Boxcar; 3=Ramped Boxcar
+   ``igrkey``              Unique integer key associated with the observation being processed.
+   ``istatus``             Return code. 0 means success, any other value is an error
+   ======================= ====================================================================
 
 | 
 
@@ -332,16 +313,16 @@ Public interfaces
 
    Writes out the extra information, the power, for observation with unique identifier key for a power observation type.
 
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``powkey  `` | Unique integer key associated with the power observation being processed. This is not the same as    |
-   |              | the key that all types of observations have and uniquely distinguishes all observations from each    |
-   |              | other; this is a key that is only set and retrieved by this code for power observations. It is       |
-   |              | stored in the obs_def derived type, not in the main obs_type definition.                             |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``ifile  ``  | Unit number on which observation sequence file is open                                               |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``fform  ``  | String noting whether file is opened for 'formatted' or 'unformatted' IO.                            |
-   +--------------+------------------------------------------------------------------------------------------------------+
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``powkey`` | Unique integer key associated with the power observation being processed. This is not the same as the  |
+   |            | key that all types of observations have and uniquely distinguishes all observations from each other;   |
+   |            | this is a key that is only set and retrieved by this code for power observations. It is stored in the  |
+   |            | obs_def derived type, not in the main obs_type definition.                                             |
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``ifile``  | Unit number on which observation sequence file is open                                                 |
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``fform``  | String noting whether file is opened for 'formatted' or 'unformatted' IO.                              |
+   +------------+--------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -360,11 +341,11 @@ Public interfaces
    key that is returned is uniquely associated with the definition that has been created and is used by this module to
    keep track of the associated parameters for this observation.
 
-   ============ =========================================================================
-   ``powkey  `` Unique integer key associated with the observation being processed.
-   ``ifile  ``  Unit number on which observation sequence file is open
-   ``fform  ``  String noting whether file is opened for 'formatted' or 'unformatted' IO.
-   ============ =========================================================================
+   ========== =========================================================================
+   ``powkey`` Unique integer key associated with the observation being processed.
+   ``ifile``  Unit number on which observation sequence file is open
+   ``fform``  String noting whether file is opened for 'formatted' or 'unformatted' IO.
+   ========== =========================================================================
 
 | 
 
@@ -381,9 +362,9 @@ Public interfaces
    uniquely associated with the definition that has been created and can be used by this module to keep track of the
    associated parameter, the power, for this key.
 
-   ============ =========================================================================================
-   ``powkey  `` Unique identifier associated with the created observation definition in the obs sequence.
-   ============ =========================================================================================
+   ========== =========================================================================================
+   ``powkey`` Unique identifier associated with the created observation definition in the obs sequence.
+   ========== =========================================================================================
 
 | 
 
@@ -404,18 +385,18 @@ Public interfaces
    forward operator code in whatever model this has been compiled with, then raises the result to the specified power
    associated with this powkey.
 
-   +----------------+----------------------------------------------------------------------------------------------------+
-   | ``state  ``    | Model state vector (or extended state vector).                                                     |
-   +----------------+----------------------------------------------------------------------------------------------------+
-   | ``location  `` | Location of this observation.                                                                      |
-   +----------------+----------------------------------------------------------------------------------------------------+
-   | ``powkey  ``   | Unique integer key associated with this observation.                                               |
-   +----------------+----------------------------------------------------------------------------------------------------+
-   | ``val  ``      | Returned value of forward observation operator.                                                    |
-   +----------------+----------------------------------------------------------------------------------------------------+
-   | ``istatus  ``  | Returns 0 if forward operator was successfully computed, else returns a positive value. (Negative  |
-   |                | values are reserved for system use.)                                                               |
-   +----------------+----------------------------------------------------------------------------------------------------+
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``state``    | Model state vector (or extended state vector).                                                       |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``location`` | Location of this observation.                                                                        |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``powkey``   | Unique integer key associated with this observation.                                                 |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``val``      | Returned value of forward observation operator.                                                      |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``istatus``  | Returns 0 if forward operator was successfully computed, else returns a positive value. (Negative    |
+   |              | values are reserved for system use.)                                                                 |
+   +--------------+------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -437,49 +418,25 @@ Public interfaces
    is unique to this observation type and is used when reading in the observation sequence to match the corresponding
    metadata with each observation of this type.
 
-   ============== ===================================================================
-   ``power_in  `` Real value setting the power.
-   ``powkey  ``   Unique integer key associated with the observation being processed.
-   ``istatus  ``  Return code. 0 means success, any other value is an error
-   ============== ===================================================================
+   ============ ===================================================================
+   ``power_in`` Real value setting the power.
+   ``powkey``   Unique integer key associated with the observation being processed.
+   ``istatus``  Return code. 0 means success, any other value is an error
+   ============ ===================================================================
 
 | 
-
---------------
 
 Namelist
 --------
 
 This module has no namelist.
 
---------------
-
 Files
 -----
 
 -  NONE
 
---------------
-
 References
 ----------
 
 #. none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +-------------------------+--------------------------------------------+--------------------------------------------+
-   | Routine                 | Message                                    | Comment                                    |
-   +=========================+============================================+============================================+
-   | interactive_1d_integral | Out of space, max_1d_integral_obs limit    | There is only room for a fixed number of   |
-   |                         | NNNN (currently 1000).                     | 1d integral observations. The max number   |
-   |                         |                                            | is defined by max_1d_integral_obs. Set     |
-   |                         |                                            | this to a larger value if more are needed. |
-   +-------------------------+--------------------------------------------+--------------------------------------------+

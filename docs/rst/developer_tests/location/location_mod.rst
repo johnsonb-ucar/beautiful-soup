@@ -1,17 +1,6 @@
 MODULE location_mod
 ===================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Introduction <#introduction>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -29,62 +18,42 @@ specific coordinate information. It also contains distance routines needed by th
 Each of the different location_mod.f90 files provides the same set of interfaces and defines a 'module location_mod', so
 by selecting the proper version in your path_names_xxx file you can compile your model code with the main DART routines.
 
--  `threed_sphere </assimilation_code/location/threed_sphere/location_mod.html>`__:
+-  :doc:`../../assimilation_code/location/threed_sphere/location_mod`:
    The most frequently used version for real-world 3d models. It uses latitude and longitude for horizontal coordinates,
    plus a vertical coordinate which can be meters, pressure, model level, surface, or no specific vertical location.
--  `oned </assimilation_code/location/oned/location_mod.html>`__:
+-  :doc:`../../assimilation_code/location/oned/location_mod`:
    The most frequently used for small models (e.g. the Lorenz family). It has a cyclic domain from 0 to 1.
 -  others:
 
-   -  `threed_cartesian </assimilation_code/location/threed_cartesian/location_mod.html>`__: A full 3D X,Y,Z coordinate
-      system.
+   -  :doc:`../../assimilation_code/location/threed_cartesian/location_mod`: A full 3D X,Y,Z coordinate system.
    -  column: no x,y but 1d height, pressure, or model level for vertical.
    -  annulus: a hollow 3d cylinder with azimuth, radius, and depth.
    -  twod: a periodic 2d domain with x,y coordinates between 0 and 1.
    -  twod_sphere: a 2d shell with latitude, longitude pairs.
    -  threed: a periodic 3d domain with x,y,z coordinates between 0 and 1.
-   -  `channel </assimilation_code/location/channel/location_mod.html>`__: a 3d domain periodic in x, limited in y, and
+   -  :doc:`../../assimilation_code/location/channel/location_mod`: a 3d domain periodic in x, limited in y, and
       unlimited z.
 
 Other schemes can be added, as needed by the models. Possible ideas are a non-periodic version of the 1d, 2d cartesian
 versions. Email `dart at ucar.edu <mailto:dart@ucar.edu>`__ if you have a different coordinate scheme which we might
 want to support.
 
---------------
-
 Namelist
 --------
 
 Each location module option has a different namelist. See the specific documentation for the location option of choice.
-
---------------
 
 Files
 -----
 
 -  none
 
---------------
-
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-See specific location documentation.
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

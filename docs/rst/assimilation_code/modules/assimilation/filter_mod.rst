@@ -1,21 +1,12 @@
 MODULE filter_mod
 =================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
 Main module for driving ensemble filter assimilations. Used by filter.f90, perfect_model_obs.f90, model_mod_check.f90,
-and a variety of test programs. See the `filter description </assimilation_code/programs/filter/filter.html>`__ for a
-general description of filter capabilities and controls.
+and a variety of test programs. See the :doc:`../../programs/filter/filter` for a general description of filter
+capabilities and controls.
 
 ``filter_mod`` is a Fortran 90 module, and provides a large number of options for controlling execution behavior and
 parameter configuration that are driven from its namelist. See the namelist section below for more details. The number
@@ -24,8 +15,6 @@ of the model being used in the assimilation.
 
 See the `DART web site <http://www.image.ucar.edu/DAReS/DART>`__ for more documentation, including a discussion of the
 capabilities of the assimilation system, a diagram of the entire execution cycle, the options and features.
-
---------------
 
 Namelist
 --------
@@ -160,7 +149,7 @@ perturbation_amplitude
 real(r8)
 
 | Standard deviation for the gaussian noise added when generating perturbed ensemble members. Ignored if
-  ``perturb_from_single_instance = .false.`` or the perturbed ensemble is created in model_mod.
+  ``perturb_from_single_instance = .false.`` or the perturbed ensemble is created in model_mod.
 | Random noise values drawn from a gaussian distribution with this standard deviation will be added to the data in a
   single initial ensemble member to generate the rest of the members.
 | This option is more frequently used in the low order models and less frequently used in large models. This is in part
@@ -344,10 +333,9 @@ integer
 
 Assimilation window seconds; defaults to model timestep size.
 
-| All variables named inf_\* are arrays of length 2.
+| All variables named ``inf_*`` are arrays of length 2.
 | The first element controls the prior inflation, the second element controls the posterior inflation. See
-  `filter.html </assimilation_code/programs/filter/filter.html#Inflation>`__ for a discussion of inflation and effective
-  strategies.
+  `filter.html <../../programs/filter/filter.html#Inflation>`__ for a discussion of inflation and effective strategies.
 
 inf_flavor
 
@@ -432,8 +420,8 @@ For inflation type 5 (enhanced inflation), controls the maximum change of the in
 for the next assimilation cycle. The value should be between 1.0 and 2.0. 1.0 prevents any changes, while 2.0 allows
 100% change. For the enhanced inflation option, if the standard deviation initial value is equal to the standard
 deviation lower bound the standard deviation will not adapt in time. See `this
-section </assimilation_code/programs/filter/filter.html#Inflation>`__ for a discussion of how the standard deviation
-adapts based on different types of inflation.
+section <../../programs/filter/filter.html#Inflation>`__ for a discussion of how the standard deviation adapts based on
+different types of inflation.
 
 trace_execution
 
@@ -481,10 +469,6 @@ order models if the execution time becomes dominated by the volume of output.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -509,46 +493,7 @@ Modules used
    forward_operator_mod
    quality_control_mod
 
---------------
-
 Files
 -----
 
-See the `filter overview </assimilation_code/programs/filter/filter.html#FilesUsed>`__ for the list of files.
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | Routine                        | Message                                 | Comment                                 |
-   +================================+=========================================+=========================================+
-   | filter_main                    | ens_size in namelist is ###: Must be >  | Ensemble size must be at least 2.       |
-   |                                | 1                                       |                                         |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_main                    | inf_flavor= ### Must be 0, 2, 3.        | Observation Inflation is no longer      |
-   |                                |                                         | supported (i.e flavor 1).               |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_main                    | Posterior observation space inflation   | Posterior observation space inflation   |
-   |                                | (type 1) not supported.                 | doesn't work.                           |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_main                    | Number of processes > model size.       | Number of processes can't exceed model  |
-   |                                |                                         | size for now.                           |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_generate_copy_meta_data | output metadata in filter needs state   | Only up to 10000 ensemble members with  |
-   |                                | ensemble size < 10000, not ###.         | state output for now.                   |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_generate_copy_meta_data | output metadata in filter needs obs     | Only up to 10000 ensemble members with  |
-   |                                | ensemble size < 10000, not ###.         | obs space output for now.               |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_setup_obs_sequence      | input obs_seq file has ### qc fields;   | Only 0 or 1 qc fields in input obs      |
-   |                                | must be < 2.                            | sequence for now.                       |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | get_obs_copy_index             | Did not find observation copy with      | Only 0 or 1 qc fields in input obs      |
-   |                                | metadata observation.                   | sequence for now.                       |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
+See the `filter overview <../../programs/filter/filter.html#FilesUsed>`__ for the list of files.

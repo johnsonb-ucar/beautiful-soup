@@ -1,11 +1,6 @@
 MODULE DEFAULT_obs_kind_mod
 ===========================
 
-Contents
---------
-
--  `Overview <#overview>`__
-
 Overview
 --------
 
@@ -16,7 +11,7 @@ Overview
   obs_def directory) are incorporated into the template provided by DEFAULT_obs_def_kind. If no special obs_def files
   are included in the preprocessor namelist, a minimal ``obs_kind_mod.f90`` is created which can only support identity
   forward observation operators.
-| To add a new specific observation type, see the `obs_def_mod </observations/forward_operators/obs_def_mod.html>`__
+| To add a new specific observation type, see the :doc:`../../../observations/forward_operators/obs_def_mod`
   documentation. If adding this type includes defining a new generic observation quantity, then the quantity must be
   added to the table in this file, with a unique integer value defined for it. The new value(s) must also be added to
   the string-to-number section in the ``initialize_module()`` routine below. In a planned future update to the
@@ -69,5 +64,3 @@ Overview
    #. A logical variable indicating whether observations of this type should use precomputed forward operator values in
       the observation sequence file. The default value here is false when the obs_def_mod is created by the preprocess
       program.
-
---------------

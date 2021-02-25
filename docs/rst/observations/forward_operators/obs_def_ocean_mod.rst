@@ -1,18 +1,6 @@
 MODULE obs_def_ocean_mod
 ========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Public components <#public_components>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -74,65 +62,36 @@ Ocean variable types and their corresponding quantities
 
 New observation types may be added to this list with no loss of generality. Supporting the observations and actually
 **assimilating** them are somewhat different and is controlled by the ``input.nml``\ ``&obs_kind_nml``
-`assimilate_these_obs_types </assimilation_code/modules/observations/obs_kind_mod.html#Namelist>`__ variable. This
+`assimilate_these_obs_types <../../assimilation_code/modules/observations/obs_kind_mod.html#Namelist>`__ variable. This
 provides the flexibility to have an observation sequence file containing many different observation types and being able
 to selectively choose what types will be assimilated.
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
 
 none
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 none
-
---------------
-
-.. _public_components:
 
 Public components
 -----------------
 
 none
 
---------------
-
 Files
 -----
 
 none
-
---------------
 
 References
 ----------
 
 none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-none
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

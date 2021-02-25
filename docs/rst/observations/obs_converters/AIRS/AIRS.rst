@@ -1,14 +1,6 @@
 AIRS Observations
 =================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Namelist <#namelist>`__
-
 Overview
 --------
 
@@ -18,10 +10,6 @@ Overview
   distribution files and put them into DART observation sequence (obs_seq) file format.
 | AIRS data includes atmospheric temperature in the troposphere, derived moisture profiles, land and ocean surface
   temperatures, surface emmissivity, cloud fraction, cloud top height, and ozone burden in the atmosphere.
-
---------------
-
-.. _data_sources:
 
 Data sources
 ------------
@@ -102,8 +90,6 @@ created by the web page after adding the selected files to a 'cart' and 'checkin
 ``wget`` commands which downloads each file, one at a time, which is run on the machine where you want the data to end
 up.
 
---------------
-
 Programs
 --------
 
@@ -115,7 +101,7 @@ the space between the levels; in their terminology the fixed heights are 'levels
 The hdf files need to be downloaded from the data server, in any manner you choose. The converter program reads each hdf
 granule and outputs a DART obs_seq file containing up to 56700 observations. Only those with a quality control of 0
 (Best) are kept. The resulting obs_seq files can be merged with the
-`obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__ into larger time periods.
+:doc:`../../../assimilation_code/programs/obs_sequence_tool/obs_sequence_tool` into larger time periods.
 
 It is possible to restrict the output observation sequence to contain data from a region of interest throught the use of
 the namelist parameters. If you need a region that spans the Prime Meridian lon1 can be a larger number than lon2, for
@@ -229,8 +215,6 @@ instructions, use those. But in the absence of anything else, here's a place to 
 
       exit 0
 
---------------
-
 Namelist
 --------
 
@@ -300,9 +284,5 @@ enclosed in quotes to prevent them from prematurely terminating the namelist.
    | along_track_thin  | integer                | provides ability to thin the data by keeping only every    |         |
    |                   |                        | Nth row. e.g. 4 == keep only every 4th row.                |         |
    +-------------------+------------------------+------------------------------------------------------------+---------+
-
-| 
-
---------------
 
 | 

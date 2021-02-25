@@ -1,18 +1,11 @@
 PROGRAM ``text_to_obs``
 =======================
 
-Contents
---------
-
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Decisions you might need to make <#decisions_you_might_need_to_make>`__
+Text file to DART converter
+---------------------------
 
 Overview
-========
-
-Text file to DART converter
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~
 
 If you have observations in spreadsheet or column format, in text, with a single line per observation, then the files
 this directory are a template for how to convert these observations into a format suitable for DART use.
@@ -33,18 +26,12 @@ the library routines will continue to be supported even if the physical format c
 If your input data is in some kind of format like netCDF or HDF, then one of the other converters (e.g. the MADIS ones
 for netCDF) might be a better starting place for adapting code.
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
 This part is up to you. For each observation you will need a location, a data value, a type, a time, and some kind of
 error estimate. The error estimate can be hardcoded in the converter if they are not available in the input data. See
 below for more details on selecting an appropriate error value.
-
---------------
 
 Programs
 --------
@@ -68,15 +55,9 @@ the ``data`` directory. These are *NOT* intended to be turnkey scripts; they wil
 your use. There are comments at the top of the script saying what options they include, and should be commented enough
 to indicate where changes will be likely to need to be made.
 
---------------
-
-.. _decisions_you_might_need_to_make:
-
 Decisions you might need to make
 --------------------------------
 
-See the discussion in the `obs_converters/README.md </observations/obs_converters/README.md#Decisions>`__ page about
-what options are available for the things you need to specify. These include setting a time, specifying an expected
-error, setting a location, and an observation type.
-
---------------
+See the discussion in the `obs_converters/README.md <../README.md#Decisions>`__ page about what options are available
+for the things you need to specify. These include setting a time, specifying an expected error, setting a location, and
+an observation type.

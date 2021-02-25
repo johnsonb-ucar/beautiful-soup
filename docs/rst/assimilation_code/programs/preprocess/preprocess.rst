@@ -1,16 +1,6 @@
 PROGRAM preprocess
 ==================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -36,21 +26,20 @@ lines. These comment lines are used as markers to insert observation specific in
 comment lines being used *verbatim*.
 
 There is no need to to alter ``DEFAULT_obs_def_mod.F90`` or ``DEFAULT_obs_kind_mod.F90``. Detailed instructions for
-adding new observation types can be found in `obs_def_mod.html <obs_def_mod.html>`__. New quantities should be added to
-a quantity file, for example a new atmosphere quantity should be added to ``atmosphere_quantities_mod.f90``.
+adding new observation types can be found in :doc:`../../../observations/forward_operators/obs_def_mod`. New quantities
+should be added to a quantity file, for example a new atmosphere quantity should be added to
+``atmosphere_quantities_mod.f90``.
 
 Every line in a quantity file between the start and end markers must be a comment or a quantity definition (QTY_string).
 Multiple name-value pairs can be specified for a quantity but are not required. For example, temperature may be defined:
 ``! QTY_TEMPERATURE units="K" minval=0.0``. Comments are allowed between quantity definitions or on the same line as the
 definition. The code snippet below shows acceptable formats for quantity definitions
 
-``! BEGIN DART PREPROCESS QUANTITY DEFINITIONS  !  ! Formats accepted: ! ! QTY_string ! QTY_string name=value ! QTY_string name=value name2=value2 ! ! QTY_string ! comments ! ! ! comment ! ! END DART PREPROCESS QUANTITY DEFINITIONS``
+``! BEGIN DART PREPROCESS QUANTITY DEFINITIONS ! ! Formats accepted: ! ! QTY_string ! QTY_string name=value ! QTY_string name=value name2=value2 ! ! QTY_string ! comments ! ! ! comment ! ! END DART PREPROCESS QUANTITY DEFINITIONS``
 
 | The output files produced by preprocess are named ``assimilation_code/modules/observations/obs_kind_mod.f90`` and
   ``observations/forward_operators/obs_def_mod.f90``, but can be renamed by namelist control if needed. Be aware that if
   you change the name of these output files, you will need to change the path_names files for DART executables.
-
---------------
 
 Namelist
 --------
@@ -78,62 +67,61 @@ enclosed in quotes to prevent them from prematurely terminating the namelist.
 
 .. container::
 
-   Item
-
-Type
-
-Description
-
-input_obs_def_mod_file
-
-| character(len=256)
-
-Path name of the template obs def module to be preprocessed. The default is
-``../../../observations/forward_operators/DEFAULT_obs_def_mod.F90``. This file must have the appropriate commented lines
-indicating where the different parts of the input special obs definition modules are to be inserted.
-
-output_obs_def_mod_file
-
-| character(len=256)
-
-Path name of output obs def module to be created by preprocess. The default is
-``../../../observations/forward_operators/obs_def_mod.f90``.
-
-input_obs_qty_mod_file
-
-| character(len=256)
-
-Path name of input obs quantity file to be preprocessed. The default path name is
-``../../../assimilation_code/modules/observations/DEFAULT_obs_kind_mod.F90``. This file must have the appropriate
-commented lines indicating where the different quantity modules are to be inserted.
-
-output_obs_qty_mod_file
-
-| character(len=256)
-
-Path name of output obs quantity module to be created by preprocess. The default is
-``../../../assimilation_code/modules/observations/obs_kind_mod.f90``.
-
-obs_type_files
-
-| character(len=256)(:)
-
-A list of files containing observation definitions for the type of observations you want to use with DART. The maximum
-number of files is limited to MAX_OBS_TYPE_FILES = 1000. The DART obs_def files are in
-``observations/forward_operators/obs_def_*.mod.f90``.
-
-overwrite_output
-
-| logical
-
-By defualt, preprocess will overwrite the existing obs_kind_mod.f90 and obs_def_mod.f90 files. Set overwrite_output =
-.false. if you want to preprocess to not overwrite existing files.
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | Item                                  | Type                                  | Description                           |
+   +=======================================+=======================================+=======================================+
+   | input_obs_def_mod_file                | character(len=256)                    | Path name of the template obs def     |
+   |                                       |                                       | module to be preprocessed. The        |
+   |                                       |                                       | default is                            |
+   |                                       |                                       | ``../../../observations/forward       |
+   |                                       |                                       | _operators/DEFAULT_obs_def_mod.F90``. |
+   |                                       |                                       | This file must have the appropriate   |
+   |                                       |                                       | commented lines indicating where the  |
+   |                                       |                                       | different parts of the input special  |
+   |                                       |                                       | obs definition modules are to be      |
+   |                                       |                                       | inserted.                             |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | output_obs_def_mod_file               | character(len=256)                    | Path name of output obs def module to |
+   |                                       |                                       | be created by preprocess. The default |
+   |                                       |                                       | is                                    |
+   |                                       |                                       | ``../../../observations               |
+   |                                       |                                       | /forward_operators/obs_def_mod.f90``. |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | input_obs_qty_mod_file                | character(len=256)                    | Path name of input obs quantity file  |
+   |                                       |                                       | to be preprocessed. The default path  |
+   |                                       |                                       | name is                               |
+   |                                       |                                       | ``.                                   |
+   |                                       |                                       | ./../../assimilation_code/modules/obs |
+   |                                       |                                       | ervations/DEFAULT_obs_kind_mod.F90``. |
+   |                                       |                                       | This file must have the appropriate   |
+   |                                       |                                       | commented lines indicating where the  |
+   |                                       |                                       | different quantity modules are to be  |
+   |                                       |                                       | inserted.                             |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | output_obs_qty_mod_file               | character(len=256)                    | Path name of output obs quantity      |
+   |                                       |                                       | module to be created by preprocess.   |
+   |                                       |                                       | The default is                        |
+   |                                       |                                       | ``../../../assimilation_code/mod      |
+   |                                       |                                       | ules/observations/obs_kind_mod.f90``. |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | obs_type_files                        | character(len=256)(:)                 | A list of files containing            |
+   |                                       |                                       | observation definitions for the type  |
+   |                                       |                                       | of observations you want to use with  |
+   |                                       |                                       | DART. The maximum number of files is  |
+   |                                       |                                       | limited to MAX_OBS_TYPE_FILES = 1000. |
+   |                                       |                                       | The DART obs_def files are in         |
+   |                                       |                                       | ``observations/f                      |
+   |                                       |                                       | orward_operators/obs_def_*.mod.f90``. |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | overwrite_output                      | logical                               | By defualt, preprocess will overwrite |
+   |                                       |                                       | the existing obs_kind_mod.f90 and     |
+   |                                       |                                       | obs_def_mod.f90 files. Set            |
+   |                                       |                                       | overwrite_output = .false. if you     |
+   |                                       |                                       | want to preprocess to not overwrite   |
+   |                                       |                                       | existing files.                       |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
 
 | 
-
---------------
-
-.. _modules_used:
 
 Modules used
 ------------
@@ -146,8 +134,6 @@ Modules used
 
 Namelist interface ``&preprocess_nml`` must be read from file ``input.nml``.
 
---------------
-
 Files
 -----
 
@@ -159,48 +145,7 @@ Files
 -  quantity_files, specified by namelist; usually files like ``atmosphere_quantities_mod.f90``.
 -  namelistfile
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +------------+---------------------------------------------------+---------------------------------------------------+
-   | Routine    | Message                                           | Comment                                           |
-   +============+===================================================+===================================================+
-   | preprocess | file \___\_ does not exist (and must)             | The input obs_type_files and qty_files must       |
-   |            |                                                   | exist.                                            |
-   +------------+---------------------------------------------------+---------------------------------------------------+
-   | preprocess | file \____\_ does NOT contain ! BEGIN DART        | Each special obs_def input file must contain this |
-   |            | PREPROCESS QUANTITY LIST                          | comment string.                                   |
-   +------------+---------------------------------------------------+---------------------------------------------------+
-   | preprocess | file \____\_ does NOT contain " END DART          | Each special obs_def input file must contain this |
-   |            | PREPROCESS KIND LIST                              | comment string.                                   |
-   +------------+---------------------------------------------------+---------------------------------------------------+
-   | preprocess | Input DEFAULT obs_kind file ended unexpectedly.   | Did not find strings indicating where to insert   |
-   |            |                                                   | special obs_def sections in the input obs_kind    |
-   |            |                                                   | module.                                           |
-   +------------+---------------------------------------------------+---------------------------------------------------+
-   | preprocess | Input DEFAULT obs_def file ended unexpectedly.    | Did not find strings indicating where to insert   |
-   |            |                                                   | special obs_def sections in the input obs_def     |
-   |            |                                                   | module.                                           |
-   +------------+---------------------------------------------------+---------------------------------------------------+
-   | preprocess | file \____\_ does NOT contain ! BEGIN DART        | Input special obs_def file must contain this      |
-   |            | PREPROCESS.                                       | comment string.                                   |
-   +------------+---------------------------------------------------+---------------------------------------------------+
-   | preprocess | file \____\_ does NOT contain ! END DART          | Input special obs_def file must contain this      |
-   |            | PREPROCESS.                                       | comment string.                                   |
-   +------------+---------------------------------------------------+---------------------------------------------------+
-   | preprocess | 'Incompatible duplicate entry detected'           | A quantity has been defined more than once but    |
-   |            |                                                   | with conflicting metadata in each definition.     |
-   +------------+---------------------------------------------------+---------------------------------------------------+

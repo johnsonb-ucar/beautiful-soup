@@ -1,9 +1,6 @@
 Netcdf Inflation Files
 ======================
 
-Contents
---------
-
 The filter_nml now read restart and inflation files directly from NetCDF files
 
 Netcdf inflation files are no longer special files. DART format inflation files were always 2 copies in one file (mean
@@ -18,7 +15,7 @@ The names of the netcdf inflation files are now fixed.
 
 The filter_nml option:
 
-``inf_in_file_name = prior_inflation_ics,   post_inflation_ics``
+``inf_in_file_name = prior_inflation_ics, post_inflation_ics``
 
 has been **deprecated** and for 1 domain filter is expecting to read:
 
@@ -38,7 +35,7 @@ where d0\* is the domain number.
 
 The filter_nml option:
 
-``inf_out_file_name = prior_inflation_restart,    post_inflation_restart``
+``inf_out_file_name = prior_inflation_restart, post_inflation_restart``
 
 has been **deprecated** and for 1 domain filter is expecting to read:
 
@@ -53,5 +50,3 @@ For multiple domains filter is expecting to write:
 | prior_inflation_restart_sd_d02
 
 where d0\* is the domain number.
-
---------------

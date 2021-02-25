@@ -1,19 +1,5 @@
-MODULE model_mod (TIEGCM)
-=========================
-
-Contents
---------
-
--  `Overview <#overview>`__
--  `Quickstart guide to running <#quickstart_guide_to_running>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces - required <#public_interfaces_-_required>`__
--  `Public interfaces - optional <#public_interfaces_-_optional>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
+TIEGCM
+======
 
 Overview
 --------
@@ -52,13 +38,11 @@ Overview
   than the number of ensemble members may speed up the DART portion of an assimilation (i.e., ``filter``) but will not
   make the model advance faster. The ``filter`` may be compiled with MPI and can exploit all available tasks.
 
-.. _quickstart_guide_to_running:
-
 Quickstart guide to running
 ---------------------------
 
 | It is important to understand basic DART nomenclature and mechanisms. Please take the time to read and run the `DART
-  tutorial </tutorial/index.pdf>`__.
+  tutorial <../../tutorial/index.pdf>`__.
 | Both ``run_filter.csh`` and ``run_perfect_model_obs.csh`` are heavily internally commented. Please read and understand
   the scripts. The overall process is to
 
@@ -69,6 +53,7 @@ Quickstart guide to running
 #. Convert each TIEGCM ensemble member to a DART initial conditions file.
 #. Run either ``filter`` or ``run_perfect_model_obs.csh``.
 
+#. ``perfect_model_obs`` will
 #. Check for any desired observations at the current time of the model state and create the synthetic observations for
    all observation times in the specified assimilation window. If the model needs to be advanced, it then
 #. creates a unique run-time directory for the model advance,
@@ -77,11 +62,12 @@ Quickstart guide to running
 #. runs a single executable of TIEGCM.
 #. Steps 1-5 are repeated until the input DART observation sequence file has been exhausted.
 
+#. ``filter`` will
 #. Check for any desired observations at the current time of the model state and assimilates all the observations in the
    specified assimilation window. If the model needs to be advanced, it then
 #. creates a set of run-time directories, one for each task. A single task may be responsible for advancing more than
-   one TIEGCM instance. If so, each instance is done serially, one after another. See the documentation for `options for
-   running DART in parallel </docs/html/filter_async_modes.html>`__.
+   one TIEGCM instance. If so, each instance is done serially, one after another. See the documentation for
+   :doc:`../../docs/html/filter_async_modes`.
 #. Copy the required information into that directory.
 #. Update the TIEGCM restart file with the most current DART-modified state and convey the desired forecast stopping
    time to TIEGCM via the unique ``tiegcm.nml`` for this ensemble member.
@@ -95,8 +81,6 @@ The scripts are designed to send email to the user that contains the run-time ou
 If that does not provide the information needed, go to the run directory (i.e. CENTRALDIR) and check the
 ``dart_log.out``. It usually provides the same information as the email, but sometimes it can help. If that does not
 help, go to any of the CENTRALDIR/*advance_temp\ nnnn* directories and read the *log_advance.\ nnnn.txt* file.
-
---------------
 
 Namelist
 --------
@@ -304,10 +288,6 @@ namelist.
    |                                       |                                       | +----------------+----------------+   |
    +---------------------------------------+---------------------------------------+---------------------------------------+
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -333,42 +313,36 @@ Other modules used
    time_manager_mod.f90
    utilities_mod.f90
 
---------------
-
-.. _public_interfaces_-_required:
-
 Public interfaces - required
 ----------------------------
 
 ======================= ======================
 *use model_mod, only :* get_model_size
-                        adv_1step
-                        get_state_meta_data
-                        model_interpolate
-                        get_model_time_step
-                        static_init_model
-                        end_model
-                        init_time
-                        init_conditions
-                        nc_write_model_atts
-                        nc_write_model_vars
-                        pert_model_state
-                        get_close_maxdist_init
-                        get_close_obs_init
-                        get_close_obs
-                        ens_mean_for_model
+\                       adv_1step
+\                       get_state_meta_data
+\                       model_interpolate
+\                       get_model_time_step
+\                       static_init_model
+\                       end_model
+\                       init_time
+\                       init_conditions
+\                       nc_write_model_atts
+\                       nc_write_model_vars
+\                       pert_model_state
+\                       get_close_maxdist_init
+\                       get_close_obs_init
+\                       get_close_obs
+\                       ens_mean_for_model
 ======================= ======================
-
-.. _public_interfaces_-_optional:
 
 Public interfaces - optional
 ----------------------------
 
 ======================= =====================
 *use model_mod, only :* tiegcm_to_dart_vector
-                        dart_vector_to_tiegcm
-                        get_f107_value
-                        test_interpolate
+\                       dart_vector_to_tiegcm
+\                       get_f107_value
+\                       test_interpolate
 ======================= =====================
 
 A namelist interface ``&model_nml`` is defined by the module, and is read from file ``input.nml``.
@@ -413,7 +387,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call get_state_meta_data (index_in, location, [, var_kind] )*
+   *call get_state_meta_data (index_in, location, [, var_kind] )*
    ::
 
       integer,             intent(in)  :: index_in
@@ -450,8 +424,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Given a state vector, a location, and a model state variable kind interpolates the state variable field to that
    location and returns the value in obs_val. The istatus variable should be returned as 0 unless there is some problem
    in computing the interpolation in which case a positive value should be returned. The ikind variable is one of the
-   KIND parameters defined in the `obs_kind_mod.f90 </assimilation_code/modules/observations/obs_kind_mod.html>`__ file
-   and defines which generic kind of item is being interpolated.
+   KIND parameters defined in the :doc:`../../assimilation_code/modules/observations/obs_kind_mod` file and defines
+   which generic kind of item is being interpolated.
 
    ============ ========================================================================================
    ``x``        A model state vector.
@@ -650,7 +624,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs_loc, obs_kind, num_close, close_ind [, dist])*
+   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs_loc, obs_kind, num_close, close_ind [, dist])*
    ::
 
       type(get_close_type), intent(in)  :: gc
@@ -790,9 +764,9 @@ TIEGCM public routines
 .. container:: indent1
 
    This function is **only** used by
-   `model_mod_check.f90 </assimilation_code/programs/model_mod_check/model_mod_check.html%20models/POP/model_mod_check.html>`__
-   and can be modified to suit your needs. ``test_interpolate()`` exercises ``model_interpolate()``,
-   ``get_state_meta_data()``, ``static_init_model()`` and a host of supporting routines.
+   :doc:`../../assimilation_code/programs/model_mod_check/model_mod_check.html%20models/POP/model_mod_check` and can be
+   modified to suit your needs. ``test_interpolate()`` exercises ``model_interpolate()``, ``get_state_meta_data()``,
+   ``static_init_model()`` and a host of supporting routines.
 
    +-----------------------------------------------------------+-----------------------------------------------------------+
    | ``x``                                                     | variable containing the DART state vector.                |
@@ -802,8 +776,6 @@ TIEGCM public routines
    |                                                           | locarray(2) is the latitude (in degrees North)            |
    |                                                           | locarray(3) is the height (in meters).                    |
    +-----------------------------------------------------------+-----------------------------------------------------------+
-
---------------
 
 Files
 -----
@@ -830,73 +802,58 @@ Files
 |                          | be in the *advance_temp\ nnnn* directory.                                                |
 +--------------------------+------------------------------------------------------------------------------------------+
 
---------------
-
 References
 ----------
 
-| Matsuo, T., and E. A. Araujo-Pradere (2011),
-| Role of thermosphere-ionosphere coupling in a global ionosphere specification,
-| *Radio Science*, **46**, RS0D23, `doi:10.1029/2010RS004576 <http://dx.doi.org/doi:10.1029/2010RS004576>`__
+-  Matsuo, T., and E. A. Araujo-Pradere (2011),
+   Role of thermosphere-ionosphere coupling in a global ionosphere specification,
+   *Radio Science*, **46**, RS0D23, `doi:10.1029/2010RS004576 <http://dx.doi.org/doi:10.1029/2010RS004576>`__
 
-| 
+-  
 
-| Lee, I. T., T, Matsuo, A. D. Richmond, J. Y. Liu, W. Wang, C. H. Lin, J. L. Anderson, and M. Q. Chen (2012),
-| Assimilation of FORMOSAT-3/COSMIC electron density profiles into thermosphere/Ionosphere coupling model by using
-  ensemble Kalman filter,
-| *Journal of Geophysical Research*, **117**, A10318,
-  `doi:10.1029/2012JA017700 <http://dx.doi.org/doi:10.1029/2012JA017700>`__
+-  Lee, I. T., T, Matsuo, A. D. Richmond, J. Y. Liu, W. Wang, C. H. Lin, J. L. Anderson, and M. Q. Chen (2012),
+   Assimilation of FORMOSAT-3/COSMIC electron density profiles into thermosphere/Ionosphere coupling model by using
+   ensemble Kalman filter,
+   *Journal of Geophysical Research*, **117**, A10318,
+   `doi:10.1029/2012JA017700 <http://dx.doi.org/doi:10.1029/2012JA017700>`__
 
-| 
+-  
 
-| Matsuo, T., I. T. Lee, and J. L. Anderson (2013),
-| Thermospheric mass density specification using an ensemble Kalman filter,
-| *Journal of Geophysical Research*, **118**, 1339-1350,
-  `doi:10.1002/jgra.50162 <http://dx.doi.org/doi:10.1002/jgra.50162>`__
+-  Matsuo, T., I. T. Lee, and J. L. Anderson (2013),
+   Thermospheric mass density specification using an ensemble Kalman filter,
+   *Journal of Geophysical Research*, **118**, 1339-1350,
+   `doi:10.1002/jgra.50162 <http://dx.doi.org/doi:10.1002/jgra.50162>`__
 
-| 
+-  
 
-| Lee, I. T., H. F. Tsai, J. Y. Liu, Matsuo, T., and L. C. Chang (2013),
-| Modeling impact of FORMOSAT-7/COSMIC-2 mission on ionospheric space weather monitoring,
-| *Journal of Geophysical Research*, **118**, 6518-6523,
-  `doi:10.1002/jgra.50538 <http://dx.doi.org/doi:10.1002/jgra.50538>`__
+-  Lee, I. T., H. F. Tsai, J. Y. Liu, Matsuo, T., and L. C. Chang (2013),
+   Modeling impact of FORMOSAT-7/COSMIC-2 mission on ionospheric space weather monitoring,
+   *Journal of Geophysical Research*, **118**, 6518-6523,
+   `doi:10.1002/jgra.50538 <http://dx.doi.org/doi:10.1002/jgra.50538>`__
 
-| 
+-  
 
-| Matsuo, T. (2014),
-| Upper atmosphere data assimilation with an ensemble Kalman filter, in Modeling the Ionosphere-Thermosphere System,
-| *Geophys. Monogr. Ser.*, vol. 201, edited by J. Huba, R. Schunk, and G. Khazanov, pp. 273-282, John Wiley & Sons, Ltd,
-  Chichester, UK, `doi:10.1002/9781118704417 <http://dx.doi.org/doi:10.1002/9781118704417>`__
+-  Matsuo, T. (2014),
+   Upper atmosphere data assimilation with an ensemble Kalman filter, in Modeling the Ionosphere-Thermosphere System,
+   *Geophys. Monogr. Ser.*, vol. 201, edited by J. Huba, R. Schunk, and G. Khazanov, pp. 273-282, John Wiley & Sons,
+   Ltd, Chichester, UK, `doi:10.1002/9781118704417 <http://dx.doi.org/doi:10.1002/9781118704417>`__
 
-| 
+-  
 
-| Hsu, C.-H., T. Matsuo, W. Wang, and J. Y. Liu (2014),
-| Effects of inferring unobserved thermospheric and ionospheric state variables by using an ensemble Kalman filter on
-  global ionospheric specification and forecasting,
-| *Journal of Geophysical Research*, **119**, 9256-9267,
-  `doi:10.1002/2014JA020390 <http://dx.doi.org/doi:10.1002/2014JA020390>`__
+-  Hsu, C.-H., T. Matsuo, W. Wang, and J. Y. Liu (2014),
+   Effects of inferring unobserved thermospheric and ionospheric state variables by using an ensemble Kalman filter on
+   global ionospheric specification and forecasting,
+   *Journal of Geophysical Research*, **119**, 9256-9267,
+   `doi:10.1002/2014JA020390 <http://dx.doi.org/doi:10.1002/2014JA020390>`__
 
-| 
+-  
 
-| Chartier, A., T. Matsuo, J. L. Anderson, G. Lu, T. Hoar, N. Collins, A. Coster, C. Mitchell, L. Paxton, G. Bust
-  (2015),
-| Ionospheric Data Assimilation and Forecasting During Storms,
-| *Journal of Geophysical Research*, under review
+-  Chartier, A., T. Matsuo, J. L. Anderson, G. Lu, T. Hoar, N. Collins, A. Coster, C. Mitchell, L. Paxton, G. Bust
+   (2015),
+   Ionospheric Data Assimilation and Forecasting During Storms,
+   *Journal of Geophysical Research*, under review
 
---------------
+-  .. rubric:: Private components
+      :name: private-components
 
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
--  Models are free to issue calls to the error handler as they see fit. No standard error handler calls are mandated.
-
-.. _private_components:
-
-Private components
-------------------
-
-N/A
-
---------------
+   N/A

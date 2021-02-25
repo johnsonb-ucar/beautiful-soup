@@ -22,9 +22,9 @@ current_directory = os.path.dirname(os.path.realpath(__file__))
 
 # Assign the documentation root and paths to the input and output documents.
 doc_root = current_directory + '/docs/html'
-original_file_path = (doc_root + '/observations/obs_converters/MODIS/'
-                      'MOD15A2_to_obs.html')
-modified_file_path = (current_directory + '/modified_MOD15A2_to_obs.html')
+dart_root = current_directory+ '/../DART'
+original_file_path = (dart_root + '/observations/obs_converters/tropical_cyclone/tc_to_obs.html')
+modified_file_path = (current_directory + '/test_file.html')
 
 # Open the input page.
 with open(original_file_path) as fp:
@@ -48,20 +48,22 @@ with open(original_file_path) as fp:
 #
 # If the functions are run in alphabetical order, they will work as intended.
 
-soup = decompose_anchors_providing_navigation_near_top_of_file(soup)
-soup = decompose_anchors_with_name_and_no_string(soup)
-soup = decompose_legalese_links(soup)
-soup = decompose_logo_main_index_table(soup)
-soup = decompose_obsolete_sections(soup)
-soup = decompose_top_links(soup)
-soup = extract_comments(soup)
-soup = replace_anchors_within_body_text_with_their_contents(soup)
-soup = replace_ems_with_classes(soup)
-soup = replace_headers_and_compose_content_list(soup)
-soup = replace_namelist_divs(soup)
-soup = rewrite_lesser_headers_than_h2_as_sentence_case(soup)
-soup = rewrite_relative_paths_as_absolute_in_hrefs(soup, original_file_path,
-                                                   doc_root)
+
+soup = convert_internal_links_to_doc(soup)
+# soup = decompose_anchors_providing_navigation_near_top_of_file(soup)
+# soup = decompose_anchors_with_name_and_no_string(soup)
+# soup = decompose_legalese_links(soup)
+# soup = decompose_logo_main_index_table(soup)
+# soup = decompose_obsolete_sections(soup)
+# soup = decompose_top_links(soup)
+# soup = extract_comments(soup)
+# soup = replace_anchors_within_body_text_with_their_contents(soup)
+# soup = replace_ems_with_classes(soup)
+# soup = replace_headers_and_compose_content_list(soup)
+# soup = replace_namelist_divs(soup)
+# soup = rewrite_lesser_headers_than_h2_as_sentence_case(soup)
+# soup = rewrite_relative_paths_as_absolute_in_hrefs(soup, original_file_path,
+#                                                    doc_root)
 
 # Save the output.
 with open(modified_file_path, 'w') as file:

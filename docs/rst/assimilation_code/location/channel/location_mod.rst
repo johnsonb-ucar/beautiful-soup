@@ -1,18 +1,6 @@
 MODULE location_mod (channel)
 =============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -164,32 +152,30 @@ distributed across the entire surface of the sphere. For local or regional model
 the the extent of the local grid.
 
 For efficiency in the case where the boxes span less than half the globe, the 3D location module needs to be able to
-determine the greatest longitude difference between a base point at latitude ``φs`` and all points that are separated
-from that point by a central angle of ``θ``. We might also want to know the latitude, ``φf`` , at which the largest
-separation occurs. Note also that an intermediate form below allows the computation of the maximum longitude difference
-at a particular latitude.
+determine the greatest longitude difference between a base point at latitude ```` and all points that are separated from
+that point by a central angle of ``θ``. We might also want to know the latitude, ```` , at which the largest separation
+occurs. Note also that an intermediate form below allows the computation of the maximum longitude difference at a
+particular latitude.
 
-| The central angle between a point at latitude ``φs`` and a second point at latitude ``φf`` that are separated in
-  longitude by ``Δλ`` is
-| ``  θ = cos-1(sinφssinφf +     cosφscosφfcosΔλ)``
+| The central angle between a point at latitude ```` and a second point at latitude ```` that are separated in longitude
+  by ``Δλ`` is
+| ````
 | Taking the cos of both sides gives
-| ``  cosθ = (sinφssinφf +    cosφscosφfcosΔλ)``
+| ````
 | Solving for ``cosΔλ`` gives
-| ``  cosΔλ      = (a - b sinφf)/(c cosφf)     = a/c secφf -        b/c tanφf``
-| where ``a = cosθ`` , ``b = sinφs`` , and ``c = cosφs`` . We want to maximize ``Δλ`` which implies minimizing ``cosΔλ``
-  subject to constraints. Taking the derivative with respect to ``φf`` gives
-| ``  (d cosΔλ)/(dφf) =     a/c secφf tanφf  - b/c sec2φf = 0``
-| Factoring out ``secφf`` which can never be 0 and using the definitions of ``sec`` and ``tan`` gives
-| ``  (a sinφf)/(c cosφf) - b/(c cosφf) = 0``
+| ````
+| where ```` , ```` , and ```` . We want to maximize ``Δλ`` which implies minimizing ``cosΔλ`` subject to constraints.
+  Taking the derivative with respect to ```` gives
+| ````
+| Factoring out ```` which can never be 0 and using the definitions of ``sec`` and ``tan`` gives
+| ````
 | Solving in the constrained range from 0 to PI/2 gives
-| ``   sinφf = b/a =     sinφs/cosθ``
-| So knowing base point (``φs``, ``λs``), latitude ``φf``, and distance ``θ`` we can use the great circle equation to
-  find the longitude difference at the greatest separation point
-| ``   Δλ = cos-1((a -  (b sinφf)) / (c cosφf))``
+| ````
+| So knowing base point (````, ````), latitude ````, and distance ``θ`` we can use the great circle equation to find the
+  longitude difference at the greatest separation point
+| ````
 | Note that if the angle between the base point and a pole is less than or equal to the central angle, all longitude
   differences will occur as the pole is approached.
-
---------------
 
 Namelist
 --------
@@ -239,10 +225,6 @@ Items in this namelist either control the way in which distances are computed an
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -252,46 +234,42 @@ Other modules used
    utilities_mod
    random_seq_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ============================ ======================
 ``use location_mod, only :`` location_type
-                             get_close_type
-                             get_location
-                             set_location
-                             write_location
-                             read_location
-                             interactive_location
-                             set_location_missing
-                             query_location
-                             get_close_maxdist_init
-                             get_close_obs_init
-                             get_close_obs
-                             get_close_obs_destroy
-                             get_dist
-                             LocationDims
-                             LocationName
-                             LocationLName
-                             horiz_dist_only
-                             vert_is_undef
-                             vert_is_surface
-                             vert_is_pressure
-                             vert_is_scale_height
-                             vert_is_level
-                             vert_is_height
-                             VERTISUNDEF
-                             VERTISSURFACE
-                             VERTISLEVEL
-                             VERTISPRESSURE
-                             VERTISHEIGHT
-                             VERTISSCALEHEIGHT
-                             operator(==)
-                             operator(/=)
+\                            get_close_type
+\                            get_location
+\                            set_location
+\                            write_location
+\                            read_location
+\                            interactive_location
+\                            set_location_missing
+\                            query_location
+\                            get_close_maxdist_init
+\                            get_close_obs_init
+\                            get_close_obs
+\                            get_close_obs_destroy
+\                            get_dist
+\                            LocationDims
+\                            LocationName
+\                            LocationLName
+\                            horiz_dist_only
+\                            vert_is_undef
+\                            vert_is_surface
+\                            vert_is_pressure
+\                            vert_is_scale_height
+\                            vert_is_level
+\                            vert_is_height
+\                            VERTISUNDEF
+\                            VERTISSURFACE
+\                            VERTISLEVEL
+\                            VERTISPRESSURE
+\                            VERTISHEIGHT
+\                            VERTISSCALEHEIGHT
+\                            operator(==)
+\                            operator(/=)
 ============================ ======================
 
 Namelist interface ``&location_nml`` must be read from file ``input.nml``.
@@ -542,9 +520,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    If the last optional argument is not specified, maxdist applies to all locations. If the last argument is specified,
    it must be a list of exactly the length of the number of specific types in the obs_kind_mod.f90 file. This length can
-   be queried with the
-   `get_num_types_of_obs() </assimilation_code/modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__ function
-   to get count of obs types. It allows a different maximum distance to be set per base type when get_close() is called.
+   be queried with the `get_num_types_of_obs() <../../modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__
+   function to get count of obs types. It allows a different maximum distance to be set per base type when get_close()
+   is called.
 
    +-------------+-------------------------------------------------------------------------------------------------------+
    | ``gc``      | Data for efficiently finding close locations.                                                         |
@@ -553,10 +531,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    +-------------+-------------------------------------------------------------------------------------------------------+
    | *maxdist*   | If specified, must be a list of real values. The length of the list must be exactly the same length   |
    |             | as the number of observation types defined in the obs_def_kind.f90 file. (See                         |
-   |             | `get_n                                                                                                |
-   |             | um_types_of_obs() </assimilation_code/modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__ |
-   |             | to get count of obs types.) The values in this list are used for the obs types as the close distance  |
-   |             | instead of the maxdist argument.                                                                      |
+   |             | `get_num_types_of_obs() <../../modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__ to get |
+   |             | count of obs types.) The values in this list are used for the obs types as the close distance instead |
+   |             | of the maxdist argument.                                                                              |
    +-------------+-------------------------------------------------------------------------------------------------------+
 
 | 
@@ -900,8 +877,6 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Files
 -----
 
@@ -911,60 +886,12 @@ filename  purpose
 input.nml to read the location_mod namelist
 ========= =================================
 
---------------
-
 References
 ----------
 
 #. none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | Routine                               | Message                               | Comment                               |
-   +=======================================+=======================================+=======================================+
-   | initialize_module                     | nlon must be odd                      | Tuning parameter for number of        |
-   |                                       |                                       | longitude boxes must be odd for       |
-   |                                       |                                       | algorithm to function.                |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | get_dist                              | Dont know how to compute vertical     | Need same which_vert for distances.   |
-   |                                       | distance for unlike vertical          |                                       |
-   |                                       | coordinates                           |                                       |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | set_location                          | longitude (#) is not within range     | Is it really a longitude?             |
-   |                                       | [0,360]                               |                                       |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | set_location                          | latitude (#) is not within range      | Is it really a latitude?              |
-   |                                       | [-90,90]                              |                                       |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | set_location                          | which_vert (#) must be one of -2, -1, | Vertical coordinate type restricted   |
-   |                                       | 1, 2, 3, or 4                         | to:                                   |
-   |                                       |                                       | -2 = no specific vertical location    |
-   |                                       |                                       | -1 = surface value                    |
-   |                                       |                                       | 1 = (model) level                     |
-   |                                       |                                       | 2 = pressure                          |
-   |                                       |                                       | 3 = height                            |
-   |                                       |                                       | 4 = scale height                      |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | read_location                         | Expected location header "loc3d" in   | Vertical coordinate confusion         |
-   |                                       | input file, got \__\_                 | involving NetCDF file.                |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | nc_write_location                     | Various NetCDF-f90 interface error    | From one of the NetCDF calls in       |
-   |                                       | messages                              | nc_write_location                     |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

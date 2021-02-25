@@ -1,15 +1,6 @@
 GTSPP Observations
 ==================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
-
 Overview
 --------
 
@@ -17,10 +8,6 @@ GTSPP (Global Temperature-Salinity Profile Program) data measures vertical profi
 The `GTPSS home page <http://www.nodc.noaa.gov/GTSPP/index.html>`__ has detailed information about the repository,
 observations, and datasets. The programs in this directory convert from the netcdf files found in the repository into
 DART observation sequence (obs_seq) file format.
-
---------------
-
-.. _data_sources:
 
 Data sources
 ------------
@@ -38,16 +25,12 @@ information (not quality control, but observation instrument error values). Ther
 information encoded in these files, but so far we don't have the key. The quality control values are read and only those
 with a QC of 1 are retained.
 
---------------
-
 Programs
 --------
 
 The data is distributed in `netCDF <http://www.unidata.ucar.edu/software/netcdf>`__ file format. DART requires all
 observations to be in a proprietary format often called DART "obs_seq" format. The files in this directory, a
 combination of C shell scripts and a Fortran source executable, do this data conversion.
-
---------------
 
 Namelist
 --------
@@ -76,12 +59,12 @@ namelist.
    | gtspp_netcdf_file     | character(len=128) | The input filename when converting a single profile. Only one of the  |
    |                       |                    | two file or filelist items can have a valid value, so to use the      |
    |                       |                    | single filename set the list name 'gtspp_netcdf_filelist' to the      |
-   |                       |                    | empty string (' ').                                                   |
+   |                       |                    | empty string (' ').                                                   |
    +-----------------------+--------------------+-----------------------------------------------------------------------+
    | gtspp_netcdf_filelist | character(len=128) | To convert a series of profiles in a single execution create a text   |
    |                       |                    | file which contains each input file, in ascii, one filename per line. |
    |                       |                    | Set this item to the name of that file, and set 'gtspp_netcdf_file'   |
-   |                       |                    | to the empty string (' ').                                            |
+   |                       |                    | to the empty string (' ').                                            |
    +-----------------------+--------------------+-----------------------------------------------------------------------+
    | gtspp_out_file        | character(len=128) | The output file to be created. To be compatible with earlier versions |
    |                       |                    | of this program, if this file already exists it will be read in and   |
@@ -99,10 +82,6 @@ namelist.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -117,5 +96,3 @@ Modules used
    obs_def_ocean_mod
    obs_kind_mod
    netcdf
-
---------------

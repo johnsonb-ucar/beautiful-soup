@@ -1,24 +1,11 @@
 PROGRAM ``rad_3dvar_to_dart``
 =============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules directly used <#modules_directly_used>`__
--  `Modules indirectly used <#modules_indirectly_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
 Programs to convert MM5 3D-VAR 2.0 Radar data files into DART observation sequence files. The capability of the program
 is limited to DOPPLER_RADIAL_VELOCITY and RADAR_REFLECTIVITY.
-
---------------
 
 Namelist
 --------
@@ -49,10 +36,6 @@ namelist.
 
 | 
 
---------------
-
-.. _modules_directly_used:
-
 Modules directly used
 ---------------------
 
@@ -67,8 +50,6 @@ Modules directly used
    time_manager_mod
    utilities_mod
 
-.. _modules_indirectly_used:
-
 Modules indirectly used
 -----------------------
 
@@ -78,8 +59,6 @@ Modules indirectly used
    models/wrf/model_mod
    models/wrf/module_map_utils
    random_seq_mod
-
---------------
 
 Files
 -----
@@ -94,18 +73,7 @@ File formats
 ``input.nml`` and ``qc_radr_3dvar_2002083100.dat`` are ASCII files. ``obs_seq.out`` is either ASCII or binary, depending
 on the logical write_binary_obs_sequence, which is the namelist entry for obs_sequence_mod.
 
---------------
-
 References
 ----------
 
 -  `3DVAR GROUP PAGE <http://www.mmm.ucar.edu/wrf/WG4/>`__
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-none

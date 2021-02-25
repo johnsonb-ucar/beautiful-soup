@@ -1,16 +1,6 @@
 program ``obs_keep_a_few``
 ==========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -22,20 +12,15 @@ the observations with the earliest timestamps will be copied.
 Set either limit to -1 to disable it. If both the maximum count per type and maximum total count are given the copying
 stops when the first limit is reached.
 
-If you want to subset an obs_seq file starting at a later time see the
-`obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__ for subsetting by time and
-then use this tool on the output. That tool also allows you to subset by obs type, location, data value, and a variety
-of other options.
+If you want to subset an obs_seq file starting at a later time see the :doc:`../obs_sequence_tool/obs_sequence_tool` for
+subsetting by time and then use this tool on the output. That tool also allows you to subset by obs type, location, data
+value, and a variety of other options.
 
 The ``obs_keep_a_few`` program only subsets by numbers of observations. It is expected to be useful when prototyping
 experiments so the run time is short, or for debugging or testing. Setting a limit per type ensures you have up to N of
 each type of observation present in the output file.
 
 Identity observations are all considered to be the same identity "observation type" by this tool.
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -49,8 +34,6 @@ Other modules used
    obs_kind_mod
    time_manager_mod
    obs_sequence_mod
-
---------------
 
 Namelist
 --------
@@ -104,32 +87,13 @@ namelist.
 
 | 
 
---------------
-
 Files
 -----
 
 -  filename_in is read.
 -  filename_out is written.
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ======= ======= =======
-   Routine Message Comment
-   ======= ======= =======
-           none     
-   ======= ======= =======

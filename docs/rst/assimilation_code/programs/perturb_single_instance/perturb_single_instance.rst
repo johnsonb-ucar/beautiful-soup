@@ -1,22 +1,11 @@
 PROGRAM ``perturb_single_instance``
 ===================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
 Utility program to generate an ensemble of perturbed ensemble member restart files. This program can be run in parallel
 and used as a stand alone program.
-
---------------
 
 Namelist
 --------
@@ -74,8 +63,6 @@ Below is an example of a typical namelist for the perturb_single_instance.
 
 | 
 
---------------
-
 Files
 -----
 
@@ -83,24 +70,7 @@ Files
 -  output_file_list.txt (a file containing a list of restart files) and,
 -  perturb_single_instance.nml
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ======================= ===================== ========================
-   Routine                 Message               Comment
-   ======================= ===================== ========================
-   perturb_single_instance Invalid method number Values 1-4 are supported
-   ======================= ===================== ========================

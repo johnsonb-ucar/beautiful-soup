@@ -56,6 +56,8 @@ for ifile, this_file in enumerate(doc_list):
     # run on certain files because they don't have navigation anchors an thus
     # the function doesn't work as intended.
 
+    soup = convert_internal_links_to_doc(soup)
+
     if ('docs/html/docs/html' in this_file and
             filename not in docs_html_files_with_navigation_anchors):
         # The files in the docs/html directory do not have navigation anchors.
@@ -76,19 +78,20 @@ for ifile, this_file in enumerate(doc_list):
         soup = decompose_anchors_providing_navigation_near_top_of_file(soup)
         
     soup = decompose_anchors_with_name_and_no_string(soup)
+    soup = decompose_hrs(soup)
     soup = decompose_legalese_links(soup)
     soup = decompose_logo_main_index_table(soup)
     soup = decompose_obsolete_sections(soup)
     soup = decompose_top_links(soup)
     soup = extract_comments(soup)
     soup = replace_anchors_within_body_text_with_their_contents(soup)
+    soup = replace_tts(soup)
     soup = replace_ems_with_classes(soup)
-    soup = replace_headers_and_compose_content_list(soup)
     soup = replace_namelist_divs(soup)
-    soup = rewrite_lesser_headers_than_h2_as_sentence_case(soup)
-    soup = rewrite_relative_paths_as_absolute_in_hrefs(soup,
-                                                       this_file,
-                                                       doc_root)
+    soup = rewrite_lesser_headers_than_h1_as_sentence_case(soup)
+    # soup = rewrite_relative_paths_as_absolute_in_hrefs(soup,
+    #                                                    this_file,
+    #                                                    doc_root)
 
     # Save the output.
     with open(this_file, 'w') as fp:

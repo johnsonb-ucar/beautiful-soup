@@ -1,17 +1,11 @@
 PROGRAM ``dwl_to_obs``
 ======================
 
-Contents
+Overview
 --------
 
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
-
-Overview
-========
-
-Dwl to DART converter
-^^^^^^^^^^^^^^^^^^^^^
+DWL to DART converter
+~~~~~~~~~~~~~~~~~~~~~
 
 These are Doppler Wind Lidar measurements which have previously been extracted from the incoming format and output in
 ascii format, one pair of wind component observations per line. This converter reads in the ascii file and outputs the
@@ -30,17 +24,11 @@ The workflow is:
 -  repeat the last 2 steps until all observations are processed
 -  finally, call a write subroutine that writes out the entire series to a file in a format that DART can read in
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
 Matic Savli at University of Ljubljana has programs which read the expected instrument formats, do the proper
 conversions, and write out ascii lines, one per wind observation.
-
---------------
 
 Programs
 --------
@@ -60,5 +48,3 @@ supported observation types before trying to recompile the source code.
 
 An example script for converting batches of files is in the ``shell_scripts`` directory. It will need customization
 before being used.
-
---------------

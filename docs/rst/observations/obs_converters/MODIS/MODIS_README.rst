@@ -1,30 +1,17 @@
 DART observations and MODIS products.
 =====================================
 
-Contents
---------
-
--  `Programs <#programs>`__
--  `Plans <#plans>`__
-
 There are many MODIS products, in many formats. This document will list all of the data products and formats that have
 DART programs to convert them to observation sequence files.
-
---------------
 
 Programs
 --------
 
-+------------------------------------------+--------------------------------------------------------------------------+
-| `MOD15A2_to_obs <MOD15A2_to_obs.html>`__ | Converts `MODIS Land Product                                             |
-|                                          | Subsets <http://daac.ornl.gov/MODIS/modis.shtml>`__ Leaf Area Index      |
-|                                          | (**LAI**) and Fraction of Photosynthetically Active Radiation (**FPAR**) |
-|                                          | 8 day composite                                                          |
-|                                          | `[MOD                                                                    |
-|                                          | 15A2] <https://lpdaac.usgs.gov/products/modis_products_table/mod15a2>`__ |
-+------------------------------------------+--------------------------------------------------------------------------+
-
---------------
++-------------------------+-------------------------------------------------------------------------------------------+
+| :doc:`./MOD15A2_to_obs` | Converts `MODIS Land Product Subsets <http://daac.ornl.gov/MODIS/modis.shtml>`__ Leaf     |
+|                         | Area Index (**LAI**) and Fraction of Photosynthetically Active Radiation (**FPAR**) 8 day |
+|                         | composite `[MOD15A2] <https://lpdaac.usgs.gov/products/modis_products_table/mod15a2>`__   |
++-------------------------+-------------------------------------------------------------------------------------------+
 
 Plans
 -----
@@ -34,5 +21,3 @@ Plans
    metadata. I *almost* have everything I need. Once that happens, the forward observation operator can be made to be
    much more accurate by only using model landunits that have the right landcover class.
 #. Support more products. Put in a request to help me prioritize.
-
---------------

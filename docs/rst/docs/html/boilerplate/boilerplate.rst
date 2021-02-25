@@ -1,18 +1,6 @@
 PROGRM OR MODULE name_of_thing
 ==============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 NAMELIST / MODULES USED / INTERFACES / FILES / REFERENCES / ERRORS / PLANS / PRIVATE COMPONENTS /
 
 Overview
@@ -23,8 +11,6 @@ This is the place for the general description of the module or program or whatev
 overview issues, how/when/why to use this thing, etc.
 
 more stuff about code, usage, etc.
-
---------------
 
 Namelist
 --------
@@ -55,10 +41,6 @@ terminating the namelist.
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -70,18 +52,14 @@ Other modules used
    time_manager_mod
    fms_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ===================== ===========
 *use xxxxxxx, only :* yyypubtype1
-                      yyyroutine1
-                      yyyroutine2
-                      yyyroutine3
+\                     yyyroutine1
+\                     yyyroutine2
+\                     yyyroutine3
 ===================== ===========
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -112,7 +90,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *subroutine yyyroutine1( var1, var2, var3 [, global])*
+   *subroutine yyyroutine1( var1, var2, var3 [, global])*
    ::
 
       type(time_type),          intent(in)    ::  var1 
@@ -177,8 +155,6 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Files
 -----
 
@@ -191,42 +167,19 @@ filename                    purpose
 inputfile1                  to read some input
 input.nml                   to read namelists
 preassim.nc                 the time-history of the model state before assimilation
-analysis.nc                 the time-history of the model state after assimilation
+analysis.nc                 the time-history of the model state after assimilation
 dart_log.out [default name] the run-time diagnostic output
 dart_log.nml [default name] the record of all the namelists actually USED - contains the default values
 =========================== ===========================================================================
 
---------------
-
 References
 ----------
 
--  Anderson, J., T. Hoar, K. Raeder, H. Liu, N. Collins, R. Torn, and A. Arellano, 2009:
+-  Anderson, J., T. Hoar, K. Raeder, H. Liu, N. Collins, R. Torn, and A. Arellano, 2009:
    The Data Assimilation Research Testbed: A Community Facility. Bull. Amer. Meteor. Soc., 90, 1283-1296.
    `DOI: 10.1175/2009BAMS2618.1 <http://dx.doi.org/10.1175%2F2009BAMS2618.1>`__
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | Routine                               | Message                               | Comment                               |
-   +=======================================+=======================================+=======================================+
-   | xxxx                                  | size of [argument] is incorrect       | The size of [argument] must be 1 and  |
-   |                                       |                                       | 4                                     |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | xxxx                                  | yyyyy                                 | bad judgement                         |
-   |                                       |                                       | What were you thinking?               |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-
-.. _private_components:
 
 Private components
 ------------------
@@ -245,5 +198,3 @@ place to point them out, if you like.
          private
          real(r8) :: x
       end type location_type
-
---------------

@@ -1,15 +1,8 @@
 DART POST-Iceland revisions
 ===========================
 
-Contents
---------
-
--  `Changes <#changes>`__
-
 DART "POST Iceland release" summary of changes.
 ===============================================
-
-$Id$
 
 | The DART POST Iceland release (16 June 2006) is an intermediate release designed to provide error fixes required for a
   number of users and to provide enhanced support for the CAM, WRF, and PBL_1D models. It also provides several new
@@ -96,9 +89,9 @@ A summary list of changes occurring in each DART directory/file follows:
 |                                                   | were identical, a ``NaN`` could result from the old correlation |
 |                                                   | computation. The ``assim_tools_nml`` was modified as follows:   |
 |                                                   | Removed                                                         |
-|                                                   | ``cov_inflate, cov_inflate_sd, sd_lower_bound,  determinist     |
-|                                                   | ic_cov_inflate, start_from_assim_restart, assim_restart_in_file |
-|                                                   | _name,  assim_restart_out_file_name, cov_inflate_upper_bound``. |
+|                                                   | ``cov_inflate, cov_inflate_sd, sd_lower_bound, determinis       |
+|                                                   | tic_cov_inflate, start_from_assim_restart, assim_restart_in_fil |
+|                                                   | e_name, assim_restart_out_file_name, cov_inflate_upper_bound``. |
 |                                                   | Added ``sampling_error_correction`` and                         |
 |                                                   | ``num_close_threshold``.                                        |
 +---------------------------------------------------+-----------------------------------------------------------------+
@@ -126,7 +119,7 @@ A summary list of changes occurring in each DART directory/file follows:
 |                                                   | entry ``cov_inflate`` has been removed from ``filter_nml``.     |
 |                                                   | Inflation is now done with ``filter_ensemble_inflate`` only if  |
 |                                                   | constant or varying spatial inflation is selected in the        |
-|                                                   | ``adaptive_inflate``\ namelist. Information about state space   |
+|                                                   | ``adaptive_inflate`` namelist. Information about state space    |
 |                                                   | inflation is passed to ``filter_assim`` as arguments. The call  |
 |                                                   | to ``assim_tools_end`` has been replace by                      |
 |                                                   | ``adaptive_inflate_end`` which creates restarts for adaptive    |
@@ -245,5 +238,3 @@ A summary list of changes occurring in each DART directory/file follows:
 |                                                   | implementation of observation space inflation and a brief       |
 |                                                   | overview of the state space inflation options.                  |
 +---------------------------------------------------+-----------------------------------------------------------------+
-
---------------

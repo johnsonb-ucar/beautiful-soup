@@ -1,18 +1,6 @@
 MODULE mpi_utilities_mod
 ========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -49,8 +37,6 @@ source file which contains some useful run-time options. To enable it edit the s
 ``mpi_utilities/mpi_utilities_mod.f90`` and set ``use_namelist`` to .TRUE. and recompile. The code will then read the
 namelist described below. Messages printed to the nml output log file will confirm whether the defaults are being used
 or if the namelist is being read in.
-
---------------
 
 Namelist
 --------
@@ -137,10 +123,6 @@ terminating the namelist.
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -151,39 +133,35 @@ Other modules used
    time_manager_mod
    mpi  (or mpif.h if mpi module not available)
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 =============================== ========================
 *use mpi_utilities_mod, only :* initialize_mpi_utilities
-                                finalize_mpi_utilities
-                                task_count
-                                my_task_id
-                                task_sync
-                                block_task
-                                restart_task
-                                array_broadcast
-                                send_to
-                                receive_from
-                                iam_task0
-                                broadcast_send
-                                broadcast_recv
-                                shell_execute
-                                sleep_seconds
-                                sum_across_tasks
-                                get_dart_mpi_comm
-                                exit_all
+\                               finalize_mpi_utilities
+\                               task_count
+\                               my_task_id
+\                               task_sync
+\                               block_task
+\                               restart_task
+\                               array_broadcast
+\                               send_to
+\                               receive_from
+\                               iam_task0
+\                               broadcast_send
+\                               broadcast_recv
+\                               shell_execute
+\                               sleep_seconds
+\                               sum_across_tasks
+\                               get_dart_mpi_comm
+\                               exit_all
 =============================== ========================
 
 | 
 
 .. container:: routine
 
-   *call initialize_mpi_utilities( [progname] [, alternatename])*
+   *call initialize_mpi_utilities( [progname] [, alternatename])*
    ::
 
       character(len=*), intent(in), optional :: progname
@@ -204,10 +182,10 @@ Public interfaces
 
    It is an error to call any of the other routines in this file before calling this routine.
 
-   =================== ================================================================================
-   ``progname  ``      If given, written to the log file to document which program is being started.
-   ``alternatename  `` If given, use this name as the log file instead of the default ``dart_log.out``.
-   =================== ================================================================================
+   ================= ================================================================================
+   ``progname``      If given, written to the log file to document which program is being started.
+   ``alternatename`` If given, use this name as the log file instead of the default ``dart_log.out``.
+   ================= ================================================================================
 
 | 
 
@@ -233,13 +211,13 @@ Public interfaces
 
    It is an error to call any of the other routines in this file after calling this routine.
 
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``callfinalize  `` | If false, do not call the ``MPI_Finalize()`` routine.                                          |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``async  ``        | If the model advance mode (selected by the async namelist value in the filter_nml section)     |
-   |                    | requires any synchronization or actions at shutdown, this is done. Currently async=4 requires  |
-   |                    | an additional set of actions at shutdown time.                                                 |
-   +--------------------+------------------------------------------------------------------------------------------------+
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``callfinalize`` | If false, do not call the ``MPI_Finalize()`` routine.                                            |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``async``        | If the model advance mode (selected by the async namelist value in the filter_nml section)       |
+   |                  | requires any synchronization or actions at shutdown, this is done. Currently async=4 requires an |
+   |                  | additional set of actions at shutdown time.                                                      |
+   +------------------+--------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -255,9 +233,9 @@ Public interfaces
    Returns the total number of MPI tasks this job was started with. Note that MPI task numbers start at 0, but this is a
    count. So a 4-task job will return 4 here, but the actual task numbers will be from 0 to 3.
 
-   ========= ======================================
-   ``var  `` Total number of MPI tasks in this job.
-   ========= ======================================
+   ======= ======================================
+   ``var`` Total number of MPI tasks in this job.
+   ======= ======================================
 
 | 
 
@@ -275,9 +253,9 @@ Public interfaces
    resources which are not shared amongst tasks. MPI task numbers start at 0, so valid task id numbers for a 4-task job
    will be 0 to 3.
 
-   ========== =============================
-   ``var   `` My unique MPI task id number.
-   ========== =============================
+   ======= =============================
+   ``var`` My unique MPI task id number.
+   ======= =============================
 
 | 
 
@@ -294,7 +272,7 @@ Public interfaces
 
 .. container:: routine
 
-   *call send_to(dest_id, srcarray [, time])*
+   *call send_to(dest_id, srcarray [, time])*
    ::
 
       integer,                   intent(in) :: dest_id
@@ -314,11 +292,11 @@ Public interfaces
    return until the receiving task has called the receive routine to accept the data. This may be subject to change; MPI
    has several other non-blocking options for send and receive.
 
-   =============== ======================================
-   ``dest_id``     The MPI task id of the receiver.
-   ``srcarray   `` The data to be copied to the receiver.
-   ``time``        If specified, send the time as well.
-   =============== ======================================
+   ============ ======================================
+   ``dest_id``  The MPI task id of the receiver.
+   ``srcarray`` The data to be copied to the receiver.
+   ``time``     If specified, send the time as well.
+   ============ ======================================
 
    The send and receive subroutines must be used with care. These calls must be used in pairs; the sending task and the
    receiving task must make corresponding calls or the tasks will hang. Calling them with different array sizes will
@@ -350,11 +328,11 @@ Public interfaces
    return until the data has arrived in this task. This may be subject to change; MPI has several other non-blocking
    options for send and receive.
 
-   ================ ============================================================
-   ``src_id   ``    The MPI task id of the sender.
-   ``destarray   `` The location where the data from the sender is to be placed.
-   ``time   ``      If specified, receive the time as well.
-   ================ ============================================================
+   ============= ============================================================
+   ``src_id``    The MPI task id of the sender.
+   ``destarray`` The location where the data from the sender is to be placed.
+   ``time``      If specified, receive the time as well.
+   ============= ============================================================
 
    See the notes section of ``send_to()``.
 
@@ -377,9 +355,9 @@ Public interfaces
    Depending on the MPI implementation and job control system, the exit code may or may not be passed back to the
    calling job script.
 
-   ================ ====================
-   ``exit_code   `` A numeric exit code.
-   ================ ====================
+   ============= ====================
+   ``exit_code`` A numeric exit code.
+   ============= ====================
 
    This routine is now called from the standard error handler. To avoid circular references this is NOT a module
    routine. Programs which are compiled without the mpi code must now compile with the ``null_mpi_utilities_mod.f90``
@@ -404,10 +382,10 @@ Public interfaces
 
    When this routine returns, all tasks will have the contents of the root array in their own arrays.
 
-   ============ ===========================================================================================
-   ``array   `` Array containing data to send to all other tasks, or the location in which to receive data.
-   ``root   ``  Task ID which will be the data source. All others are destinations.
-   ============ ===========================================================================================
+   ========= ===========================================================================================
+   ``array`` Array containing data to send to all other tasks, or the location in which to receive data.
+   ``root``  Task ID which will be the data source. All others are destinations.
+   ========= ===========================================================================================
 
    This is another of the routines which must be called by all tasks. The MPI call used here is synchronous, so all
    tasks block here until everyone has called this routine.
@@ -425,11 +403,11 @@ Public interfaces
 
    Returns ``.TRUE.`` if called from the task with MPI task id 0. Returns ``.FALSE.`` in all other tasks. It is
    frequently the case that some code should execute only on a single task. This allows one to easily write a block
-   surrounded by ``if (iam_task0()) then ...``.
+   surrounded by ``if (iam_task0()) then ...`` .
 
-   ========== ===========================================================================
-   ``var   `` Convenience function to easily test and execute code blocks on task 0 only.
-   ========== ===========================================================================
+   ======= ===========================================================================
+   ``var`` Convenience function to easily test and execute code blocks on task 0 only.
+   ======= ===========================================================================
 
 | 
 
@@ -463,19 +441,19 @@ Public interfaces
    In reality the data here are ``intent(in)`` only but this routine will be calling ``array_broadcast()`` internally
    and so must be ``intent(inout)`` to match.
 
-   ============= ======================================================
-   ``from   ``   Current task ID; the root task for the data broadcast.
-   ``array1   `` First data array to be broadcast.
-   *array2   *   If given, second data array to be broadcast.
-   *array3   *   If given, third data array to be broadcast.
-   *array4   *   If given, fourth data array to be broadcast.
-   *array5   *   If given, fifth data array to be broadcast.
-   *scalar1   *  If given, first data scalar to be broadcast.
-   *scalar2   *  If given, second data scalar to be broadcast.
-   *scalar3   *  If given, third data scalar to be broadcast.
-   *scalar4   *  If given, fourth data scalar to be broadcast.
-   *scalar5   *  If given, fifth data scalar to be broadcast.
-   ============= ======================================================
+   ========== ======================================================
+   ``from``   Current task ID; the root task for the data broadcast.
+   ``array1`` First data array to be broadcast.
+   *array2*   If given, second data array to be broadcast.
+   *array3*   If given, third data array to be broadcast.
+   *array4*   If given, fourth data array to be broadcast.
+   *array5*   If given, fifth data array to be broadcast.
+   *scalar1*  If given, first data scalar to be broadcast.
+   *scalar2*  If given, second data scalar to be broadcast.
+   *scalar3*  If given, third data scalar to be broadcast.
+   *scalar4*  If given, fourth data scalar to be broadcast.
+   *scalar5*  If given, fifth data scalar to be broadcast.
+   ========== ======================================================
 
    This is another of the routines which must be called consistently; only one task makes this call and all other tasks
    call the companion ``broadcast_recv`` routine. The MPI call used here is synchronous, so all tasks block until
@@ -514,19 +492,19 @@ Public interfaces
    In reality the data arrays here are ``intent(out)`` only but this routine will be calling ``array_broadcast()``
    internally and so must be ``intent(inout)`` to match.
 
-   ============= ==================================================
-   ``from   ``   The task ID for the data broadcast source.
-   ``array1   `` First array location to receive data into.
-   *array2   *   If given, second data array to receive data into.
-   *array3   *   If given, third data array to receive data into.
-   *array4   *   If given, fourth data array to receive data into.
-   *array5   *   If given, fifth data array to receive data into.
-   *scalar1   *  If given, first data scalar to receive data into.
-   *scalar2   *  If given, second data scalar to receive data into.
-   *scalar3   *  If given, third data scalar to receive data into.
-   *scalar4   *  If given, fourth data scalar to receive data into.
-   *scalar5   *  If given, fifth data scalar to receive data into.
-   ============= ==================================================
+   ========== ==================================================
+   ``from``   The task ID for the data broadcast source.
+   ``array1`` First array location to receive data into.
+   *array2*   If given, second data array to receive data into.
+   *array3*   If given, third data array to receive data into.
+   *array4*   If given, fourth data array to receive data into.
+   *array5*   If given, fifth data array to receive data into.
+   *scalar1*  If given, first data scalar to receive data into.
+   *scalar2*  If given, second data scalar to receive data into.
+   *scalar3*  If given, third data scalar to receive data into.
+   *scalar4*  If given, fourth data scalar to receive data into.
+   *scalar5*  If given, fifth data scalar to receive data into.
+   ========== ==================================================
 
    This is another of the routines which must be called consistently; all tasks but one make this call and exactly one
    other task calls the companion ``broadcast_send`` routine. The MPI call used here is synchronous, so all tasks block
@@ -547,10 +525,10 @@ Public interfaces
    All tasks call this routine, each with their own different ``addend``. The returned value in ``sum`` is the total of
    the values summed across all tasks, and is the same for each task.
 
-   ============= ============================================
-   ``addend   `` Single input value per task to be summed up.
-   ``sum   ``    The sum.
-   ============= ============================================
+   ========== ============================================
+   ``addend`` Single input value per task to be summed up.
+   ``sum``    The sum.
+   ========== ============================================
 
    This is another of those calls which must be made from each task, and the calls block until this is so.
 
@@ -617,15 +595,15 @@ Public interfaces
    Wrapper routine around the system() library function to execute shell level commands from inside the Fortran program.
    Will wait for the command to execute and will return the error code. 0 means ok, any other number indicates error.
 
-   +-----------------------+---------------------------------------------------------------------------------------------+
-   | ``rc   ``             | Return code from the shell exit after the command has been executed.                        |
-   +-----------------------+---------------------------------------------------------------------------------------------+
-   | ``execute_string   `` | Command to be executed by the shell.                                                        |
-   +-----------------------+---------------------------------------------------------------------------------------------+
-   | ``serialize   ``      | If specified and if .TRUE. run the command from each PE in turn, waiting for each to        |
-   |                       | complete before beginning the next. The default is .FALSE. and does not require that all    |
-   |                       | tasks call this routine. If given and .TRUE. then all tasks must make this call.            |
-   +-----------------------+---------------------------------------------------------------------------------------------+
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``rc``             | Return code from the shell exit after the command has been executed.                           |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``execute_string`` | Command to be executed by the shell.                                                           |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``serialize``      | If specified and if .TRUE. run the command from each PE in turn, waiting for each to complete  |
+   |                    | before beginning the next. The default is .FALSE. and does not require that all tasks call     |
+   |                    | this routine. If given and .TRUE. then all tasks must make this call.                          |
+   +--------------------+------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -641,9 +619,9 @@ Public interfaces
    Wrapper routine for the sleep command. Argument is a real in seconds. Some systems have different lower resolutions
    for the minimum time it will sleep. This routine can round up to even seconds if a smaller than 1.0 time is given.
 
-   ================ ===========================================
-   ``naplength   `` Number of seconds to sleep as a real value.
-   ================ ===========================================
+   ============= ===========================================
+   ``naplength`` Number of seconds to sleep as a real value.
+   ============= ===========================================
 
    The amount of time this routine will sleep is not precise and might be in units of whole seconds on some platforms.
 
@@ -662,13 +640,11 @@ Public interfaces
    communicator. This routine returns the private communicator. If it is called before the internal setup work is
    completed it returns MPI_COMM_WORLD. If it is called before MPI is initialized, it returns 0.
 
-   =========== ==============================
-   ``comm   `` The private DART communicator.
-   =========== ==============================
+   ======== ==============================
+   ``comm`` The private DART communicator.
+   ======== ==============================
 
 | 
-
---------------
 
 Files
 -----
@@ -680,34 +656,13 @@ Depending on the implementation of MPI, the library routines are either defined 
 proper Fortran 90 module (``use mpi``). If it is available the module is preferred; it allows for better argument
 checking and optional arguments support in the MPI library calls.
 
---------------
-
 References
 ----------
 
 -  MPI: The Complete Reference; Snir, Otto, Huss-Lederman, Walker, Dongarra; MIT Press, 1996, ISBN 0-262-69184-1
 -  ```http://www-unix.mcs.anl.gov/mpi/`` <http://www-unix.mcs.anl.gov/mpi/>`__
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-If MPI returns an error, the DART error handler is called with the numeric error code it received from MPI. See any of
-the MPI references for an up-to-date list of error codes.
-
-After printing to the standard output and log files, the DART error handler calls the ``exit_all()`` routine which calls
-``MPI_Abort()`` to make sure all tasks exit and the entire job does not hang if only one task has an error.
-
---------------
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

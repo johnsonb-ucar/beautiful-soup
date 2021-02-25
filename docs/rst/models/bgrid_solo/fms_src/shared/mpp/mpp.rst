@@ -1,93 +1,80 @@
-.. _module_mpp_mod:
-
-Module mpp_mod
---------------
-
-Contents
-~~~~~~~~
-
--  `Module mpp_mod <#module_mpp_mod>`__
-
-.. container::
-
-   **Contact: ** `V. Balaji <mailto:vb@gfdl.noaa.gov>`__
-   **Reviewers: **
-   **Change History: **\ `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/>`__
-   **RCS Log: **\ `RCS Log <http://www.gfdl.noaa.gov/~vb/changes_models/bgrid_solo/fms_src/shared/mpp/mpp.html>`__
-   **Last Modified: **\ 2002/07/19 18:10:05
-
---------------
+module mpp_mod
+==============
 
 Overview
-^^^^^^^^
+--------
 
 ``mpp_mod``, is a set of simple calls to provide a uniform interface to different message-passing libraries. It
 currently can be implemented either in the SGI/Cray native SHMEM library or in the MPI standard. Other libraries (e.g
 MPI-2, Co-Array Fortran) can be incorporated as the need arises.
 
-.. container::
+The data transfer between a processor and its own memory is based on ``load`` and ``store`` operations upon memory.
+Shared-memory systems (including distributed shared memory systems) have a single address space and any processor can
+acquire any data within the memory by ``load`` and ``store``. The situation is different for distributed parallel
+systems. Specialized MPP systems such as the T3E can simulate shared-memory by direct data acquisition from remote
+memory. But if the parallel code is distributed across a cluster, or across the Net, messages must be sent and received
+using the protocols for long-distance communication, such as TCP/IP. This requires a \``handshaking'' between nodes of
+the distributed system. One can think of the two different methods as involving ``put``\ s or ``get``\ s (e.g the SHMEM
+library), or in the case of negotiated communication (e.g MPI), ``send``\ s and ``recv``\ s.
 
-   The data transfer between a processor and its own memory is based on ``load`` and ``store`` operations upon memory.
-   Shared-memory systems (including distributed shared memory systems) have a single address space and any processor can
-   acquire any data within the memory by ``load`` and ``store``. The situation is different for distributed parallel
-   systems. Specialized MPP systems such as the T3E can simulate shared-memory by direct data acquisition from remote
-   memory. But if the parallel code is distributed across a cluster, or across the Net, messages must be sent and
-   received using the protocols for long-distance communication, such as TCP/IP. This requires a \``handshaking''
-   between nodes of the distributed system. One can think of the two different methods as involving ``put``\ s or
-   ``get``\ s (e.g the SHMEM library), or in the case of negotiated communication (e.g MPI), ``send``\ s and
-   ``recv``\ s.
-   The difference between SHMEM and MPI is that SHMEM uses one-sided communication, which can have very low-latency
-   high-bandwidth implementations on tightly coupled systems. MPI is a standard developed for distributed computing
-   across loosely-coupled systems, and therefore incurs a software penalty for negotiating the communication. It is
-   however an open industry standard whereas SHMEM is a proprietary interface. Besides, the ``put``\ s or ``get``\ s on
-   which it is based cannot currently be implemented in a cluster environment (there are recent announcements from
-   Compaq that occasion hope).
-   The message-passing requirements of climate and weather codes can be reduced to a fairly simple minimal set, which is
-   easily implemented in any message-passing API. ``mpp_mod`` provides this API.
-   Features of ``mpp_mod`` include:
-   1) Simple, minimal API, with free access to underlying API for more complicated stuff.
-   2) Design toward typical use in climate/weather CFD codes.
-   3) Performance to be not significantly lower than any native API.
-   This module is used to develop higher-level calls for `domain
-   decomposition <models/bgrid_solo/fms_src/shared/mpp/mpp_domains.html>`__ and `parallel
-   I/O <models/bgrid_solo/fms_src/shared/mpp/mpp_io.html>`__.
-   Parallel computing is initially daunting, but it soon becomes second nature, much the way many of us can now write
-   vector code without much effort. The key insight required while reading and writing parallel code is in arriving at a
-   mental grasp of several independent parallel execution streams through the same code (the SPMD model). Each variable
-   you examine may have different values for each stream, the processor ID being an obvious example. Subroutines and
-   function calls are particularly subtle, since it is not always obvious from looking at a call what synchronization
-   between execution streams it implies. An example of erroneous code would be a global barrier call (see
-   ` <#mpp_sync>`__ below) placed within a code block that not all PEs will execute, e.g:
-   ::
+The difference between SHMEM and MPI is that SHMEM uses one-sided communication, which can have very low-latency
+high-bandwidth implementations on tightly coupled systems. MPI is a standard developed for distributed computing across
+loosely-coupled systems, and therefore incurs a software penalty for negotiating the communication. It is however an
+open industry standard whereas SHMEM is a proprietary interface. Besides, the ``put``\ s or ``get``\ s on which it is
+based cannot currently be implemented in a cluster environment (there are recent announcements from Compaq that occasion
+hope).
 
-         if( pe.EQ.0 )call mpp_sync()
+The message-passing requirements of climate and weather codes can be reduced to a fairly simple minimal set, which is
+easily implemented in any message-passing API. ``mpp_mod`` provides this API.
 
-   Here only PE 0 reaches the barrier, where it will wait indefinitely. While this is a particularly egregious example
-   to illustrate the coding flaw, more subtle versions of the same are among the most common errors in parallel code.
-   It is therefore important to be conscious of the context of a subroutine or function call, and the implied
-   synchronization. There are certain calls here (e.g
-   ``mpp_declare_pelist, mpp_init,    mpp_malloc, mpp_set_stack_size``) which must be called by all PEs. There are
-   others which must be called by a subset of PEs (here called a ``pelist``) which must be called by all the PEs in the
-   ``pelist`` (e.g ``mpp_max, mpp_sum, mpp_sync``). Still others imply no synchronization at all. I will make every
-   effort to highlight the context of each call in the MPP modules, so that the implicit synchronization is spelt out.
-   For performance it is necessary to keep synchronization as limited as the algorithm being implemented will allow. For
-   instance, a single message between two PEs should only imply synchronization across the PEs in question. A *global*
-   synchronization (or *barrier*) is likely to be slow, and is best avoided. But codes first parallelized on a Cray T3E
-   tend to have many global syncs, as very fast barriers were implemented there in hardware.
-   Another reason to use pelists is to run a single program in MPMD mode, where different PE subsets work on different
-   portions of the code. A typical example is to assign an ocean model and atmosphere model to different PE subsets, and
-   couple them concurrently instead of running them serially. The MPP module provides the notion of a *current pelist*,
-   which is set when a group of PEs branch off into a subset. Subsequent calls that omit the ``pelist`` optional
-   argument (seen below in many of the individual calls) assume that the implied synchronization is across the current
-   pelist. The calls ``mpp_root_pe`` and ``mpp_npes`` also return the values appropriate to the current pelist. The
-   ``mpp_set_current_pelist`` call is provided to set the current pelist.
+Features of ``mpp_mod`` include:
+
+#. Simple, minimal API, with free access to underlying API for more complicated stuff.
+#. Design toward typical use in climate/weather CFD codes.
+#. Performance to be not significantly lower than any native API.
+
+This module is used to develop higher-level calls for :doc:`./mpp_domains` and :doc:`./mpp_io`.
+
+Parallel computing is initially daunting, but it soon becomes second nature, much the way many of us can now write
+vector code without much effort. The key insight required while reading and writing parallel code is in arriving at a
+mental grasp of several independent parallel execution streams through the same code (the SPMD model). Each variable you
+examine may have different values for each stream, the processor ID being an obvious example. Subroutines and function
+calls are particularly subtle, since it is not always obvious from looking at a call what synchronization between
+execution streams it implies. An example of erroneous code would be a global barrier call (see ` <#mpp_sync>`__ below)
+placed within a code block that not all PEs will execute, e.g:
+
+::
+
+
+   if( pe.EQ.0 )call mpp_sync()
+
+Here only PE 0 reaches the barrier, where it will wait indefinitely. While this is a particularly egregious example to
+illustrate the coding flaw, more subtle versions of the same are among the most common errors in parallel code.
+
+It is therefore important to be conscious of the context of a subroutine or function call, and the implied
+synchronization. There are certain calls here (e.g ``mpp_declare_pelist, mpp_init, mpp_malloc, mpp_set_stack_size``)
+which must be called by all PEs. There are others which must be called by a subset of PEs (here called a ``pelist``)
+which must be called by all the PEs in the ``pelist`` (e.g ``mpp_max, mpp_sum, mpp_sync``). Still others imply no
+synchronization at all. I will make every effort to highlight the context of each call in the MPP modules, so that the
+implicit synchronization is spelt out.
+
+For performance it is necessary to keep synchronization as limited as the algorithm being implemented will allow. For
+instance, a single message between two PEs should only imply synchronization across the PEs in question. A *global*
+synchronization (or *barrier*) is likely to be slow, and is best avoided. But codes first parallelized on a Cray T3E
+tend to have many global syncs, as very fast barriers were implemented there in hardware.
+
+Another reason to use pelists is to run a single program in MPMD mode, where different PE subsets work on different
+portions of the code. A typical example is to assign an ocean model and atmosphere model to different PE subsets, and
+couple them concurrently instead of running them serially. The MPP module provides the notion of a *current pelist*,
+which is set when a group of PEs branch off into a subset. Subsequent calls that omit the ``pelist`` optional argument
+(seen below in many of the individual calls) assume that the implied synchronization is across the current pelist. The
+calls ``mpp_root_pe`` and ``mpp_npes`` also return the values appropriate to the current pelist. The
+``mpp_set_current_pelist`` call is provided to set the current pelist.
 
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -96,10 +83,8 @@ Other modules used
       shmem_interface
                   mpi
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -168,19 +153,15 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
    None.
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Mpp_max
       :name: mpp_max
@@ -192,12 +173,12 @@ a. .. rubric:: Mpp_max
    **DESCRIPTION**
       Find the max of scalar a the PEs in pelist result is also automatically broadcast to all PEs
    **INPUT**
-      +---------------+-----------------------------------------------------------------------------------------------------+
-      | ``a   ``      | ``real`` or ``integer``, of 4-byte of 8-byte kind.                                                  |
-      +---------------+-----------------------------------------------------------------------------------------------------+
-      | ``pelist   `` | If ``pelist`` is omitted, the context is assumed to be the current pelist. This call implies        |
-      |               | synchronization across the PEs in ``pelist``, or the current pelist if ``pelist`` is absent.        |
-      +---------------+-----------------------------------------------------------------------------------------------------+
+      +------------+--------------------------------------------------------------------------------------------------------+
+      | ``a``      | ``real`` or ``integer``, of 4-byte of 8-byte kind.                                                     |
+      +------------+--------------------------------------------------------------------------------------------------------+
+      | ``pelist`` | If ``pelist`` is omitted, the context is assumed to be the current pelist. This call implies           |
+      |            | synchronization across the PEs in ``pelist``, or the current pelist if ``pelist`` is absent.           |
+      +------------+--------------------------------------------------------------------------------------------------------+
 
 b. .. rubric:: Mpp_sum
       :name: mpp_sum
@@ -212,21 +193,14 @@ b. .. rubric:: Mpp_sum
       ``f77``.
       Library reduction operators are not required or guaranteed to be bit-reproducible. In any case, changing the
       processor count changes the data layout, and thus very likely the order of operations. For bit-reproducible sums
-      of distributed arrays, consider using the ``mpp_global_sum`` routine provided by the
-      ` <models/bgrid_solo/fms_src/shared/mpp/mpp_domains.html>`__ module.
+      of distributed arrays, consider using the ``mpp_global_sum`` routine provided by the :doc:`./mpp_domains` module.
       The ``bit_reproducible`` flag provided in earlier versions of this routine has been removed.
       If ``pelist`` is omitted, the context is assumed to be the current pelist. This call implies synchronization
       across the PEs in ``pelist``, or the current pelist if ``pelist`` is absent.
    **INPUT**
-      =============
-      ``length   `` 
-      ``pelist   `` 
-      =============
-
+      ``length`` ``pelist``
    **INPUT/OUTPUT**
-      ========
-      ``a   `` 
-      ========
+      ``a``
 
 c. .. rubric:: Mpp_transmit
       :name: mpp_transmit
@@ -298,16 +272,9 @@ d. .. rubric:: Mpp_broadcast
       pelist. This call implies synchronization across the PEs in ``pelist``, or the current pelist if ``pelist`` is
       absent.
    **INPUT**
-      ==============
-      ``length   ``  
-      ``from_pe   `` 
-      ``pelist   ``  
-      ==============
-
+      ``length``, ``from_pe``, ``pelist``
    **INPUT/OUTPUT**
-      ==============
-      ``data(*)   `` 
-      ==============
+      ``data(*)``
 
 e. .. rubric:: Mpp_chksum
       :name: mpp_chksum
@@ -344,10 +311,7 @@ e. .. rubric:: Mpp_chksum
         across the PEs in ``pelist``, or the current pelist if ``pelist`` is absent.
 
    **INPUT**
-      =============
-      ``pelist   `` 
-      ``var   ``    
-      =============
+      ``pelist``, ``var``
 
 f. .. rubric:: Mpp_error
       :name: mpp_error
@@ -404,12 +368,9 @@ f. .. rubric:: Mpp_error
              if( mpp_error_state().EQ.WARNING )call mpp_error( FATAL, '...' )
 
    **INPUT**
-      +------------------+--------------------------------------------------------------------------------------------------+
-      | ``errortype   `` | One of ``NOTE``, ``WARNING`` or ``FATAL`` (these definitions are acquired by use association).   |
-      |                  | ``NOTE`` writes ``errormsg`` to ``STDOUT``. ``WARNING`` writes ``errormsg`` to ``STDERR``.       |
-      |                  | ``FATAL`` writes ``errormsg`` to ``STDERR``, and induces a clean error exit with a call stack    |
-      |                  | traceback.                                                                                       |
-      +------------------+--------------------------------------------------------------------------------------------------+
+      ``errortype``. One of ``NOTE``, ``WARNING`` or ``FATAL`` (these definitions are acquired by use association).
+      ``NOTE`` writes ``errormsg`` to ``STDOUT``. ``WARNING`` writes ``errormsg`` to ``STDERR``. ``FATAL`` writes
+      ``errormsg`` to ``STDERR``, and induces a clean error exit with a call stack traceback.
 
 g. .. rubric:: Mpp_init
       :name: mpp_init
@@ -424,11 +385,8 @@ g. .. rubric:: Mpp_init
       environment variable ``NPES``), and associates an ID number to each PE. These can be accessed by calling
       ` <#mpp_npes>`__ and ` <#mpp_pe>`__.
    **INPUT**
-      +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``flags   ``                                              | ``flags`` can be set to ``MPP_VERBOSE`` to have           |
-      |                                                           | ``mpp_mod`` keep you informed of what it's up to.         |
-      |                                                           |    [integer]                                              |
-      +-----------------------------------------------------------+-----------------------------------------------------------+
+      ``flags``\ <``flags`` can be set to ``MPP_VERBOSE`` to have ``mpp_mod`` keep you informed of what it's up to.
+      [integer]
 
 h. .. rubric:: Stdin
       :name: stdin
@@ -492,9 +450,8 @@ l. .. rubric:: Mpp_declare_pelist
       The restriction does not apply to SMA but to have uniform code, you may as well call it.
       This call implies synchronization across the PEs in the current pelist, of which ``pelist`` is a subset.
    **INPUT**
-      +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pelist   ``                                             |    [integer, dimension(:)]                                |
-      +-----------------------------------------------------------+-----------------------------------------------------------+
+      ``pelist``
+      [integer, dimension(:)]
 
 m. .. rubric:: Mpp_set_current_pelist
       :name: mpp_set_current_pelist
@@ -509,9 +466,8 @@ m. .. rubric:: Mpp_set_current_pelist
       In MPI, this call may hang unless ``pelist`` has been previous declared using ` <#mpp_declare_pelist>`__.
       If the argument ``pelist`` is absent, the current pelist is set to the "world" pelist, of all PEs in the job.
    **INPUT**
-      +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pliest   ``                                             |    [integer]                                              |
-      +-----------------------------------------------------------+-----------------------------------------------------------+
+      ``pliest``
+      [integer]
 
 n. .. rubric:: Mpp_clock_set_grain
       :name: mpp_clock_set_grain
@@ -541,7 +497,7 @@ n. .. rubric:: Mpp_clock_set_grain
         This allows us to measure load imbalance for a given code section. Statistics are written to ``stdout`` by
         ``mpp_exit``.
       | The flag ``MPP_CLOCK_DETAILED`` may be turned on by ``mpp_clock_id`` to get detailed communication profiles.
-        Communication events of the types ``SEND, RECV, BROADCAST,    REDUCE`` and ``WAIT`` are separately measured for
+        Communication events of the types ``SEND, RECV, BROADCAST, REDUCE`` and ``WAIT`` are separately measured for
         data volume and time. Statistics are written to ``stdout`` by ``mpp_exit``, and individual PE info is also
         written to the file ``mpp_clock.out.####`` where ``####`` is the PE id given by ``mpp_pe``.
       | The flags ``MPP_CLOCK_SYNC`` and ``MPP_CLOCK_DETAILED`` are integer parameters available by use association, and
@@ -570,9 +526,8 @@ n. .. rubric:: Mpp_clock_set_grain
         compatibility.
 
    **INPUT**
-      +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``grain   ``                                              |    [integer]                                              |
-      +-----------------------------------------------------------+-----------------------------------------------------------+
+      ``grain``
+      [integer]
 
 o. .. rubric:: Mpp_sync
       :name: mpp_sync
@@ -590,9 +545,8 @@ o. .. rubric:: Mpp_sync
       If ``pelist`` is omitted, the context is assumed to be the current pelist. This call implies synchronization
       across the PEs in ``pelist``, or the current pelist if ``pelist`` is absent.
    **INPUT**
-      +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pelist   ``                                             |    [integer, dimension(:)]                                |
-      +-----------------------------------------------------------+-----------------------------------------------------------+
+      ``pelist``
+      [integer, dimension(:)]
 
 p. .. rubric:: Mpp_sync_self
       :name: mpp_sync_self
@@ -604,9 +558,7 @@ p. .. rubric:: Mpp_sync_self
       If ``pelist`` is omitted, the context is assumed to be the current pelist. This call implies synchronization
       across the PEs in ``pelist``, or the current pelist if ``pelist`` is absent.
    **INPUT**
-      +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pelist   ``                                             |    [integer, dimension(:)]                                |
-      +-----------------------------------------------------------+-----------------------------------------------------------+
+      ``pelist`` [integer, dimension(:)]
 
 q. .. rubric:: Mpp_malloc
       :name: mpp_malloc
@@ -628,16 +580,10 @@ q. .. rubric:: Mpp_malloc
       It is never required if ``mpp_mod`` is invoked in MPI.
       This call implies synchronization across all PEs.
    **INPUT**
-      +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``ptr   ``                                                | a cray pointer, points to a dummy argument in this        |
-      |                                                           | routine.                                                  |
-      +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``newlen   ``                                             | the required allocation length for the pointer ptr        |
-      |                                                           |    [integer]                                              |
-      +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``len   ``                                                | the current allocation (0 if unallocated).                |
-      |                                                           |    [integer]                                              |
-      +-----------------------------------------------------------+-----------------------------------------------------------+
+      ``ptr``, a cray pointer, points to a dummy argument in this routine. ``newlen``, the required allocation length
+      for the pointer ptr
+      [integer]. ``len``, the current allocation (0 if unallocated).
+      [integer].
 
 r. .. rubric:: Mpp_set_stack_size
       :name: mpp_set_stack_size
@@ -664,164 +610,97 @@ r. .. rubric:: Mpp_set_stack_size
       known to be present.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  |    [integer]                                              |
+      | ``n``                                                     | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
---------------
-
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
-
---------------
 
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
-
---------------
 
 References
-^^^^^^^^^^
+----------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Compiler specifics
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
-      Any module or program unit using ``mpp_mod`` must contain the line
-
-      ::
-
-             use mpp_mod
-
-      | The source file for ``mpp_mod`` is ` <ftp://ftp.gfdl.gov/pub/vb/mpp/mpp.F90>`__. Activate the preprocessor flag
-        ``-Duse_libSMA`` to invoke the SHMEM library, or ``-Duse_libMPI`` to invoke the MPI library. Global translation
-        of preprocessor macros is required. This required the activation of the ``-F`` flag on Cray systems and the
-        ``-ftpp -macro_expand`` flags on SGI systems. On non-SGI/Cray systems, please consult the f90 manpage for the
-        equivalent flag.
-      | On Cray PVP systems, *all* routines in a message-passing program must be compiled with ``-a taskcommon``.
-      | On SGI systems, it is required to use 4-byte integers and 8-byte reals, and the 64-bit ABI
-        (``-i4 -r8 -64 -mips4``). It is also required on SGI systems to link the following libraries explicitly: one of
-        ``-lmpi`` and ``-lsma``, depending on whether you wish to use the SHMEM or MPI implementations; and ``-lexc``).
-        On Cray systems, all the required flags are default.
-      | On SGI, use MIPSPro f90 7.3.1.2 or higher.
-      | On Cray, use cf90 3.0.0.0 or higher.
-      | On either, use the message-passing toolkit MPT 1.2 or higher.
-      | The declaration ``MPI_INTEGER8`` for 8-byte integers was provided by ``mpp_mod`` because it was absent in early
-        releases of the Message Passing Toolkit. It has since been included there, and the declaration in ``mpp_mod``
-        commented out. This declaration may need to be reinstated if you get a compiler error from this (i.e you are
-        using a superseded version of the MPT).
-      | By turning on the cpp flag ``-Dtest_mpp`` and compiling ``mpp_mod`` by itself, you may create a test program to
-        exercise certain aspects of ``mpp_mod``, e.g
-
-      ::
-
-             f90 -F -Duse_libSMA -Dtest_mpp mpp.F90
-             mpprun -n4 a.out
-
-      runs a 4-PE test on a t3e.
-
-| 
-
---------------
-
-Precompiler options
-^^^^^^^^^^^^^^^^^^^
-
-.. container::
-
-      While the SHMEM library is currently available only on SGI/Cray systems, ``mpp_mod`` can be used on any other
-      system with a standard-compliant f90 compiler and MPI library. SHMEM is now becoming available on other systems as
-      well.
-      There are some `OS-dependent pre-processor directives <>`__ that you might need to modify on non-SGI/Cray systems
-      and compilers.
-      On SGI systems, the ``f90`` standard ``SYSTEM_CLOCK`` intrinsic is overloaded with a non-portable fortran
-      interface to a higher-precision clock. This is distributed with the MPP package as ``nsclock.c``. This approach
-      will eventually be extended to other platforms, since the resolution of the default clock is often too coarse for
-      our needs.
-
-| 
-
---------------
-
-Loader options
-^^^^^^^^^^^^^^
-
-.. container::
-
-   The source consists of the main source file and also requires the following include files: (when compiled with )
-   (when compiled with ) GFDL users can check it out of the main CVS repository as part of the CVS module. The current
-   public tag is . External users can download the latest package . Public access to the GFDL CVS repository will soon
-   be made available.
-
+   Any module or program unit using ``mpp_mod`` must contain the line
    ::
 
-              
+          use mpp_mod
 
---------------
+   The source file for ``mpp_mod`` is ` <ftp://ftp.gfdl.gov/pub/vb/mpp/mpp.F90>`__. Activate the preprocessor flag
+   ``-Duse_libSMA`` to invoke the SHMEM library, or ``-Duse_libMPI`` to invoke the MPI library. Global translation of
+   preprocessor macros is required. This required the activation of the ``-F`` flag on Cray systems and the
+   ``-ftpp -macro_expand`` flags on SGI systems. On non-SGI/Cray systems, please consult the f90 manpage for the
+   equivalent flag.
+   On Cray PVP systems, *all* routines in a message-passing program must be compiled with ``-a taskcommon``.
+   On SGI systems, it is required to use 4-byte integers and 8-byte reals, and the 64-bit ABI (``-i4 -r8 -64 -mips4``).
+   It is also required on SGI systems to link the following libraries explicitly: one of ``-lmpi`` and ``-lsma``,
+   depending on whether you wish to use the SHMEM or MPI implementations; and ``-lexc``). On Cray systems, all the
+   required flags are default.
+   On SGI, use MIPSPro f90 7.3.1.2 or higher.
+   On Cray, use cf90 3.0.0.0 or higher.
+   On either, use the message-passing toolkit MPT 1.2 or higher.
+   The declaration ``MPI_INTEGER8`` for 8-byte integers was provided by ``mpp_mod`` because it was absent in early
+   releases of the Message Passing Toolkit. It has since been included there, and the declaration in ``mpp_mod``
+   commented out. This declaration may need to be reinstated if you get a compiler error from this (i.e you are using a
+   superseded version of the MPT).
+   By turning on the cpp flag ``-Dtest_mpp`` and compiling ``mpp_mod`` by itself, you may create a test program to
+   exercise certain aspects of ``mpp_mod``, e.g
+   ::
+
+          f90 -F -Duse_libSMA -Dtest_mpp mpp.F90
+          mpprun -n4 a.out
+
+   runs a 4-PE test on a t3e.
+
+| 
+
+Precompiler options
+-------------------
+
+.. container::
+
+   While the SHMEM library is currently available only on SGI/Cray systems, ``mpp_mod`` can be used on any other system
+   with a standard-compliant f90 compiler and MPI library. SHMEM is now becoming available on other systems as well.
+   There are some OS-dependent pre-processor directives that you might need to modify on non-SGI/Cray systems and
+   compilers.
+   On SGI systems, the ``f90`` standard ``SYSTEM_CLOCK`` intrinsic is overloaded with a non-portable fortran interface
+   to a higher-precision clock. This is distributed with the MPP package as ``nsclock.c``. This approach will eventually
+   be extended to other platforms, since the resolution of the default clock is often too coarse for our needs.
 
 Test PROGRAM
-^^^^^^^^^^^^
+------------
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Known bugs
-^^^^^^^^^^
-
-.. container::
-
-   The ``SYSTEM_CLOCK`` intrinsic has a limited range before the clock rolls over. The maximum time interval that may be
-   measured before rollover depends on the default integer precision, and is ``COUNT_MAX/COUNT_RATE`` seconds. Timing a
-   code section longer than this interval will give incorrect results. The ``mpp`` entry in the logfile reports the
-   rollover time interval. Note that this is a limitation, or "feature" of the ``f90 SYSTEM_CLOCK`` intrinsic.
-
-| 
-
---------------
 
 Notes
-^^^^^
+-----
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Future plans
-^^^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
-
-.. container::
-
-   top

@@ -1,16 +1,8 @@
 Filter async modes
 ==================
 
-Contents
---------
-
--  `Options for parallelism both in DART and in the model
-   advances: <#options_for_parallelism_both_in_dart_and_in_the_model_advances:>`__
-
-.. _options_for_parallelism_both_in_dart_and_in_the_model_advances::
-
-Options for parallelism both in DART and in the model advances:
----------------------------------------------------------------
+Options for parallelism both in DART and in the model advances
+--------------------------------------------------------------
 
 | 
 | Simplest case, async=0:
@@ -39,8 +31,6 @@ Options for parallelism both in DART and in the model advances:
 | Parallel model advance, async=4, showing how data is communicated between filter and the model thru intermediate
   files. IC are 'initial condition' files, UD are 'updated' files.
 | |image7|
-
---------------
 
 .. |image1| image:: ../images/async0.gif
 .. |image2| image:: ../images/async2a.gif

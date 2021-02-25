@@ -1,18 +1,8 @@
 PROGRAM ``ncommas_to_dart``
 ===========================
 
-Contents
---------
-
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files read <#files_read>`__
--  `Files written <#files_written>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 | ``ncommas_to_dart`` is the program that reads a ncommas restart file (usually ``ncommas_restart.nc``) and creates a
-  DART state vector file (e.g. ``perfect_ics, filter_ics, ...``).
+  DART state vector file (e.g. ``perfect_ics, filter_ics, ...`` ).
 | The list of variables used to create the DART state vector are specified in the ``ncommas_vars.nml`` file.
 | Conditions required for successful execution of ``ncommas_to_dart``:
 
@@ -23,8 +13,6 @@ Contents
 Since this program is called repeatedly for every ensemble member, we have found it convenient to link the ncommas
 restart files to the default input filename (``ncommas_restart.nc``). The default DART state vector filename is
 ``dart_ics`` - this may be moved or linked as necessary.
-
---------------
 
 Namelist
 --------
@@ -104,10 +92,6 @@ namelist.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -123,35 +107,18 @@ Modules used
    types_mod
    utilities_mod
 
---------------
-
-.. _files_read:
-
 Files read
 ----------
 
 -  ncommas restart file; ``ncommas_restart.nc``
 -  DART namelist files; ``input.nml`` and ``ncommas_vars.nml``
 
-.. _files_written:
-
 Files written
 -------------
 
 -  DART state vector file; e.g. ``dart_ics``
 
---------------
-
 References
 ----------
 
 none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-none - all error messages come from modules that have their own documentation.

@@ -1,93 +1,74 @@
-.. _module_mpp_domains_mod:
-
-Module mpp_domains_mod
-----------------------
-
-Contents
-~~~~~~~~
-
--  `Module mpp_domains_mod <#module_mpp_domains_mod>`__
-
-.. container::
-
-   **Contact: ** `V. Balaji <mailto:vb@gfdl.noaa.gov>`__
-   **Reviewers: **
-   **Change History: **\ `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/>`__
-   **RCS Log: **\ `RCS
-   Log <http://www.gfdl.noaa.gov/~vb/changes_models/bgrid_solo/fms_src/shared/mpp/mpp_domains.html>`__
-   **Last Modified: **\ 2002/07/19 18:10:06
-
---------------
+module mpp_domains_mod
+======================
 
 Overview
-^^^^^^^^
+--------
 
 ``mpp_domains_mod`` is a set of simple calls for domain decomposition and domain updates on rectilinear grids. It
-requires the module ` <models/bgrid_solo/fms_src/shared/mpp/mpp.html>`__, upon which it is built.
+requires the module :doc:`./mpp`, upon which it is built.
 
-.. container::
+Scalable implementations of finite-difference codes are generally based on decomposing the model domain into subdomains
+that are distributed among processors. These domains will then be obliged to exchange data at their boundaries if data
+dependencies are merely nearest-neighbour, or may need to acquire information from the global domain if there are
+extended data dependencies, as in the spectral transform. The domain decomposition is a key operation in the development
+of parallel codes.
 
-   Scalable implementations of finite-difference codes are generally based on decomposing the model domain into
-   subdomains that are distributed among processors. These domains will then be obliged to exchange data at their
-   boundaries if data dependencies are merely nearest-neighbour, or may need to acquire information from the global
-   domain if there are extended data dependencies, as in the spectral transform. The domain decomposition is a key
-   operation in the development of parallel codes.
-   ``mpp_domains_mod`` provides a domain decomposition and domain update API for *rectilinear* grids, built on top of
-   the ` <models/bgrid_solo/fms_src/shared/mpp/mpp.html>`__ API for message passing. Features of ``mpp_domains_mod``
-   include:
-   Simple, minimal API, with free access to underlying API for more complicated stuff.
-   Design toward typical use in climate/weather CFD codes.
-   .. rubric:: Domains
-      :name: domains
+``mpp_domains_mod`` provides a domain decomposition and domain update API for *rectilinear* grids, built on top of the
+:doc:`./mpp` API for message passing. Features of ``mpp_domains_mod`` include:
 
-   I have assumed that domain decomposition will mainly be in 2 horizontal dimensions, which will in general be the two
-   fastest-varying indices. There is a separate implementation of 1D decomposition on the fastest-varying index, and 1D
-   decomposition on the second index, treated as a special case of 2D decomposition, is also possible. We define
-   *domain* as the grid associated with a *task*. We define the *compute domain* as the set of gridpoints that are
-   computed by a task, and the *data domain* as the set of points that are required by the task for the calculation.
-   There can in general be more than 1 task per PE, though often the number of domains is the same as the processor
-   count. We define the *global domain* as the global computational domain of the entire model (i.e, the same as the
-   computational domain if run on a single processor). 2D domains are defined using a derived type ``domain2D``,
-   constructed as follows (see comments in code for more details):
-   ::
+Simple, minimal API, with free access to underlying API for more complicated stuff.
 
-           type, public :: domain_axis_spec
-              private
-              integer :: begin, end, size, max_size
-              logical :: is_global
-           end type domain_axis_spec
-           type, public :: domain1D
-              private
-              type(domain_axis_spec) :: compute, data, global, active
-              logical :: mustputb, mustgetb, mustputf, mustgetf, folded
-              type(domain1D), pointer, dimension(:) :: list
-              integer :: pe              !PE to which this domain is assigned
-              integer :: pos
-           end type domain1D
-      domaintypes of higher rank can be constructed from type domain1D
-      typically we only need 1 and 2D, but could need higher (e.g 3D LES)
-      some elements are repeated below if they are needed once per domain
-           type, public :: domain2D
-              private
-              type(domain1D) :: x
-              type(domain1D) :: y
-              type(domain2D), pointer, dimension(:) :: list
-              integer :: pe              !PE to which this domain is assigned
-              integer :: pos
-           end type domain2D
-           type(domain1D), public :: NULL_DOMAIN1D
-           type(domain2D), public :: NULL_DOMAIN2D
+Design toward typical use in climate/weather CFD codes.
 
-   The ``domain2D`` type contains all the necessary information to define the global, compute and data domains of each
-   task, as well as the PE associated with the task. The PEs from which remote data may be acquired to update the data
-   domain are also contained in a linked list of neighbours.
+Domains
+-------
 
-| 
+I have assumed that domain decomposition will mainly be in 2 horizontal dimensions, which will in general be the two
+fastest-varying indices. There is a separate implementation of 1D decomposition on the fastest-varying index, and 1D
+decomposition on the second index, treated as a special case of 2D decomposition, is also possible. We define *domain*
+as the grid associated with a *task*. We define the *compute domain* as the set of gridpoints that are computed by a
+task, and the *data domain* as the set of points that are required by the task for the calculation. There can in general
+be more than 1 task per PE, though often the number of domains is the same as the processor count. We define the *global
+domain* as the global computational domain of the entire model (i.e, the same as the computational domain if run on a
+single processor). 2D domains are defined using a derived type ``domain2D``, constructed as follows (see comments in
+code for more details):
 
---------------
+::
+
+
+   type, public :: domain_axis_spec
+       private
+       integer :: begin, end, size, max_size
+       logical :: is_global
+       end type domain_axis_spec
+       type, public :: domain1D
+       private
+       type(domain_axis_spec) :: compute, data, global, active
+       logical :: mustputb, mustgetb, mustputf, mustgetf, folded
+       type(domain1D), pointer, dimension(:) :: list
+       integer :: pe              !PE to which this domain is assigned
+       integer :: pos
+       end type domain1D
+   domaintypes of higher rank can be constructed from type domain1D
+   typically we only need 1 and 2D, but could need higher (e.g 3D LES)
+   some elements are repeated below if they are needed once per domain
+       type, public :: domain2D
+       private
+       type(domain1D) :: x
+       type(domain1D) :: y
+       type(domain2D), pointer, dimension(:) :: list
+       integer :: pe              !PE to which this domain is assigned
+       integer :: pos
+       end type domain2D
+       type(domain1D), public :: NULL_DOMAIN1D
+       type(domain2D), public :: NULL_DOMAIN2D
+
+The ``domain2D`` type contains all the necessary information to define the global, compute and data domains of each
+task, as well as the PE associated with the task. The PEs from which remote data may be acquired to update the data
+domain are also contained in a linked list of neighbours.
 
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -95,10 +76,8 @@ Other modules used
 
       mpp_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -162,19 +141,15 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
    None.
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Mpp_define_domains
       :name: mpp_define_domains
@@ -192,62 +167,62 @@ a. .. rubric:: Mpp_define_domains
       repeated calls to the 1D version, also provided.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``global_indices   ``                                     | Defines the global domain.                                |
-      |                                                           |    [integer, dimension(2)]                                |
-      |                                                           |    [integer, dimension(4)]                                |
+      | ``global_indices``                                        | Defines the global domain.                                |
+      |                                                           | [integer, dimension(2)]                                   |
+      |                                                           | [integer, dimension(4)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``ndivs   ``                                              | Is the number of domain divisions required.               |
-      |                                                           |    [integer]                                              |
+      | ``ndivs``                                                 | Is the number of domain divisions required.               |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pelist   ``                                             | List of PEs to which the domains are to be assigned.      |
-      |                                                           |    [integer, dimension(0:)]                               |
-      |                                                           |    [integer, dimension(0:)]                               |
+      | ``pelist``                                                | List of PEs to which the domains are to be assigned.      |
+      |                                                           | [integer, dimension(0:)]                                  |
+      |                                                           | [integer, dimension(0:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``flags   ``                                              | An optional flag to pass additional information about the |
+      | ``flags``                                                 | An optional flag to pass additional information about the |
       |                                                           | desired domain topology. Useful flags in a 1D             |
       |                                                           | decomposition include ``GLOBAL_DATA_DOMAIN`` and          |
       |                                                           | ``CYCLIC_GLOBAL_DOMAIN``. Flags are integers: multiple    |
       |                                                           | flags may be added together. The flag values are public   |
       |                                                           | parameters available by use association.                  |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``halo   ``                                               | Width of the halo.                                        |
-      |                                                           |    [integer]                                              |
+      | ``halo``                                                  | Width of the halo.                                        |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``extent   ``                                             | Normally ``mpp_define_domains`` attempts an even division |
+      | ``extent``                                                | Normally ``mpp_define_domains`` attempts an even division |
       |                                                           | of the global domain across ``ndivs`` domains. The        |
       |                                                           | ``extent`` array can be used by the user to pass a custom |
       |                                                           | domain division. The ``extent`` array has ``ndivs``       |
       |                                                           | elements and holds the compute domain widths, which       |
       |                                                           | should add up to cover the global domain exactly.         |
-      |                                                           |    [integer, dimension(0:)]                               |
+      |                                                           | [integer, dimension(0:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``maskmap   ``                                            | Some divisions may be masked (``maskmap=.FALSE.``) to     |
+      | ``maskmap``                                               | Some divisions may be masked (``maskmap=.FALSE.``) to     |
       |                                                           | exclude them from the computation (e.g for ocean model    |
       |                                                           | domains that are all land). The ``maskmap`` array is      |
       |                                                           | dimensioned ``ndivs`` and contains ``.TRUE.`` values for  |
       |                                                           | any domain that must be *included* in the computation     |
       |                                                           | (default all). The ``pelist`` array length should match   |
       |                                                           | the number of domains included in the computation.        |
-      |                                                           |    [logical, dimension(0:)]                               |
-      |                                                           |    [logical, dimension(:,:)]                              |
+      |                                                           | [logical, dimension(0:)]                                  |
+      |                                                           | [logical, dimension(:,:)]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``layout   ``                                             |    [integer, dimension(2)]                                |
+      | ``layout``                                                | [integer, dimension(2)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``xflags, yflags   ``                                     |    [integer]                                              |
+      | ``xflags, yflags``                                        | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``xhalo, yhalo   ``                                       |    [integer]                                              |
+      | ``xhalo, yhalo``                                          | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``xextent, yextent   ``                                   |    [integer, dimension(0:)]                               |
+      | ``xextent, yextent``                                      | [integer, dimension(0:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``name   ``                                               |    [character(len=*)]                                     |
+      | ``name``                                                  | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **INPUT/OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``domain   ``                                             | Holds the resulting domain decomposition.                 |
-      |                                                           |    [type(domain1D)]                                       |
-      |                                                           |    [type(domain2D)]                                       |
+      | ``domain``                                                | Holds the resulting domain decomposition.                 |
+      |                                                           | [type(domain1D)]                                          |
+      |                                                           | [type(domain2D)]                                          |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **NOTE**
@@ -261,12 +236,12 @@ a. .. rubric:: Mpp_define_domains
       defines 10 compute domains spanning the range [1,100] of the global domain. The compute domains are
       non-overlapping blocks of 10. All the data domains are global, and with a halo of 2 span the range [-1:102]. And
       since the global domain has been declared to be cyclic, ``domain(9)%next => domain(0)`` and
-      ``domain(0)%prev =>    domain(9)``. A field is allocated on the data domain, and computations proceed on the
-      compute domain. A call to ` <#mpp_update_domains>`__ would fill in the values in the halo region:
+      ``domain(0)%prev => domain(9)``. A field is allocated on the data domain, and computations proceed on the compute
+      domain. A call to ` <#mpp_update_domains>`__ would fill in the values in the halo region:
 
       ::
 
-             call mpp_get_data_domain( domain, isd, ied ) !returns -1 and 102
+         call mpp_get_data_domain( domain, isd, ied ) !returns -1 and 102
              call mpp_get_compute_domain( domain, is, ie ) !returns (1,10) on PE 0 ...
              allocate( a(isd:ied) )
              do i = is,ie
@@ -292,39 +267,43 @@ a. .. rubric:: Mpp_define_domains
 
       ::
 
-             call mpp_define_domains( (/1,100,1,100/), (/2,2/), domain, xhalo=1 )
+
+         call mpp_define_domains( (/1,100,1,100/), (/2,2/), domain, xhalo=1 )
 
       will create the following domain layout:
 
       ::
 
-                            |---------|-----------|-----------|-------------|
-                            |domain(1)|domain(2)  |domain(3)  |domain(4)    |
-             |--------------|---------|-----------|-----------|-------------|
-             |Compute domain|1,50,1,50|51,100,1,50|1,50,51,100|51,100,51,100|
-             |--------------|---------|-----------|-----------|-------------|
-             |Data domain   |0,51,1,50|50,101,1,50|0,51,51,100|50,101,51,100|
-             |--------------|---------|-----------|-----------|-------------|
+           
+                        |---------|-----------|-----------|-------------|
+                        |domain(1)|domain(2)  |domain(3)  |domain(4)    |
+         |--------------|---------|-----------|-----------|-------------|
+         |Compute domain|1,50,1,50|51,100,1,50|1,50,51,100|51,100,51,100|
+         |--------------|---------|-----------|-----------|-------------|
+         |Data domain   |0,51,1,50|50,101,1,50|0,51,51,100|50,101,51,100|
+         |--------------|---------|-----------|-----------|-------------|
 
-      | Again, we allocate arrays on the data domain, perform computations on the compute domain, and call
-        ``mpp_update_domains`` to update the halo region.
-      | If we wished to perfom a 1D decomposition along ``Y`` on the same global domain, we could use:
+      Again, we allocate arrays on the data domain, perform computations on the compute domain, and call
+      ``mpp_update_domains`` to update the halo region.
+
+      If we wished to perfom a 1D decomposition along ``Y`` on the same global domain, we could use:
 
       ::
 
-             call mpp_define_domains( (/1,100,1,100/), layout=(/4,1/), domain, xhalo=1 )
+         call mpp_define_domains( (/1,100,1,100/), layout=(/4,1/), domain, xhalo=1 )
 
       This will create the following domain layout:
 
       ::
 
-                            |----------|-----------|-----------|------------|
-                            |domain(1) |domain(2)  |domain(3)  |domain(4)   |
-             |--------------|----------|-----------|-----------|------------|
-             |Compute domain|1,100,1,25|1,100,26,50|1,100,51,75|1,100,76,100|
-             |--------------|----------|-----------|-----------|------------|
-             |Data domain   |0,101,1,25|0,101,26,50|0,101,51,75|1,101,76,100|
-             |--------------|----------|-----------|-----------|------------|
+
+                        |----------|-----------|-----------|------------|
+                        |domain(1) |domain(2)  |domain(3)  |domain(4)   |
+         |--------------|----------|-----------|-----------|------------|
+         |Compute domain|1,100,1,25|1,100,26,50|1,100,51,75|1,100,76,100|
+         |--------------|----------|-----------|-----------|------------|
+         |Data domain   |0,101,1,25|0,101,26,50|0,101,51,75|1,101,76,100|
+         |--------------|----------|-----------|-----------|------------|
 
 b. .. rubric:: Mpp_update_domains
       :name: mpp_update_domains
@@ -372,8 +351,7 @@ b. .. rubric:: Mpp_update_domains
       topology requires no special treatment of vector fields, specifying ``gridtype`` will do no harm.
       ``mpp_update_domains`` internally buffers the date being sent and received into single messages for efficiency. A
       turnable internal buffer area in memory is provided for this purpose by ``mpp_domains_mod``. The size of this
-      buffer area can be set by the user by calling
-      ` <models/bgrid_solo/fms_src/shared/mpp/mpp_domains.html#mpp_domains_set_stack_size>`__ .
+      buffer area can be set by the user by calling mpp_domains_set_stack_size in :doc:`./mpp_domains`.
 
 c. .. rubric:: Mpp_redistribute
       :name: mpp_redistribute
@@ -386,14 +364,14 @@ c. .. rubric:: Mpp_redistribute
       ``mpp_redistribute`` is used to reorganize a distributed array. ``MPP_TYPE_`` can be of type ``integer``,
       ``complex``, or ``real``; of 4-byte or 8-byte kind; of rank up to 5.
    **INPUT**
-      =============== ================================================================
-      ``field_in   `` ``field_in`` is dimensioned on the data domain of ``domain_in``.
-      =============== ================================================================
+      ============ ================================================================
+      ``field_in`` ``field_in`` is dimensioned on the data domain of ``domain_in``.
+      ============ ================================================================
 
    **OUTPUT**
-      ================ ===================================================
-      ``field_out   `` ``field_out`` on the data domain of ``domain_out``.
-      ================ ===================================================
+      ============= ===================================================
+      ``field_out`` ``field_out`` on the data domain of ``domain_out``.
+      ============= ===================================================
 
 d. .. rubric:: Mpp_global_field
       :name: mpp_global_field
@@ -408,16 +386,16 @@ d. .. rubric:: Mpp_global_field
       All PEs in a domain decomposition must call ``mpp_global_field``, and each will have a complete global field at
       the end. Please note that a global array of rank 3 or higher could occupy a lot of memory.
    **INPUT**
-      ============= =====================================================================================================
-      ``domain   `` 
-      ``local   ``  ``local`` is dimensioned on either the compute domain or the data domain of ``domain``.
-      ``flags   ``  ``flags`` can be given the value ``XONLY`` or ``YONLY``, to specify a globalization on one axis only.
-      ============= =====================================================================================================
+      ========== =====================================================================================================
+      ``domain`` 
+      ``local``  ``local`` is dimensioned on either the compute domain or the data domain of ``domain``.
+      ``flags``  ``flags`` can be given the value ``XONLY`` or ``YONLY``, to specify a globalization on one axis only.
+      ========== =====================================================================================================
 
    **OUTPUT**
-      ============= =============================================================
-      ``global   `` ``global`` is dimensioned on the corresponding global domain.
-      ============= =============================================================
+      ========== =============================================================
+      ``global`` ``global`` is dimensioned on the corresponding global domain.
+      ========== =============================================================
 
 e. .. rubric:: Mpp_global_max
       :name: mpp_global_max
@@ -434,16 +412,16 @@ e. .. rubric:: Mpp_global_max
       All PEs in a domain decomposition must call ``mpp_global_max``, and each will have the result upon exit.
       The function ``mpp_global_min``, with an identical syntax. is also available.
    **INPUT**
-      ============= =======================================================================================
-      ``domain   `` 
-      ``field   ``  ``field`` is dimensioned on either the compute domain or the data domain of ``domain``.
-      ============= =======================================================================================
+      ========== =======================================================================================
+      ``domain`` 
+      ``field``  ``field`` is dimensioned on either the compute domain or the data domain of ``domain``.
+      ========== =======================================================================================
 
    **OUTPUT**
-      +--------------+------------------------------------------------------------------------------------------------------+
-      | ``locus   `` | ``locus``, if present, can be used to retrieve the location of the maximum (as in the ``MAXLOC``     |
-      |              | intrinsic of f90).                                                                                   |
-      +--------------+------------------------------------------------------------------------------------------------------+
+      +-----------+---------------------------------------------------------------------------------------------------------+
+      | ``locus`` | ``locus``, if present, can be used to retrieve the location of the maximum (as in the ``MAXLOC``        |
+      |           | intrinsic of f90).                                                                                      |
+      +-----------+---------------------------------------------------------------------------------------------------------+
 
 f. .. rubric:: Mpp_global_sum
       :name: mpp_global_sum
@@ -456,18 +434,17 @@ f. .. rubric:: Mpp_global_sum
       ``mpp_global_sum`` is used to get the sum of a domain-decomposed array on each PE. ``MPP_TYPE_`` can be of type
       ``integer``, ``complex``, or ``real``; of 4-byte or 8-byte kind; of rank up to 5.
    **INPUT**
-      +---------------+-----------------------------------------------------------------------------------------------------+
-      | ``domain   `` |                                                                                                     |
-      +---------------+-----------------------------------------------------------------------------------------------------+
-      | ``field   ``  | ``field`` is dimensioned on either the compute domain or the data domain of ``domain``.             |
-      +---------------+-----------------------------------------------------------------------------------------------------+
-      | ``flags   ``  | ``flags``, if present, must have the value ``BITWISE_EXACT_SUM``. This produces a sum that is       |
-      |               | guaranteed to produce the identical result irrespective of how the domain is decomposed. This       |
-      |               | method does the sum first along the ranks beyond 2, and then calls ` <#mpp_global_field>`__ to      |
-      |               | produce a global 2D array which is then summed. The default method, which is considerably faster,   |
-      |               | does a local sum followed by ` <models/bgrid_solo/fms_src/shared/mpp/mpp.html#mpp_sum>`__ across    |
-      |               | the domain decomposition.                                                                           |
-      +---------------+-----------------------------------------------------------------------------------------------------+
+      +------------+--------------------------------------------------------------------------------------------------------+
+      | ``domain`` |                                                                                                        |
+      +------------+--------------------------------------------------------------------------------------------------------+
+      | ``field``  | ``field`` is dimensioned on either the compute domain or the data domain of ``domain``.                |
+      +------------+--------------------------------------------------------------------------------------------------------+
+      | ``flags``  | ``flags``, if present, must have the value ``BITWISE_EXACT_SUM``. This produces a sum that is          |
+      |            | guaranteed to produce the identical result irrespective of how the domain is decomposed. This method   |
+      |            | does the sum first along the ranks beyond 2, and then calls ` <#mpp_global_field>`__ to produce a      |
+      |            | global 2D array which is then summed. The default method, which is considerably faster, does a local   |
+      |            | sum followed by mpp_sum in :doc:`./mpp` across the domain decomposition.                               |
+      +------------+--------------------------------------------------------------------------------------------------------+
 
    **NOTE**
       All PEs in a domain decomposition must call ``mpp_global_sum``, and each will have the result upon exit.
@@ -514,16 +491,9 @@ i. .. rubric:: Mpp_get_compute_domains
    **DESCRIPTION**
       Retrieve the entire array of compute domain extents associated with a decomposition.
    **INPUT**
-      =============
-      ``domain   `` 
-      =============
-
+      ``domain``
    **OUTPUT**
-      ====================
-      ``xbegin,ybegin   `` 
-      ``xend,yend   ``     
-      ``xsize,ysize   ``   
-      ====================
+      ``xbegin,ybegin``, ``xend,yend``, ``xsize,ysize``
 
 j. .. rubric:: Mpp_get_data_domain
       :name: mpp_get_data_domain
@@ -562,14 +532,14 @@ l. .. rubric:: Mpp_define_layout
       ``y``, a preference that could improve vector performance.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``global_indices   ``                                     |    [integer, dimension(4)]                                |
+      | ``global_indices``                                        | [integer, dimension(4)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``ndivs   ``                                              |    [integer]                                              |
+      | ``ndivs``                                                 | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``layout   ``                                             |    [integer, dimension(2)]                                |
+      | ``layout``                                                | [integer, dimension(2)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 m. .. rubric:: Mpp_get_pelist
@@ -578,22 +548,21 @@ m. .. rubric:: Mpp_get_pelist
    **DESCRIPTION**
       The 1D version of this call returns an array of the PEs assigned to this 1D domain decomposition. In addition the
       optional argument ``pos`` may be used to retrieve the 0-based position of the domain local to the calling PE, i.e
-      ``domain%list(pos)%pe`` is the local PE, as returned by
-      ` <models/bgrid_solo/fms_src/shared/mpp/mpp.html#mpp_pe>`__. The 2D version of this call is identical to 1D
-      version.
+      ``domain%list(pos)%pe`` is the local PE, as returned by mpp_pe in :doc:`./mpp`. The 2D version of this call is
+      identical to 1D version.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``domain   ``                                             |    [type(domain1D)]                                       |
-      |                                                           |    [type(domain2D)]                                       |
+      | ``domain``                                                | [type(domain1D)]                                          |
+      |                                                           | [type(domain2D)]                                          |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pelist   ``                                             |    [integer, dimension(:)]                                |
-      |                                                           |    [integer, dimension(:)]                                |
+      | ``pelist``                                                | [integer, dimension(:)]                                   |
+      |                                                           | [integer, dimension(:)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pos   ``                                                |    [integer]                                              |
-      |                                                           |    [integer]                                              |
+      | ``pos``                                                   | [integer]                                                 |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 n. .. rubric:: Mpp_get_layout
@@ -608,14 +577,14 @@ n. .. rubric:: Mpp_get_layout
       version of this call returns an array of dimension 2 holding the results on two axes.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``domain   ``                                             |    [type(domain1D)]                                       |
-      |                                                           |    [type(domain2D)]                                       |
+      | ``domain``                                                | [type(domain1D)]                                          |
+      |                                                           | [type(domain2D)]                                          |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``layout   ``                                             |    [integer]                                              |
-      |                                                           |    [integer, dimension(2)]                                |
+      | ``layout``                                                | [integer]                                                 |
+      |                                                           | [integer, dimension(2)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 o. .. rubric:: Mpp_domains_init
@@ -629,11 +598,11 @@ o. .. rubric:: Mpp_domains_init
       Called to initialize the ``mpp_domains_mod`` package.
       ``flags`` can be set to ``MPP_VERBOSE`` to have ``mpp_domains_mod`` keep you informed of what it's up to.
       ``MPP_DEBUG`` returns even more information for debugging.
-      ``mpp_domains_init`` will call ``mpp_init``, to make sure ` <models/bgrid_solo/fms_src/shared/mpp/mpp.html>`__ is
-      initialized. (Repeated calls to ``mpp_init`` do no harm, so don't worry if you already called it).
+      ``mpp_domains_init`` will call ``mpp_init``, to make sure :doc:`./mpp` is initialized. (Repeated calls to
+      ``mpp_init`` do no harm, so don't worry if you already called it).
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``flags   ``                                              |    [integer]                                              |
+      | ``flags``                                                 | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 p. .. rubric:: Mpp_domains_set_stack_size
@@ -649,7 +618,7 @@ p. .. rubric:: Mpp_domains_set_stack_size
       This call has implied global synchronization. It should be placed somewhere where all PEs can call it.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  |    [integer]                                              |
+      | ``n``                                                     | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 q. .. rubric:: Mpp_domains_exit
@@ -675,137 +644,85 @@ r. .. rubric:: Mpp_get_domain_components
       retrieves them.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``domain   ``                                             |    [type(domain2D)]                                       |
+      | ``domain``                                                | [type(domain2D)]                                          |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``x,y   ``                                                |    [type(domain1D)]                                       |
+      | ``x,y``                                                   | [type(domain1D)]                                          |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
---------------
-
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
-
---------------
 
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
-
---------------
 
 References
-^^^^^^^^^^
+----------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Compiler specifics
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
-      Any module or program unit using ``mpp_domains_mod`` must contain the line
-
-      ::
-
-              use mpp_domains_mod
-
-      ``mpp_domains_mod`` ``use``\ s ` <models/bgrid_solo/fms_src/shared/mpp/mpp.html>`__, and therefore is subject to
-      the `compiling and linking requirements of that
-      module. <models/bgrid_solo/fms_src/shared/mpp/mpp.html#COMPILING%20AND%20LINKING%20SOURCE>`__
-
-| 
-
---------------
-
-Precompiler options
-^^^^^^^^^^^^^^^^^^^
-
-.. container::
-
-      ``mpp_domains_mod`` uses standard f90, and has no special requirements. There are some OS-dependent pre-processor
-      directives that you might need to modify on non-SGI/Cray systems and compilers. The `portability
-      of <models/bgrid_solo/fms_src/shared/mpp/mpp.html#PORTABILITY>`__ obviously is a constraint, since this module is
-      built on top of it. Contact me, Balaji, SGI/GFDL, with questions.
-
-| 
-
---------------
-
-Loader options
-^^^^^^^^^^^^^^
-
-.. container::
-
-   The source consists of the main source file and also requires the following include files: GFDL users can check it
-   out of the main CVS repository as part of the CVS module. The current public tag is . External users can download the
-   latest package . Public access to the GFDL CVS repository will soon be made available.
-
+   Any module or program unit using ``mpp_domains_mod`` must contain the line
    ::
 
-              
+           use mpp_domains_mod
 
+   ``mpp_domains_mod`` ``use``\ s :doc:`./mpp`, and therefore is subject to the compiling and linking requirements of
+   :doc:`./mpp`.
+
+| 
+
+Precompiler options
+-------------------
+
+.. container::
+
+   ``mpp_domains_mod`` uses standard f90, and has no special requirements. There are some OS-dependent pre-processor
+   directives that you might need to modify on non-SGI/Cray systems and compilers. The portability, as described in
+   :doc:`./mpp` obviously is a constraint, since this module is built on top of it. Contact me, Balaji, SGI/GFDL, with
+   questions.
+
+| 
+
+Loader options
 --------------
+
+The source consists of the main source file and also requires the following include files: GFDL users can check it out
+of the main CVS repository as part of the CVS module. The current public tag is . External users can download the latest
+package . Public access to the GFDL CVS repository will soon be made available.
 
 Test PROGRAM
-^^^^^^^^^^^^
+------------
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Known bugs
-^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
 
 Notes
-^^^^^
+-----
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Future plans
-^^^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
-
-.. container::
-
-   top

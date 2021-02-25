@@ -1,32 +1,13 @@
---------------
-
-Diag_table_tk
--------------
-
-Contents
-~~~~~~~~
-
--  `Diag_table_tk <#diag_table_tk>`__
-
-.. container::
-
-   **Contact:**  Matt Harrison
-   **Reviewers:** 
-   **Change History:** `WebCVS
-   Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/shared/diag_manager/diag_table_tk>`__
-   **Last Modified:**  $Date$
-   **Language:**  Perl/Tk
-
---------------
+diag_table_tk
+=============
 
 Overview
-^^^^^^^^
+--------
 
 .. container::
 
    The script diag_table_tk is a GUI written in Perl/Tk for building diagnostics tables, which are used by the
-   `Diagnostics Manager <models/bgrid_solo/fms_src/shared/diag_manager/diag_manager.html>`__ for run-time specification
-   of diagnostics.
+   :doc:`./models/bgrid_solo/fms_src/shared/diag_manager/diag_manager` for run-time specification of diagnostics.
 
 .. container::
 
@@ -79,10 +60,8 @@ Overview
                   = 4  packed 16-bit integers
                   = 8  packed 1-byte (not tested?)
 
---------------
-
 Installation
-^^^^^^^^^^^^
+------------
 
 .. container::
 
@@ -108,10 +87,8 @@ Installation
    | http://rpmfind.net/linux/rpm2html/search.php?query=perl-Tk
    | http://rpmfind.net/linux/rpm2html/search.php?query=perl-Tk-FileDialog
 
---------------
-
 Usage
-^^^^^
+-----
 
 #. **Load and edit previously saved diag tables.**
    Choose "Load Table" from the "File" menu.
@@ -128,10 +105,8 @@ Usage
 #. **Online Help is available.**
    Choose "Help" from the menubar.
 
---------------
-
 Bugs and future plans
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 .. container::
 
@@ -140,5 +115,3 @@ Bugs and future plans
    feedback is good.
 
    | It should warn you if you make changes and quit without saving.
-
---------------

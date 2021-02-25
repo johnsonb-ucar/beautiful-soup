@@ -1,23 +1,8 @@
-.. _module_field_manager_mod:
-
-Module field_manager_mod
-------------------------
-
-Contents
-~~~~~~~~
-
--  `Module field_manager_mod <#module_field_manager_mod>`__
-
-.. container::
-
-   **Contact: ** `William Cooke <mailto:wfc@gfdl.noaa.gov>`__ ,  `Matthew Harrison <mailto:mh2@gfdl.noaa.gov>`__
-   **Reviewers: **
-   **Change History: **\ `WebCVS Log home <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi>`__
-
---------------
+module field_manager_mod
+========================
 
 Overview
-^^^^^^^^
+--------
 
 The field manager reads entries from a field table and stores this information along with the type of field it belongs
 to. This allows the component models to query the field manager to see if non-default methods of operation are desired.
@@ -59,10 +44,8 @@ namelist, individual fields can be modified through the field table however.
 
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -72,10 +55,8 @@ Other modules used
       mpp_io_mod
          fms_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -107,10 +88,8 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
@@ -125,10 +104,8 @@ Public data
    MODEL_ICE             integer, parameter 4       ---   Ice model.
    ===================== ================== ======= ===== =============================
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Field_manager_init
       :name: field_manager_init
@@ -143,15 +120,15 @@ a. .. rubric:: Field_manager_init
       simply holds the information and is queried by the appropriate module.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``table_name   ``                                         | The name of the field table. The default name is          |
+      | ``table_name``                                            | The name of the field table. The default name is          |
       |                                                           | field_table.                                              |
-      |                                                           |    [character, optional, dimension(len=128)]              |
+      |                                                           | [character, optional, dimension(len=128)]                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``nfields   ``                                            | The number of fields.                                     |
-      |                                                           |    [integer]                                              |
+      | ``nfields``                                               | The number of fields.                                     |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 b. .. rubric:: Field_manager_end
@@ -177,8 +154,8 @@ c. .. rubric:: Find_field_index
       manager. This index can be used to access other information from the field manager.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``model   ``                                              | The number indicating which model is used.                |
-      |                                                           |    [integer]                                              |
+      | ``model``                                                 | The number indicating which model is used.                |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 d. .. rubric:: Get_field_info
@@ -193,23 +170,23 @@ d. .. rubric:: Get_field_info
       is associated and the number of methods associated with the field.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  | The field index.                                          |
-      |                                                           |    [integer]                                              |
+      | ``n``                                                     | The field index.                                          |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``fld_type   ``                                           | The field type.                                           |
-      |                                                           |    [character, dimension(*)]                              |
+      | ``fld_type``                                              | The field type.                                           |
+      |                                                           | [character, dimension(*)]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``fld_name   ``                                           | The name of the field.                                    |
-      |                                                           |    [character, dimension(*)]                              |
+      | ``fld_name``                                              | The name of the field.                                    |
+      |                                                           | [character, dimension(*)]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``model   ``                                              | The number indicating which model is used.                |
-      |                                                           |    [integer]                                              |
+      | ``model``                                                 | The number indicating which model is used.                |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``num_methods   ``                                        | The number of methods.                                    |
-      |                                                           |    [integer]                                              |
+      | ``num_methods``                                           | The number of methods.                                    |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 e. .. rubric:: Get_field_method
@@ -224,11 +201,11 @@ e. .. rubric:: Get_field_method
       field(n) method(m).
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  | The field index.                                          |
-      |                                                           |    [integer]                                              |
+      | ``n``                                                     | The field index.                                          |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``m   ``                                                  | The method index.                                         |
-      |                                                           |    [integer]                                              |
+      | ``m``                                                     | The method index.                                         |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 f. .. rubric:: Get_field_methods
@@ -243,8 +220,8 @@ f. .. rubric:: Get_field_methods
       field.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  | The field index.                                          |
-      |                                                           |    [integer]                                              |
+      | ``n``                                                     | The field index.                                          |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 g. .. rubric:: Parse
@@ -261,38 +238,34 @@ g. .. rubric:: Parse
       values decoded.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``text   ``                                               | The text string from which the values will be parsed.     |
-      |                                                           |    [character(len=*)]                                     |
+      | ``text``                                                  | The text string from which the values will be parsed.     |
+      |                                                           | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``label   ``                                              | A label which describes the values being decoded.         |
-      |                                                           |    [character(len=*)]                                     |
+      | ``label``                                                 | A label which describes the values being decoded.         |
+      |                                                           | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``value   ``                                              | The value or values that have been decoded.               |
-      |                                                           |    [integer, real, character(len=*)]                      |
+      | ``value``                                                 | The value or values that have been decoded.               |
+      |                                                           | [integer, real, character(len=*)]                         |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``parse   ``                                              | The number of values that have been decoded. This allows  |
+      | ``parse``                                                 | The number of values that have been decoded. This allows  |
       |                                                           | a user to define a large array and fill it partially with |
       |                                                           | values from a list. This should be the size of the value  |
       |                                                           | array.                                                    |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
---------------
-
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
 
---------------
-
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
@@ -333,8 +306,6 @@ Error messages
    **FATAL in get_field_methods**
       method array too small
       The method array is smaller than the number of methods.
-
---------------
 
 .. container::
 

@@ -1,22 +1,11 @@
 PROGRAM ``netcdf_to_gitm_blocks``
 =================================
 
-Contents
---------
-
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files read <#files_read>`__
--  `Files written <#files_written>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 | The `Global Ionosphere Thermosphere Model (GITM) <http://ccmc.gsfc.nasa.gov/models/modelinfo.php?model=GITM>`__ is a
   3-dimensional spherical code that models the Earth's thermosphere and ionosphere system using a stretched grid in
-  latitude and altitude. For a fuller description of using GITM within DART, please see the `DART GITM model
-  documentation <model_mod.html>`__.
+  latitude and altitude. For a fuller description of using GITM within DART, please see the :doc:`./model_mod`.
 | ``netcdf_to_gitm_blocks`` is the program that updates the GITM restart files (i.e. ``b?????.rst``) with the
-  information from a DART output/restart file (e.g. ``perfect_ics, filter_ics, ... ``).
+  information from a DART output/restart file (e.g. ``perfect_ics, filter_ics, ...``).
 | The list of variables used to create the DART state vector are specified in the ``input.nml`` file.
 | Conditions required for successful execution of ``netcdf_to_gitm_blocks``:
 
@@ -56,8 +45,6 @@ To build GITM ... download GITM and unpack the code into ``DART/models/gitm/GITM
 
    And then manually run ``netcdf_to_gitm_blocks`` on the result.
 
---------------
-
 Namelist
 --------
 
@@ -86,23 +73,21 @@ terminating the namelist.
                              'iO_3P_NDensityS',        'QTY_DENSITY_NEUTRAL_O3P',
       ...
 
-+--------------------------------------+----------------------+----------------------------------------------+
-| Contents                             | Type                 | Description                                  |
-+======================================+======================+==============================================+
-| netcdf_to_gitm_blocks_output_file    | character(len=128)   | The name of the DART file containing the     |
-|                                      |                      | model state derived from the GITM restart    |
-|                                      |                      | files.                                       |
-+--------------------------------------+----------------------+----------------------------------------------+
-| advance_time_present                 | logical              | If you are manually converting a DART        |
-|                                      |                      | initial conditions or restart file this      |
-|                                      |                      | should be ``.false.``; these files have a    |
-|                                      |                      | single timestamp describing the valid time   |
-|                                      |                      | of the model state. If ``.true.``, TWO       |
-|                                      |                      | timestamps are expected in the DART file     |
-|                                      |                      | header and ``DART_GITM_time_control.txt``)   |
-|                                      |                      | is created with the settings appropriate to  |
-|                                      |                      | advance GITM to the time requested by DART.  |
-+--------------------------------------+----------------------+----------------------------------------------+
++-----------------------------------+--------------------+-----------------------------------------------------------+
+| Contents                          | Type               | Description                                               |
++===================================+====================+===========================================================+
+| netcdf_to_gitm_blocks_output_file | character(len=128) | The name of the DART file containing the model state      |
+|                                   |                    | derived from the GITM restart files.                      |
++-----------------------------------+--------------------+-----------------------------------------------------------+
+| advance_time_present              | logical            | If you are manually converting a DART initial conditions  |
+|                                   |                    | or restart file this should be ``.false.``; these files   |
+|                                   |                    | have a single timestamp describing the valid time of the  |
+|                                   |                    | model state. If ``.true.``, TWO timestamps are expected   |
+|                                   |                    | in the DART file header and                               |
+|                                   |                    | ``DART_GITM_time_control.txt``) is created with the       |
+|                                   |                    | settings appropriate to advance GITM to the time          |
+|                                   |                    | requested by DART.                                        |
++-----------------------------------+--------------------+-----------------------------------------------------------+
 
 | 
 
@@ -112,21 +97,17 @@ but the most important variable for ``netcdf_to_gitm_blocks`` is repeated here.
 +---------------------------------------+---------------------------------------+---------------------------------------+
 | Contents                              | Type                                  | Description                           |
 +=======================================+=======================================+=======================================+
-| gitm_restart_dirname                  | character(len=256)                    | The name of the directory containing  |
+| gitm_restart_dirname                  | character(len=256)                    | The name of the directory containing  |
 |                                       |                                       | the GITM restart files and runtime    |
 |                                       |                                       | control information.                  |
 +---------------------------------------+---------------------------------------+---------------------------------------+
-| gitm_state_variables                  | character(len=32),                    | The list of variable names in the     |
+| gitm_state_variables                  | character(len=32),                    | The list of variable names in the     |
 |                                       | dimension(2,80)                       | gitm restart file to use to create    |
 |                                       |                                       | the DART state vector and their       |
 |                                       |                                       | corresponding DART kind. The default  |
 |                                       |                                       | list is specified in                  |
 |                                       |                                       | `model_mod.nml <model_mod.nml>`__     |
 +---------------------------------------+---------------------------------------+---------------------------------------+
-
---------------
-
-.. _modules_used:
 
 Modules used
 ------------
@@ -152,10 +133,6 @@ Modules used
    time_manager_mod.f90
    utilities_mod.f90
 
---------------
-
-.. _files_read:
-
 Files read
 ----------
 
@@ -164,26 +141,13 @@ Files read
 -  gitm control files: ``UAM.in.rst``
 -  DART namelist file: ``input.nml``
 
-.. _files_written:
-
 Files written
 -------------
 
 -  DART initial conditions/restart file; e.g. ``dart_ics``
-
---------------
 
 References
 ----------
 
 -  The official ``GITM`` site is: can be found at
    `ccmc.gsfc.nasa.gov/models/modelinfo.php?model=GITM <http://ccmc.gsfc.nasa.gov/models/modelinfo.php?model=GITM>`__
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-none - all error messages come from modules that have their own documentation.

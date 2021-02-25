@@ -1,26 +1,12 @@
 MODULE schedule_mod
 ===================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
 Provides a set of routines to generate a regular pattern of time windows. This module is only used for converting
 observation sequences files to netCDF format. If it stands the test of time, it will likely be used to create an
 assimilation schedule independent of the observation sequence file. Wouldn't that be nice ...
-
---------------
 
 Namelist
 --------
@@ -79,10 +65,6 @@ The default values will cause (pretty much) all possible observations to be put 
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -92,18 +74,14 @@ Other modules used
    utilities_mod
    time_manager_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ========================== ======================
 *use schedule_mod, only :* schedule_type
-                           set_regular_schedule
-                           get_time_from_schedule
-                           get_schedule_length
+\                          set_regular_schedule
+\                          get_time_from_schedule
+\                          get_schedule_length
 ========================== ======================
 
 Namelist ``&schedule_mod_nml`` may be read from file ``input.nml``.
@@ -129,7 +107,7 @@ Namelist ``&schedule_mod_nml`` may be read from file ``input.nml``.
 
 .. container:: routine
 
-   *call get_time_from_schedule(mytime, schedule, iepoch [, edge])*
+   *call get_time_from_schedule(mytime, schedule, iepoch [, edge])*
    ::
 
       type(time_type),     intent(out) :: mytime
@@ -204,8 +182,6 @@ Namelist ``&schedule_mod_nml`` may be read from file ``input.nml``.
 
 | 
 
---------------
-
 Files
 -----
 
@@ -215,33 +191,12 @@ filename  purpose
 input.nml to read the schedule_mod namelist
 ========= =================================
 
---------------
-
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ======= ======= =======
-   Routine Message Comment
-   ======= ======= =======
-   \               
-   ======= ======= =======
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

@@ -1,16 +1,6 @@
 PROGRAM ``compute_error``
 =========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -30,8 +20,6 @@ useful to skip an initial error spike while the model is spinning up which can r
 error.
 
 Namelist interface ``&compute_error_nml`` is read from file ``input.nml``.
-
---------------
 
 Namelist
 --------
@@ -67,10 +55,6 @@ namelist.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -79,33 +63,13 @@ Modules used
    types_mod
    utilities_mod
 
---------------
-
 Files
 -----
 
 -  DART diagnosic files (True_State.nc, Prior_Diag.nc)
 -  compute_error.nml
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +----------------------+-----------------------------------------+----------------------------------------------+
-   | Routine              | Message                                 | Comment                                      |
-   +======================+=========================================+==============================================+
-   | time dimension error | files must have overlapping time series | The unlimited 'time' dimension must values   |
-   |                      |                                         | in common between both files.                |
-   +----------------------+-----------------------------------------+----------------------------------------------+

@@ -1,17 +1,6 @@
 MODULE ``obs_def_gps_mod``
 ==========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -22,8 +11,6 @@ Author and Contact information:
 
 -  GPS Science: Hui Liu, hliu at ncar.edu
 -  DART Code: Nancy Collins, nancy at ucar.edu
-
---------------
 
 Namelist
 --------
@@ -56,10 +43,6 @@ namelist.
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -71,20 +54,16 @@ Other modules used
    assim_model_mod
    obs_kind_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ============================= ======================
 *use obs_def_gps_mod, only :* read_gpsro_ref
-                              write_gpsro_ref
-                              get_expected_gpsro_ref
-                              interactive_gpsro_ref
-                              set_gpsro_ref
-                              get_gpsro_ref
+\                             write_gpsro_ref
+\                             get_expected_gpsro_ref
+\                             interactive_gpsro_ref
+\                             set_gpsro_ref
+\                             get_gpsro_ref
 ============================= ======================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -106,11 +85,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    the next observation and returns the private GPS key index number that identifies the auxiliary data for this
    observation.
 
-   ============ ====================================================================================================
-   ``gpskey  `` GPS key number returned to the caller.
-   ``ifile``    Open file unit number to read from.
-   *fform*      If specified, indicate whether the file was opened formatted or unformatted. Default is 'formatted'.
-   ============ ====================================================================================================
+   ========== ====================================================================================================
+   ``gpskey`` GPS key number returned to the caller.
+   ``ifile``  Open file unit number to read from.
+   *fform*    If specified, indicate whether the file was opened formatted or unformatted. Default is 'formatted'.
+   ========== ====================================================================================================
 
 | 
 
@@ -128,11 +107,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Refractivity observations have several items of auxiliary data to read or write. This routine writes out the
    auxiliary data for the specified observation to the file unit given.
 
-   ============ ====================================================================================================
-   ``gpskey  `` GPS key number identifying which observation to write aux data for.
-   ``ifile``    Open file unit number to write to.
-   *fform*      If specified, indicate whether the file was opened formatted or unformatted. Default is 'formatted'.
-   ============ ====================================================================================================
+   ========== ====================================================================================================
+   ``gpskey`` GPS key number identifying which observation to write aux data for.
+   ``ifile``  Open file unit number to write to.
+   *fform*    If specified, indicate whether the file was opened formatted or unformatted. Default is 'formatted'.
+   ========== ====================================================================================================
 
 | 
 
@@ -154,20 +133,20 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
      refractivity (N-1)*1.0e6 or *non_local* refractivity (excess phase, m) The type is indicated in the auxiliary
      information for each observation.
 
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``state_vector  `` | A one dimensional representation of the model state vector                                     |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``location``       | Location of this observation                                                                   |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``gpskey``         | Integer key identifying which GPS observation this is, so the correct corresponding auxiliary  |
-   |                    | information can be accessed.                                                                   |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``ro_ref``         | The returned GPS refractivity value                                                            |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``istatus``        | Returned integer status code describing problems with applying forward operator. 0 is a good   |
-   |                    | value; any positive value indicates an error; negative values are reserved for internal DART   |
-   |                    | use only.                                                                                      |
-   +--------------------+------------------------------------------------------------------------------------------------+
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``state_vector`` | A one dimensional representation of the model state vector                                       |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``location``     | Location of this observation                                                                     |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``gpskey``       | Integer key identifying which GPS observation this is, so the correct corresponding auxiliary    |
+   |                  | information can be accessed.                                                                     |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``ro_ref``       | The returned GPS refractivity value                                                              |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``istatus``      | Returned integer status code describing problems with applying forward operator. 0 is a good     |
+   |                  | value; any positive value indicates an error; negative values are reserved for internal DART use |
+   |                  | only.                                                                                            |
+   +------------------+--------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -183,11 +162,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Prompts the user for the auxiliary information needed for a GPS refractivity observation, and returns the new key
    associated with this data.
 
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``gpskey  `` | Unique identifier associated with this GPS refractivity observation. In this code it is an integer   |
-   |              | index into module local arrays which hold the additional data. This routine returns the incremented  |
-   |              | value associated with this data.                                                                     |
-   +--------------+------------------------------------------------------------------------------------------------------+
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``gpskey`` | Unique identifier associated with this GPS refractivity observation. In this code it is an integer     |
+   |            | index into module local arrays which hold the additional data. This routine returns the incremented    |
+   |            | value associated with this data.                                                                       |
+   +------------+--------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -278,44 +257,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Files
 -----
 
 -  A DART observation sequence file containing GPS obs.
-
---------------
 
 References
 ----------
 
 -  Assimilation of GPS Radio Occultation Data for Numerical Weather Prediction, Kuo,Y.H., Sokolovskiy,S.V., Anthes,R.A.,
    Vendenberghe,F., Terrestrial Atm and Ocn Sciences, Vol 11, pp157-186, 2000.
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +------------------------+---------------------------------------------+---------------------------------------------+
-   | Routine                | Message                                     | Comment                                     |
-   +========================+=============================================+=============================================+
-   | initialize_module      | initial allocation failed for gps           | Need to increase max_gpsro_obs count in     |
-   |                        | observation data, itemcount =               | namelist                                    |
-   |                        | (max_gpsro_obs)                             |                                             |
-   +------------------------+---------------------------------------------+---------------------------------------------+
-   | gpskey_out_of_range    | gpskey (key#) exceeds max_radial_gps_obs    | The number of GPS observations exceeds the  |
-   |                        | (maxval)                                    | array size allocated in the module. Need to |
-   |                        |                                             | increase max_gpsro_obs count in namelist.   |
-   +------------------------+---------------------------------------------+---------------------------------------------+
-   | read_gpsro_ref         | Expected header 'gpsroref' in input file    | The format of the input obs_seq file is not |
-   |                        |                                             | consistent.                                 |
-   +------------------------+---------------------------------------------+---------------------------------------------+
-   | get_expected_gpsro_ref | vertical location must be height; gps obs   | GPS observations must have vertical         |
-   |                        | key #                                       | coordinates of height                       |
-   +------------------------+---------------------------------------------+---------------------------------------------+

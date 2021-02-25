@@ -1,17 +1,5 @@
-MODULE model_mod (Ikeda)
-========================
-
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
+Ikeda
+=====
 
 Overview
 --------
@@ -40,8 +28,6 @@ where
    error variance. The observation was defined to be taken at day=0, seconds = 0. ``create_fixed_network_sequence`` was
    run to create a sequence with 3000 hourly observations starting at day=0, seconds =0. The initial conditions for
    filter can accomodate 100 ensemble members."
-
---------------
 
 Namelist
 --------
@@ -84,10 +70,6 @@ namelist.
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -98,30 +80,26 @@ Other modules used
    oned/location_mod
    utilities_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ======================= ======================
 *use model_mod, only :* get_model_size
-                        adv_1step
-                        get_state_meta_data
-                        model_interpolate
-                        get_model_time_step
-                        static_init_model
-                        end_model
-                        init_time
-                        init_conditions
-                        nc_write_model_atts
-                        nc_write_model_vars
-                        pert_model_state
-                        get_close_maxdist_init
-                        get_close_obs_init
-                        get_close_obs
-                        ens_mean_for_model
+\                       adv_1step
+\                       get_state_meta_data
+\                       model_interpolate
+\                       get_model_time_step
+\                       static_init_model
+\                       end_model
+\                       init_time
+\                       init_conditions
+\                       nc_write_model_atts
+\                       nc_write_model_vars
+\                       pert_model_state
+\                       get_close_maxdist_init
+\                       get_close_obs_init
+\                       get_close_obs
+\                       ens_mean_for_model
 ======================= ======================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -158,16 +136,16 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Advances the model for a single time step. The time associated with the initial model state is also input although it
    is not used for the computation.
 
-   =========== ==================================
-   ``x``       State vector of length model_size.
-   ``time   `` Unused in this model.
-   =========== ==================================
+   ======== ==================================
+   ``x``    State vector of length model_size.
+   ``time`` Unused in this model.
+   ======== ==================================
 
 | 
 
 .. container:: routine
 
-   *call get_state_meta_data (index_in, location, [, var_type] )*
+   *call get_state_meta_data (index_in, location, [, var_type] )*
    ::
 
       integer,             intent(in)  :: index_in
@@ -178,16 +156,16 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns the location of the given index, and a dummy integer as the var_type.
 
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``index_in   `` | Index of state vector element about which information is requested.                               |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``location``    | Returns location of indexed state variable. The location should use a location_mod that is        |
-   |                 | appropriate for the model domain. For realistic atmospheric models, for instance, a               |
-   |                 | three-dimensional spherical location module that can represent height in a variety of ways is     |
-   |                 | provided.                                                                                         |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | *var_type*      | Returns the type of the indexed state variable as an optional argument.                           |
-   +-----------------+---------------------------------------------------------------------------------------------------+
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``index_in`` | Index of state vector element about which information is requested.                                  |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``location`` | Returns location of indexed state variable. The location should use a location_mod that is           |
+   |              | appropriate for the model domain. For realistic atmospheric models, for instance, a                  |
+   |              | three-dimensional spherical location module that can represent height in a variety of ways is        |
+   |              | provided.                                                                                            |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | *var_type*   | Returns the type of the indexed state variable as an optional argument.                              |
+   +--------------+------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -206,18 +184,18 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    A NULL INTERFACE in this model. Always returns istatus = 0.
 
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``x``           | A model state vector.                                                                             |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``location   `` | Location to which to interpolate.                                                                 |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``itype``       | Integer indexing which type of state variable is to be interpolated. Can be ignored for low order |
-   |                 | models with a single type of variable.                                                            |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``obs_val``     | The interpolated value from the model.                                                            |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``istatus``     | Quality control information about the observation of the model state.                             |
-   +-----------------+---------------------------------------------------------------------------------------------------+
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``x``        | A model state vector.                                                                                |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``location`` | Location to which to interpolate.                                                                    |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``itype``    | Integer indexing which type of state variable is to be interpolated. Can be ignored for low order    |
+   |              | models with a single type of variable.                                                               |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``obs_val``  | The interpolated value from the model.                                                               |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``istatus``  | Quality control information about the observation of the model state.                                |
+   +--------------+------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -232,9 +210,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns the models base time step, or forecast length, as a time_type. This is settable in the namelist.
 
-   ========== ============================
-   ``var   `` Smallest time step of model.
-   ========== ============================
+   ======= ============================
+   ``var`` Smallest time step of model.
+   ======= ============================
 
 | 
 
@@ -269,9 +247,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns a time of 0.
 
-   =========== ===================
-   ``time   `` Initial model time.
-   =========== ===================
+   ======== ===================
+   ``time`` Initial model time.
+   ======== ===================
 
 | 
 
@@ -286,9 +264,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Sets 2 initial locations close to the attractor.
 
-   ======== ====================================
-   ``x   `` Initial conditions for state vector.
-   ======== ====================================
+   ===== ====================================
+   ``x`` Initial conditions for state vector.
+   ===== ====================================
 
 | 
 
@@ -304,10 +282,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Uses the default template code.
 
-   =============== =========================================================
-   ``ncFileID   `` Integer file descriptor to previously-opened netCDF file.
-   ``ierr``        Returns a 0 for successful completion.
-   =============== =========================================================
+   ============ =========================================================
+   ``ncFileID`` Integer file descriptor to previously-opened netCDF file.
+   ``ierr``     Returns a 0 for successful completion.
+   ============ =========================================================
 
 | 
 
@@ -326,13 +304,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Uses the default template code.
 
-   ================ =================================================
-   ``ncFileID``     file descriptor to previously-opened netCDF file.
-   ``statevec``     A model state vector.
-   ``copyindex   `` Integer index of copy to be written.
-   ``timeindex``    The timestep counter for the given state.
-   ``ierr``         Returns 0 for normal completion.
-   ================ =================================================
+   ============= =================================================
+   ``ncFileID``  file descriptor to previously-opened netCDF file.
+   ``statevec``  A model state vector.
+   ``copyindex`` Integer index of copy to be written.
+   ``timeindex`` The timestep counter for the given state.
+   ``ierr``      Returns 0 for normal completion.
+   ============= =================================================
 
 | 
 
@@ -350,11 +328,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Given a model state, produces a perturbed model state. This particular model does not implement an interface for this
    and so returns .false. for interf_provided.
 
-   ====================== =============================================
-   ``state``              State vector to be perturbed.
-   ``pert_state``         Perturbed state vector: NOT returned.
-   ``interf_provided   `` Returned false; interface is not implemented.
-   ====================== =============================================
+   =================== =============================================
+   ``state``           State vector to be perturbed.
+   ``pert_state``      Perturbed state vector: NOT returned.
+   ``interf_provided`` Returned false; interface is not implemented.
+   =================== =============================================
 
 | 
 
@@ -369,8 +347,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 1-D locations module. See
-   `get_close_maxdist_init() </location/oned/location_mod.html#get_close_maxdist_init>`__ for the documentation of this
-   subroutine.
+   `get_close_maxdist_init() <../../location/oned/location_mod.html#get_close_maxdist_init>`__ for the documentation of
+   this subroutine.
 
 | 
 
@@ -386,14 +364,14 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 1-D locations module. See
-   `get_close_obs_init() </location/oned/location_mod.html#get_close_obs_init>`__ for the documentation of this
+   `get_close_obs_init() <../../location/oned/location_mod.html#get_close_obs_init>`__ for the documentation of this
    subroutine.
 
 | 
 
 .. container:: routine
 
-   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
+   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
    ::
 
       type(get_close_type), intent(in)  :: gc
@@ -407,8 +385,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: indent1
 
-   Pass-through to the 1-D locations module. See `get_close_obs() </location/oned/location_mod.html#get_close_obs>`__
-   for the documentation of this subroutine.
+   Pass-through to the 1-D locations module. See
+   `get_close_obs() <../../location/oned/location_mod.html#get_close_obs>`__ for the documentation of this subroutine.
 
 | 
 
@@ -423,13 +401,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    A NULL INTERFACE in this model.
 
-   =============== ==========================================
-   ``ens_mean   `` State vector containing the ensemble mean.
-   =============== ==========================================
+   ============ ==========================================
+   ``ens_mean`` State vector containing the ensemble mean.
+   ============ ==========================================
 
 | 
-
---------------
 
 Files
 -----
@@ -439,41 +415,19 @@ filename                    purpose
 =========================== ===========================================================================
 input.nml                   to read the model_mod namelist
 preassim.nc                 the time-history of the model state before assimilation
-analysis.nc                 the time-history of the model state after assimilation
+analysis.nc                 the time-history of the model state after assimilation
 dart_log.out [default name] the run-time diagnostic output
 dart_log.nml [default name] the record of all the namelists actually USED - contains the default values
 =========================== ===========================================================================
 
 | 
 
---------------
-
 References
 ----------
 
 Ikeda 1979, Optics Communications
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | Routine                               | Message                               | Comment                               |
-   +=======================================+=======================================+=======================================+
-   | nc_write_model_atts                   | Various netCDF-f90 interface error    | From one of the netCDF calls in the   |
-   | nc_write_model_vars                   | messages                              | named routine                         |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

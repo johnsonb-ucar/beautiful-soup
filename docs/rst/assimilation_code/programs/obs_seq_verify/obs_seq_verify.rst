@@ -1,17 +1,6 @@
 program ``obs_seq_verify``
 ==========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Files <#files>`__
--  `Usage <#usage>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -24,40 +13,36 @@ Overview
 | |verify variable|
 | ``obs_seq_verify`` can read in a series of observation sequence files - each of the files **must** contain the
   **entire forecast from a single analysis time**. The extension of each filename is **required** to reflect the
-  analysis time. Use `obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__ to
-  concatenate multiple files into a single observation sequence file if necessary. *Only the individual ensemble members
-  forecast values are used - the ensemble mean and spread (as individual copies) are completely ignored.* The individual
-  "*prior ensemble member NNNN*" copies are used. As a special case, the "*prior ensemble mean*" copy is used *if and
-  only if* there are no individual ensemble members present (i.e. ``input.nml``
-  ``&filter_nml:num_output_obs_members`` == *0*).
+  analysis time. Use :doc:`../../../assimilation_code/programs/obs_sequence_tool/obs_sequence_tool` to concatenate
+  multiple files into a single observation sequence file if necessary. *Only the individual ensemble members forecast
+  values are used - the ensemble mean and spread (as individual copies) are completely ignored.* The individual "*prior
+  ensemble member NNNN*" copies are used. As a special case, the "*prior ensemble mean*" copy is used *if and only if*
+  there are no individual ensemble members present (i.e. ``input.nml`` ``&filter_nml:num_output_obs_members`` == *0*).
 
-+-----------------+---------------------------------------------------------------------------------------------------+
-| Dimension       | Explanation                                                                                       |
-+=================+===================================================================================================+
-| analysisT       | This is the netCDF UNLIMITED dimension, so it is easy to 'grow' this dimension. This corresponds  |
-|                 | to the number of forecasts one would like to compare.                                             |
-+-----------------+---------------------------------------------------------------------------------------------------+
-| stations        | The unique horizontal locations in the verification network.                                      |
-+-----------------+---------------------------------------------------------------------------------------------------+
-| levels          | The vertical level at each location. Observations with a pressure vertical coordinate are         |
-|                 | selected based on their proximity to the mandatory levels as defined in                           |
-|                 | `obs_seq_coverage </assimilation_code/programs/obs_seq_coverage/obs_seq_coverage.html>`__.        |
-|                 | Surface observations or observations with undefined vertical coordinates are simply put into      |
-|                 | level 1.                                                                                          |
-+-----------------+---------------------------------------------------------------------------------------------------+
-| copy            | This dimension designates the quantity of interest; the observation, the forecast value, or the   |
-|                 | observation error variance. These quantities are the ones required to calculate the evaluation    |
-|                 | statistics.                                                                                       |
-+-----------------+---------------------------------------------------------------------------------------------------+
-| nmembers        | Each ensemble member contributes a forecast value.                                                |
-+-----------------+---------------------------------------------------------------------------------------------------+
-| forecast_lead   | This dimension relates to the amount of time between the start of the forecast and the            |
-|                 | verification.                                                                                     |
-+-----------------+---------------------------------------------------------------------------------------------------+
++---------------+-----------------------------------------------------------------------------------------------------+
+| Dimension     | Explanation                                                                                         |
++===============+=====================================================================================================+
+| analysisT     | This is the netCDF UNLIMITED dimension, so it is easy to 'grow' this dimension. This corresponds to |
+|               | the number of forecasts one would like to compare.                                                  |
++---------------+-----------------------------------------------------------------------------------------------------+
+| stations      | The unique horizontal locations in the verification network.                                        |
++---------------+-----------------------------------------------------------------------------------------------------+
+| levels        | The vertical level at each location. Observations with a pressure vertical coordinate are selected  |
+|               | based on their proximity to the mandatory levels as defined in                                      |
+|               | :doc:`../../../assimilation_code/programs/obs_seq_coverage/obs_seq_coverage`. Surface observations  |
+|               | or observations with undefined vertical coordinates are simply put into level 1.                    |
++---------------+-----------------------------------------------------------------------------------------------------+
+| copy          | This dimension designates the quantity of interest; the observation, the forecast value, or the     |
+|               | observation error variance. These quantities are the ones required to calculate the evaluation      |
+|               | statistics.                                                                                         |
++---------------+-----------------------------------------------------------------------------------------------------+
+| nmembers      | Each ensemble member contributes a forecast value.                                                  |
++---------------+-----------------------------------------------------------------------------------------------------+
+| forecast_lead | This dimension relates to the amount of time between the start of the forecast and the              |
+|               | verification.                                                                                       |
++---------------+-----------------------------------------------------------------------------------------------------+
 
 The USAGE section has more on the actual use of ``obs_seq_verify``.
-
---------------
 
 Namelist
 --------
@@ -82,7 +67,7 @@ namelist.
 | 
 
 You can specify **either** ``obs_sequences`` **or** ``obs_sequence_list`` -- not both. One of them has to be an empty
-string ... i.e. *' '*.
+string ... i.e. *' '*.
 
 .. container::
 
@@ -93,7 +78,7 @@ string ... i.e. *' '*.
    |                   |                                    | **MUST** have an extension that defines the start of the  |
    |                   |                                    | forecast (the analysis time). The observation sequence    |
    |                   |                                    | filenames must be something like                          |
-   |                   |                                    | ``obs_seq.forecast.YYYYMMDDHH`` . If ``obs_sequences`` is |
+   |                   |                                    | ``obs_seq.forecast.YYYYMMDDHH`` . If ``obs_sequences`` is |
    |                   |                                    | specified, ``obs_sequence_list`` must be empty.           |
    +-------------------+------------------------------------+-----------------------------------------------------------+
    | obs_sequence_list | character(len=256)                 | Name of an ascii text file which contains a list of one   |
@@ -109,8 +94,8 @@ string ... i.e. *' '*.
    |                   |                                    | must be empty.                                            |
    +-------------------+------------------------------------+-----------------------------------------------------------+
    | station_template  | character(len=256)                 | The name of the netCDF file created by                    |
-   |                   |                                    | `obs_seq_coverage </assimilation                          |
-   |                   |                                    | _code/programs/obs_seq_coverage/obs_seq_coverage.html>`__ |
+   |                   |                                    | :doc:`../../../assi                                       |
+   |                   |                                    | milation_code/programs/obs_seq_coverage/obs_seq_coverage` |
    |                   |                                    | that contains the verification network description.       |
    +-------------------+------------------------------------+-----------------------------------------------------------+
    | netcdf_out        | character(len=256)                 | The base portion of the filename of the file that will    |
@@ -137,10 +122,6 @@ string ... i.e. *' '*.
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -158,27 +139,23 @@ Other modules used
    assimilation_code/modules/utilities/utilities_mod.f90
    observations/forward_operators/obs_def_mod.f90
 
---------------
-
 Files
 -----
 
 -  ``input.nml`` is used for *obs_seq_verify_nml*
 -  A netCDF file containing the metadata for the verification network. This file is created by
-   `obs_seq_coverage </assimilation_code/programs/obs_seq_coverage/obs_seq_coverage.html>`__ to define the desired times
-   and locations for the verification.
+   :doc:`../../../assimilation_code/programs/obs_seq_coverage/obs_seq_coverage` to define the desired times and
+   locations for the verification.
    (``obsdef_mask.nc`` is the default name)
 -  One or more observation sequence files from ``filter`` run in *forecast* mode - meaning all the observations were
    flagged as *evaluate_only*. It is required/presumed that all the ensemble members are output to the observation
-   sequence file (see `num_output_obs_members </assimilation_code/programs/filter/filter.html#Namelist>`__). Each
-   observation sequence file contains all the forecasts from a single analysis time and the filename extension must
+   sequence file (see `num_output_obs_members <../../../assimilation_code/programs/filter/filter.html#Namelist>`__).
+   Each observation sequence file contains all the forecasts from a single analysis time and the filename extension must
    reflect the analysis time used to start the forecast.
    (``obs_seq.forecast.YYYYMMDDHH`` is the default name)
 -  Every execution of ``obs_seq_verify`` results in one netCDF file that contains the observation being verified. If
-   ``obtype_string = 'METAR_U_10_METER_WIND'``, and ``netcdf_out = 'forecast.nc'``; the resulting filename will be
+   ``obtype_string = 'METAR_U_10_METER_WIND'``, and ``netcdf_out = 'forecast.nc'``; the resulting filename will be
    ``METAR_U_10_METER_WIND_forecast.nc``.
-
---------------
 
 Usage
 -----
@@ -194,14 +171,13 @@ Example: a single 48-hour forecast that is evaluated every 6 hours
 
 | |Example 1|
 | In this example, the ``obsdef_mask.nc`` file was created by running
-  `obs_seq_coverage </assimilation_code/programs/obs_seq_coverage/obs_seq_coverage.html>`__ with the namelist specified
-  in the `single 48hour forecast evaluated every 6
-  hours </assimilation_code/programs/obs_seq_coverage/obs_seq_coverage.html#example48x6>`__ example. The
+  :doc:`../../../assimilation_code/programs/obs_seq_coverage/obs_seq_coverage` with the namelist specified in the
+  `single 48hour forecast evaluated every 6
+  hours <../../../assimilation_code/programs/obs_seq_coverage/obs_seq_coverage.html#example48x6>`__ example. The
   ``obsdef_mask.txt`` file was used to mask the input observation sequence files by
-  `obs_selection </assimilation_code/programs/obs_selection/obs_selection.html>`__ and the result was run through
-  `filter </assimilation_code/programs/filter/filter.html>`__ with the observations marked as *evaluate_only* -
-  resulting in a file called ``obs_seq.forecast.2008060818``. This filename could also be put in a file called
-  ``verify_list.txt``.
+  :doc:`../../../assimilation_code/programs/obs_selection/obs_selection` and the result was run through
+  :doc:`../filter/filter` with the observations marked as *evaluate_only* - resulting in a file called
+  ``obs_seq.forecast.2008060818``. This filename could also be put in a file called ``verify_list.txt``.
 | Just to reiterate the example, both namelists for ``obs_seq_coverage`` and ``obs_seq_verify`` are provided below.
 
 .. container:: routine
@@ -240,8 +216,8 @@ Example: a single 48-hour forecast that is evaluated every 6 hours
          debug             = .false.
          /
 
-The pertinent information from the ``obsdef_mask.nc`` file is summarized (from
-*ncdump -v experiment_times,analysis,forecast_lead obsdef_mask.nc*) as follows:
+The pertinent information from the ``obsdef_mask.nc`` file is summarized (from *ncdump -v
+experiment_times,analysis,forecast_lead obsdef_mask.nc*) as follows:
 
 ::
 
@@ -423,84 +399,12 @@ Discussion
 -  The *analysisT* dimension is the netCDF record/unlimited dimension. Should you want to increase the strength of the
    statistical results, you should be able to trivially ``ncrcat`` more (compatible) netCDF files together.
 
---------------
-
 References
 ----------
 
 -  none - but this seems like a good place to start:
    `The Centre for Australian Weather and Climate Research - Forecast Verification Issues, Methods and
    FAQ <http://www.cawcr.gov.au/projects/verification/>`__
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   Routine
-
-Message
-
-Comment
-
-obs_seq_verify
-
-'namelist: obtype_string (xxxx) is unknown. change input.nml'
-
-the requested observation type does not match any supported observation type. If it is spelled correctly, perhaps you
-need to rerun ``preprocess`` to build the appropriate ``obs_def_mod.mod``\ and ``obs_kind_mod.mod``.
-
-obs_seq_verify
-
-'specify "obs_sequences" or "obs_sequence_list"'
-
-one of these namelist variables MUST be an empty string
-
-obs_seq_verify
-
-'xxxxxx ' is not a known observation type.'
-
-one of the *obs_of_interest* namelist entries specifies an observation type that is not supported. Perhaps you need to
-rerun ``preprocess`` with support for the observation, or perhaps it is spelled incorrectly. All DART observation types
-are strictly uppercase.
-
-obs_seq_verify
-
-'need at least 1 qc and 1 observation copy'
-
-an observation sequence does not have all the metadata necessary. Cannot use "``obs_seq.in``"-class sequences.
-
-obs_seq_verify
-
-'num_copies ##### does not match #####'
-
-ALL observation sequences must contain the same 'copy' information. At some point it may be possible to mix
-"``obs_seq.out``"-class sequences with "``obs_seq.final``"-class sequences, but this seems like it can wait.
-
-obs_seq_verify
-
-'No location had at least ### reporting times.'
-
-The input selection criteria did not result in any locations that had observations at all of the required verification
-times.
-
-set_required_times
-
-'namelist: forecast length is not a multiple of the verification interval'
-
-The namelist settings for *forecast_length_[days,seconds]* and *verification_interval_seconds* do not make sense. Refer
-to the forecast time diagram.
-
-set_required_times
-
-'namelist: last analysis time is not a multiple of the verification interval'
-
-The namelist settings for *first_analysis* and *last_analysis* are not separated by a multiple of
-*verification_interval_seconds*. Refer to the forecast time diagram.
 
 .. |verify schematic| image:: ../../../docs/images/obs_seq_verify_diagram.png
    :width: 50.0%

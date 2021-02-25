@@ -1,19 +1,5 @@
-MODULE model_mod (MPAS OCN)
-===========================
-
-Contents
---------
-
--  `Overview <#overview>`__
--  `model_mod variable storage <#model_mod_variable_storage>`__
--  `The DART interface for MPAS (atm) <#the_dart_interface_for_mpas_(atm)>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
+MPAS OCN
+========
 
 Overview
 --------
@@ -57,8 +43,6 @@ real(r8) :: lonCell(:)        the longitudes of the Cell Centers [0, 360)
 real(r8) :: zgrid(:,:)        cell center geometric height at cell centers (ncells,nvert)
 integer :: CellsOnVertex(:,:) list of cell centers defining a triangle
 ============================= ===========================================================
-
-.. _model_mod_variable_storage:
 
 model_mod variable storage
 --------------------------
@@ -104,7 +88,7 @@ naturally, the DART state vector is 1D. Each variable is also stored this way in
 .. container:: indent1
 
    .. rubric:: The DART interface for MPAS (atm)
-      :name: the_dart_interface_for_mpas_(atm)
+      :name: the-dart-interface-for-mpas-atm
 
    | was compiled with the gfortran 4.2.3 compilers and run on a Mac.
    | The DART components were built with the following ``mkmf.template`` settings:
@@ -131,23 +115,23 @@ naturally, the DART state vector is 1D. Each variable is also stored this way in
      ``mpas_vars_nml`` namelist in the ``input.nml`` file. The MPAS file name being read and/or written is - in all
      instances - specified by the ``model_nml:model_analysis_filename`` variable in the ``input.nml`` namelist file.
 
-   +--------------------------------------------+------------------------------------------------------------------------+
-   | `model_to_dart.f90 <model_to_dart.html>`__ | converts an MPAS analysis file (nominally named ``mpas_analysis.nc``)  |
-   |                                            | into a DART-compatible file normally called ``dart_ics`` . We usually  |
-   |                                            | wind up linking the actual analysis file to a static name that is used |
-   |                                            | by DART.                                                               |
-   +--------------------------------------------+------------------------------------------------------------------------+
-   | `dart_to_model.f90 <dart_to_model.f90>`__  | inserts the DART output into an existing MPAS analysis netCDF file by  |
-   |                                            | overwriting the variables in the analysis netCDF file. There are two   |
-   |                                            | different types of DART output files, so there is a namelist option to |
-   |                                            | specify if the DART file has two time records or just one (if there    |
-   |                                            | are two, the first one is the 'advance_to' time, followed by the       |
-   |                                            | 'valid_time' of the ensuing state). ``dart_to_model`` updates the MPAS |
-   |                                            | analysis file specified in                                             |
-   |                                            | ``input.nml``\ ``model_nml:model_analysis_filename``. If the DART file |
-   |                                            | contains an 'advance_to' time, separate control information is written |
-   |                                            | to an auxiliary file that is used by the ``advance_model.csh`` script. |
-   +--------------------------------------------+------------------------------------------------------------------------+
+   +-------------------------------------------+-------------------------------------------------------------------------+
+   | :doc:`./model_to_dart`                    | converts an MPAS analysis file (nominally named ``mpas_analysis.nc``)   |
+   |                                           | into a DART-compatible file normally called ``dart_ics`` . We usually   |
+   |                                           | wind up linking the actual analysis file to a static name that is used  |
+   |                                           | by DART.                                                                |
+   +-------------------------------------------+-------------------------------------------------------------------------+
+   | `dart_to_model.f90 <dart_to_model.f90>`__ | inserts the DART output into an existing MPAS analysis netCDF file by   |
+   |                                           | overwriting the variables in the analysis netCDF file. There are two    |
+   |                                           | different types of DART output files, so there is a namelist option to  |
+   |                                           | specify if the DART file has two time records or just one (if there are |
+   |                                           | two, the first one is the 'advance_to' time, followed by the            |
+   |                                           | 'valid_time' of the ensuing state). ``dart_to_model`` updates the MPAS  |
+   |                                           | analysis file specified in                                              |
+   |                                           | ``input.nml``\ ``model_nml:model_analysis_filename``. If the DART file  |
+   |                                           | contains an 'advance_to' time, separate control information is written  |
+   |                                           | to an auxiliary file that is used by the ``advance_model.csh`` script.  |
+   +-------------------------------------------+-------------------------------------------------------------------------+
 
 .. container:: indent1
 
@@ -270,8 +254,6 @@ naturally, the DART state vector is 1D. Each variable is also stored this way in
               double tend_qnr(Time, nCells, nVertLevels) ;
               double tend_qni(Time, nCells, nVertLevels) ;
 
---------------
-
 Namelist
 --------
 
@@ -299,11 +281,11 @@ prevent them from prematurely terminating the namelist.
    | Contents                              | Type                                  | Description                           |
    +=======================================+=======================================+=======================================+
    | model_analysis_filename               | character(len=256)                    | Character string specifying the name  |
-   |                                       | *[default: 'mpas_analysis.nc']*       | of the MPAS analysis file to be read  |
+   |                                       | *[default: 'mpas_analysis.nc']*       | of the MPAS analysis file to be read  |
    |                                       |                                       | and/or written by the different       |
    |                                       |                                       | program units.                        |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | output_state_vector                   | logical *[default: .true.]*           | The switch to determine the form of   |
+   | output_state_vector                   | logical *[default: .true.]*           | The switch to determine the form of   |
    |                                       |                                       | the state vector in the output netCDF |
    |                                       |                                       | files. If ``.true.`` the state vector |
    |                                       |                                       | will be output exactly as DART uses   |
@@ -313,29 +295,28 @@ prevent them from prematurely terminating the namelist.
    |                                       |                                       | output that way -- much easier to use |
    |                                       |                                       | with 'ncview', for example.           |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | assimilation_period_days              | integer *[default: 1]*                | The number of days to advance the     |
+   | assimilation_period_days              | integer *[default: 1]*                | The number of days to advance the     |
    |                                       |                                       | model for each assimilation.          |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | assimilation_period_seconds           | integer *[default: 0]*                | In addition to                        |
+   | assimilation_period_seconds           | integer *[default: 0]*                | In addition to                        |
    |                                       |                                       | ``assimilation_period_days``, the     |
    |                                       |                                       | number of seconds to advance the      |
    |                                       |                                       | model for each assimilation.          |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | model_perturbation_amplitude          | real(r8) *[default: 0.2]*             | Reserved for future use.              |
+   | model_perturbation_amplitude          | real(r8) *[default: 0.2]*             | Reserved for future use.              |
    +---------------------------------------+---------------------------------------+---------------------------------------+
    | calendar                              | character(len=32)                     | Character string specifying the       |
-   |                                       | *[default: 'Gregorian']*              | calendar being used by MPAS.          |
+   |                                       | *[default: 'Gregorian']*              | calendar being used by MPAS.          |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | debug                                 | integer *[default: 0]*                | The switch to specify the run-time    |
+   | debug                                 | integer *[default: 0]*                | The switch to specify the run-time    |
    |                                       |                                       | verbosity. ``0`` is as quiet as it    |
    |                                       |                                       | gets. ``> 1`` provides more run-time  |
    |                                       |                                       | messages. ``> 5`` provides ALL        |
    |                                       |                                       | run-time messages.                    |
    +---------------------------------------+---------------------------------------+---------------------------------------+
 
-   .. rubric:: Example
-      :name: example
-      :class: indent1
+   .. rubric:: Example namelist
+      :name: example-namelist
 
    ::
 
@@ -365,13 +346,13 @@ prevent them from prematurely terminating the namelist.
    | Contents                              | Type                                  | Description                           |
    +=======================================+=======================================+=======================================+
    | mpas_vars_nml                         | character(len=NF90_MAX_NAME)::        | The table that relates the GITM       |
-   |                                       | dimension(160) *[default:  see        | variables to use to build the DART    |
+   |                                       | dimension(160) *[default: see         | variables to use to build the DART    |
    |                                       | example]*                             | state vector, and the corresponding   |
    |                                       |                                       | DART kinds for those variables.       |
    +---------------------------------------+---------------------------------------+---------------------------------------+
 
    .. rubric:: Example
-      :name: example-1
+      :name: example
       :class: indent1
 
    The following mpas_vars_nml is just for demonstration purposes. You application will likely involve a different DART
@@ -401,10 +382,6 @@ prevent them from prematurely terminating the namelist.
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -418,22 +395,13 @@ Other modules used
    mpi_utilities_mod
    random_seq_mod
 
-Everything below here is complete fiction
-=========================================
+.. warning::
 
-.. _everything-below-here-is-complete-fiction-1:
-
-Everything below here is complete fiction
-=========================================
-
-.. _everything-below-here-is-complete-fiction-2:
-
-Everything below here is complete fiction
-=========================================
-
---------------
-
-.. _public_interfaces:
+   DAReS staff began creating the MPAS_OCN interface to DART in preparation for the model's inclusion as the ocean
+   component of the Community Earth System Model (CESM). The plans for including MPAS_OCN in CESM were abandoned and the
+   Modular Ocean Model version 6 (MOM6) was included instead. Thus, the documentation on this page after this point
+   describes an incomplete interface. Please contact DAReS staff by emailing dart@ucar.edu if you want to use DART with
+   MPAS_OCN.
 
 Public interfaces
 -----------------
@@ -444,22 +412,22 @@ Required interface routines
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ======================= ======================
-*use model_mod, only :* get_model_size
-                        adv_1step
-                        get_state_meta_data
-                        model_interpolate
-                        get_model_time_step
-                        static_init_model
-                        end_model
-                        init_time
-                        init_conditions
-                        nc_write_model_atts
-                        nc_write_model_vars
-                        pert_model_state
-                        get_close_maxdist_init
-                        get_close_obs_init
-                        get_close_obs
-                        ens_mean_for_model
+*use model_mod, only :* get_model_size
+\                       adv_1step
+\                       get_state_meta_data
+\                       model_interpolate
+\                       get_model_time_step
+\                       static_init_model
+\                       end_model
+\                       init_time
+\                       init_conditions
+\                       nc_write_model_atts
+\                       nc_write_model_vars
+\                       pert_model_state
+\                       get_close_maxdist_init
+\                       get_close_obs_init
+\                       get_close_obs
+\                       ens_mean_for_model
 ======================= ======================
 
 Unique interface routines
@@ -467,16 +435,17 @@ Unique interface routines
 
 ======================= =========================
 *use model_mod, only :* get_gridsize
-                        restart_file_to_sv
-                        sv_to_restart_file
-                        get_gitm_restart_filename
-                        get_base_time
-                        get_state_time
+\                       restart_file_to_sv
+\                       sv_to_restart_file
+\                       get_gitm_restart_filename
+\                       get_base_time
+\                       get_state_time
 ======================= =========================
 
-========================== =============================================================================================
-*use location_mod, only :* `get_close_obs </assimilation_code/location/threed_sphere/location_mod.html#get_close_obs>`__
-========================== =============================================================================================
++----------------------------+----------------------------------------------------------------------------------------+
+| *use location_mod, only :* | `get_close_o                                                                           |
+|                            | bs <../../assimilation_code/location/threed_sphere/location_mod.html#get_close_obs>`__ |
++----------------------------+----------------------------------------------------------------------------------------+
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
 
@@ -517,16 +486,16 @@ Required interface routines
    ``adv_1step`` is not used for the gitm model. Advancing the model is done through the ``advance_model`` script. This
    is a NULL_INTERFACE, provided only for compatibility with the DART requirements.
 
-   =========== ==========================================
-   ``x``       State vector of length model_size.
-   ``time   `` Specifies time of the initial model state.
-   =========== ==========================================
+   ======== ==========================================
+   ``x``    State vector of length model_size.
+   ``time`` Specifies time of the initial model state.
+   ======== ==========================================
 
 | 
 
 .. container:: routine
 
-   *call get_state_meta_data (index_in, location, [, var_type] )*
+   *call get_state_meta_data (index_in, location, [, var_type] )*
    ::
 
       integer,             intent(in)  :: index_in
@@ -542,18 +511,18 @@ Required interface routines
    to indicate different variable types in ``var_type`` are themselves defined as public interfaces to model_mod if
    required.
 
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``index_in   `` | Index of state vector element about which information is requested.                               |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``location``    | Returns the 3D location of the indexed state variable. The ``location_ type`` comes from          |
-   |                 | ``DART/assimilation_code/location/threed_sphere/location_mod.f90``. Note that the lat/lon are     |
-   |                 | specified in degrees by the user but are converted to radians internally.                         |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | *var_type*      | Returns the type of the indexed state variable as an optional argument. The type is one of the    |
-   |                 | list of supported observation types, found in the block of code starting                          |
-   |                 | ``! Integer definitions for DART TYPES`` in                                                       |
-   |                 | ``DART/assimilation_code/modules/observations/obs_kind_mod.f90``                                  |
-   +-----------------+---------------------------------------------------------------------------------------------------+
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``index_in`` | Index of state vector element about which information is requested.                                  |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``location`` | Returns the 3D location of the indexed state variable. The ``location_ type`` comes from             |
+   |              | ``DART/assimilation_code/location/threed_sphere/location_mod.f90``. Note that the lat/lon are        |
+   |              | specified in degrees by the user but are converted to radians internally.                            |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | *var_type*   | Returns the type of the indexed state variable as an optional argument. The type is one of the list  |
+   |              | of supported observation types, found in the block of code starting                                  |
+   |              | ``! Integer definitions for DART TYPES`` in                                                          |
+   |              | ``DART/assimilation_code/modules/observations/obs_kind_mod.f90``                                     |
+   +--------------+------------------------------------------------------------------------------------------------------+
 
    The list of supported variables in ``DART/assimilation_code/modules/observations/obs_kind_mod.f90`` is created by
    ``preprocess``.
@@ -585,7 +554,7 @@ Required interface routines
    +-----------------------------------------------------------+-----------------------------------------------------------+
    | ``x``                                                     | A model state vector.                                     |
    +-----------------------------------------------------------+-----------------------------------------------------------+
-   | ``location   ``                                           | Location to which to interpolate.                         |
+   | ``location``                                              | Location to which to interpolate.                         |
    +-----------------------------------------------------------+-----------------------------------------------------------+
    | ``itype``                                                 | Integer indexing which type of observation is desired.    |
    +-----------------------------------------------------------+-----------------------------------------------------------+
@@ -612,9 +581,9 @@ Required interface routines
    is set from the namelist values for
    ``input.nml``\ ``&model_nml:assimilation_period_days, assimilation_period_seconds``.
 
-   ========== ============================
-   ``var   `` Smallest time step of model.
-   ========== ============================
+   ======= ============================
+   ``var`` Smallest time step of model.
+   ======= ============================
 
 | 
 
@@ -627,7 +596,7 @@ Required interface routines
    | ``static_init_model`` is called for runtime initialization of the model. The namelists are read to determine
      runtime configuration of the model, the grid coordinates, etc. There are no input arguments and no return values.
      The routine sets module-local private attributes that can then be queried by the public interface routines.
-   | See the GITM documentation for all namelists in ``gitm_in`` . Be aware that DART reads the GITM ``&grid_nml``
+   | See the GITM documentation for all namelists in ``gitm_in`` . Be aware that DART reads the GITM ``&grid_nml``
      namelist to get the filenames for the horizontal and vertical grid information as well as the topography
      information.
    | The namelists (all mandatory) are:
@@ -666,9 +635,9 @@ Required interface routines
    routine would get called is if the ``input.nml``\ ``&perfect_model_obs_nml:start_from_restart`` is .false., which is
    not supported in the GITM model.
 
-   =========== =====================================================================================================
-   ``time   `` the starting time for the model if no initial conditions are to be supplied. This is hardwired to 0.0
-   =========== =====================================================================================================
+   ======== =====================================================================================================
+   ``time`` the starting time for the model if no initial conditions are to be supplied. This is hardwired to 0.0
+   ======== =====================================================================================================
 
 | 
 
@@ -684,9 +653,9 @@ Required interface routines
    ``init_conditions`` returns default initial conditions for model; generally used for spinning up initial model
    states. For the GITM model it is just a stub because the initial state is always provided by the input files.
 
-   ======== =============================================================
-   ``x   `` Initial conditions for state vector. This is hardwired to 0.0
-   ======== =============================================================
+   ===== =============================================================
+   ``x`` Initial conditions for state vector. This is hardwired to 0.0
+   ===== =============================================================
 
 | 
 
@@ -707,10 +676,10 @@ Required interface routines
    module. Both the ``input.nml`` and ``gitm_in`` files are preserved in the netCDF file as variables ``inputnml`` and
    ``gitm_in``, respectively.
 
-   =============== =========================================================
-   ``ncFileID   `` Integer file descriptor to previously-opened netCDF file.
-   ``ierr``        Returns a 0 for successful completion.
-   =============== =========================================================
+   ============ =========================================================
+   ``ncFileID`` Integer file descriptor to previously-opened netCDF file.
+   ``ierr``     Returns a 0 for successful completion.
+   ============ =========================================================
 
    ``nc_write_model_atts`` is responsible for the model-specific attributes in the following DART-output netCDF files:
    ``true_state.nc``, ``preassim.nc``, and ``analysis.nc``.
@@ -733,17 +702,17 @@ Required interface routines
    ``nc_write_model_vars`` writes a copy of the state variables to a NetCDF file. Multiple copies of the state for a
    given time are supported, allowing, for instance, a single file to include multiple ensemble estimates of the state.
    Whether the state vector is parsed into prognostic variables (SALT, TEMP, UVEL, VVEL, PSURF) or simply written as a
-   1D array is controlled by ``input.nml``\ ``&model_mod_nml:output_state_vector``. If ``output_state_vector = .true.``
+   1D array is controlled by ``input.nml``\ ``&model_mod_nml:output_state_vector``. If ``output_state_vector = .true.``
    the state vector is written as a 1D array (the simplest case, but hard to explore with the diagnostics). If
-   ``output_state_vector = .false.`` the state vector is parsed into prognostic variables before being written.
+   ``output_state_vector = .false.`` the state vector is parsed into prognostic variables before being written.
 
-   ================ =================================================
-   ``ncFileID``     file descriptor to previously-opened netCDF file.
-   ``statevec``     A model state vector.
-   ``copyindex   `` Integer index of copy to be written.
-   ``timeindex``    The timestep counter for the given state.
-   ``ierr``         Returns 0 for normal completion.
-   ================ =================================================
+   ============= =================================================
+   ``ncFileID``  file descriptor to previously-opened netCDF file.
+   ``statevec``  A model state vector.
+   ``copyindex`` Integer index of copy to be written.
+   ``timeindex`` The timestep counter for the given state.
+   ``ierr``      Returns 0 for normal completion.
+   ============= =================================================
 
 | 
 
@@ -767,14 +736,14 @@ Required interface routines
    | A more robust perturbation mechanism is needed. Until then, avoid using this routine by using your own ensemble of
      initial conditions. This is determined by setting ``input.nml``\ ``&filter_nml:start_from_restart = .false.``
 
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``state``              | State vector to be perturbed.                                                              |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``pert_state``         | The perturbed state vector.                                                                |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``interf_provided   `` | Because of the 'wet/dry' issue discussed above, this is always ``.true.``, indicating a    |
-   |                        | model-specific perturbation is available.                                                  |
-   +------------------------+--------------------------------------------------------------------------------------------+
+   +---------------------+-----------------------------------------------------------------------------------------------+
+   | ``state``           | State vector to be perturbed.                                                                 |
+   +---------------------+-----------------------------------------------------------------------------------------------+
+   | ``pert_state``      | The perturbed state vector.                                                                   |
+   +---------------------+-----------------------------------------------------------------------------------------------+
+   | ``interf_provided`` | Because of the 'wet/dry' issue discussed above, this is always ``.true.``, indicating a       |
+   |                     | model-specific perturbation is available.                                                     |
+   +---------------------+-----------------------------------------------------------------------------------------------+
 
 | 
 
@@ -789,8 +758,8 @@ Required interface routines
 .. container:: indent1
 
    Pass-through to the 3-D sphere locations module. See
-   `get_close_maxdist_init() </assimilation_code/location/threed_sphere/location_mod.html#get_close_maxdist_init>`__ for
-   the documentation of this subroutine.
+   `get_close_maxdist_init() <../../assimilation_code/location/threed_sphere/location_mod.html#get_close_maxdist_init>`__
+   for the documentation of this subroutine.
 
 | 
 
@@ -806,15 +775,15 @@ Required interface routines
 .. container:: indent1
 
    Pass-through to the 3-D sphere locations module. See
-   `get_close_obs_init() </assimilation_code/location/threed_sphere/location_mod.html#get_close_obs_init>`__ for the
-   documentation of this subroutine.
+   `get_close_obs_init() <../../assimilation_code/location/threed_sphere/location_mod.html#get_close_obs_init>`__ for
+   the documentation of this subroutine.
 
 | 
 
 .. container:: routine
 
    *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, &
-             num_close, close_ind [, dist])*
+   num_close, close_ind [, dist])*
    ::
 
       type(get_close_type),              intent(in ) :: gc
@@ -872,8 +841,6 @@ Required interface routines
 
 | 
 
---------------
-
 .. _unique-interface-routines-1:
 
 Unique interface routines
@@ -915,17 +882,11 @@ Unique interface routines
    ``restart_file_to_sv`` Reads a GITM netCDF format restart file and packs the desired variables into a DART state
    vector. The desired variables are specified in the ``gitm_vars_nml`` namelist.
 
-   ``filename``
-
-The name of the netCDF format GITM restart file.
-
-``state_vector``
-
-the 1D array containing the concatenated GITM variables.
-
-``model_time``
-
-the time of the model state. The last time in the netCDF restart file.
+   ================ ======================================================================
+   ``filename``     The name of the netCDF format GITM restart file.
+   ``state_vector`` the 1D array containing the concatenated GITM variables.
+   ``model_time``   the time of the model state. The last time in the netCDF restart file.
+   ================ ======================================================================
 
 | 
 
@@ -963,9 +924,9 @@ the time of the model state. The last time in the netCDF restart file.
    ``get_gitm_restart_filename`` returns the name of the gitm restart file - the filename itself is in private module
    storage.
 
-   =============== ==================================
-   ``filename   `` The name of the GITM restart file.
-   =============== ==================================
+   ============ ==================================
+   ``filename`` The name of the GITM restart file.
+   ============ ==================================
 
 | 
 
@@ -1002,8 +963,6 @@ the time of the model state. The last time in the netCDF restart file.
 
 | 
 
---------------
-
 Files
 -----
 
@@ -1015,50 +974,19 @@ gitm_vars.nml               to read the ``gitm_vars_nml`` namelist
 gitm_restart.nc             provides grid dimensions, model state, and 'valid_time' of the model state
 true_state.nc               the time-history of the "true" model state from an OSSE
 preassim.nc                 the time-history of the model state before assimilation
-analysis.nc                 the time-history of the model state after assimilation
+analysis.nc                 the time-history of the model state after assimilation
 dart_log.out [default name] the run-time diagnostic output
 dart_log.nml [default name] the record of all the namelists actually USED - contains the default values
 =========================== ===========================================================================
 
 | 
 
---------------
-
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-   | Routine            | Message                                       | Comment                                       |
-   +====================+===============================================+===============================================+
-   | restart_file_to_sv | cannot open file "xxxx" for reading           | The GITM restart file "xxxx" does not exist.  |
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-   | restart_file_to_sv | 'WARNING!!! year 0 not supported; setting to  | year 0 ... is not supported in a Gregorian    |
-   |                    | year 1                                        | calendar. Our intent here is to do data       |
-   |                    |                                               | assimilation, normally 'real' observations    |
-   |                    |                                               | have 'real' dates.                            |
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-   | sv_to_restart_file | current time /= model time. FATAL error.      | The DART time does not match the time of the  |
-   |                    |                                               | GITM restart file. This message is preceeded  |
-   |                    |                                               | by several lines indicating the expected      |
-   |                    |                                               | times of both DART and GITM.                  |
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

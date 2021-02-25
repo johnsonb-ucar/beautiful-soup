@@ -1,15 +1,6 @@
 PROGRAM ``fill_inflation_restart``
 ==================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -61,8 +52,6 @@ syntaxes:
 
 Some versions of the NCO utilities change the full 3D arrays into a single scalar. If that's your result (check your
 output with ``ncdump -h``) use the alternate syntax or a more recent version of the NCO tools.
-
---------------
 
 Namelist
 --------
@@ -138,8 +127,6 @@ Here is an example of a typical namelist for ``fill_inflation_restart`` :
       verbose            = .FALSE.
    /
 
---------------
-
 Files
 -----
 
@@ -154,21 +141,7 @@ Creates:
 
 based on the template file from the specific model this code is compiled for.
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-Only works for models which have individual restart files and not the 'single_file' format, where all the ensemble
-members are contained in one file.
-
---------------

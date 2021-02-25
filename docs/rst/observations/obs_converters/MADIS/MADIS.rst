@@ -1,13 +1,6 @@
 MADIS Data Ingest System
 ========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
-
 Overview
 --------
 
@@ -29,21 +22,14 @@ high level view of the workflow is:
    #. the wrf preprocessing takes a list of files and assumes they will all be assimilated at the same time, for
       superob'ing purposes, so it should match the expected assimilation window when running filter.
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
 `http://madis.noaa.gov <http://madis.noaa.gov/>`__
 
-There are two satellite wind converter programs; the one in this directory and one in the
-`SSEC </observations/obs_converters/SSEC/SSEC.html>`__ directory. The observations distributed here come from
-`NESDIS <http://www.nesdis.noaa.gov>`__. The SSEC observations are processed by SSEC itself and will differ from the
-observations converted here.
-
---------------
+There are two satellite wind converter programs; the one in this directory and one in the :doc:`../SSEC/SSEC` directory.
+The observations distributed here come from `NESDIS <http://www.nesdis.noaa.gov>`__. The SSEC observations are processed
+by SSEC itself and will differ from the observations converted here.
 
 Programs
 --------
@@ -54,33 +40,15 @@ In addition to the converters, the ``advance_time`` and ``obs_sequence_tool`` ut
 
 There are currently converters for these data types:
 
-ACARS aircraft T,U,V,Q data
-
-convert_madis_acars
-
-Marine surface data
-
-convert_madis_marine
-
-Mesonet surface data
-
-convert_madis_mesonet
-
-Metar data
-
-convert_madis_metar
-
-Wind Profiler data
-
-convert_madis_profiler
-
-Rawinsonde/Radiosonde data
-
-convert_madis_rawin
-
-Satellite Wind data
-
-convert_madis_satwnd
+=========================== ======================
+ACARS aircraft T,U,V,Q data convert_madis_acars
+Marine surface data         convert_madis_marine
+Mesonet surface data        convert_madis_mesonet
+Metar data                  convert_madis_metar
+Wind Profiler data          convert_madis_profiler
+Rawinsonde/Radiosonde data  convert_madis_rawin
+Satellite Wind data         convert_madis_satwnd
+=========================== ======================
 
 Example data files are in the ``data`` directory. Example scripts for converting batches of these files are in the
 ``shell_scripts`` directory. These are *NOT* intended to be turnkey scripts; they will certainly need to be customized
@@ -93,52 +61,18 @@ what types of observations to convert. Again, check the source code for more det
 
 Each converter has hard-coded input and output filenames:
 
-convert_madis_acars:
-
-acars_input.nc
-
-obs_seq.acars
-
-convert_madis_marine:
-
-marine_input.nc
-
-obs_seq.marine
-
-convert_madis_mesonet:
-
-mesonet_input.nc
-
-obs_seq.mesonet
-
-convert_madis_metar:
-
-metar_input.nc
-
-obs_seq.metar
-
-convert_madis_profiler:
-
-profiler_input.nc
-
-obs_seq.profiler
-
-convert_madis_rawin:
-
-rawin_input.nc
-
-obs_seq.rawin
-
-convert_madis_satwnd:
-
-satwnd_input.nc
-
-obs_seq.satwnd
+======================= ================= ================
+convert_madis_acars:    acars_input.nc    obs_seq.acars
+convert_madis_marine:   marine_input.nc   obs_seq.marine
+convert_madis_mesonet:  mesonet_input.nc  obs_seq.mesonet
+convert_madis_metar:    metar_input.nc    obs_seq.metar
+convert_madis_profiler: profiler_input.nc obs_seq.profiler
+convert_madis_rawin:    rawin_input.nc    obs_seq.rawin
+convert_madis_satwnd:   satwnd_input.nc   obs_seq.satwnd
+======================= ================= ================
 
 The expected usage pattern is that a script will copy, rename, or make a symbolic link from the actual input file (which
 often contains a timestamp in the name) to the fixed input name before conversion, and move the output file to an
 appropriate filename before the next invocation of the converter. If an existing observation sequence file of the same
 output name is found when the converter is run again, it will open that file and append the next set of observations to
 it.
-
---------------

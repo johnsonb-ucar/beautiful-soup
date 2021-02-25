@@ -1,31 +1,16 @@
 DART Lanai Differences from Kodiak Release Notes
 ================================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Changes to core DART routines <#changes_to_core_dart_routines>`__
--  `New models or changes to existing models <#new_models_or_changes_to_existing_models>`__
--  `New or changed forward operators <#new_or_changed_forward_operators>`__
--  `Observation converters <#observation_converters>`__
--  `New or updated DART diagnostics <#new_or_updated_dart_diagnostics>`__
--  `Tutorial, scripting, setup, builds <#tutorial,_scripting,_setup,_builds>`__
-
 Overview
 --------
 
 This document includes an overview of the changes in the DART system since the Kodiak release. For further details on
 any of these items look at the HTML documentation for that specific part of the system.
 
-There is a longer companion document for this release, the `Lanai Release Notes <Lanai_release.html>`__, which include
-installation instructions, a walk-through of running one of the low-order models, the diagnostics, and a description of
-non-backward compatible changes. See the `Notes for Current Users <Lanai_release.html#CurrentUsers>`__ section for
-additional information on changes in this release.
-
---------------
-
-.. _changes_to_core_dart_routines:
+There is a longer companion document for this release, the :doc:`./Lanai_release`, which include installation
+instructions, a walk-through of running one of the low-order models, the diagnostics, and a description of non-backward
+compatible changes. See the `Notes for Current Users <Lanai_release.html#CurrentUsers>`__ section for additional
+information on changes in this release.
 
 Changes to core DART routines
 -----------------------------
@@ -87,10 +72,6 @@ This section describes changes in the basic DART library routines since the Kodi
 
 | 
 
---------------
-
-.. _new_models_or_changes_to_existing_models:
-
 New models or changes to existing models
 ----------------------------------------
 
@@ -149,10 +130,6 @@ descriptions of new models that have been added since the Kodiak release.
 
    -  Fix where the random number seed is set in the models/simple_advection model_mod - it needed to be sooner than it
       was being called.
-
---------------
-
-.. _new_or_changed_forward_operators:
 
 New or changed forward operators
 --------------------------------
@@ -215,10 +192,6 @@ since the Kodiak release.
    an example of how to set the metadata if you aren't using create_obs_sequence interactively (e.g. your data is in
    netcdf and you have a separate converter program.)
 
---------------
-
-.. _observation_converters:
-
 Observation converters
 ----------------------
 
@@ -247,10 +220,6 @@ This section describes support for new observation types or sources that have be
 -  The 'wrf_dart_obs_preprocess' program now refuses to superob observations that include the pole, since the simple
    averaging of latitude and longitude that works everyplace else won't work there. Also treats observations near the
    prime meridian more correctly.
-
---------------
-
-.. _new_or_updated_dart_diagnostics:
 
 New or updated DART diagnostics
 -------------------------------
@@ -284,10 +253,6 @@ This section describes new or updated diagnostic routines that have been added s
 -  Default for obs_seq_to_netcdf in all the namelists is now 'one big time bin' so you don't have to know the exact
    timespan of an obs_seq.final file before converting to netCDF.
 
---------------
-
-.. _tutorial,_scripting,_setup,_builds:
-
 Tutorial, scripting, setup, builds
 ----------------------------------
 
@@ -312,5 +277,3 @@ Kodiak release.
 -  Cleaned up mkmf files - removed files for obsolete platforms and compilers, updated suggested default flags for
    intel.
 -  Update the mkmf template for gfortran to allow fortran source lines longer than 132 characters.
-
---------------

@@ -1,22 +1,11 @@
 PROGRAM ``gitm_blocks_to_netcdf``
 =================================
 
-Contents
---------
-
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files read <#files_read>`__
--  `Files written <#files_written>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 | The `Global Ionosphere Thermosphere Model (GITM) <http://ccmc.gsfc.nasa.gov/models/modelinfo.php?model=GITM>`__ is a
   3-dimensional spherical code that models the Earth's thermosphere and ionosphere system using a stretched grid in
-  latitude and altitude. For a fuller description of using GITM within DART, please see the `DART GITM model
-  documentation <model_mod.html>`__.
+  latitude and altitude. For a fuller description of using GITM within DART, please see the :doc:`./model_mod`.
 | ``gitm_blocks_to_netcdf`` is the program that reads GITM restart files (i.e. ``b?????.rst``) and creates a DART
-  output/restart file (e.g. ``perfect_ics, filter_ics, ... ``).
+  output/restart file (e.g. ``perfect_ics, filter_ics, ...``).
 | The list of variables used to create the DART state vector are specified in the ``input.nml`` file.
 | Conditions required for successful execution of ``gitm_blocks_to_netcdf``:
 
@@ -54,8 +43,6 @@ To build GITM ... download GITM and unpack the code into ``DART/models/gitm/GITM
       cd ../work
       ./clean.sh 1 1 0 150.0 170.0 1.0 
 
---------------
-
 Namelist
 --------
 
@@ -83,13 +70,12 @@ terminating the namelist.
                              'iO_3P_NDensityS',        'QTY_DENSITY_NEUTRAL_O3P',
       ...
 
-+--------------------------------------+----------------------+----------------------------------------------+
-| Contents                             | Type                 | Description                                  |
-+======================================+======================+==============================================+
-| gitm_blocks_to_netcdf_output_file    | character(len=128)   | The name of the DART file containing the     |
-|                                      |                      | model state derived from the GITM restart    |
-|                                      |                      | files.                                       |
-+--------------------------------------+----------------------+----------------------------------------------+
++-----------------------------------+--------------------+-----------------------------------------------------------+
+| Contents                          | Type               | Description                                               |
++===================================+====================+===========================================================+
+| gitm_blocks_to_netcdf_output_file | character(len=128) | The name of the DART file containing the model state      |
+|                                   |                    | derived from the GITM restart files.                      |
++-----------------------------------+--------------------+-----------------------------------------------------------+
 
 | 
 
@@ -99,21 +85,17 @@ but the most important variable for ``gitm_blocks_to_netcdf`` is repeated here.
 +---------------------------------------+---------------------------------------+---------------------------------------+
 | Contents                              | Type                                  | Description                           |
 +=======================================+=======================================+=======================================+
-| gitm_restart_dirname                  | character(len=256)                    | The name of the directory containing  |
+| gitm_restart_dirname                  | character(len=256)                    | The name of the directory containing  |
 |                                       |                                       | the GITM restart files and runtime    |
 |                                       |                                       | control information.                  |
 +---------------------------------------+---------------------------------------+---------------------------------------+
-| gitm_state_variables                  | character(len=32),                    | The list of variable names in the     |
+| gitm_state_variables                  | character(len=32),                    | The list of variable names in the     |
 |                                       | dimension(2,80)                       | gitm restart file to use to create    |
 |                                       |                                       | the DART state vector and their       |
 |                                       |                                       | corresponding DART kind. The default  |
 |                                       |                                       | list is specified in                  |
 |                                       |                                       | `model_mod.nml <model_mod.nml>`__     |
 +---------------------------------------+---------------------------------------+---------------------------------------+
-
---------------
-
-.. _modules_used:
 
 Modules used
 ------------
@@ -139,10 +121,6 @@ Modules used
    time_manager_mod.f90
    utilities_mod.f90
 
---------------
-
-.. _files_read:
-
 Files read
 ----------
 
@@ -151,26 +129,13 @@ Files read
 -  gitm control files: ``UAM.in.rst``
 -  DART namelist file: ``input.nml``
 
-.. _files_written:
-
 Files written
 -------------
 
 -  DART initial conditions/restart file; e.g. ``dart_ics``
-
---------------
 
 References
 ----------
 
 -  The official ``GITM`` site is: can be found at
    `ccmc.gsfc.nasa.gov/models/modelinfo.php?model=GITM <http://ccmc.gsfc.nasa.gov/models/modelinfo.php?model=GITM>`__
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-none - all error messages come from modules that have their own documentation.

@@ -11,6 +11,40 @@ from bs4 import Tag, NavigableString, BeautifulSoup, Comment
 # Declare user-defined functions.
 
 
+def convert_internal_links_to_doc(soup):
+    """Pandoc expects internal links to be code tags with 'interpreted-text'
+    class and 'doc' role. This function checks to see if a link is an internal
+    link and, if so, converts the link to a code tag with the appropriate class
+    and role.
+    """
+
+    for a in soup('a'):
+        try:
+            href = a.get('href')
+            if href is not None:
+                if href[0:4] == 'http':
+                    pass
+                elif href[-4:] == 'html':
+                    print('Replace internal link with interpreted-text.')     
+                    code_tag = soup.new_tag('code')
+                    code_tag['class'] = 'interpreted-text'
+                    code_tag['role'] = 'doc'
+                    # Prepend current directory if href doesn't begin with a 
+                    # period. 
+                    if href[0] is not '.':
+                        code_tag.string = './' + href[:-5]
+                    else:
+                        code_tag.string = href[:-5]
+                    a.replace_with(code_tag)
+        except AttributeError:
+            pass
+
+    return soup
+
+
+#<code class="interpreted-text" role="doc">/assimilation_code/programs/obs_sequence_tool/obs_sequence_tool</code>
+
+
 def convert_relative_path_to_absolute_path(this_file_path, relative_path,
                                            doc_root):
     """Sphinx expects paths to be defined as absolute paths in which the path
@@ -73,32 +107,33 @@ def convert_string_to_sentence_case(string):
         '1D', '3DVAR', '3DVAR/4DVAR', '4DVAR', 'AIRS', 'AIX', 'AMSR-E',
         'AQUA', 'ASCII', 'ATCF', 'ATM', 'CAM', 'CAM-FV', 'CAM-SE', 'CESM',
         'CESM', 'CESM+DART' 'CESM1', 'CESM2', 'CLM', 'CM1', 'COAMPS', 'COSMIC',
-        'DART', 'DMSP', 'EDR-DSK', 'F16', 'F90', 'GHRSST', 'GITM', 'GPS',
-        'GTSPP', 'GUI', 'HRLDAS', 'HRLDAS-V3.3', 'L63', 'LANL', 'LANL/POP',
-        'MADIS', 'MDF', 'MIDAS', 'MODIS', 'MODULE', 'MPAS', 'MPAS_ATM',
-        'MPAS_OCN', 'MPI', 'NCO', 'NCOMMAS', 'NOAH', 'NOAHLSM_OFFLINE', 'OCN',
-        'OSX', 'POP', 'POP2', 'PROGRAM', 'QC', 'RINEX', 'RMA', 'ROMS', 'SGI',
-        'SQG', 'SSEC', 'SSUSI', 'TERRA', 'TIEGCM', 'TPW', 'WACCM', 'WOD',
-        'WRF', 'WRF/DART'
+        'COSMOS', 'DART', 'DMSP', 'DWL', 'EDR-DSK', 'F16', 'F90', 'FFLAGS',
+        'GHRSST', 'GITM', 'GPS', 'GTSPP', 'GUI', 'HRLDAS', 'HRLDAS-V3.3',
+        'L63', 'LANL', 'LANL/POP', 'MADIS', 'MDF', 'MIDAS', 'MODIS', 'MODULE',
+        'MPAS', 'MPAS_ATM', 'MPAS_OCN', 'MPI', 'NCO', 'NCOMMAS', 'NOAH',
+        'NOAHLSM_OFFLINE', 'OCN', 'OSX', 'POP', 'POP2', 'PROGRAM', 'QC',
+        'RINEX', 'RMA', 'ROMS', 'SGI', 'SQG', 'SSEC', 'SSUSI', 'TERRA',
+        'TIEGCM', 'TPW', 'WACCM', 'WOD', 'WRF', 'WRF/DART'
     ]
 
     proper_nouns = [
         'Absoft', 'AmeriFlux', 'Convert all netCDF variations',
         'DEFAULT_obs_def_mod', 'Easter', 'Fiji', 'Fortran', 'Guam', 'Hawaii',
-        'Iceland', 'Ikeda', 'Jamaica', 'Kodiak', 'Lanai', 'Lorenz',
-        'Lorenz_04', 'Lorenz_63', 'Lorenz_84', 'Lorenz_96', 'Lorenz_96',
-        'Manhattan', 'Matlab', 'Matlab®', 'Mesonet', 'MITgcm_ocean', 'netCDF',
-        'NetCDF', 'Oklahoma', 'PowerPC', 'PrecisionCheck', 'Pro', 'QuikSCAT',
-        'SeaWinds'
+        'Hawaiʻi', 'Iceland', 'Ikeda', 'Jamaica', 'Kodiak', 'Lanai', 'Lanaʻi',
+        'Lorenz', 'Lorenz_04', 'Lorenz_63', 'Lorenz_63.', 'Lorenz_84',
+        'Lorenz_96', 'Lorenz_96.å', 'Manhattan', 'Matlab', 'Matlab®',
+        'Mesonet', 'MITgcm_ocean', 'netCDF', 'NetCDF', 'Oklahoma', 'PowerPC',
+        'PrecisionCheck', 'Pro', 'QuikSCAT', 'SeaWinds'
     ]
 
     # Preserving lower case only matters for the first word of the string,
     # since it would otherwise be capitalized.
     lower_case = [
-        'atmos_tracer_utilities_mod', 'convert_L2b.f90', 'dart_to_cam', 'mkmf',
-        'model_mod', 'model_to_dart', 'mpas_dart_obs_preprocess',
-        'obs_to_table.f90', 'pe2lyr', 'perfect_model_obs_nml',
-        'plot_wind_vectors.m', 'replace_wrf_fields', 'utilities_nml'
+        'atmos_tracer_utilities_mod', 'convert_L2b.f90', 'dart_to_cam',
+        'filter_nml', 'mkmf', 'model_mod', 'model_to_dart',
+        'mpas_dart_obs_preprocess', 'obs_to_table.f90', 'oi_sst_to_obs',
+        'pe2lyr', 'perfect_model_obs_nml', 'plot_wind_vectors.m',
+        'replace_wrf_fields', 'sst_to_obs', 'utilities_nml'
     ]
 
     # To keep the logic simple, this boolean gets set to true when the first
@@ -138,8 +173,8 @@ def convert_string_to_sentence_case(string):
                     word = word.lower()
                 sentence_case_string = sentence_case_string + ' ' + word
 
-        # Some of the headers end with a period. Remove it.
-        if sentence_case_string[-1] == '.':
+        # Some of the headers end with a period or colon. Remove it.
+        if sentence_case_string[-1] == '.' or sentence_case_string[-1] == ':':
             sentence_case_string = sentence_case_string[:-1]
     else:
         sentence_case_string = ''
@@ -334,6 +369,16 @@ def decompose_anchors_with_name_and_no_string(soup):
     return soup
 
 
+def decompose_hrs(soup):
+    """The HTML documentation contains hr tags. This function decomposes all of
+    the named anchors in a page that don't have link text.
+    """
+    for hr in soup('hr'):
+        hr.decompose()
+
+    return soup
+
+
 def decompose_legalese_links(soup):
     """Each page in the HTML documentation has a Legalese link and target that
     takes the user to the bottom of the page. This function removes them.
@@ -399,9 +444,13 @@ def decompose_obsolete_sections(soup):
     # Construct a list of headers that should be removed. This list might
     # become long.
     sections_to_remove = [
+        'Document conventions',
         'KNOWN BUGS',
         'FUTURE PLANS',
-        'Terms of Use'
+        'Terms of Use',
+        'Terms of use',
+        'ERROR CODES and CONDITIONS',
+        'ERROR CODES AND CONDITIONS'
     ]
 
     # Find all the h2 tags in the page.
@@ -508,6 +557,32 @@ def replace_anchors_within_body_text_with_their_contents(soup):
     return soup
 
 
+def replace_tts(soup):
+    """The filepaths and environmental variables in the HTML documentation are
+    represented using ``<em>`` tags with unix and file classes. Pandoc needs
+    these to be represented using ``<code>`` tags in order to be rendered as
+    string literals in reStructuredText.
+    """
+    # Construct a set rather than a list.
+
+    for tt in soup('tt'):
+        # Only replace the <em> tags with <code> tags if the em has the file,
+        # unix, mono, program, class or code class.
+        try:
+            # Each em can have zero or more classes assigned to it. Check if
+            # union of its set of classes and the classes to remove have any
+            # shared elements. If so, replace the em tag with a code tag.
+            code_tag = soup.new_tag('code')
+            if tt.string is not None:
+                code_tag.string = tt.string.replace("&nbsp", "")
+            tt.replace_with(code_tag)
+            print('Replacing tt tag with code tag.')
+        except KeyError:
+            pass
+
+    return soup
+
+
 def replace_ems_with_classes(soup):
     """The filepaths and environmental variables in the HTML documentation are
     represented using ``<em>`` tags with unix and file classes. Pandoc needs
@@ -526,101 +601,13 @@ def replace_ems_with_classes(soup):
             # shared elements. If so, replace the em tag with a code tag.
             if classes_to_remove & set(em['class']) and em.string is not None:
                 code_tag = soup.new_tag('code')
-                code_tag.string = em.string
+                code_tag.string = em.string.replace("&nbsp;", "")
                 em.replace_with(code_tag)
                 print('Replacing classed em tag with code tag.')
             else:
                 print('Not replacing unclassed em tag.')
         except KeyError:
             pass
-
-    return soup
-
-
-def replace_headers_and_compose_content_list(soup):
-    """Each page in the HTML documentation has a collection of h1, h2 and h3
-    tags that act as section headers. Typically, the ``<h2>`` tags are used to
-    denote sections of the page. Unfortunately ``<h3>`` and ``<h4>`` tags tend
-    to be scattered around the documentation pages and are often used out of
-    order, failing to respect the expected header hierarchy in an HTML
-    document, e.g.:
-
-    .. code-block::
-
-       <h1>
-           <h2></h2>
-           <h2></h2>
-               <h3></h3>
-           <h2></h2>
-               <h3</h3>
-                   <h4></h4>
-
-    This function collects the ``<h2>`` headers in a page and composes a
-    content list near the top of the page that will serve as internal
-    navigation.
-    """
-
-    # Make an empty unordered list.
-    content_list = soup.new_tag('ul')
-
-    for h2 in soup('h2'):
-        # Use the string methods to modify versions of the header string for
-        # use in creating the content list and to assign an id attribute to the
-        # tag.
-
-        # Make an empty list item tag to populate with modified versions of the
-        # header string.
-        list_item = soup.new_tag('li')
-        list_item_a = soup.new_tag('a')
-
-        # Convert the header string to sentence case.
-        sentence_case_header = convert_string_to_sentence_case(h2.string)
-
-        # Modify the original h2 string to be capitalized.
-        h2.string = sentence_case_header
-        # Assign the list item string to the same capitalized verison of the h2
-        # string.
-        list_item_a.string = sentence_case_header
-
-        # Create an id attribute for the original h2 tag and assign it a
-        # lowercase, underscored modification of the original h2 tag.
-        h2.attrs['id'] = h2.string.lower().replace(" ", "_")
-        # Create a href attribute for the list item and assign it the same
-        # lowercase, underscored modification of the original h2 tag.
-        list_item_a.attrs['href'] = '#'+h2.string.lower().replace(" ", "_")
-
-        # Insert the anchor into the list item.
-        list_item.append(list_item_a)
-        # Append the list item to the content list.
-        content_list.append(list_item)
-        content_list.append("\n")
-
-    # Insert the content list after the page title contained in the first <h1>.
-    insert_count = 0
-    if soup.h1:
-        if insert_count == 0:
-            soup.h1.insert_after("\n", content_list)
-            header_for_content_list = soup.new_tag('h2')
-            header_for_content_list.string = 'Contents'
-            soup.h1.insert_after("\n", header_for_content_list)
-            insert_count += 1
-    # Otherwise insert the content list after the first <h2>.
-    elif soup.h2:
-        if insert_count == 0:
-            soup.h2.insert_after("\n", content_list)
-            header_for_content_list = soup.new_tag('h3')
-            header_for_content_list.string = 'Contents'
-            soup.h2.insert_after("\n", header_for_content_list)
-            insert_count += 1
-    else:
-        if insert_count == 0:
-            soup.body.insert(0, '\n')
-            soup.body.insert(0, content_list)
-            header_for_content_list = soup.new_tag('h2')
-            header_for_content_list.string = 'Contents'
-            soup.body.insert(0, '\n')
-            soup.body.insert(0, header_for_content_list)
-            insert_count += 1
 
     return soup
 
@@ -659,14 +646,12 @@ def replace_namelist_divs(soup):
 
     return soup
 
-
-def rewrite_lesser_headers_than_h2_as_sentence_case(soup):
-    """The ``replace_headers_and_compose_content_list`` function rewrites all
-    of the h2 headers in the document using sentence case. This function
-    rewrites the h3, h4, h5 and h6 headers using sentence case.
+def rewrite_lesser_headers_than_h1_as_sentence_case(soup):
+    """This function rewrites the h2, h3, h4, h5 and h6 headers using sentence
+    case.
     """
     # Create a list with the types of headers to rewrite.
-    header_types = ['h3', 'h4', 'h5', 'h6']
+    header_types = ['h2', 'h3', 'h4', 'h5', 'h6']
 
     # Iterate through the header types.
     for header_type in header_types:

@@ -1,24 +1,8 @@
-.. _module_fft_mod:
-
-Module fft_mod
---------------
-
-Contents
-~~~~~~~~
-
--  `Module fft_mod <#module_fft_mod>`__
-
-.. container::
-
-   **Contact:**  `Bruce Wyman <mailto:bw@gfdl.noaa.gov>`__
-   **Reviewers:** 
-   **Change History:**  `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/>`__
-   **Last Modified:** 2002/03/22 00:10:54
-
---------------
+module fft_mod
+==============
 
 Overview
-^^^^^^^^
+--------
 
 Performs simultaneous fast Fourier transforms (FFTs) between real grid space and complex Fourier space.
 
@@ -31,10 +15,8 @@ Performs simultaneous fast Fourier transforms (FFTs) between real grid space and
 
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -44,10 +26,8 @@ Other modules used
            fms_mod
          fft99_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -71,19 +51,15 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
    None.
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Fft_grid_to_fourier
       :name: fft_grid_to_fourier
@@ -97,26 +73,26 @@ a. .. rubric:: Fft_grid_to_fourier
       sequences.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``grid   ``                                               | Multiple sequence of real data values. The first          |
+      | ``grid``                                                  | Multiple sequence of real data values. The first          |
       |                                                           | dimension must be n+1 (where n is the size of a single    |
       |                                                           | sequence).                                                |
-      |                                                           |    [real(R4_KIND), dimension(:,:)]                        |
-      |                                                           |    [real(R8_KIND), dimension(:,:)]                        |
-      |                                                           |    [real(R4_KIND), dimension(:,:,:)]                      |
-      |                                                           |    [real(R8_KIND), dimension(:,:,:)]                      |
+      |                                                           | [real(R4_KIND), dimension(:,:)]                           |
+      |                                                           | [real(R8_KIND), dimension(:,:)]                           |
+      |                                                           | [real(R4_KIND), dimension(:,:,:)]                         |
+      |                                                           | [real(R8_KIND), dimension(:,:,:)]                         |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``fourier   ``                                            | Multiple sequences of transformed data in complex Fourier |
+      | ``fourier``                                               | Multiple sequences of transformed data in complex Fourier |
       |                                                           | space. The first dimension must equal n/2+1 (where n is   |
       |                                                           | the size of a single sequence). The remaining dimensions  |
       |                                                           | must be the same size as the input argument "grid".       |
-      |                                                           |    [complex(R4_KIND), dimension(lenc,size(grid,2))]       |
-      |                                                           |    [complex(R8_KIND), dimension(lenc,size(grid,2))]       |
-      |                                                           |    [complex(R4_KIND),                                     |
+      |                                                           | [complex(R4_KIND), dimension(lenc,size(grid,2))]          |
+      |                                                           | [complex(R8_KIND), dimension(lenc,size(grid,2))]          |
+      |                                                           | [complex(R4_KIND),                                        |
       |                                                           | dimension(lenc,size(grid,2),size(grid,3))]                |
-      |                                                           |    [complex(R8_KIND),                                     |
+      |                                                           | [complex(R8_KIND),                                        |
       |                                                           | dimension(lenc,size(grid,2),size(grid,3))]                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
@@ -145,26 +121,26 @@ b. .. rubric:: Fft_fourier_to_grid
       real data values for all sequences.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``fourier   ``                                            | Multiple sequence complex Fourier space transforms. The   |
+      | ``fourier``                                               | Multiple sequence complex Fourier space transforms. The   |
       |                                                           | first dimension must equal n/2+1 (where n is the size of  |
       |                                                           | a single real data sequence).                             |
-      |                                                           |    [real(R4_KIND), dimension(:,:)]                        |
-      |                                                           |    [real(R8_KIND), dimension(:,:)]                        |
-      |                                                           |    [real(R4_KIND), dimension(:,:,:)]                      |
-      |                                                           |    [real(R8_KIND), dimension(:,:,:)]                      |
+      |                                                           | [real(R4_KIND), dimension(:,:)]                           |
+      |                                                           | [real(R8_KIND), dimension(:,:)]                           |
+      |                                                           | [real(R4_KIND), dimension(:,:,:)]                         |
+      |                                                           | [real(R8_KIND), dimension(:,:,:)]                         |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``grid   ``                                               | Multiple sequence of real data values. The first          |
+      | ``grid``                                                  | Multiple sequence of real data values. The first          |
       |                                                           | dimension must be n+1 (where n is the size of a single    |
       |                                                           | sequence). The remaining dimensions must be the same size |
       |                                                           | as the input argument "fourier".                          |
-      |                                                           |    [complex(R4_KIND), dimension(leng1,size(fourier,2))]   |
-      |                                                           |    [complex(R8_KIND), dimension(leng1,size(fourier,2))]   |
-      |                                                           |    [complex(R4_KIND),                                     |
+      |                                                           | [complex(R4_KIND), dimension(leng1,size(fourier,2))]      |
+      |                                                           | [complex(R8_KIND), dimension(leng1,size(fourier,2))]      |
+      |                                                           | [complex(R4_KIND),                                        |
       |                                                           | dimension(leng1,size(fourier,2),size(fourier,3))]         |
-      |                                                           |    [complex(R8_KIND),                                     |
+      |                                                           | [complex(R8_KIND),                                        |
       |                                                           | dimension(leng1,size(fourier,2),size(fourier,3))]         |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
@@ -180,10 +156,10 @@ c. .. rubric:: Fft_init
       the routine fft_exit must be called before re-initialing with fft_init.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  | The number of real values in a single sequence of data.   |
+      | ``n``                                                     | The number of real values in a single sequence of data.   |
       |                                                           | The resulting transformed data will have n/2+1 pairs of   |
       |                                                           | complex values.                                           |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 d. .. rubric:: Fft_end
@@ -197,19 +173,15 @@ d. .. rubric:: Fft_end
       This routine is called to unset the transform size and deallocate memory. It can not be called unless fft_init has
       already been called. There are no arguments.
 
---------------
-
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
 
---------------
-
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
@@ -251,10 +223,8 @@ Error messages
       attempt to un-initialize fft that has not been initialized
       You can not call fft_end unless fft_init has been called.
 
---------------
-
 References
-^^^^^^^^^^
+----------
 
 .. container::
 
@@ -263,10 +233,8 @@ References
 
 | 
 
---------------
-
 Compiler specifics
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -274,10 +242,8 @@ Compiler specifics
 
 | 
 
---------------
-
 Precompiler options
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 .. container::
 
@@ -290,10 +256,8 @@ Precompiler options
 
 | 
 
---------------
-
 Loader options
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
@@ -309,32 +273,17 @@ Loader options
 
               -L/usr/local/lib -lnag
 
---------------
-
 Test PROGRAM
-^^^^^^^^^^^^
+------------
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Known bugs
-^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
 
 Notes
-^^^^^
+-----
 
 .. container::
 
@@ -349,20 +298,3 @@ Notes
    single (32-bit) real precision then FFT's cannot be computed at full (64-bit) precision.
 
 | 
-
---------------
-
-Future plans
-^^^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
-
-.. container::
-
-   top

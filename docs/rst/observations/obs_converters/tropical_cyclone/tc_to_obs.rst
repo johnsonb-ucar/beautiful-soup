@@ -1,15 +1,6 @@
 PROGRAM ``tc_to_obs``
 =====================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Specifying expected error <#specifying_expected_error>`__
--  `Namelist <#namelist>`__
-
 Tropical Cyclone ATCF File to DART Converter
 ============================================
 
@@ -19,7 +10,7 @@ Overview
 Tropical Cyclone data created by the 'Automated Tropical Cyclone Forecast (ATCF) System' can be converted into DART
 observations of the storm center location, minimum sea level pressure, and maximum wind speed. Several of the options
 can be customized at runtime by setting values in a Fortran namelist. See the namelist section below for more details.
-In the current release of DART only the `WRF model </models/wrf/model_mod.html>`__ has forward operator code to generate
+In the current release of DART only the :doc:`../../../models/wrf/model_mod` has forward operator code to generate
 expected obs values for these vortex observations.
 
 `This webpage <http://www.ral.ucar.edu/hurricanes/realtime/index.php#about_atcf_data_files>`__ documents many things
@@ -31,10 +22,6 @@ should mostly be a matter of changing the read format string to match the data i
 
 | 
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
@@ -44,8 +31,6 @@ estimates will need to be hardcoded or computed in the converter since they are 
 below for more details on selecting an appropriate error value.
 
 | 
-
---------------
 
 Programs
 --------
@@ -72,10 +57,6 @@ have many more fields than what is read here.
 
 | 
 
---------------
-
-.. _specifying_expected_error:
-
 Specifying expected error
 -------------------------
 
@@ -84,8 +65,6 @@ sea level pressure, and max wind errors. These may need to be adjusted as needed
 results.
 
 | 
-
---------------
 
 Namelist
 --------
@@ -141,10 +120,10 @@ namelist.
    |                                       |                                       | results.) Use with care.              |
    |                                       |                                       | You can concatenate multiple obs      |
    |                                       |                                       | sequence files as a postprocessing    |
-   |                                       |                                       | step with the `observation sequence   |
-   |                                       |                                       | tool                                  |
-   |                                       |                                       |  </assimilation_code/programs/obs_seq |
-   |                                       |                                       | uence_tool/obs_sequence_tool.html>`__ |
+   |                                       |                                       | step with the                         |
+   |                                       |                                       | :doc                                  |
+   |                                       |                                       | :`../../../assimilation_code/programs |
+   |                                       |                                       | /obs_sequence_tool/obs_sequence_tool` |
    |                                       |                                       | which comes with DART and is in fact  |
    |                                       |                                       | built by the quickbuild.csh script in |
    |                                       |                                       | the TC converter work directory.      |
@@ -155,5 +134,3 @@ namelist.
    +---------------------------------------+---------------------------------------+---------------------------------------+
 
 | 
-
---------------

@@ -1,26 +1,11 @@
 program ``obs_loop``
 ====================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Usage <#usage>`__
--  `Namelist <#namelist>`__
--  `Discussion <#discussion>`__
--  `Building <#building>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Future plans <#future_plans>`__
-
 Overview
 --------
 
 This program is a template that is intended to be modified by the user to do any desired operations on an observation
 sequence file.
-
---------------
 
 Usage
 -----
@@ -29,15 +14,13 @@ This program is intended to be used as a template to read in observations from o
 optionally modified in some way, to another obs_seq file. It can be compiled and run as-is, but it simply makes an exact
 copy of the input file.
 
-There are comments in the code (search for ``MODIFY HERE``) where you can test values, types, times, error values, and
+There are comments in the code (search for ``MODIFY HERE`` ) where you can test values, types, times, error values, and
 either modify them or skip copying that observation to the output.
 
 There are build files in ``observations/utilities/oned`` and ``observations/utilities/threed_sphere`` to build the
 ``obs_loop`` program.
 
 | 
-
---------------
 
 Namelist
 --------
@@ -73,16 +56,13 @@ Items in this namelist set the input and output files.
    |              |                    | written as output without actually creating the output file.                   |
    +--------------+--------------------+--------------------------------------------------------------------------------+
    | calendar     | character(len=32)  | The string name of a valid DART calendar type. (See the                        |
-   |              |                    | `ti                                                                            |
-   |              |                    | me_manager_mod </assimilation_code/modules/utilities/time_manager_mod.html>`__ |
-   |              |                    | documentation for a list of valid types.) The setting here does not change     |
-   |              |                    | what is written to the output file; it only changes how the date information   |
-   |              |                    | is printed to the screen in the informational messages.                        |
+   |              |                    | :doc:`../../modules/utilities/time_manager_mod` documentation for a list of    |
+   |              |                    | valid types.) The setting here does not change what is written to the output   |
+   |              |                    | file; it only changes how the date information is printed to the screen in the |
+   |              |                    | informational messages.                                                        |
    +--------------+--------------------+--------------------------------------------------------------------------------+
 
 | 
-
---------------
 
 Discussion
 ----------
@@ -92,8 +72,6 @@ See the documentation in the obs_kind and obs_def modules for things you can que
 
 | 
 
---------------
-
 Building
 --------
 
@@ -101,9 +79,9 @@ There are build files in ``observations/utilities/oned`` and ``observations/util
 ``obs_loop`` program.
 
 The ``preprocess`` program must be built and run first to define what set of observation types will be supported. See
-the `preprocess documentation </assimilation_code/programs/preprocess/preprocess.html>`__ for more details on how to
-define the list and run it. The ``&preprocess_nml`` namelist in the ``input.nml`` file must contain files with
-definitions for the combined set of all observation types which will be encountered over all input obs_seq files.
+the :doc:`../../../assimilation_code/programs/preprocess/preprocess` for more details on how to define the list and run
+it. The ``&preprocess_nml`` namelist in the ``input.nml`` file must contain files with definitions for the combined set
+of all observation types which will be encountered over all input obs_seq files.
 
 If you have observation types which are not part of the default list in the &preprocess_nml namelist, add them to the
 input.nml file and then either run quickbuild.csh or make and run preprocess and then make the obs_loop tool.
@@ -112,8 +90,6 @@ Usually the directories where executables are built will include a ``quickbuild.
 preprocess and then builds the rest of the executables by executing all files with names starting with ``mkmf_``.
 
 ::
-
---------------
 
 Files
 -----
@@ -124,16 +100,10 @@ filename  purpose
 input.nml to read the &obs_loop_nml namelist
 ========= ==================================
 
---------------
-
 References
 ----------
 
 #. none
-
---------------
-
-.. _error_codes_and_conditions:
 
 Error codes and conditions
 --------------------------
@@ -147,11 +117,7 @@ Error codes and conditions
    obs_loop         
    ======== ======= =======
 
-.. _future_plans:
-
 Future plans
 ------------
 
 none
-
---------------

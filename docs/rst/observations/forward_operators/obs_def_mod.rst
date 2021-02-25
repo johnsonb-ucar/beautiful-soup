@@ -1,17 +1,6 @@
 MODULE obs_def_mod
 ==================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -127,23 +116,23 @@ precisely formatted comments, and possibly module code sections:
      first column.
    | The variables available to be passed to subroutines or used in this section of code are:
 
-   ================= ==========================================
-   ``state``         the entire model state vector
-   ``state_time``    the time of the state data
-   ``ens_index``     the ensemble member number
-   ``location``      the observation location
-   ``obs_kind_ind `` the index of the specific observation type
-   ``obs_time``      the time of the observation
-   ``error_val``     the observation error variance
-   ================= ==========================================
+   ================ ==========================================
+   ``state``        the entire model state vector
+   ``state_time``   the time of the state data
+   ``ens_index``    the ensemble member number
+   ``location``     the observation location
+   ``obs_kind_ind`` the index of the specific observation type
+   ``obs_time``     the time of the observation
+   ``error_val``    the observation error variance
+   ================ ==========================================
 
    | 
    | The routine must fill in the values of these variables:
 
-   ============ ==========================================================
-   ``obs_val `` the computed forward operator value
-   ``istatus``  return code: 0=ok, >0 is error, <0 reserved for system use
-   ============ ==========================================================
+   =========== ==========================================================
+   ``obs_val`` the computed forward operator value
+   ``istatus`` return code: 0=ok, >0 is error, <0 reserved for system use
+   =========== ==========================================================
 
    | 
    | To call a model_mod interpolate routine directly, the argument list must match exactly:
@@ -168,7 +157,7 @@ precisely formatted comments, and possibly module code sections:
 
    ============ =====================================================================
    ``ifile``    the open unit number positioned ready to read, read-only
-   ``obs_def `` the rest of the obs_def derived type for this obs, read-write
+   ``obs_def``  the rest of the obs_def derived type for this obs, read-write
    ``key``      the index observation number in this sequence, read-only
    ``obs_val``  the observation value, if needed. in general should not be changed
    ``is_ascii`` logical to indicate how the file was opened, formatted or unformatted
@@ -193,7 +182,7 @@ precisely formatted comments, and possibly module code sections:
 
    ============ =====================================================================
    ``ifile``    the open unit number positioned ready to write, read-only
-   ``obs_def `` the rest of the obs_def derived type for this obs, read-only
+   ``obs_def``  the rest of the obs_def derived type for this obs, read-only
    ``key``      the index observation number in this sequence, read-only
    ``is_ascii`` logical to indicate how the file was opened, formatted or unformatted
    ============ =====================================================================
@@ -214,10 +203,10 @@ precisely formatted comments, and possibly module code sections:
      comment character in the first column.
    | The variables available to be passed to subroutines or used in this section of code are:
 
-   ============ =============================================================
-   ``obs_def `` the rest of the obs_def derived type for this obs, read-write
-   ``key``      the index observation number in this sequence, read-only
-   ============ =============================================================
+   =========== =============================================================
+   ``obs_def`` the rest of the obs_def derived type for this obs, read-write
+   ``key``     the index observation number in this sequence, read-only
+   =========== =============================================================
 
    | 
    | The DART code will prompt for the rest of the obs_def values (location, type, value, error) but any additional
@@ -292,16 +281,11 @@ code:
    end module obs_def_1d_state_mod
    ! END DART PREPROCESS MODULE CODE
 
-| See the `obs_def_1d_state_mod <obs_def_1d_state_mod.html>`__ documentation for more details and examples of each
-  section. Also see `obs_def_wind_speed_mod.f90 <obs_def_wind_speed_mod.f90>`__ for an example of a 3D geophysical
-  forward operator.
+| See the :doc:`./obs_def_1d_state_mod` documentation for more details and examples of each section. Also see
+  `obs_def_wind_speed_mod.f90 <obs_def_wind_speed_mod.f90>`__ for an example of a 3D geophysical forward operator.
 | In addition to collecting and managing any additional observation type-specific code, this module provides the
   definition of the obs_def_type derived type, and a collection of subroutines for creating, accessing, and updating
   this type. The remainder of this document describes the subroutines provided by this module.
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -316,34 +300,30 @@ Other modules used
    obs_kind_mod
    Other special obs_def_kind modules as required
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ========================= ==========================
 *use obs_def_mod, only :* obs_def_type
-                          init_obs_def
-                          get_obs_def_location
-                          get_obs_def_type_of_obs
-                          get_obs_def_time
-                          get_obs_def_error_variance
-                          get_obs_def_key
-                          set_obs_def_location
-                          set_obs_def_type_of_obs
-                          set_obs_def_time
-                          set_obs_def_error_variance
-                          set_obs_def_key
-                          interactive_obs_def
-                          write_obs_def
-                          read_obs_def
-                          get_expected_obs_from_def
-                          destroy_obs_def
-                          copy_obs_def
-                          assignment(=)
-                          get_name_for_type_of_obs
+\                         init_obs_def
+\                         get_obs_def_location
+\                         get_obs_def_type_of_obs
+\                         get_obs_def_time
+\                         get_obs_def_error_variance
+\                         get_obs_def_key
+\                         set_obs_def_location
+\                         set_obs_def_type_of_obs
+\                         set_obs_def_time
+\                         set_obs_def_error_variance
+\                         set_obs_def_key
+\                         interactive_obs_def
+\                         write_obs_def
+\                         read_obs_def
+\                         get_expected_obs_from_def
+\                         destroy_obs_def
+\                         copy_obs_def
+\                         assignment(=)
+\                         get_name_for_type_of_obs
 ========================= ==========================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -395,13 +375,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Creates an obs_def type with location, type, time and error_variance specified.
 
-   ==================== ==================================
-   ``obs_def  ``        The obs_def that is created
-   ``location  ``       Location for this obs_def
-   ``kind  ``           Observation type for obs_def
-   ``time  ``           Time for obs_def
-   ``error_variance  `` Error variance of this observation
-   ==================== ==================================
+   ================== ==================================
+   ``obs_def``        The obs_def that is created
+   ``location``       Location for this obs_def
+   ``kind``           Observation type for obs_def
+   ``time``           Time for obs_def
+   ``error_variance`` Error variance of this observation
+   ================== ==================================
 
 | 
 
@@ -417,10 +397,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Copies obs_def2 to obs_def1, overloaded as assignment (=).
 
-   ============== =========================
-   ``obs_def1  `` obs_def to be copied into
-   ``obs_def2  `` obs_def to be copied from
-   ============== =========================
+   ============ =========================
+   ``obs_def1`` obs_def to be copied into
+   ``obs_def2`` obs_def to be copied from
+   ============ =========================
 
 | 
 
@@ -436,10 +416,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns key from an observation definition.
 
-   ============= ===========================
-   ``var  ``     Returns key from an obs_def
-   ``obs_def  `` An obs_def
-   ============= ===========================
+   =========== ===========================
+   ``var``     Returns key from an obs_def
+   ``obs_def`` An obs_def
+   =========== ===========================
 
 | 
 
@@ -455,10 +435,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns error variance from an observation definition.
 
-   ============= ==============================
-   ``var  ``     Error variance from an obs_def
-   ``obs_def  `` An obs_def
-   ============= ==============================
+   =========== ==============================
+   ``var``     Error variance from an obs_def
+   ``obs_def`` An obs_def
+   =========== ==============================
 
 | 
 
@@ -474,10 +454,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns the location from an observation definition.
 
-   ============= ================================
-   ``var  ``     Returns location from an obs_def
-   ``obs_def  `` An obs_def
-   ============= ================================
+   =========== ================================
+   ``var``     Returns location from an obs_def
+   ``obs_def`` An obs_def
+   =========== ================================
 
 | 
 
@@ -493,10 +473,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns an observation type from an observation definition.
 
-   ============= ============================================
-   ``var  ``     Returns the observation type from an obs_def
-   ``obs_def  `` An obs_def
-   ============= ============================================
+   =========== ============================================
+   ``var``     Returns the observation type from an obs_def
+   ``obs_def`` An obs_def
+   =========== ============================================
 
 | 
 
@@ -512,10 +492,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns time from an observation definition.
 
-   ============= ============================
-   ``var  ``     Returns time from an obs_def
-   ``obs_def  `` An obs_def
-   ============= ============================
+   =========== ============================
+   ``var``     Returns time from an obs_def
+   ``obs_def`` An obs_def
+   =========== ============================
 
 | 
 
@@ -531,10 +511,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns an observation name from an observation type.
 
-   ================== =====================================
-   ``var  ``          Returns name from an observation type
-   ``obs_kind_ind  `` An observation type
-   ================== =====================================
+   ================ =====================================
+   ``var``          Returns name from an observation type
+   ``obs_kind_ind`` An observation type
+   ================ =====================================
 
 | 
 
@@ -550,10 +530,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Set the location in an observation definition.
 
-   ============== ==========
-   ``obs_def  ``  An obs_def
-   ``location  `` A location
-   ============== ==========
+   ============ ==========
+   ``obs_def``  An obs_def
+   ``location`` A location
+   ============ ==========
 
 | 
 
@@ -569,10 +549,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Set error variance for an observation definition.
 
-   ==================== ==============
-   ``obs_def  ``        An obs_def
-   ``error_variance  `` Error variance
-   ==================== ==============
+   ================== ==============
+   ``obs_def``        An obs_def
+   ``error_variance`` Error variance
+   ================== ==============
 
 | 
 
@@ -588,10 +568,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Set the key for an observation definition.
 
-   ============= ======================================
-   ``obs_def  `` An obs_def
-   ``key  ``     Unique identifier for this observation
-   ============= ======================================
+   =========== ======================================
+   ``obs_def`` An obs_def
+   ``key``     Unique identifier for this observation
+   =========== ======================================
 
 | 
 
@@ -607,10 +587,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Set the type of observation in an observation definition.
 
-   ============= ===========================
-   ``obs_def  `` An obs_def
-   ``kind  ``    An integer observation type
-   ============= ===========================
+   =========== ===========================
+   ``obs_def`` An obs_def
+   ``kind``    An integer observation type
+   =========== ===========================
 
 | 
 
@@ -626,10 +606,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Sets time for an observation definition.
 
-   ============= ===========
-   ``obs_def  `` An obs_def
-   ``time  ``    Time to set
-   ============= ===========
+   =========== ===========
+   ``obs_def`` An obs_def
+   ``time``    Time to set
+   =========== ===========
 
 | 
 
@@ -654,26 +634,26 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Compute the observation (forward) operator for a particular obs definition.
 
-   +--------------------------+------------------------------------------------------------------------------------------+
-   | ``key  ``                | descriptor for observation type                                                          |
-   +--------------------------+------------------------------------------------------------------------------------------+
-   | ``obs_def  ``            | The input obs_def                                                                        |
-   +--------------------------+------------------------------------------------------------------------------------------+
-   | ``obs_kind_ind  ``       | The obs type                                                                             |
-   +--------------------------+------------------------------------------------------------------------------------------+
-   | ``ens_index  ``          | The ensemble member number of this state vector                                          |
-   +--------------------------+------------------------------------------------------------------------------------------+
-   | ``state  ``              | Model state vector                                                                       |
-   +--------------------------+------------------------------------------------------------------------------------------+
-   | ``state_time  ``         | Time of the data in the model state vector                                               |
-   +--------------------------+------------------------------------------------------------------------------------------+
-   | ``istatus  ``            | Returned integer describing problems with applying forward operator (0 == OK, >0 ==      |
-   |                          | error, <0 reserved for sys use).                                                         |
-   +--------------------------+------------------------------------------------------------------------------------------+
-   | ``assimilate_this_ob  `` | Indicates whether to assimilate this obs or not                                          |
-   +--------------------------+------------------------------------------------------------------------------------------+
-   | ``evaluate_this_ob  ``   | Indicates whether to evaluate this obs or not                                            |
-   +--------------------------+------------------------------------------------------------------------------------------+
+   +------------------------+--------------------------------------------------------------------------------------------+
+   | ``key``                | descriptor for observation type                                                            |
+   +------------------------+--------------------------------------------------------------------------------------------+
+   | ``obs_def``            | The input obs_def                                                                          |
+   +------------------------+--------------------------------------------------------------------------------------------+
+   | ``obs_kind_ind``       | The obs type                                                                               |
+   +------------------------+--------------------------------------------------------------------------------------------+
+   | ``ens_index``          | The ensemble member number of this state vector                                            |
+   +------------------------+--------------------------------------------------------------------------------------------+
+   | ``state``              | Model state vector                                                                         |
+   +------------------------+--------------------------------------------------------------------------------------------+
+   | ``state_time``         | Time of the data in the model state vector                                                 |
+   +------------------------+--------------------------------------------------------------------------------------------+
+   | ``istatus``            | Returned integer describing problems with applying forward operator (0 == OK, >0 == error, |
+   |                        | <0 reserved for sys use).                                                                  |
+   +------------------------+--------------------------------------------------------------------------------------------+
+   | ``assimilate_this_ob`` | Indicates whether to assimilate this obs or not                                            |
+   +------------------------+--------------------------------------------------------------------------------------------+
+   | ``evaluate_this_ob``   | Indicates whether to evaluate this obs or not                                              |
+   +------------------------+--------------------------------------------------------------------------------------------+
 
 | 
 
@@ -693,18 +673,18 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Reads an obs_def from file open on channel ifile. Uses format specified in fform or FORMATTED if fform is not
    present.
 
-   +---------------+-----------------------------------------------------------------------------------------------------+
-   | ``ifile  ``   | File unit open to output file                                                                       |
-   +---------------+-----------------------------------------------------------------------------------------------------+
-   | ``obs_def  `` | Observation definition to be read                                                                   |
-   +---------------+-----------------------------------------------------------------------------------------------------+
-   | ``key  ``     | Present if unique identifier key is needed by some obs type. Unused by default code.                |
-   +---------------+-----------------------------------------------------------------------------------------------------+
-   | ``obs_val  `` | Present if needed to perform operations based on value. Unused by default code.                     |
-   +---------------+-----------------------------------------------------------------------------------------------------+
-   | ``fform  ``   | File format specifier: FORMATTED or UNFORMATTED; default FORMATTED (FORMATTED in this case is the   |
-   |               | human readable/text option as opposed to UNFORMATTED which is binary.)                              |
-   +---------------+-----------------------------------------------------------------------------------------------------+
+   +-------------+-------------------------------------------------------------------------------------------------------+
+   | ``ifile``   | File unit open to output file                                                                         |
+   +-------------+-------------------------------------------------------------------------------------------------------+
+   | ``obs_def`` | Observation definition to be read                                                                     |
+   +-------------+-------------------------------------------------------------------------------------------------------+
+   | ``key``     | Present if unique identifier key is needed by some obs type. Unused by default code.                  |
+   +-------------+-------------------------------------------------------------------------------------------------------+
+   | ``obs_val`` | Present if needed to perform operations based on value. Unused by default code.                       |
+   +-------------+-------------------------------------------------------------------------------------------------------+
+   | ``fform``   | File format specifier: FORMATTED or UNFORMATTED; default FORMATTED (FORMATTED in this case is the     |
+   |             | human readable/text option as opposed to UNFORMATTED which is binary.)                                |
+   +-------------+-------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -720,10 +700,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Creates an obs_def via input from standard in.
 
-   ============= ====================================================================================
-   ``obs_def  `` An obs_def to be created
-   ``key  ``     Present if unique identifier key is needed by some obs type. Unused by default code.
-   ============= ====================================================================================
+   =========== ====================================================================================
+   ``obs_def`` An obs_def to be created
+   ``key``     Present if unique identifier key is needed by some obs type. Unused by default code.
+   =========== ====================================================================================
 
 | 
 
@@ -741,12 +721,12 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Writes an obs_def to file open on channel ifile. Uses format specified in fform or FORMATTED if fform is not present.
 
-   ============= ====================================================================================
-   ``ifile  ``   File unit open to output file
-   ``obs_def  `` Observation definition to be written
-   ``key  ``     Present if unique identifier key is needed by some obs type. Unused by default code.
-   ``fform  ``   File format specifier: FORMATTED or UNFORMATTED; default FORMATTED
-   ============= ====================================================================================
+   =========== ====================================================================================
+   ``ifile``   File unit open to output file
+   ``obs_def`` Observation definition to be written
+   ``key``     Present if unique identifier key is needed by some obs type. Unused by default code.
+   ``fform``   File format specifier: FORMATTED or UNFORMATTED; default FORMATTED
+   =========== ====================================================================================
 
 | 
 
@@ -761,13 +741,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Releases all storage associated with an obs_def and its subcomponents.
 
-   ============= ==========================
-   ``obs_def  `` An obs_def to be released.
-   ============= ==========================
+   =========== ==========================
+   ``obs_def`` An obs_def to be released.
+   =========== ==========================
 
 | 
-
---------------
 
 Files
 -----
@@ -775,52 +753,12 @@ Files
 -  The read_obs_def() and write_obs_def() routines are passed an already-opened file channel/descriptor and read to or
    write from it.
 
---------------
-
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------------------+-------------------------------------------+-------------------------------------------+
-   | Routine                   | Message                                   | Comment                                   |
-   +===========================+===========================================+===========================================+
-   | get_expected_obs_from_def | Attempt to evaluate undefined observation | An observation type for which no forward  |
-   |                           | type                                      | operator has been defined is an error.    |
-   +---------------------------+-------------------------------------------+-------------------------------------------+
-   | read_obs_def              | Expected header "obdef" in input file     | The format of the input file is not       |
-   |                           |                                           | consistent.                               |
-   +---------------------------+-------------------------------------------+-------------------------------------------+
-   | read_obs_def              | Expected kind header "kind " in input     | The format of the input file is not       |
-   |                           | file                                      | consistent.                               |
-   +---------------------------+-------------------------------------------+-------------------------------------------+
-   | read_obs_def              | Attempt to read for undefined obs_kind    | Reading for an observation type for which |
-   |                           | index                                     | no forward operator has been defined is   |
-   |                           |                                           | an error.                                 |
-   +---------------------------+-------------------------------------------+-------------------------------------------+
-   | write_obs_def             | Attempt to write for undefined obs_kind   | Writing for an observation type for which |
-   |                           | index                                     | no forward operator has been defined is   |
-   |                           |                                           | an error.                                 |
-   +---------------------------+-------------------------------------------+-------------------------------------------+
-   | interactive_obs_def       | Attempt to interactively create undefined | Creating an observation type for which no |
-   |                           | obs_kind index                            | forward operator has been defined is an   |
-   |                           |                                           | error.                                    |
-   +---------------------------+-------------------------------------------+-------------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

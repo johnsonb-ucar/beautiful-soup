@@ -1,16 +1,6 @@
 PROGRAM ``mpas_dart_obs_preprocess``
 ====================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -32,8 +22,6 @@ This program can exclude observations outside a given time window defined by the
 width in hours.
 
 This program can overwrite the incoming Data QC value with another.
-
---------------
 
 Namelist
 --------
@@ -253,10 +241,6 @@ If true, replace the incoming observation time with the analysis time. Not recom
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -269,8 +253,6 @@ Modules used
    time_manager_mod
    model_mod
    netcdf
-
---------------
 
 Files
 -----
@@ -287,32 +269,7 @@ This utility can read one or more obs_seq files and combine them while doing the
 standard DART observation sequence file format. It uses the grid information from an MPAS file to define the bins for
 combining nearby aircraft and satellite wind observations.
 
---------------
-
 References
 ----------
 
 -  Developed by Soyoung Ha, based on the WRF observation preprocessor contributed by Ryan Torn.
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   Routine
-
-Message
-
-Comment
-
-mpas_dart_obs_preprocess
-
-mpas_dart_obs_preprocess
-
-mpas_dart_obs_preprocess
-
-mpas_dart_obs_preprocess

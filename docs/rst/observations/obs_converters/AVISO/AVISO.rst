@@ -1,15 +1,6 @@
 Aviso+/CMEMS Observations
 =========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
-
 Overview
 --------
 
@@ -34,7 +25,7 @@ Service <http://marine.copernicus.eu/about-us/about-your-copernicus-marine-servi
   ``Geosat Follow On`` platforms.
 | The DART observation TYPE corresponding to each of these platforms are ``J1_SEA_SURFACE_ANOMALY``,
   ``EN_SEA_SURFACE_ANOMALY``, and ``GFO_SEA_SURFACE_ANOMALY``, respectively and are defined in
-  `obs_def_ocean_mod.f90 </observations/forward_operators/obs_def_ocean_mod.f90>`__.
+  `obs_def_ocean_mod.f90 <../../forward_operators/obs_def_ocean_mod.f90>`__.
 | Fred wrote a python script (``shell_scripts/convert_aviso.py``) to repeatedly call ``convert_aviso`` and decided it
   was easiest to simply provide the input file name as a command line argument and always have the output file have the
   name ``obs_seq.aviso``. As such, there is no input namelist specifically for these parameters, but other DART modules
@@ -53,10 +44,6 @@ Topography (MDT) can be added. It is distributed by Aviso+ (
 http://www.aviso.altimetry.fr/en/data/products/auxiliary-products/mdt.html ). Fred was using this product in
 assimilations with POP, so he chose a different source for MDT - consistent with POP's behavior.
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
@@ -65,8 +52,6 @@ Ssalto/Duacs multimission altimeter products formerly administered by Aviso+. Af
 along-track sea level anomalies (SLA) may be downloaded from
 `http://marine.copernicus.eu/services-portfolio/access-to-products/ <http://marine.copernicus.eu/services-portfolio/access-to-products/?option=com_csw&view=details&product_id=SEALEVEL_GLO_SLA_L3_REP_OBSERVATIONS_008_018>`__
 - search for the ``SEALEVEL_GLO_SLA_L3_REP_OBSERVATIONS_008_018`` if it does not come up directly.
-
---------------
 
 Programs
 --------
@@ -85,18 +70,12 @@ Programs
 |                                    | range.                                                                         |
 +------------------------------------+--------------------------------------------------------------------------------+
 
---------------
-
 Namelist
 --------
 
 There is no namelist for ``convert_aviso``, but other namelists control aspects of the execution, namely
 ``&obs_sequence_nml:write_binary_obs_sequence``. see
-`obs_sequence_mod.html </assimilation_code/modules/observations/obs_sequence_mod.html>`__.
-
---------------
-
-.. _modules_used:
+:doc:`../../../assimilation_code/modules/observations/obs_sequence_mod`.
 
 Modules used
 ------------
@@ -119,5 +98,3 @@ Modules used
    observations/forward_operators/obs_def_mod.f90
    observations/obs_converters/AVISO/convert_aviso.f90
    observations/obs_converters/utilities/obs_utilities_mod.f90
-
---------------

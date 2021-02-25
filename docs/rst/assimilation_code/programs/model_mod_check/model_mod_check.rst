@@ -1,17 +1,6 @@
 program ``model_mod_check``
 ===========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Files <#files>`__
--  `Usage <#usage>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -20,8 +9,6 @@ adding a new model to DART - test the pieces as they are written. As such, this 
 customized to your own purpose. Right now, it reads in model netCDF file(s) - one per domain/nest/whatever - and writes
 out files, queries the metdata, etc. It also exercises ``static_init_model()``, which is the first routine to get right
 ...
-
---------------
 
 Namelist
 --------
@@ -204,56 +191,55 @@ namelist.
    |                                       |                                       | ``test1thru < 0``, ``run_tests`` is   |
    |                                       |                                       | used to specify the tests to perform. |
    |                                       |                                       |                                       |
-   |                                       |                                       | +-------+-------------------------+   |
-   |                                       |                                       | | test  | summary                 |   |
-   |                                       |                                       | +=======+=========================+   |
-   |                                       |                                       | | 0     | Mandatory. Tests        |   |
-   |                                       |                                       | |       | ``static_init_model()`` |   |
-   |                                       |                                       | |       | by calling              |   |
-   |                                       |                                       | |       | ``stati                 |   |
-   |                                       |                                       | |       | c_init_assim_model()``. |   |
-   |                                       |                                       | |       | Reads ``input.nml``     |   |
-   |                                       |                                       | |       | ``&model_nml``          |   |
-   |                                       |                                       | +-------+-------------------------+   |
-   |                                       |                                       | | 1     | Tests                   |   |
-   |                                       |                                       | |       | ``get_model_size()``    |   |
-   |                                       |                                       | |       | and reports on the      |   |
-   |                                       |                                       | |       | makeup of the DART      |   |
-   |                                       |                                       | |       | state vector.           |   |
-   |                                       |                                       | +-------+-------------------------+   |
-   |                                       |                                       | | 2     | Reads and writes a      |   |
-   |                                       |                                       | |       | restart file.           |   |
-   |                                       |                                       | +-------+-------------------------+   |
-   |                                       |                                       | | 3     | Tests                   |   |
-   |                                       |                                       | |       | ``                      |   |
-   |                                       |                                       | |       | get_state_meta_data()`` |   |
-   |                                       |                                       | |       | for a single index into |   |
-   |                                       |                                       | |       | the DART state. Helps   |   |
-   |                                       |                                       | |       | determine if the state  |   |
-   |                                       |                                       | |       | vector is constructed   |   |
-   |                                       |                                       | |       | correctly.              |   |
-   |                                       |                                       | +-------+-------------------------+   |
-   |                                       |                                       | | 4     | Tests                   |   |
-   |                                       |                                       | |       | ``model_interpolate()`` |   |
-   |                                       |                                       | |       | for a single point.     |   |
-   |                                       |                                       | +-------+-------------------------+   |
-   |                                       |                                       | | 5     | Tests                   |   |
-   |                                       |                                       | |       | ``model_interpolate()`` |   |
-   |                                       |                                       | |       | for a range of          |   |
-   |                                       |                                       | |       | interpolation points.   |   |
-   |                                       |                                       | +-------+-------------------------+   |
-   |                                       |                                       | | 6     | Long, expensive test to |   |
-   |                                       |                                       | |       | return the metadata for |   |
-   |                                       |                                       | |       | every element of the    |   |
-   |                                       |                                       | |       | state vector. May be    |   |
-   |                                       |                                       | |       | useful to decide on     |   |
-   |                                       |                                       | |       | known locations for     |   |
-   |                                       |                                       | |       | subsequent testing.     |   |
-   |                                       |                                       | +-------+-------------------------+   |
-   |                                       |                                       | | 7     | Find the closest        |   |
-   |                                       |                                       | |       | gridpoint to a known    |   |
-   |                                       |                                       | |       | location.               |   |
-   |                                       |                                       | +-------+-------------------------+   |
+   |                                       |                                       | +------+--------------------------+   |
+   |                                       |                                       | | test | summary                  |   |
+   |                                       |                                       | +======+==========================+   |
+   |                                       |                                       | | 0    | Mandatory. Tests         |   |
+   |                                       |                                       | |      | ``static_init_model()``  |   |
+   |                                       |                                       | |      | by calling               |   |
+   |                                       |                                       | |      | ``stat                   |   |
+   |                                       |                                       | |      | ic_init_assim_model()``. |   |
+   |                                       |                                       | |      | Reads ``input.nml``      |   |
+   |                                       |                                       | |      | ``&model_nml``           |   |
+   |                                       |                                       | +------+--------------------------+   |
+   |                                       |                                       | | 1    | Tests                    |   |
+   |                                       |                                       | |      | ``get_model_size()`` and |   |
+   |                                       |                                       | |      | reports on the makeup of |   |
+   |                                       |                                       | |      | the DART state vector.   |   |
+   |                                       |                                       | +------+--------------------------+   |
+   |                                       |                                       | | 2    | Reads and writes a       |   |
+   |                                       |                                       | |      | restart file.            |   |
+   |                                       |                                       | +------+--------------------------+   |
+   |                                       |                                       | | 3    | Tests                    |   |
+   |                                       |                                       | |      | `                        |   |
+   |                                       |                                       | |      | `get_state_meta_data()`` |   |
+   |                                       |                                       | |      | for a single index into  |   |
+   |                                       |                                       | |      | the DART state. Helps    |   |
+   |                                       |                                       | |      | determine if the state   |   |
+   |                                       |                                       | |      | vector is constructed    |   |
+   |                                       |                                       | |      | correctly.               |   |
+   |                                       |                                       | +------+--------------------------+   |
+   |                                       |                                       | | 4    | Tests                    |   |
+   |                                       |                                       | |      | ``model_interpolate()``  |   |
+   |                                       |                                       | |      | for a single point.      |   |
+   |                                       |                                       | +------+--------------------------+   |
+   |                                       |                                       | | 5    | Tests                    |   |
+   |                                       |                                       | |      | ``model_interpolate()``  |   |
+   |                                       |                                       | |      | for a range of           |   |
+   |                                       |                                       | |      | interpolation points.    |   |
+   |                                       |                                       | +------+--------------------------+   |
+   |                                       |                                       | | 6    | Long, expensive test to  |   |
+   |                                       |                                       | |      | return the metadata for  |   |
+   |                                       |                                       | |      | every element of the     |   |
+   |                                       |                                       | |      | state vector. May be     |   |
+   |                                       |                                       | |      | useful to decide on      |   |
+   |                                       |                                       | |      | known locations for      |   |
+   |                                       |                                       | |      | subsequent testing.      |   |
+   |                                       |                                       | +------+--------------------------+   |
+   |                                       |                                       | | 7    | Find the closest         |   |
+   |                                       |                                       | |      | gridpoint to a known     |   |
+   |                                       |                                       | |      | location.                |   |
+   |                                       |                                       | +------+--------------------------+   |
    +---------------------------------------+---------------------------------------+---------------------------------------+
    | run_tests(:)                          | integer                               | Specifies a list of tests to be       |
    |                                       |                                       | performed. Same test numbers as       |
@@ -297,10 +283,6 @@ below.
       interp_test_dvert     = 200.0
       interp_test_vertcoord = 'VERTISHEIGHT'
      /
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -351,8 +333,6 @@ Other modules used
 
 Items highlighted may change based on which model is being tested.
 
---------------
-
 Files
 -----
 
@@ -362,8 +342,6 @@ Files
 -  The ``"output_state_files"`` is the output netCDF files from Test 2. Check the attributes, values, etc.
 -  ``check_me_interptest.nc`` and ``check_me_interptest.m`` are the result of Test 5.
 -  ``"all_metadata_file"`` is the run-time output of Test 6.
-
---------------
 
 Usage
 -----
@@ -441,21 +419,21 @@ The first test in ``model_mod_check`` reads the namelist and runs ``static_init_
 geometry of the grid, the number of state variables and their shape, etc. Virtually everything requires knowledge of the
 grid and state vector, so this block cannot be skipped.
 
-Test 1. checking the geometry information:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Test 1. checking the geometry information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The first test in ``model_mod_check`` exercises a basic required interface ``get_model_size()``. This also generates a
 report on the geometry of the grid, the number of state variables and their shape, etc. as well as the total number of
 elements in the DART state vector.
 
-Test 2. read/writing a restart file:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Test 2. read/writing a restart file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This directly reads and write state variables from the model netCDF file. This is a nice sanity check to make sure that
 the DART state vector is being read in properly.
 
-Test 3. check the construction of the state vector:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Test 3. check the construction of the state vector
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is critical to return the correct metadata for any given index into the DART state vector. This code block tests the
 two most common features of the metadata. As a bonus, this routine is also quite useful to determine EXACTLY where to
@@ -490,22 +468,7 @@ This is a good test to verify that *get_state_meta_data()* and the grid informat
 put in a location that is actually **on** the grid and see if the correct gridpoint index is returned. Repeat the test
 with slightly different locations until the next gridpoint is closer. Repeat ...
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   There are no error conditions to check. This program is intended to demonstrate simple checks that will allow you to
-   proceed with improving and testing the ``model_mod``. There will be plenty of run-time errors, I suggest compiling
-   your code with "bounds checking" turned on - at a minimum.

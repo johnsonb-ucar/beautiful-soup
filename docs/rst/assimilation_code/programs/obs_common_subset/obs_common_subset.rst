@@ -1,17 +1,6 @@
 program ``obs_common_subset``
 =============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Building <#building>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -40,8 +29,7 @@ supplied with DART to directly compare the observation diagnostic output from mu
 two, the script has a poor name).
 
 This is one of a set of tools which operate on observation sequence files. For a more general purpose tool see the
-`obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__, and for a more flexible
-selection tool see the `obs_selection_tool <>`__.
+:doc:`../obs_sequence_tool/obs_sequence_tool`, and for a more flexible selection tool see the `obs_selection_tool <>`__.
 
 Creating an input filelist
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -86,8 +74,6 @@ Then the namelist entries would be:
     filename_seq_list = 'exp1list', 'exp2list', exp3list'
     num_to_compare_at_once = 3
 
---------------
-
 Namelist
 --------
 
@@ -113,104 +99,91 @@ namelist.
 
 .. container::
 
-   Item
-
-Type
-
-Description
-
-num_to_compare_at_once
-
-integer
-
-Number of observation sequence files to compare together at a time. Most commonly the value is 2, but can be any number.
-If more than this number of files are listed as inputs, the tool will loop over the list N files at a time.
-
-filename_seq
-
-character(len=256), dimension(5000)
-
-The array of names of the observation sequence files to process. If more than N files (where N is
-num_to_compare_at_once) are listed, they should be ordered so the first N files are compared together, followed by the
-next set of N files, etc. You can only specify one of filename_seq OR filename_seq_list, not both.
-
-filename_seq_list
-
-character(len=256), dimension(100)
-
-An alternative way to specify the list of input observation sequence files. Give a list of N filenames which contain,
-one per line, the names of the observation sequence files to process. There should be N files specified (where N is
-num_to_compare_at_once), and the first observation sequence filename listed in each file will be compared together, then
-the second, until the lists are exhausted. You can only specify one of filename_seq OR filename_seq_list, not both.
-
-filename_out_suffix
-
-character(len=32)
-
-A string to be appended to each of the input observation sequence file names to create the output filenames.
-
-print_every
-
-integer
-
-To indicate progress, a count of the successfully processed observations is printed every Nth set of obs. To decrease
-the output volume set this to a larger number. To disable this output completely set this to -1.
-
-dart_qc_threshold
-
-integer
-
-Observations with a DART QC value larger than this threshold will be discarded. Note that this is the QC value set by
-``filter`` to indicate the outcome of trying to assimilate an observation. This is not related to the incoming data QC.
-For an observation which was successfully assimilated or evaluated in both the Prior and Posterior this should be set to
-1. To also include observations which were successfully processed in the Prior but not the Posterior, set to 3. To
-ignore the magnitude of the DART QC values and keep observations only if the DART QCs match, set this to any value
-higher than 7.
-
-calendar
-
-character(len=32)
-
-Set to the name of the calendar; only controls the printed output for the dates of the first and last observations in
-the file. Set this to "no_calendar" if the observations are not using any calendar.
-
-print_only
-
-logical
-
-If .TRUE. do not create the output files, but print a summary of the number and types of each observation in each of the
-input and output files.
-
-eval_and_assim_can_match
-
-logical
-
-Normally .FALSE. . If .TRUE. then observations which were either successfully evaluated OR assimilated will match and
-are kept.
+   +--------------------------+-------------------------------------+---------------------------------------------------+
+   | Item                     | Type                                | Description                                       |
+   +==========================+=====================================+===================================================+
+   | num_to_compare_at_once   | integer                             | Number of observation sequence files to compare   |
+   |                          |                                     | together at a time. Most commonly the value is 2, |
+   |                          |                                     | but can be any number. If more than this number   |
+   |                          |                                     | of files are listed as inputs, the tool will loop |
+   |                          |                                     | over the list N files at a time.                  |
+   +--------------------------+-------------------------------------+---------------------------------------------------+
+   | filename_seq             | character(len=256), dimension(5000) | The array of names of the observation sequence    |
+   |                          |                                     | files to process. If more than N files (where N   |
+   |                          |                                     | is num_to_compare_at_once) are listed, they       |
+   |                          |                                     | should be ordered so the first N files are        |
+   |                          |                                     | compared together, followed by the next set of N  |
+   |                          |                                     | files, etc. You can only specify one of           |
+   |                          |                                     | filename_seq OR filename_seq_list, not both.      |
+   +--------------------------+-------------------------------------+---------------------------------------------------+
+   | filename_seq_list        | character(len=256), dimension(100)  | An alternative way to specify the list of input   |
+   |                          |                                     | observation sequence files. Give a list of N      |
+   |                          |                                     | filenames which contain, one per line, the names  |
+   |                          |                                     | of the observation sequence files to process.     |
+   |                          |                                     | There should be N files specified (where N is     |
+   |                          |                                     | num_to_compare_at_once), and the first            |
+   |                          |                                     | observation sequence filename listed in each file |
+   |                          |                                     | will be compared together, then the second, until |
+   |                          |                                     | the lists are exhausted. You can only specify one |
+   |                          |                                     | of filename_seq OR filename_seq_list, not both.   |
+   +--------------------------+-------------------------------------+---------------------------------------------------+
+   | filename_out_suffix      | character(len=32)                   | A string to be appended to each of the input      |
+   |                          |                                     | observation sequence file names to create the     |
+   |                          |                                     | output filenames.                                 |
+   +--------------------------+-------------------------------------+---------------------------------------------------+
+   | print_every              | integer                             | To indicate progress, a count of the successfully |
+   |                          |                                     | processed observations is printed every Nth set   |
+   |                          |                                     | of obs. To decrease the output volume set this to |
+   |                          |                                     | a larger number. To disable this output           |
+   |                          |                                     | completely set this to -1.                        |
+   +--------------------------+-------------------------------------+---------------------------------------------------+
+   | dart_qc_threshold        | integer                             | Observations with a DART QC value larger than     |
+   |                          |                                     | this threshold will be discarded. Note that this  |
+   |                          |                                     | is the QC value set by ``filter`` to indicate the |
+   |                          |                                     | outcome of trying to assimilate an observation.   |
+   |                          |                                     | This is not related to the incoming data QC. For  |
+   |                          |                                     | an observation which was successfully assimilated |
+   |                          |                                     | or evaluated in both the Prior and Posterior this |
+   |                          |                                     | should be set to 1. To also include observations  |
+   |                          |                                     | which were successfully processed in the Prior    |
+   |                          |                                     | but not the Posterior, set to 3. To ignore the    |
+   |                          |                                     | magnitude of the DART QC values and keep          |
+   |                          |                                     | observations only if the DART QCs match, set this |
+   |                          |                                     | to any value higher than 7.                       |
+   +--------------------------+-------------------------------------+---------------------------------------------------+
+   | calendar                 | character(len=32)                   | Set to the name of the calendar; only controls    |
+   |                          |                                     | the printed output for the dates of the first and |
+   |                          |                                     | last observations in the file. Set this to        |
+   |                          |                                     | "no_calendar" if the observations are not using   |
+   |                          |                                     | any calendar.                                     |
+   +--------------------------+-------------------------------------+---------------------------------------------------+
+   | print_only               | logical                             | If .TRUE. do not create the output files, but     |
+   |                          |                                     | print a summary of the number and types of each   |
+   |                          |                                     | observation in each of the input and output       |
+   |                          |                                     | files.                                            |
+   +--------------------------+-------------------------------------+---------------------------------------------------+
+   | eval_and_assim_can_match | logical                             | Normally .FALSE. . If .TRUE. then observations    |
+   |                          |                                     | which were either successfully evaluated OR       |
+   |                          |                                     | assimilated will match and are kept.              |
+   +--------------------------+-------------------------------------+---------------------------------------------------+
 
 | 
-
---------------
 
 Building
 --------
 
 Most ``$DART/models/*/work`` directories will build the tool along with other executable programs. It is also possible
 to build the tool in the ``$DART/observations/utilities`` directory. The ``preprocess`` program must be built and run
-first, to define what set of observation types will be supported. See the `preprocess
-documentation </assimilation_code/programs/preprocess/preprocess.html>`__ for more details on how to define the list and
-run it. The combined list of all observation types which will be encountered over all input files must be in the
-preprocess input list. The other important choice when building the tool is to include a compatible locations module.
-For the low-order models, the ``oned`` module should be used; for real-world observations, the ``threed_sphere`` module
-should be used.
+first, to define what set of observation types will be supported. See the
+:doc:`../../../assimilation_code/programs/preprocess/preprocess` for more details on how to define the list and run it.
+The combined list of all observation types which will be encountered over all input files must be in the preprocess
+input list. The other important choice when building the tool is to include a compatible locations module. For the
+low-order models, the ``oned`` module should be used; for real-world observations, the ``threed_sphere`` module should
+be used.
 
 Generally the directories where executables are built will include a "quickbuild.csh" script which will build and run
 preprocess and then build the rest of the executables. The "input.nml" namelists will need to be edited to include all
 the required observation types first.
-
---------------
-
-.. _modules_used:
 
 Modules used
 ------------
@@ -223,8 +196,6 @@ Modules used
    obs_def_mod
    obs_sequence_mod
 
---------------
-
 Files
 -----
 
@@ -233,34 +204,7 @@ Files
 -  The output files are specified by appending the string from the ``filename_out_suffix`` namelist item to the input
    filenames.
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +-------------------+-----------------------------------------------+-----------------------------------------------+
-   | Routine           | Message                                       | Comment                                       |
-   +===================+===============================================+===============================================+
-   | obs_common_subset | num_input_files > max_num_input_files.        | The default is 5000 total files. To process   |
-   |                   |                                               | more, change max_num_input_files in source    |
-   |                   |                                               | code                                          |
-   +-------------------+-----------------------------------------------+-----------------------------------------------+
-   | obs_common_subset | num_to_compare_at_once and filename_seq       | The number of filenames is not an even        |
-   |                   | length mismatch                               | multiple of the count.                        |
-   +-------------------+-----------------------------------------------+-----------------------------------------------+
-   | handle_filenames  | cannot specify both filename_seq and          | You can either specify the files directly in  |
-   |                   | filename_seq_list                             | the namelist, or give a filename that         |
-   |                   |                                               | contains the list of input files, but not     |
-   |                   |                                               | both.                                         |
-   +-------------------+-----------------------------------------------+-----------------------------------------------+

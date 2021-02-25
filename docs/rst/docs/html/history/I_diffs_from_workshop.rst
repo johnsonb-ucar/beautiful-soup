@@ -1,13 +1,6 @@
 DART Iceland revisions
 ======================
 
-Contents
---------
-
--  `Improvements <#improvements>`__
--  `Changes <#changes>`__
--  `Future enhancements / work <#future_enhancements_/_work>`__
-
 The DART Iceland release (23 Nov 2005) is expected to be the last update that makes major modifications to the user
 interfaces to DART and the DART interfaces to models or observations. The primary purpose of this release is to improve
 the way that DART handles observation sequences. The goal is to provide a more modular fashion for adding new types of
@@ -187,13 +180,13 @@ A summary list of changes occurring in each DART directory follows:
 |                                 | format detection. Automatic namelist error detection.                             |
 +---------------------------------+-----------------------------------------------------------------------------------+
 | preprocess.f90                  | Now preprocesses the DEFAULT_obs_kind_mod.F90 and DEFAULT_obs_def_mod.F90 and     |
-|                                 | inputs information from obs_def_???_mod.f90 files such as                         |
+|                                 | inputs information from ``obs_def_???_mod.f90`` files such as                     |
 |                                 | obs_def_reanalysis_bufr_mod. Looks for fixed format text strings in the input     |
 |                                 | files to determine what sections of code to extract and where to insert them in   |
 |                                 | the DEFAULT files. Namelist includes the names of the two input DEFAULT files,    |
 |                                 | the names of the output preprocessed files (normally obs_def_mod.f90 and          |
 |                                 | obs_kind_mod.f90 in the appropriate directories) and a list of all the            |
-|                                 | obs_def_???_mod.f90 files that are to be incorporated.                            |
+|                                 | ``obs_def_???_mod.f90`` files that are to be incorporated.                        |
 +---------------------------------+-----------------------------------------------------------------------------------+
 | reg_factor_mod.f90              | Automatic namelist error detection.                                               |
 +---------------------------------+-----------------------------------------------------------------------------------+
@@ -213,8 +206,6 @@ A summary list of changes occurring in each DART directory follows:
 | utilities_mod.f90               | Namelist error detection added.                                                   |
 +---------------------------------+-----------------------------------------------------------------------------------+
 
-.. _future_enhancements_/_work:
-
 Future enhancements / work
 --------------------------
 
@@ -226,5 +217,3 @@ Future enhancements / work
    regression testing of DART infrasturcture.
 -  Improve netcdf error messages.
    Will incorporate an additional argument to the 'check' routine to append a string to the netCDF error library string.
-
---------------

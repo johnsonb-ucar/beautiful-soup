@@ -1,18 +1,6 @@
 PROGRAM ``trans_sv_pv``
 =======================
 
-Contents
---------
-
--  `Usage <#usage>`__
--  `Modules used <#modules_used>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
-$Id$
-
 | ``trans_sv_pv`` is responsible for converting a DART 'initial conditions' file to a set of model 'snapshot' files and
   appropriate namelist files: ``data.cal`` and ``data``. This is easier than the reverse process because the DART
   initial conditions file have a header that contains the valid time for the accompanying state. This same header also
@@ -30,7 +18,7 @@ Usage
 
 | There must be several input files in the current working directory; most of these are required by the ``model_mod``
   interface. The input filename is hardwired to ``assim_model_state_ic``. Assuming the time tag in the input file is set
-  to 06Z 23 July 1996, this example creates output files named
+  to 06Z 23 July 1996, this example creates output files named
 | ``S.19960723.060000.[data,meta]``
 | ``T.19960723.060000.[data,meta]``
 | ``U.19960723.060000.[data,meta]``
@@ -48,10 +36,6 @@ Usage
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -63,8 +47,6 @@ Modules used
    assim_model_mod
    time_manager_mod
 
---------------
-
 Namelist
 --------
 
@@ -75,7 +57,7 @@ required namelists is provided - with a hyperlink to the full documentation for 
 +----------------------------------------------------------+----------------------------------------------------------+
 | Namelist                                                 | Primary Purpose                                          |
 +==========================================================+==========================================================+
-| `utilities_nml </assimilatio                             | set the termination level and file name for the run-time |
+| `utilities_nml <../../assimilatio                        | set the termination level and file name for the run-time |
 | n_code/modules/utilities/utilities_mod.html#Namelist>`__ | log                                                      |
 +----------------------------------------------------------+----------------------------------------------------------+
 | `CAL_NML <model_mod.html#namelist_cal_nml>`__            | must be read, values are not used. The ``data.cal.DART`` |
@@ -94,8 +76,6 @@ required namelists is provided - with a hyperlink to the full documentation for 
 | `PARM04 <model_mod.html#namelist_parm04>`__              | ocean model grid parameters, read - never changed.       |
 +----------------------------------------------------------+----------------------------------------------------------+
 
---------------
-
 Files
 -----
 
@@ -104,18 +84,7 @@ Files
 -  input data file: ``assim_model_state_ic``
 -  output data files: ``[S,T,U,V,Eta].YYYYMMDD.HHMMSS.[data,meta]``
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-There are no error conditions specific to ``trans_sv_pv``.

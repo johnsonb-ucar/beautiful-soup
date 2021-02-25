@@ -1,13 +1,6 @@
 DART_LAB Tutorial
 =================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `DART tutorial presentations <#dart_tutorial_presentations>`__
--  `Matlab hands-on exercises <#matlab_hands-on_exercises>`__
-
 Overview
 --------
 
@@ -16,10 +9,6 @@ files and a list of the corresponding matlab scripts.
 
 This tutorial begins at a more introductory level than the materials in the tutorial directory, and includes hands-on
 exercises at several points. In a workshop setting, these materials and exercises took about 1.5 days to complete.
-
---------------
-
-.. _dart_tutorial_presentations:
 
 DART tutorial presentations
 ---------------------------
@@ -32,10 +21,6 @@ Here are the PDF files for the presentation part of the tutorial:
 -  `Section 3: <presentation/DART_LAB_Section03.pdf>`__ Sampling error and localization.
 -  `Section 4: <presentation/DART_LAB_Section04.pdf>`__ The Ensemble Kalman Filter (Perturbed Observations).
 -  `Section 5: <presentation/DART_LAB_Section05.pdf>`__ Adaptive Inflation.
-
---------------
-
-.. _matlab_hands-on_exercises:
 
 Matlab hands-on exercises
 -------------------------
@@ -54,5 +39,3 @@ The exercises use the following functions:
 -  twod_ensemble
 
 To run these, cd into the DART_LAB/matlab directory, start matlab, and type the names at the prompt.
-
---------------

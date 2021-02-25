@@ -1,21 +1,5 @@
-MODULE model_mod (CLM)
-======================
-
-Contents
---------
-
--  `Overview <#overview>`__
--  `Pertinent details of the CLM gridcell <#pertinent_details_of_the_clm_gridcell>`__
--  `A word about forward observation operators <#a_word_about_forward_observation_operators>`__
--  `Major changes as of (v7195) 3 october 2014 <#major_changes_as_of_(v7195)_3_october_2014>`__
--  `Namelist <#namelist>`__
--  `Other modules used (directly) <#other_modules_used_(directly)>`__
--  `Public interfaces - required <#public_interfaces_-_required>`__
--  `Public interfaces - optional <#public_interfaces_-_optional>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
+CLM
+===
 
 Overview
 --------
@@ -106,8 +90,6 @@ In addition to the script above, there are a couple scripts that will either per
 platforms although they require configuration, mainly to indicate the location of the DART observation sequence files on
 your system.
 
-.. _pertinent_details_of_the_clm_gridcell:
-
 Pertinent details of the CLM gridcell
 -------------------------------------
 
@@ -131,8 +113,6 @@ Pertinent details of the CLM gridcell
 |                                                           | observation value for that location.                      |
 +-----------------------------------------------------------+-----------------------------------------------------------+
 
-.. _a_word_about_forward_observation_operators:
-
 A word about forward observation operators
 ------------------------------------------
 
@@ -147,8 +127,6 @@ A word about forward observation operators
   execution of CLM. As soon as CONTINUE_RUN=TRUE, the namelist values for history file generation are ignored. Because
   the history file creation is very flexible, some additional information must be passed to DART to construct the
   filename of the ``.h1.`` history file needed for any particular time.
-
-.. _major_changes_as_of_(v7195)_3_october_2014:
 
 Major changes as of (v7195) 3 october 2014
 ------------------------------------------
@@ -182,35 +160,35 @@ Major changes as of (v7195) 3 october 2014
    ============= ========= ======== ======== ======== ========
 
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | **Column 1**                          | Variable name                         | This is the CLM variable name as it   |
+   | **Column 1**                          | Variable name                         | This is the CLM variable name as it   |
    |                                       |                                       | appears in the CLM netCDF file.       |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | **Column 2**                          | DART KIND                             | This is the character string of the   |
+   | **Column 2**                          | DART KIND                             | This is the character string of the   |
    |                                       |                                       | corresponding DART KIND.              |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | **Column 3**                          | minimum                               | If the variable is to be updated in   |
+   | **Column 3**                          | minimum                               | If the variable is to be updated in   |
    |                                       |                                       | the CLM restart file, this specifies  |
    |                                       |                                       | the minimum value. If set to 'NA',    |
    |                                       |                                       | there is no minimum value.            |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | **Column 4**                          | maximum                               | If the variable is to be updated in   |
+   | **Column 4**                          | maximum                               | If the variable is to be updated in   |
    |                                       |                                       | the CLM restart file, this specifies  |
    |                                       |                                       | the maximum value. If set to 'NA',    |
    |                                       |                                       | there is no maximum value.            |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | **Column 5**                          | filename                              | This specifies which file should be   |
+   | **Column 5**                          | filename                              | This specifies which file should be   |
    |                                       |                                       | used to obtain the variable.          |
-   |                                       |                                       | ``'restart'`` => clm_restart_filename |
-   |                                       |                                       | ``'history'`` => clm_history_filename |
-   |                                       |                                       | ``'vect                               |
-   |                                       |                                       | or' `` => clm_vector_history_filename |
+   |                                       |                                       | ``'restart'`` => clm_restart_filename |
+   |                                       |                                       | ``'history'`` => clm_history_filename |
+   |                                       |                                       | ``'vector'`` =>                       |
+   |                                       |                                       | clm_vector_history_filename           |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | **Column 6**                          | update                                | If the variable comes from the        |
+   | **Column 6**                          | update                                | If the variable comes from the        |
    |                                       |                                       | restart file, it may be updated after |
    |                                       |                                       | the assimilation.                     |
-   |                                       |                                       | ``'UPDATE'      `` => the variable in |
-   |                                       |                                       | the restart file is updated.          |
-   |                                       |                                       | ``'NO_COPY_BACK'`` => the variable in |
+   |                                       |                                       | ``'UPDATE'`` => the variable in the   |
+   |                                       |                                       | restart file is updated.              |
+   |                                       |                                       | ``'NO_COPY_BACK'`` => the variable in |
    |                                       |                                       | the restart file remains unchanged.   |
    +---------------------------------------+---------------------------------------+---------------------------------------+
 
@@ -262,8 +240,6 @@ The following is perfectly legal (for CLM4, at least):
 however, only LAIP_VALUE will be used to calculate the LAI when an observation of LAI is encountered. All the other LAI
 variables in the DART state will be modified by the assimilation based on the relationship of LAIP_VALUE and the
 observation. Those coming from the restart file and marked 'UPDATE' **will** be updated in the CLM restart file.
-
---------------
 
 Namelist
 --------
@@ -432,10 +408,6 @@ namelist.
    | debug       | logical            | Set to .false. for minimal output.                                              |
    +-------------+--------------------+---------------------------------------------------------------------------------+
 
---------------
-
-.. _other_modules_used_(directly):
-
 Other modules used (directly)
 -----------------------------
 
@@ -450,30 +422,26 @@ Other modules used (directly)
    obs_def_tower_mod
    random_seq_mod
 
---------------
-
-.. _public_interfaces_-_required:
-
 Public interfaces - required
 ----------------------------
 
 ======================= ======================
 *use model_mod, only :* get_model_size
-                        adv_1step
-                        get_state_meta_data
-                        model_interpolate
-                        get_model_time_step
-                        static_init_model
-                        end_model
-                        init_time
-                        init_conditions
-                        nc_write_model_atts
-                        nc_write_model_vars
-                        pert_model_state
-                        get_close_maxdist_init
-                        get_close_obs_init
-                        get_close_obs
-                        ens_mean_for_model
+\                       adv_1step
+\                       get_state_meta_data
+\                       model_interpolate
+\                       get_model_time_step
+\                       static_init_model
+\                       end_model
+\                       init_time
+\                       init_conditions
+\                       nc_write_model_atts
+\                       nc_write_model_vars
+\                       pert_model_state
+\                       get_close_maxdist_init
+\                       get_close_obs_init
+\                       get_close_obs
+\                       ens_mean_for_model
 ======================= ======================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -510,16 +478,16 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Advances the model for a single time step. The time associated with the initial model state is also input although it
    is not used for the computation.
 
-   =========== ==========================================
-   ``x``       State vector of length model_size.
-   ``time   `` Specifies time of the initial model state.
-   =========== ==========================================
+   ======== ==========================================
+   ``x``    State vector of length model_size.
+   ``time`` Specifies time of the initial model state.
+   ======== ==========================================
 
 | 
 
 .. container:: routine
 
-   *call get_state_meta_data (index_in, location, [, var_type] )*
+   *call get_state_meta_data (index_in, location, [, var_type] )*
    ::
 
       integer,             intent(in)  :: index_in
@@ -531,11 +499,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Returns metadata about a given element, indexed by index_in, in the model state vector. The location defines where
    the state variable is located.
 
-   =============== ===================================================================
-   ``index_in   `` Index of state vector element about which information is requested.
-   ``location``    The location of state variable element.
-   *var_type*      The generic DART kind of the state variable element.
-   =============== ===================================================================
+   ============ ===================================================================
+   ``index_in`` Index of state vector element about which information is requested.
+   ``location`` The location of state variable element.
+   *var_type*   The generic DART kind of the state variable element.
+   ============ ===================================================================
 
 | 
 
@@ -554,18 +522,18 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Given model state, returns the value interpolated to a given location.
 
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``x``           | A model state vector.                                                                             |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``location   `` | Location to which to interpolate.                                                                 |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``itype``       | Not used.                                                                                         |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``obs_val``     | The interpolated value from the model.                                                            |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``istatus``     | If the interpolation was successful ``istatus = 0``. If ``istatus /= 0`` the interpolation        |
-   |                 | failed. Values less than zero are reserved for DART.                                              |
-   +-----------------+---------------------------------------------------------------------------------------------------+
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``x``        | A model state vector.                                                                                |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``location`` | Location to which to interpolate.                                                                    |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``itype``    | Not used.                                                                                            |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``obs_val``  | The interpolated value from the model.                                                               |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``istatus``  | If the interpolation was successful ``istatus = 0``. If ``istatus /= 0`` the interpolation failed.   |
+   |              | Values less than zero are reserved for DART.                                                         |
+   +--------------+------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -580,9 +548,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns the time step (forecast length) of the model;
 
-   ========== ============================
-   ``var   `` Smallest time step of model.
-   ========== ============================
+   ======= ============================
+   ``var`` Smallest time step of model.
+   ======= ============================
 
 | 
 
@@ -619,9 +587,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Returns the time at which the model will start if no input initial conditions are to be used. This is used to spin-up
    the model from rest.
 
-   =========== ===================
-   ``time   `` Initial model time.
-   =========== ===================
+   ======== ===================
+   ``time`` Initial model time.
+   ======== ===================
 
 | 
 
@@ -636,9 +604,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns default initial conditions for the model; generally used for spinning up initial model states.
 
-   ======== ====================================
-   ``x   `` Initial conditions for state vector.
-   ======== ====================================
+   ===== ====================================
+   ``x`` Initial conditions for state vector.
+   ===== ====================================
 
 | 
 
@@ -656,10 +624,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    diagnostic information. This is not a requirement, and models could choose to provide output in other formats. This
    function writes the metadata associated with the model to a NetCDF file opened to a file identified by ncFileID.
 
-   =============== =========================================================
-   ``ncFileID   `` Integer file descriptor to previously-opened netCDF file.
-   ``ierr``        Returns a 0 for successful completion.
-   =============== =========================================================
+   ============ =========================================================
+   ``ncFileID`` Integer file descriptor to previously-opened netCDF file.
+   ``ierr``     Returns a 0 for successful completion.
+   ============ =========================================================
 
 | 
 
@@ -679,13 +647,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Writes a copy of the state variables to a netCDF file. Multiple copies of the state for a given time are supported,
    allowing, for instance, a single file to include multiple ensemble estimates of the state.
 
-   ================ =================================================
-   ``ncFileID``     file descriptor to previously-opened netCDF file.
-   ``statevec``     A model state vector.
-   ``copyindex   `` Integer index of copy to be written.
-   ``timeindex``    The timestep counter for the given state.
-   ``ierr``         Returns 0 for normal completion.
-   ================ =================================================
+   ============= =================================================
+   ``ncFileID``  file descriptor to previously-opened netCDF file.
+   ``statevec``  A model state vector.
+   ``copyindex`` Integer index of copy to be written.
+   ``timeindex`` The timestep counter for the given state.
+   ``ierr``      Returns 0 for normal completion.
+   ============= =================================================
 
 | 
 
@@ -702,11 +670,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Given a model state, produces a perturbed model state.
 
-   ====================== =============================================
-   ``state``              State vector to be perturbed.
-   ``pert_state``         Perturbed state vector: NOT returned.
-   ``interf_provided   `` Returned false; interface is not implemented.
-   ====================== =============================================
+   =================== =============================================
+   ``state``           State vector to be perturbed.
+   ``pert_state``      Perturbed state vector: NOT returned.
+   ``interf_provided`` Returned false; interface is not implemented.
+   =================== =============================================
 
 | 
 
@@ -722,8 +690,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    In distance computations any two locations closer than the given ``maxdist`` will be considered close by the
    ``get_close_obs()`` routine. Pass-through to the 3D Sphere locations module. See
-   `get_close_maxdist_init() </assimilation_code/location/threed_sphere/location_mod.html#get_close_maxdist_init>`__ for
-   the documentation of this subroutine.
+   `get_close_maxdist_init() <../../assimilation_code/location/threed_sphere/location_mod.html#get_close_maxdist_init>`__
+   for the documentation of this subroutine.
 
 | 
 
@@ -739,14 +707,14 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3D Sphere locations module. See
-   `get_close_obs_init() </assimilation_code/location/threed_sphere/location_mod.html#get_close_obs_init>`__ for the
-   documentation of this subroutine.
+   `get_close_obs_init() <../../assimilation_code/location/threed_sphere/location_mod.html#get_close_obs_init>`__ for
+   the documentation of this subroutine.
 
 | 
 
 .. container:: routine
 
-   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
+   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
    ::
 
       type(get_close_type), intent(in)  :: gc
@@ -761,8 +729,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3D Sphere locations module. See
-   `get_close_obs() </assimilation_code/location/threed_sphere/location_mod.html#get_close_obs>`__ for the documentation
-   of this subroutine.
+   `get_close_obs() <../../assimilation_code/location/threed_sphere/location_mod.html#get_close_obs>`__ for the
+   documentation of this subroutine.
 
 | 
 
@@ -777,28 +745,24 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    A NULL INTERFACE in this model.
 
-   =============== ==========================================
-   ``ens_mean   `` State vector containing the ensemble mean.
-   =============== ==========================================
-
---------------
-
-.. _public_interfaces_-_optional:
+   ============ ==========================================
+   ``ens_mean`` State vector containing the ensemble mean.
+   ============ ==========================================
 
 Public interfaces - optional
 ----------------------------
 
 ======================= ========================
 *use model_mod, only :* get_gridsize
-                        clm_to_dart_state_vector
-                        sv_to_restart_file
-                        get_clm_restart_filename
-                        get_state_time
-                        get_grid_vertval
-                        compute_gridcell_value
-                        gridcell_components
-                        DART_get_var
-                        get_model_time
+\                       clm_to_dart_state_vector
+\                       sv_to_restart_file
+\                       get_clm_restart_filename
+\                       get_state_time
+\                       get_grid_vertval
+\                       compute_gridcell_value
+\                       gridcell_components
+\                       DART_get_var
+\                       get_model_time
 ======================= ========================
 
 | 
@@ -1035,8 +999,6 @@ Public interfaces - optional
 
 | 
 
---------------
-
 Files
 -----
 
@@ -1051,38 +1013,16 @@ dart_log.out           the run-time diagnostic output
 dart_log.nml           the record of all the namelists actually USED - contains the default values
 ====================== ===========================================================================
 
---------------
-
 References
 ----------
 
 `CLM User's Guide <http://www.cesm.ucar.edu/models/cesm1.1/clm/models/lnd/clm/doc/UsersGuide/clm_ug.pdf>`__ is an
 excellent reference for CLM.
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | Routine                               | Message                               | Comment                               |
-   +=======================================+=======================================+=======================================+
-   | nc_write_model_atts                   | Various netCDF-f90 interface error    | From one of the netCDF calls in the   |
-   | nc_write_model_vars                   | messages                              | named routine                         |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------
 
 .. |CLM gridcell breakdown| image:: ../../docs/images/clm_landcover.jpg
    :height: 250px

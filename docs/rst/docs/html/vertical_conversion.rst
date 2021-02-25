@@ -1,9 +1,6 @@
 Vertical Conversion of Observations
 ===================================
 
-Contents
---------
-
 In Lanai vertical conversion of observations occurs in get_close_obs. The Lanai code in filter_assim is as follows:
 
 ::
@@ -51,6 +48,4 @@ Moving the ``convert_vertical_location`` changes the number of ``get/set locatio
 the location when you do this. This is in the conversion from degrees to radians and back again. If you want to do the
 exact number of ``get/set location`` you can change the line lanai_bitwise = .false. to lanai_bitwise = .true. in
 assim_tools_mod.f90. Note this is not a namelist option because production code should not be run with lanai_bitwise =
-.true. For more detail on running bitwise with Lanai see `bitwise considerations <bitwise_considerations.html>`__.
-
---------------
+.true. For more detail on running bitwise with Lanai see :doc:`./bitwise_considerations`.

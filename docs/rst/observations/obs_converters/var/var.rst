@@ -1,13 +1,6 @@
 3DVAR/4DVAR Observation Converters
 ==================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
-
 Overview
 --------
 
@@ -18,30 +11,12 @@ See the README file in this directory for more information.
 
 | 
 
---------------
-
-| 
-
-.. _data_sources:
-
 Data sources
 ------------
-
- 
-
-| 
-
---------------
 
 | 
 
 Programs
 --------
-
- 
-
-| 
-
---------------
 
 | 

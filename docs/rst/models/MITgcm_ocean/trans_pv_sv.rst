@@ -1,19 +1,6 @@
 PROGRAM ``trans_pv_sv``
 =======================
 
-Contents
---------
-
--  `Usage <#usage>`__
--  `Modules used <#modules_used>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
-$Id$
-
 | ``trans_pv_sv`` is responsible for converting the ocean model 'snapshot' files to a DART 'initial conditions' file. In
   order to do that, the valid time for the snapshot files must be calculated from several pieces of information: the
   filename contains a timestep index, the ``data``\ ``&PARM03`` namelist contains information about the amount of time
@@ -40,10 +27,6 @@ Usage
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -55,8 +38,6 @@ Modules used
    assim_model_mod
    time_manager_mod
 
---------------
-
 Namelist
 --------
 
@@ -67,10 +48,10 @@ hyperlink to the full documentation for each namelist.
 +----------------------------------------------------------+----------------------------------------------------------+
 | Namelist                                                 | Primary Purpose                                          |
 +==========================================================+==========================================================+
-| `utilities_nml </assimilatio                             | set the termination level and file name for the run-time |
+| `utilities_nml <../../assimilatio                        | set the termination level and file name for the run-time |
 | n_code/modules/utilities/utilities_mod.html#Namelist>`__ | log                                                      |
 +----------------------------------------------------------+----------------------------------------------------------+
-| `assim_model_mod_nml </assimilation_cod                  | write DART restart files in binary or ASCII              |
+| `assim_model_mod_nml <../../assimilation_cod             | write DART restart files in binary or ASCII              |
 | e/modules/assimilation/assim_model_mod.html#Namelist>`__ |                                                          |
 +----------------------------------------------------------+----------------------------------------------------------+
 | `model_nml <model_mod.html#Namelist>`__                  | write netCDF files with prognostic variables             |
@@ -83,8 +64,6 @@ hyperlink to the full documentation for each namelist.
 | `PARM04 <model_mod.html#namelist_parm04>`__              | ocean model grid parameters                              |
 +----------------------------------------------------------+----------------------------------------------------------+
 
---------------
-
 Files
 -----
 
@@ -92,38 +71,12 @@ Files
 -  input snapshot files: ``[S,T,U,V,Eta].nnnnnnnnnn.[data[,.meta]]``
 -  output initial conditions file: ``assim_model_state_ud``
 
---------------
-
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-| The most common problem is trying to read the Fortran direct-access big-endian snapshot files on a little-endian
-  architecture. This can manifest itself in very misleading ways. Make sure you have the right compiler settings to be
-  able to read these files. There is no one error message that indicates the read was unsuccessful.
-| The read takes place in `model_mod:read_snapshot() <model_mod.html#read_snapshot>`__.
-
-.. container:: errors
-
-   =========== =================================== ===========================================
-   Routine     Message                             Comment
-   =========== =================================== ===========================================
-   trans_sv_pv unable to read timestep from stdin. look at the example in the 'Usage' section.
-   =========== =================================== ===========================================
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

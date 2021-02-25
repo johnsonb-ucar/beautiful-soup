@@ -1,14 +1,6 @@
 Total Precipitable Water Observations
 =====================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Namelist <#namelist>`__
-
 Overview
 --------
 
@@ -30,10 +22,6 @@ time. The Fortran read line is:
 No program to convert between the HDF and text files is currently provided. Contact dart@ucar.edu for more information
 if you are interested in using this converter.
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
@@ -42,8 +30,6 @@ are interested in this data.
 
 Alternatively, if you can read HDF-EOS files and output a text line per observation in the format listed above, then you
 can use this converter on TPW data from any MODIS file.
-
---------------
 
 Programs
 --------
@@ -73,8 +59,6 @@ The specific type of observation created in the output observation sequence file
 "MODIS_TOTAL_PRECIPITABLE_WATER" is the most general term, or a more satellite-specific name can be chosen. The choice
 of which observations to assimilate or evaluate are made using this name. The observation-space diagnostics also
 aggregate statistics based on this name.
-
---------------
 
 Namelist
 --------
@@ -275,5 +259,3 @@ namelist.
 +---------------------------------------+---------------------------------------+---------------------------------------+
 
 | 
-
---------------

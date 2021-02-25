@@ -1,17 +1,5 @@
-MODULE MITgcm_ocean
-===================
-
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelists <#namelists>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
+MITgcm_ocean
+============
 
 Overview
 --------
@@ -42,8 +30,8 @@ The observations for the ocean model were the first observations of oceanic quan
 *salinity, sea surface height, current components ...*. In keeping with the DART philosophy, there is a concept of
 inheritance between platform-specific observations like *DRIFTER_U_CURRENT_COMPONENT* and the general
 *U_CURRENT_COMPONENT*. Using the specific types when possible will allow flexibility specifying what kinds of
-observations to assimilate. `create_ocean_obs <models/MITgcm_ocean/create_ocean_obs.html>`__ is the program to create a
-DART observation sequence from a very particular ASCII file.
+observations to assimilate. :doc:`./create_ocean_obs` is the program to create a DART observation sequence from a very
+particular ASCII file.
 
 | 
 
@@ -52,22 +40,17 @@ Converting between DART and the model
 
 There are a set of support programs:
 
-+----------------------------------------------------------+----------------------------------------------------------+
-| `t                                                       | converts the ocean model snapshot files into a           |
-| rans_pv_sv.f90 <models/MITgcm_ocean/trans_pv_sv.html>`__ | DART-compatible format                                   |
-+----------------------------------------------------------+----------------------------------------------------------+
-| `t                                                       | converts the DART output into snapshot files to be used  |
-| rans_sv_pv.f90 <models/MITgcm_ocean/trans_sv_pv.html>`__ | as ocean model input datasets (specified in              |
-|                                                          | ``data``\ ``&PARM05``); creates a new ``data`` namelist  |
-|                                                          | file (``data.DART``) containing the correct              |
-|                                                          | ``&PARM03;startTime,endTime`` values to advance the      |
-|                                                          | ocean model the expected amount; and creates a new       |
-|                                                          | ``data.cal`` namelist file (``data.cal.DART``)           |
-|                                                          | containing the calendar information.                     |
-+----------------------------------------------------------+----------------------------------------------------------+
-| `create_ocea                                             | create observation sequence files                        |
-| n_obs.f90 <models/MITgcm_ocean/create_ocean_obs.html>`__ |                                                          |
-+----------------------------------------------------------+----------------------------------------------------------+
++---------------------------+-----------------------------------------------------------------------------------------+
+| :doc:`./trans_pv_sv`      | converts the ocean model snapshot files into a DART-compatible format                   |
++---------------------------+-----------------------------------------------------------------------------------------+
+| :doc:`./trans_sv_pv`      | converts the DART output into snapshot files to be used as ocean model input datasets   |
+|                           | (specified in ``data``\ ``&PARM05``); creates a new ``data`` namelist file              |
+|                           | (``data.DART``) containing the correct ``&PARM03;startTime,endTime`` values to advance  |
+|                           | the ocean model the expected amount; and creates a new ``data.cal`` namelist file       |
+|                           | (``data.cal.DART``) containing the calendar information.                                |
++---------------------------+-----------------------------------------------------------------------------------------+
+| :doc:`./create_ocean_obs` | create observation sequence files                                                       |
++---------------------------+-----------------------------------------------------------------------------------------+
 
 The data assimilation period is controlled in the ``input.nml``\ ``&model_nml`` namelist. In combination with the ocean
 model dynamics timestep ``data``\ ``&PARM03:deltaTClock`` this determines the amount of time the model will advance for
@@ -90,11 +73,9 @@ Generating the initial ensemble
   things are on-track.
 | There is a ``shell_scripts/MakeInitialEnsemble.csh`` script that was intended to automate this process - with modest
   success. It does illustrate the steps needed to convert each snapshot file to a DART initial conditions file and then
-  run the
-  `restart_file_utility </Users/johnsonb/work/git/beautiful-soup-backup/docs/utilities/restart_file_utility.f90>`__ to
-  overwrite the timestep in the header of the initial conditions file. After you have created all the initial conditions
-  files, you can simply 'cat' them all together. Even if the script doesn't work *out-of-the-box*, it should be readable
-  enough to be some help.
+  run the `restart_file_utility <../../utilities/restart_file_utility.f90>`__ to overwrite the timestep in the header of
+  the initial conditions file. After you have created all the initial conditions files, you can simply 'cat' them all
+  together. Even if the script doesn't work *out-of-the-box*, it should be readable enough to be some help.
 
 | 
 
@@ -118,17 +99,16 @@ Controlling the model advances
   or may not come directly from the DART initial conditions files.
 | The ocean model **MUST always** start from the input datasets defined in the ``data``\ ``&PARM05`` namelist.
   Apparently, this requires ``data``\ ``&PARM03:startTime`` to be **0.0**. One of the DART support routines
-  (`trans_sv_pv <models/MITgcm_ocean/trans_sv_pv.html>`__) converts the DART state vector to the files used in
-  ``data``\ ``&PARM05`` and creates new ``data.cal``\ ``&CAL_NML`` and ``data``\ ``&PARM03`` namelists with values
-  appropriate to advance the model to the desired time.
-| The ocean model then advances till ``data``\ ``&PARM03:endTime`` and writes out snapshot files.
-  `trans_pv_sv <models/MITgcm_ocean/trans_pv_sv.html>`__ converts the snapshot files to a DART-compatible file which is
-  ingested by ``filter``. ``filter`` also reads the observation sequence file to determine which observations are within
-  the assimilation window, assimilates them, and writes out a set of restart files, one for each ensemble member.
-  ``filter`` then waits for each instance of the ocean model (one instance for each ensemble member) to advance to
-  ``data``\ ``&PARM03:endTime``. The whole process repeats until 1) there are no more observations to assimilate (i.e.
-  the observation sequence file is exhausted) or 2) the time specified by
-  ``input.nml``\ ``&filter_nml:last_obs_days,last_obs_seconds`` has been reached.
+  (:doc:`./trans_sv_pv`) converts the DART state vector to the files used in ``data``\ ``&PARM05`` and creates new
+  ``data.cal``\ ``&CAL_NML`` and ``data``\ ``&PARM03`` namelists with values appropriate to advance the model to the
+  desired time.
+| The ocean model then advances till ``data``\ ``&PARM03:endTime`` and writes out snapshot files. :doc:`./trans_pv_sv`
+  converts the snapshot files to a DART-compatible file which is ingested by ``filter``. ``filter`` also reads the
+  observation sequence file to determine which observations are within the assimilation window, assimilates them, and
+  writes out a set of restart files, one for each ensemble member. ``filter`` then waits for each instance of the ocean
+  model (one instance for each ensemble member) to advance to ``data``\ ``&PARM03:endTime``. The whole process repeats
+  until 1) there are no more observations to assimilate (i.e. the observation sequence file is exhausted) or 2) the time
+  specified by ``input.nml``\ ``&filter_nml:last_obs_days,last_obs_seconds`` has been reached.
 
 | 
 
@@ -142,15 +122,13 @@ details for running each program are covered in their own documentation.
 #. create a set of initial conditions for DART as described in Generating the intial ensemble and keep a copy of the
    'middle' snapshot - then use it as the initial condition for ``perfect_model_obs``.
 #. create a TINY set of 'perfect' observations in the normal fashion:
-   `create_obs_sequence </Users/johnsonb/work/git/beautiful-soup-backup/docs/assimilation_code/programs/create_obs_sequence/create_obs_sequence.html>`__
-   and then
-   `create_fixed_network_seq </Users/johnsonb/work/git/beautiful-soup-backup/docs/obs_sequence/assimilation_code/programs/create_fixed_network_seq/create_fixed_network_seq.html>`__
-   to create an empty observation sequence file (usually called ``obs_seq.in``)
+   :doc:`../../assimilation_code/programs/create_obs_sequence/create_obs_sequence` and then
+   :doc:`../../assimilation_code/programs/create_fixed_network_seq/create_fixed_network_seq` to create an empty
+   observation sequence file (usually called ``obs_seq.in``)
 #. modify ``data``, ``data.cal``, and ``input.nml`` to control the experiment and populate the observation sequence file
-   by running
-   `perfect_model_obs </Users/johnsonb/work/git/beautiful-soup-backup/docs/assimilation_code/programs/perfect_model_obs/perfect_model_obs.html>`__
+   by running :doc:`../../assimilation_code/programs/perfect_model_obs/perfect_model_obs`
 #. Now use the full ensemble of initial conditions from Step 1 and run
-   `filter </Users/johnsonb/work/git/beautiful-soup-backup/docs/filter/filter.html>`__
+   :doc:`../../assimilation_code/programs/filter/filter`
 
 A perfectly sensible approach to get to know the system would be to try to
 
@@ -166,14 +144,9 @@ Exploring the output
 Is pretty much like any other model. The netCDF files have the model prognostic variables before and after the
 assimilation. There are Matlab® scripts for perusing the netCDF files in the ``DART/matlab`` directory. There are
 Matlab® scripts for exploring the performance of the assimilation in observation-space (after running
-`obs_diag </Users/johnsonb/work/git/beautiful-soup-backup/docs/assimilation_code/programs/obs_diag/oned/obs_diag.html%20assimilation_code/programs/obs_diag/threed_cartesian/obs_diag.html%20assimilation_code/programs/obs_diag/threed_sphere/obs_diag.html>`__
-to explore the ``obs_seq.final`` file) - use the scripts starting with 'plot_', i.e.
-``DART/diagnostics/matlab/plot_*.m``. As always, there are some model-specific item you should know about in
-``DART/models/MITgcm_ocean/matlab``, and ``DART/models/MITgcm_ocean/shell_scripts``.
-
---------------
-
-.. _other_modules_used:
+:doc:`../../assimilation_code/programs/obs_diag/threed_sphere/obs_diag` to explore the ``obs_seq.final`` file) - use the
+scripts starting with ``'plot_'``, e.g. ``DART/diagnostics/matlab/plot_*.m``. As always, there are some model-specific
+item you should know about in ``DART/models/MITgcm_ocean/matlab``, and ``DART/models/MITgcm_ocean/shell_scripts``.
 
 Other modules used
 ------------------
@@ -188,20 +161,16 @@ Other modules used
    mpi_utilities_mod
    random_seq_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 Only a select number of interfaces used are discussed here.
 
-========================== ===========================================================================
-*use location_mod, only :* `location_type </location/threed_sphere/location_mod.html#location_type>`__
-                           `get_location </location/threed_sphere/location_mod.html#get_location>`__
-                           `set_location </location/threed_sphere/location_mod.html#set_location>`__
-========================== ===========================================================================
+========================== ================================================================================
+*use location_mod, only :* `location_type <../../location/threed_sphere/location_mod.html#location_type>`__
+\                          `get_location <../../location/threed_sphere/location_mod.html#get_location>`__
+\                          `set_location <../../location/threed_sphere/location_mod.html#set_location>`__
+========================== ================================================================================
 
 The ocean model namelists ``data``, and ``data.cal`` *MUST* be present. These namelists are needed to reconstruct the
 valid time of the snapshot files created by the ocean model. Be aware that as DART advances the model, the ``data``
@@ -213,63 +182,33 @@ Required Interface Routines
 
 get_model_size
 
- 
-
 adv_1step
-
- 
 
 get_state_meta_data
 
- 
-
 model_interpolate
-
- 
 
 get_model_time_step
 
- 
-
 static_init_model
-
- 
 
 end_model
 
- 
-
 init_time
-
- 
 
 init_conditions
 
- 
-
 nc_write_model_atts
-
- 
 
 nc_write_model_vars
 
- 
-
 pert_model_state
-
- 
 
 get_close_maxdist_init
 
- 
-
 get_close_obs_init
 
- 
-
 get_close_obs
-
- 
 
 ens_mean_for_model
 
@@ -279,55 +218,29 @@ Unique Interface Routines
 
 MIT_meta_type
 
- 
-
 read_meta
-
- 
 
 write_meta
 
- 
-
 prog_var_to_vector
-
- 
 
 vector_to_prog_var
 
- 
-
 read_snapshot
-
- 
 
 write_snapshot
 
- 
-
 get_gridsize
-
- 
 
 snapshot_files_to_sv
 
- 
-
 sv_to_snapshot_files
-
- 
 
 timestep_to_DARTtime
 
- 
-
 DARTtime_to_MITtime
 
- 
-
 DARTtime_to_timestepindex
-
- 
 
 write_data_namelistfile
 
@@ -368,16 +281,16 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    ``adv_1step`` is not used for the MITgcm_ocean model. Advancing the model is done through the ``advance_model``
    script. This is a NULL_INTERFACE, provided only for compatibility with the DART requirements.
 
-   =========== ==========================================
-   ``x``       State vector of length model_size.
-   ``time   `` Specifies time of the initial model state.
-   =========== ==========================================
+   ======== ==========================================
+   ``x``    State vector of length model_size.
+   ``time`` Specifies time of the initial model state.
+   ======== ==========================================
 
 | 
 
 .. container:: routine
 
-   *call get_state_meta_data (index_in, location, [, var_type] )*
+   *call get_state_meta_data (index_in, location, [, var_type] )*
    ::
 
       integer,             intent(in)  :: index_in
@@ -393,18 +306,18 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    integer values used to indicate different variable types in ``var_type`` are themselves defined as public interfaces
    to model_mod if required.
 
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``index_in   `` | Index of state vector element about which information is requested.                               |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``location``    | Returns the 3D location of the indexed state variable. The ``location_ type`` comes from          |
-   |                 | ``DART/location/threed_sphere/location_mod.f90``. Note that the lat/lon are specified in degrees  |
-   |                 | by the user but are converted to radians internally.                                              |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | *var_type*      | Returns the type of the indexed state variable as an optional argument. The type is one of the    |
-   |                 | list of supported observation types, found in the block of code starting                          |
-   |                 | ``! Integer definitions for DART TYPES`` in                                                       |
-   |                 | ``DART/assimilation_code/modules/observations/obs_kind_mod.f90``                                  |
-   +-----------------+---------------------------------------------------------------------------------------------------+
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``index_in`` | Index of state vector element about which information is requested.                                  |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``location`` | Returns the 3D location of the indexed state variable. The ``location_ type`` comes from             |
+   |              | ``DART/location/threed_sphere/location_mod.f90``. Note that the lat/lon are specified in degrees by  |
+   |              | the user but are converted to radians internally.                                                    |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | *var_type*   | Returns the type of the indexed state variable as an optional argument. The type is one of the list  |
+   |              | of supported observation types, found in the block of code starting                                  |
+   |              | ``! Integer definitions for DART TYPES`` in                                                          |
+   |              | ``DART/assimilation_code/modules/observations/obs_kind_mod.f90``                                     |
+   +--------------+------------------------------------------------------------------------------------------------------+
 
    The list of supported variables in ``DART/assimilation_code/modules/observations/obs_kind_mod.f90`` is created by
    ``preprocess`` using the entries in ``input.nml``\ [``&preprocess_nml, &obs_kind_nml``], ``DEFAULT_obs_kin_mod.F90``
@@ -437,7 +350,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    +-----------------------------------------------------------+-----------------------------------------------------------+
    | ``x``                                                     | A model state vector.                                     |
    +-----------------------------------------------------------+-----------------------------------------------------------+
-   | ``location   ``                                           | Location to which to interpolate.                         |
+   | ``location``                                              | Location to which to interpolate.                         |
    +-----------------------------------------------------------+-----------------------------------------------------------+
    | ``itype``                                                 | Not used.                                                 |
    +-----------------------------------------------------------+-----------------------------------------------------------+
@@ -465,11 +378,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    ``input.nml``\ ``&model_nml:assimilation_period_days, assimilation_period_seconds``, after ensuring the forecast
    length is a multiple of the ocean model dynamical timestep declared by ``data``\ ``&PARM03:deltaTClock``.
 
-   ========== ============================
-   ``var   `` Smallest time step of model.
-   ========== ============================
+   ======= ============================
+   ``var`` Smallest time step of model.
+   ======= ============================
 
-   Please read the note concerning Controlling the model advances
+   Please read the note concerning Controlling the model advances
 
 | 
 
@@ -517,10 +430,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    time this routine would get called is if the ``input.nml``\ ``&perfect_model_obs_nml:start_from_restart`` is .false.,
    which is not supported in the MITgcm_ocean model.
 
-   +-------------+-------------------------------------------------------------------------------------------------------+
-   | ``time   `` | the starting time for the model if no initial conditions are to be supplied. As of Oct 2008, this is  |
-   |             | hardwired to 0.0                                                                                      |
-   +-------------+-------------------------------------------------------------------------------------------------------+
+   +----------+----------------------------------------------------------------------------------------------------------+
+   | ``time`` | the starting time for the model if no initial conditions are to be supplied. As of Oct 2008, this is     |
+   |          | hardwired to 0.0                                                                                         |
+   +----------+----------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -536,9 +449,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    ``init_conditions`` returns default initial conditions for model; generally used for spinning up initial model
    states. For the MITgcm_ocean model it is just a stub because the initial state is always provided by the input files.
 
-   ======== ==========================================================================
-   ``x   `` Model state vector. [default is 0.0 for every element of the state vector]
-   ======== ==========================================================================
+   ===== ==========================================================================
+   ``x`` Model state vector. [default is 0.0 for every element of the state vector]
+   ===== ==========================================================================
 
 | 
 
@@ -553,14 +466,14 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    ``nc_write_model_atts`` writes model-specific attributes to an opened netCDF file: In the MITgcm_ocean case, this
-   includes information like the coordinate variables (the grid arrays: XG, XC, YG, YC, ZG, ZC, ...), information from
+   includes information like the coordinate variables (the grid arrays: XG, XC, YG, YC, ZG, ZC, ...), information from
    some of the namelists, and either the 1D state vector or the prognostic variables (S,T,U,V,Eta). All the required
    information (except for the netCDF file identifier) is obtained from the scope of the ``model_mod`` module.
 
-   =============== =========================================================
-   ``ncFileID   `` Integer file descriptor to previously-opened netCDF file.
-   ``ierr``        Returns a 0 for successful completion.
-   =============== =========================================================
+   ============ =========================================================
+   ``ncFileID`` Integer file descriptor to previously-opened netCDF file.
+   ``ierr``     Returns a 0 for successful completion.
+   ============ =========================================================
 
    ``nc_write_model_atts`` is responsible for the model-specific attributes in the following DART-output netCDF files:
    ``true_state.nc``, ``preassim.nc``, and ``analysis.nc``.
@@ -583,17 +496,17 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    ``nc_write_model_vars`` writes a copy of the state variables to a NetCDF file. Multiple copies of the state for a
    given time are supported, allowing, for instance, a single file to include multiple ensemble estimates of the state.
    Whether the state vector is parsed into prognostic variables (S,T,U,V,Eta) or simply written as a 1D array is
-   controlled by ``input.nml``\ ``&model_mod_nml:output_state_vector``. If ``output_state_vector = .true.`` the state
+   controlled by ``input.nml``\ ``&model_mod_nml:output_state_vector``. If ``output_state_vector = .true.`` the state
    vector is written as a 1D array (the simplest case, but hard to explore with the diagnostics). If
-   ``output_state_vector = .false.`` the state vector is parsed into prognostic variables before being written.
+   ``output_state_vector = .false.`` the state vector is parsed into prognostic variables before being written.
 
-   ================ =================================================
-   ``ncFileID``     file descriptor to previously-opened netCDF file.
-   ``statevec``     A model state vector.
-   ``copyindex   `` Integer index of copy to be written.
-   ``timeindex``    The timestep counter for the given state.
-   ``ierr``         Returns 0 for normal completion.
-   ================ =================================================
+   ============= =================================================
+   ``ncFileID``  file descriptor to previously-opened netCDF file.
+   ``statevec``  A model state vector.
+   ``copyindex`` Integer index of copy to be written.
+   ``timeindex`` The timestep counter for the given state.
+   ``ierr``      Returns 0 for normal completion.
+   ============= =================================================
 
 | 
 
@@ -627,14 +540,14 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    ``input.nml``\ ``&filter_nml:start_from_restart = .false.`` See also Generating the initial ensemble at the start of
    this document.
 
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``state``              | State vector to be perturbed.                                                              |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``pert_state``         | The perturbed state vector.                                                                |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``interf_provided   `` | Because of the 'wet/dry' issue discussed above, this is always ``.true.``, indicating a    |
-   |                        | model-specific perturbation is available.                                                  |
-   +------------------------+--------------------------------------------------------------------------------------------+
+   +---------------------+-----------------------------------------------------------------------------------------------+
+   | ``state``           | State vector to be perturbed.                                                                 |
+   +---------------------+-----------------------------------------------------------------------------------------------+
+   | ``pert_state``      | The perturbed state vector.                                                                   |
+   +---------------------+-----------------------------------------------------------------------------------------------+
+   | ``interf_provided`` | Because of the 'wet/dry' issue discussed above, this is always ``.true.``, indicating a       |
+   |                     | model-specific perturbation is available.                                                     |
+   +---------------------+-----------------------------------------------------------------------------------------------+
 
 | 
 
@@ -649,8 +562,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3-D sphere locations module. See
-   `get_close_maxdist_init() </location/threed_sphere/location_mod.html#get_close_maxdist_init>`__ for the documentation
-   of this subroutine.
+   `get_close_maxdist_init() <../../location/threed_sphere/location_mod.html#get_close_maxdist_init>`__ for the
+   documentation of this subroutine.
 
 | 
 
@@ -666,14 +579,14 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3-D sphere locations module. See
-   `get_close_obs_init() </location/threed_sphere/location_mod.html#get_close_obs_init>`__ for the documentation of this
-   subroutine.
+   `get_close_obs_init() <../../location/threed_sphere/location_mod.html#get_close_obs_init>`__ for the documentation of
+   this subroutine.
 
 | 
 
 .. container:: routine
 
-   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
+   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
    ::
 
       type(get_close_type), intent(in)  :: gc
@@ -688,7 +601,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3-D sphere locations module. See
-   `get_close_obs() </location/threed_sphere/location_mod.html#get_close_obs>`__ for the documentation of this
+   `get_close_obs() <../../location/threed_sphere/location_mod.html#get_close_obs>`__ for the documentation of this
    subroutine.
 
 | 
@@ -712,16 +625,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
-| 
-
 Unique Interface Routines
 =========================
-
-| 
-
---------------
 
 | 
 
@@ -1185,8 +1090,6 @@ Unique Interface Routines
 
 | 
 
---------------
-
 Namelists
 ---------
 
@@ -1211,21 +1114,21 @@ prevent them from prematurely terminating the namelist.
    +------------------------------+-----------------------------+-------------------------------------------------------+
    | Contents                     | Type                        | Description                                           |
    +==============================+=============================+=======================================================+
-   | assimilation_period_days     | integer *[default: 7]*      | The number of days to advance the model for each      |
+   | assimilation_period_days     | integer *[default: 7]*      | The number of days to advance the model for each      |
    |                              |                             | assimilation.                                         |
    +------------------------------+-----------------------------+-------------------------------------------------------+
-   | assimilation_period_seconds  | integer *[default: 0]*      | In addition to ``assimilation_period_days``, the      |
+   | assimilation_period_seconds  | integer *[default: 0]*      | In addition to ``assimilation_period_days``, the      |
    |                              |                             | number of seconds to advance the model for each       |
    |                              |                             | assimilation.                                         |
    +------------------------------+-----------------------------+-------------------------------------------------------+
-   | output_state_vector          | logical *[default: .true.]* | The switch to determine the form of the state vector  |
+   | output_state_vector          | logical *[default: .true.]* | The switch to determine the form of the state vector  |
    |                              |                             | in the output netcdf files. If ``.true.`` the state   |
    |                              |                             | vector will be output exactly as DART uses it ... one |
    |                              |                             | long array. If ``.false.``, the state vector is       |
    |                              |                             | parsed into prognostic variables and output that way  |
    |                              |                             | -- much easier to use with 'ncview', for example.     |
    +------------------------------+-----------------------------+-------------------------------------------------------+
-   | model_perturbation_amplitude | real(r8) *[default: 0.2]*   | The amount of noise to add when trying to perturb a   |
+   | model_perturbation_amplitude | real(r8) *[default: 0.2]*   | The amount of noise to add when trying to perturb a   |
    |                              |                             | single state vector to create an ensemble. Only       |
    |                              |                             | needed when                                           |
    |                              |                             | ``inpu                                                |
@@ -1260,10 +1163,10 @@ prevent them from prematurely terminating the namelist.
 
    | This namelist is read in a file called ``data.cal`` This namelist is the same one that is used by the ocean model.
      The values **must** correspond to the date at the start of an experiment. This is more important for
-     ``create_ocean_obs, trans_pv_sv`` than for ``filter`` and `trans_sv_pv <models/MITgcm_ocean/trans_sv_pv.html>`__
-     since ``trans_sv_pv`` takes the start time of the experiment from the DART initial conditions file and actually
-     writes a new ``data.cal.DART`` and a new ``data.DART`` file. ``advance_model.csh`` renames ``data.DART`` and
-     ``data.cal.DART`` to be used for the model advance.
+     ``create_ocean_obs, trans_pv_sv`` than for ``filter`` and :doc:`./trans_sv_pv` since ``trans_sv_pv`` takes the
+     start time of the experiment from the DART initial conditions file and actually writes a new ``data.cal.DART`` and
+     a new ``data.DART`` file. ``advance_model.csh`` renames ``data.DART`` and ``data.cal.DART`` to be used for the
+     model advance.
    | Still, the files must exist before DART runs to avoid unnecessarily complex logic. If you are running the support
      programs in a standalone fashion (as you might if you are converting snapshot files into an intial ensemble), it is
      critical that the values in this namelist are correct to have accurate times in the headers of the restart files.
@@ -1336,7 +1239,7 @@ prevent them from prematurely terminating the namelist.
          taveFreq     = 86400.,
            ...
 
-   This would result in snapshot files with names like ``[S,T,U,V,Eta].0000000096.data`` since 86400/900 = 96. These
+   This would result in snapshot files with names like ``[S,T,U,V,Eta].0000000096.data`` since 86400/900 = 96. These
    values remain fixed for the entire assimilation experiment, the only thing that changes from the ocean model's
    perspective is a new ``data.cal`` gets created for every new assimilation cycle. ``filter`` is responsible for
    starting and stopping the ocean model. The DART model state has a valid time associated with it, this information is
@@ -1454,8 +1357,6 @@ prevent them from prematurely terminating the namelist.
 
 | 
 
---------------
-
 Files
 -----
 
@@ -1465,169 +1366,12 @@ Files
 
 Please note that there are **many** more files needed to advance the ocean model, none of which are discussed here.
 
---------------
-
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   Routine
-
-Message
-
-Comment
-
-static_init_model
-
-... At present, DART only supports equal values.
-
-namelist PARM03 has deltaTmom /= deltaTtracer /= deltaTClock
-
-static_init_model
-
-could not figure out number of longitudes from delX in namelist
-
-Every entry in PARM04:delX is a perfect zero [the default value] ... indicating there are no longitudes. That can't be
-good.
-
-static_init_model
-
-could not figure out number of latitudes from delY in namelist
-
-Every entry in PARM04:delY is a perfect zero [the default value] ... indicating there are no latitudes.
-
-static_init_model
-
-could not figure out number of depth levelss from delZ in namelist
-
-Every entry in PARM04:delZ is a perfect zero [the default value] ... indicating there are no depth levels.
-
-read_meta
-
-unable to parse line <*> from <some_file>
-
-unable to match character string 'nDims = [' in the snapshot metadata file.
-
-read_meta
-
-unable to determine nDims from <some_file>
-
-snapshot metadata file has the string 'nDims = [' but the value cannot be understood.
-
-read_meta
-
-unable to read line <*> from <some_file>
-
-no comment.
-
-read_meta
-
-unable to parse dimList(<*>) from <some_file>
-
-snapshot metadata file has the string 'dimList = [' but the value cannot be understood.
-
-read_meta
-
-unable to determine dimList from <some_file>
-
-snapshot metadata file has the string 'dimList = [' but the values are all nonsensical.
-
-read_meta
-
-unable to parse dataprec from <some_file>
-
-snapshot metadata file has the string 'dataprec = [' but the value cannot be understood.
-
-read_meta
-
-unable to determine dataprec from <some_file>
-
-snapshot metadata file has the string 'dataprec = [' but the values are all nonsensical.
-
-read_meta
-
-unable to parse nrecords from <some_file>
-
-snapshot metadata file has the string 'nrecords = [' but the value cannot be understood.
-
-read_meta
-
-unable to determine nrecords from <some_file>
-
-snapshot metadata file has the string 'nrecords = [' but the values are all nonsensical.
-
-read_meta
-
-unable to parse timeStepNumber from <some_file>
-
-snapshot metadata file has the string 'timeStepNumber = [' but the value cannot be understood.
-
-read_meta
-
-unable to determine timeStepNumber from <some_file>
-
-snapshot metadata file has the string 'timeStepNumber = [' but the values are all nonsensical.
-
-write_meta
-
-unable to open file <some_file> for writing
-
-no comment.
-
-read_Nd_snapshot
-
-storage mode mismatch for <some_file>
-
-DART is expecting a 32bit float in the snapshot file. This is tricky to check, since it is possible to redefine the
-``r4`` storage type (in ``common/types_mod.f90``) to be a 64bit float, in which case you don't want to get a 32bit
-float. This check must be manually disabled by editing the logic in ``read_Nd_snapshot`` to handle the case where the
-snapshot file storage is 64bit.
-
-read_Nd_snapshot
-
-dim 1 does not match delX grid size from namelist ...
-
-the snapshot file metadata does not match the number of longitudes inferred from PARM04:delX
-
-read_Nd_snapshot
-
-dim 2 does not match delY grid size from namelist ...
-
-the snapshot file metadata does not match the number of latitudes inferred from PARM04:delY
-
-read_Nd_snapshot
-
-dim 3 does not match delZ grid size from namelist ...
-
-the snapshot file metadata does not match the number of depths inferred from PARM04:delZ
-
-read_Nd_snapshot
-
-cannot open (<*>) <some_file> for reading
-
-the (<*>) is the Fortran error code
-
-read_Nd_snapshot
-
-unable to read (<*>) snapshot file <some_file>
-
-the (<*>) is the Fortran error code
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

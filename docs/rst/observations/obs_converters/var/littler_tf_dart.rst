@@ -1,18 +1,6 @@
 PROGRAM ``littler_tf_dart``
 ===========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Modules used <#modules_used>`__
--  `Modules indirectly used <#modules_indirectly_used>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -22,10 +10,6 @@ program is limited to wind and temperature from radiosondes.
 The littler data files do not contain observation errors. The observation errors are in a separate file called
 ``obserr.txt``. The littler file generated here has to be preprocessed by the program ``3dvar_obs.exe`` before beeing
 ingested in the WRF 3D-Var system.
-
---------------
-
-.. _modules_used:
 
 Modules used
 ------------
@@ -40,8 +24,6 @@ Modules used
    time_manager_mod
    utilities_mod
 
-.. _modules_indirectly_used:
-
 Modules indirectly used
 -----------------------
 
@@ -54,17 +36,11 @@ Modules indirectly used
 
 | 
 
---------------
-
-| 
-
 Namelist
 --------
 
 The program does not have its own namelist. However, an ``input.nml`` file is required for the modules used by the
 program.
-
---------------
 
 Files
 -----
@@ -78,48 +54,10 @@ File formats
 
 If there are no observation error at a particular pressure level, the default value of -1 is written in ``obserr.txt``.
 
---------------
-
 References
 ----------
 
 -  `3DVAR GROUP PAGE <http://www.mmm.ucar.edu/wrf/WG4/>`__
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +------------------+------------------------------------------------+------------------------------------------------+
-   | Routine          | Message                                        | Comment                                        |
-   +==================+================================================+================================================+
-   | littler_tf_dart  | Did not get all obs                            | There is observation before dart time (0, 0)   |
-   |                  |                                                | or beyond day 200000 in the Gregorian calendar |
-   |                  |                                                | in the ``obs_seq.out`` file.                   |
-   +------------------+------------------------------------------------+------------------------------------------------+
-   | littler_tf_dart  | No vertical coordinate.                        | Only vertical pressure coordinate is           |
-   |                  |                                                | supported.                                     |
-   +------------------+------------------------------------------------+------------------------------------------------+
-   | littler_tf_dart  | Error when reading or writing header of        | Problem with littler file.                     |
-   |                  | sounding.                                      |                                                |
-   +------------------+------------------------------------------------+------------------------------------------------+
-   | littler_tf_dart  | Error when reading or writing sounding.        | Problem with littler file.                     |
-   +------------------+------------------------------------------------+------------------------------------------------+
-   | littler_tf_dart  | Error when reading or writing footer of the    | Problem with littler file.                     |
-   |                  | sounding.                                      |                                                |
-   +------------------+------------------------------------------------+------------------------------------------------+
-   | intplin, intplog | arrays xx and yy must have same size           | Each x value needs a corresponding y value.    |
-   +------------------+------------------------------------------------+------------------------------------------------+
-   | intplin, intplog | bad value in yy                                | It is assumed that the input yy contains rms   |
-   |                  |                                                | errors and should not be negative. That should |
-   |                  |                                                | be traced back to the file ``obserr.txt``.     |
-   +------------------+------------------------------------------------+------------------------------------------------+
-
-.. _private_components:
 
 Private components
 ------------------
@@ -273,5 +211,3 @@ Private components
    Return the index in xx such that xx(index) < x < xx(index+1).
 
 | 
-
---------------

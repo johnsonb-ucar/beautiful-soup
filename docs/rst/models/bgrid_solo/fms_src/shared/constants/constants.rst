@@ -1,24 +1,8 @@
-.. _module_constants_mod:
-
-Module constants_mod
---------------------
-
-Contents
-~~~~~~~~
-
--  `Module constants_mod <#module_constants_mod>`__
-
-.. container::
-
-   **Contact:**  `Bruce Wyman <mailto:bw@gfdl.noaa.gov>`__
-   **Reviewers:** 
-   **Change History:**  `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/>`__
-   **Last Modified:** 2002/03/01 23:43:42
-
---------------
+module constants_mod
+====================
 
 Overview
-^^^^^^^^
+--------
 
 Defines useful constants for Earth in mks units.
 
@@ -29,10 +13,8 @@ Defines useful constants for Earth in mks units.
 
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -40,10 +22,8 @@ Other modules used
 
       fms_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -57,10 +37,8 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
@@ -84,10 +62,8 @@ Public data
    PI       real 3.14159265358979323846 ---        is it enough?
    ======== ==== ====================== ========== ======================================================
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Constants_init
       :name: constants_init
@@ -101,92 +77,65 @@ a. .. rubric:: Constants_init
       does not have to be called. If it is called more than once or called from other than the root PE it will return
       silently. There are no arguments.
 
---------------
-
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
-
---------------
 
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
-
---------------
 
 References
-^^^^^^^^^^
+----------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Compiler specifics
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Precompiler options
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Loader options
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
-
---------------
 
 Test PROGRAM
-^^^^^^^^^^^^
+------------
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Known bugs
-^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
 
 Notes
-^^^^^
+-----
 
 .. container::
 
@@ -205,22 +154,3 @@ Notes
            geopotential(:,:) = height(:,:) * grav_new
 
 | 
-
---------------
-
-Future plans
-^^^^^^^^^^^^
-
-.. container::
-
-   1. Renaming of constants.
-
-   2. Additional constants.
-
-| 
-
---------------
-
-.. container::
-
-   top

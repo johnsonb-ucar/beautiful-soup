@@ -1,16 +1,6 @@
 PROGRAM ``advance_time``
 ========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Usage <#usage>`__
--  `Modules used <#modules_used>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -31,8 +21,6 @@ Overview
   creating WRF filenames.
 | The program does require that an 'input.nml' namelist file exist in the current directory, and at least a
   &utilities_nml namelist (which can be empty) exists.
-
---------------
 
 Usage
 -----
@@ -77,10 +65,6 @@ Some examples:
    print Gregorian day and second (since year 1601):
      echo 2007073006    0 -g       | advance_time    
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -90,31 +74,12 @@ Modules used
    time_manager_mod
    parse_args_mod
 
---------------
-
 Namelist
 --------
 
 No namelist is currently defined for ``advance_time``.
 
---------------
-
 Files
 -----
 
 -  input.nml
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ======= ======= =======
-   Routine Message Comment
-   ======= ======= =======
-   \               
-   ======= ======= =======

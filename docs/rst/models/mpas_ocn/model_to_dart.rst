@@ -1,27 +1,16 @@
 PROGRAM ``model_to_dart`` for MPAS OCN
 ======================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files read <#files_read>`__
--  `Files written <#files_written>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
 | ``model_to_dart`` is the program that reads an MPAS OCN analysis file (nominally named ``mpas_restart.nc``) and
-  creates a DART state vector file (e.g. ``perfect_ics, filter_ics, ...``). The MPAS analysis files have a **Time**
+  creates a DART state vector file (e.g. ``perfect_ics, filter_ics, ...`` ). The MPAS analysis files have a **Time**
   UNLIMITED Dimension, which indicates there may (at some point) be more than one timestep in the file. The DART
   routines are currently designed to use the LAST timestep. If the Time dimension of length 3, we use the third
   timestep. A warning message is issued and indicates exactly the time being used.
 | ``input.nml``\ ``&mpas_vars_nml`` defines the list of MPAS variables used to build the DART state vector. This
-  namelist is more fully described in the `MPAS model_mod.html <model_mod.html>`__ documentation. For example:
+  namelist is more fully described in the :doc:`./model_mod` documentation. For example:
 
 ::
 
@@ -42,8 +31,6 @@ Conditions required for successful execution of ``model_to_dart`` are:
 Since this program is called repeatedly for every ensemble member, we have found it convenient to link the MPAS OCN
 analysis files to a static input filename (e.g. ``mpas_analysis.nc``). The default DART filename is ``dart_ics`` - this
 may be moved or linked as necessary.
-
---------------
 
 Namelist
 --------
@@ -111,10 +98,6 @@ For example:
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -131,35 +114,18 @@ Modules used
    time_manager_mod.f90
    utilities_mod.f90
 
---------------
-
-.. _files_read:
-
 Files read
 ----------
 
 -  MPAS analysis file; ``mpas_analysis.nc``
 -  DART namelist file; `input.nml <work/input.nml>`__
 
-.. _files_written:
-
 Files written
 -------------
 
 -  DART initial conditions/restart file; e.g. ``dart_ics``
 
---------------
-
 References
 ----------
 
 none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-none - all error messages come from modules that have their own documentation.

@@ -1,22 +1,11 @@
 PROGRAM ``dart_to_cam``
 =======================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files read <#files_read>`__
--  `Files written <#files_written>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
 ``dart_to_cam`` is the program that reads a DART restart or model advance file (e.g.
-``perfect_ics, filter_ics, assim_model_state_id ...``). and overwrites the part of the CAM data in a single CAM restart
+``perfect_ics, filter_ics, assim_model_state_id ...`` ). and overwrites the part of the CAM data in a single CAM restart
 file (usually ``caminput.nc``) which is in the DART state vector. If you have multiple input files, you will need to
 rename the output files as you create them.
 
@@ -42,8 +31,6 @@ Conditions required for successful execution of ``dart_to_cam``:
 Since this program is called repeatedly for every ensemble member, we have found it convenient to link the DART input
 and CAM restart files to the default filenames ``dart_ics`` and ``caminput.nc``). The output files may be moved or
 relinked as necessary.
-
---------------
 
 Namelist
 --------
@@ -78,10 +65,6 @@ namelist.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -97,10 +80,6 @@ Modules used
    time_manager_mod.f90
    utilities_mod.f90
 
---------------
-
-.. _files_read:
-
 Files read
 ----------
 
@@ -109,27 +88,12 @@ Files read
 -  CAM restart file; ``caminput.nc`` (read and written)
 -  CAM "phis" file specified in ``&model_nml::cam_phis`` (normally ``cam_phis.nc``)
 
-.. _files_written:
-
 Files written
 -------------
 
 -  CAM restart file; ``caminput.nc`` (read and written)
 
---------------
-
 References
 ----------
 
 none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-none - all error messages come from modules that have their own documentation.
-
---------------

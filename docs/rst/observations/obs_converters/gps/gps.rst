@@ -1,17 +1,6 @@
 GPS Observations
 ================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Namelist <#namelist>`__
--  `Workflow for batch conversions <#workflow_for_batch_conversions>`__
--  `Modules used <#modules_used>`__
--  `Errors <#errors>`__
-
 Overview
 --------
 
@@ -37,10 +26,6 @@ Electron density
 The COSMIC satellites also provide ionospheric profiles of electron density. The accuracy is generally about
 10\ :sup:`-4` ∼ 10\ :sup:`-5` cm\ :sup:`-3`. These data are converted with the ``convert_cosmic_ionosphere.f90`` program
 and create DART observations tagged as COSMIC_ELECTRON_DENSITY.
-
---------------
-
-.. _data_sources:
 
 Data sources
 ------------
@@ -72,13 +57,10 @@ Electron density
 | The files we have used as input to these conversion programs are from the COSMIC 2013 Mission and have a data type of
   'ionPrf'.
 | The file naming convention and file format are described by COSMIC
-  `here <%20http://cdaac-www.cosmic.ucar.edu/cdaac/cgi_bin/fileFormats.cgi?type=ionPrf>`__ and there can be more than
-  1000 profiles/day. Like the GPS radio occultation data, the profiles are now available in a single daily tar file
-  which can be downloaded then be unpacked into the individual files. COSMIC has instructions on ways to download the
-  data at
+  `here <http://cdaac-www.cosmic.ucar.edu/cdaac/cgi_bin/fileFormats.cgi?type=ionPrf>`__ and there can be more than 1000
+  profiles/day. Like the GPS radio occultation data, the profiles are now available in a single daily tar file which can
+  be downloaded then be unpacked into the individual files. COSMIC has instructions on ways to download the data at
 | http://cdaac-www.cosmic.ucar.edu/cdaac/tar/rest.html
-
---------------
 
 Programs
 --------
@@ -120,27 +102,20 @@ Convert_cosmic_ionosphere
 | ``convert_cosmic_ionosphere`` reads the namelist ``&convert_cosmic_ionosphere_nml`` from the file ``input.nml``.
 | The original observation times are preserved in the conversion process. If it is desired to subset the observation
   sequence file such that observations too far away from desired assimilation times are rejected, a separate
-  post-processing step using the `obs_sequence_tool <obs_sequence_tool.html>`__ is required. A script will be necessary
-  to take a start date, an end date, an assimilation time step, and a desired time 'window' - and strip out the unwanted
-  observations from a series of observation sequence files.
+  post-processing step using the :doc:`./obs_sequence_tool` is required. A script will be necessary to take a start
+  date, an end date, an assimilation time step, and a desired time 'window' - and strip out the unwanted observations
+  from a series of observation sequence files.
 | There are multiple ways of specifying the observation error variance at run time. They are implemented in a routine
   named ``electron_density_error()`` and are selected by the namelist variable ``observation_error_method``.
 
-'constant'
+=============== =====================================================================================
+'constant'       a scalar value for all observations
+'scaled'         the electron density is multiplied by a scalar value
+'lookup'         a lookup table is read
+'scaled_lookup'  the lookup table value is multiplied by a scalar value and the electron density value
+=============== =====================================================================================
 
-a scalar value for all observations
-
-'scaled'
-
-the electron density is multiplied by a scalar value
-
-'lookup'
-
-a lookup table is read
-
-'scaled_lookup'
-
-the lookup table value is multiplied by a scalar value and the electron density value
+..
 
    I-Te Lee: " ... the original idea for error of ionospheric observation is 1%. Thus, I put the code as "oerr = 0.01_r8
    \* obsval". Liu et. al and Yue et al investigated the Abel inversion error of COSMIC ionosphere profile, both of them
@@ -151,12 +126,12 @@ the lookup table value is multiplied by a scalar value and the electron density 
    file which named 'f3coerr.nc'. ... The number in the matrix is error percentage (%), which calculated by OSSE. Here
    are two reference papers. In the end, the observation error consists of instrumentation error (10%) and Abel error."
 
-   -  X. Yue, W.S. Schreiner, J. Lei, S.V. Sokolovskiy, C. Rocken, D.C. Hunt, and Y.-H. Kuo (2010),
+   -  X. Yue, W.S. Schreiner, J. Lei, S.V. Sokolovskiy, C. Rocken, D.C. Hunt, and Y.-H. Kuo (2010),
       `Error analysis of Abel retrieved electron density profiles from radio occultation
       measurements. <https://www.ann-geophys.net/28/217/2010/>`__
       *Annales Geophysicae: Atmospheres, Hydrospheres and Space Sciences*. **28** No. 1, pp 217-222,
       doi:10.5194/angeo-28-217-2010
-   -  J.Y. Liu, C.Y. Lin, C.H. Lin, H.F. Tsai, S.C. Solomon, Y.Y. Sun, I.T. Lee, W.S. Schreiner, and Y.H. Kuo (2010),
+   -  J.Y. Liu, C.Y. Lin, C.H. Lin, H.F. Tsai, S.C. Solomon, Y.Y. Sun, I.T. Lee, W.S. Schreiner, and Y.H. Kuo (2010),
       `Artificial plasma cave in the low-latitude ionosphere results from the radio occultation inversion of the
       FORMOSAT-3/COSMIC} <http://dx.doi.org/10.1029/2009JA015079>`__, *Journal of Geophysical Research: Space Physics*.
       **115** No. A7, pp 2156-2202, doi:10.1029/2009JA015079
@@ -166,8 +141,6 @@ sampling patterns and observation error variances that **do not have any actual 
 files are read, but the electron density information is not written. Keep in mind that some methods of specifying the
 observation error variance require knowledge of the observation value. If the observation value is bad or the entire
 profile is bad, no observation locations are created for the profile.
-
---------------
 
 Namelist
 --------
@@ -221,12 +194,12 @@ namelist.
    | gpsro_netcdf_file      | character(len=128) | The input filename when converting a single profile. Only one of the |
    |                        |                    | file or filelist items can have a valid value, so to use the single  |
    |                        |                    | filename set the list name 'gpsro_netcdf_filelist' to the empty      |
-   |                        |                    | string (' ').                                                        |
+   |                        |                    | string (' ').                                                        |
    +------------------------+--------------------+----------------------------------------------------------------------+
    | gpsro_netcdf_filelist  | character(len=128) | To convert a series of profiles in a single execution create a text  |
    |                        |                    | file which contains each input file, in ascii, one filename per      |
    |                        |                    | line. Set this item to the name of that file, and set                |
-   |                        |                    | 'gpsro_netcdf_file' to the empty string (' ').                       |
+   |                        |                    | 'gpsro_netcdf_file' to the empty string (' ').                       |
    +------------------------+--------------------+----------------------------------------------------------------------+
    | gpsro_out_file         | character(len=128) | The output file to be created. To be compatible with earlier         |
    |                        |                    | versions of this program, if this file already exists it will be     |
@@ -297,11 +270,11 @@ namelist.
    +==========================+====================+====================================================================+
    | input_file               | character(len=256) | The input filename when converting a single profile. Only one of   |
    |                          |                    | the ``input_file`` or ``input_file_list`` items can have a valid   |
-   |                          |                    | value, so to use a single filename set ``input_file_list = ''``    |
+   |                          |                    | value, so to use a single filename set ``input_file_list = ''``    |
    +--------------------------+--------------------+--------------------------------------------------------------------+
    | input_file_list          | character(len=256) | To convert a series of profiles in a single execution create a     |
    |                          |                    | text file which contains one filename per line. Set this item to   |
-   |                          |                    | the name of that file, and set ``input_file = ''``                 |
+   |                          |                    | the name of that file, and set ``input_file = ''``                 |
    +--------------------------+--------------------+--------------------------------------------------------------------+
    | output_file              | character(len=256) | The output file to be created. If this file already exists the new |
    |                          |                    | data will be added to that file. DART observation sequences are    |
@@ -319,14 +292,14 @@ namelist.
    |                          |                    | will result in an error. Look in the ``electron_density_error()``  |
    |                          |                    | routine for specifics.                                             |
    +--------------------------+--------------------+--------------------------------------------------------------------+
-   | locations_only           | logical            | If ``locations_only = .true.`` then the actual observation values  |
+   | locations_only           | logical            | If ``locations_only = .true.`` then the actual observation values  |
    |                          |                    | are not written to the output observation sequence file. This is   |
    |                          |                    | useful for designing an OSSE that has a realistic observation      |
    |                          |                    | sampling pattern. Keep in mind that some methods of specifying the |
    |                          |                    | observation error variance require knowledge of the observation    |
    |                          |                    | value. If the observation value is bad or the entire profile is    |
    |                          |                    | bad, this profile is rejected - even if                            |
-   |                          |                    | ``locations_only = .true.``                                        |
+   |                          |                    | ``locations_only = .true.``                                        |
    +--------------------------+--------------------+--------------------------------------------------------------------+
    | obs_error_factor         | real(r8)           | This is the scalar that is used in several of the methods          |
    |                          |                    | specifying the observation error variance.                         |
@@ -361,10 +334,6 @@ namelist.
                       360.0, 370.0, 380.0, 390.0, 400.0,
                       410.0, 420.0, 430.0, 440.0, 450.0
         /
-
---------------
-
-.. _workflow_for_batch_conversions:
 
 Workflow for batch conversions
 ------------------------------
@@ -553,10 +522,6 @@ running on an NCAR superscomputer.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -591,8 +556,6 @@ Modules used
    observations/forward_operators/obs_def_utilities_mod.f90
    observations/obs_converters/utilities/obs_utilities_mod.f90
 
---------------
-
 Errors
 ------
 
@@ -606,5 +569,3 @@ entered as input (to ``obs_levels``), a rather uninformative run-time error is g
      message:  INVALID NAMELIST ENTRY:  / in namelist convert_cosmic_ionosphere_nml
 
 Your error may be different if ``obs_levels`` is not the last namelist item before the slash '/'
-
---------------

@@ -1,19 +1,11 @@
 PROGRAM ``COSMOS_development``
 ==============================
 
-Contents
+Overview
 --------
 
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Namelist <#namelist>`__
--  `References <#references>`__
-
-Overview
-========
-
-Trial cosmos text file to DART converter
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Trial COSMOS text file to DART converter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 | `COSMOS <http://cosmos.hwr.arizona.edu/>`__ is an NSF supported project to measure soil moisture on the horizontal
   scale of hectometers and depths of decimeters using cosmic-ray neutrons. The data for each station is available from
@@ -21,8 +13,7 @@ Trial cosmos text file to DART converter
   also available from the data portal. The **Level 2 Data** is most suited for use with DART, but does not currently
   have a correction for the amount of hydrogen in the atmospheric volume near the probe. To this end, Rafael Rosolem has
   a separate data stream. ``COSMOS_development`` reads Rafaels data streams and converts them to DART observation
-  sequence files. **Since these data streams are not widespread, we recommend
-  using**\ `COSMOS_to_obs.f90 <COSMOS_to_obs.html>`__\ **.**
+  sequence files. **Since these data streams are not widespread, we recommend using :doc:`./COSMOS_to_obs`.**
 | The workflow is usually:
 
 #. `get the site metadata <http://cosmos.hwr.arizona.edu/Probes/probemap.php>`__ and enter it in the ``input.nml``
@@ -34,20 +25,16 @@ Trial cosmos text file to DART converter
 #. run ``COSMOS_development`` to generate a DART observation sequence file for the station and rename the output file if
    necessary (you can explicity name the output file via the namelist).
 #. repeat steps 1-4 for this converter to generate a DART observation sequence file for each station.
-#. use the `obs_sequence_tool.f90 </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__ to combine
-   the observations from multiple sites
-
---------------
-
-.. _data_sources:
+#. use the :doc:`../../../assimilation_code/programs/obs_sequence_tool/obs_sequence_tool` to combine the observations
+   from multiple sites
 
 Data sources
 ------------
 
 The COSMOS data portal can be found at: http://cosmos.hwr.arizona.edu/Probes/probemap.php The development observation
 data for each station is generally not available. The metadata for each station (location, height, etc) is also
-available from the data portal. The **Level 2 Data** is most suited for use with DART. **We recommend
-using**\ `COSMOS_to_obs.f90 <COSMOS_to_obs.html>`__\ **.** An example of the development observation data follows:
+available from the data portal. The **Level 2 Data** is most suited for use with DART. **We recommend using
+:doc:`./COSMOS_to_obs`.** An example of the development observation data follows:
 
 ::
 
@@ -57,8 +44,6 @@ using**\ `COSMOS_to_obs.f90 <COSMOS_to_obs.html>`__\ **.** An example of the dev
     1, 1, 2,  1,-9999,9999,3
     1, 1, 3,  1,-9999,9999,3
    ...
-
---------------
 
 Programs
 --------
@@ -72,13 +57,13 @@ metadata for each observation.
 
 To compile and test, go into the ``COSMOS/work`` subdirectory and run the ``quickbuild.csh`` script to build the
 converter and a couple of general purpose utilities. The
-`obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__ manipulates (i.e. combines,
-subsets) DART observation files once they have been created. The default observations supported are those defined in
-`observations/forward_operators/obs_def_land_mod.f90 </observations/forward_operators/obs_def_land_mod.f90>`__ and
-`observations/forward_operators/obs_def_COSMOS_mod.f90 </observations/forward_operators/obs_def_COSMOS_mod.f90>`__. If
-you need additional observation types, you will have to add the appropriate ``obs_def_XXX_mod.f90`` file to the
-``input.nml`` ``&preprocess_nml:input_files`` variable and run ``quickbuild.csh`` again. It rebuilds the table of
-supported observation types before compiling the source code.
+:doc:`../../../assimilation_code/programs/obs_sequence_tool/obs_sequence_tool` manipulates (i.e. combines, subsets) DART
+observation files once they have been created. The default observations supported are those defined in
+`observations/forward_operators/obs_def_land_mod.f90 <../../forward_operators/obs_def_land_mod.f90>`__ and
+`observations/forward_operators/obs_def_COSMOS_mod.f90 <../../forward_operators/obs_def_COSMOS_mod.f90>`__. If you need
+additional observation types, you will have to add the appropriate ``obs_def_XXX_mod.f90`` file to the ``input.nml``
+``&preprocess_nml:input_files`` variable and run ``quickbuild.csh`` again. It rebuilds the table of supported
+observation types before compiling the source code.
 
 .. container:: indent1
 
@@ -219,17 +204,17 @@ supported observation types before compiling the source code.
               4.154723123116714        0.7997185899100618         0.000000000000000     -1
          kind
                    20
-          cosmic
-           0.88500000000000001       5.84099999999999966E-002   336.95696938999998       0.31918025877000000
-            161.98621864285701        129.14558984999999        55.311849408000000        3.8086191933000002
-                    1
+
+      .. container::
+
+         cosmic 0.88500000000000001 5.84099999999999966E-002 336.95696938999998 0.31918025877000000 161.98621864285701
+         129.14558984999999 55.311849408000000 3.8086191933000002 1
+
+      ::
+
           77340     150034
             1225.0000000000000
             ...
-
- 
-
---------------
 
 Namelist
 --------
@@ -263,7 +248,7 @@ namelist.
    +--------------------+--------------------+--------------------------------------------------------------------------+
    | sitename           | character(len=128) | The name of the site. Must match one of the site names in the            |
    |                    |                    | ``site_metadata_file``. Case-insensitive match, trailing blanks ignored. |
-   |                    |                    | Use *ncdump -v sitenames COSMIC_parlist.nc*                              |
+   |                    |                    | Use *ncdump -v sitenames COSMIC_parlist.nc*                              |
    +--------------------+--------------------+--------------------------------------------------------------------------+
    | year               | integer            | The year of the data.                                                    |
    +--------------------+--------------------+--------------------------------------------------------------------------+
@@ -285,8 +270,6 @@ namelist.
          obs_out_file       = 'SantaRita_obs_seq.out',
          sitename           = 'Santa_Rita_Creosote',
 
---------------
-
 References
 ----------
 
@@ -297,5 +280,3 @@ References
 -  Franz, T.E, M. Zreda, R. Rosolem, T.P.A. Ferre, 2012: Field validation of cosmic-ray soil moisture probe using a
    distributed sensor network. Vadose Zone Journal (in press),
    `doi:10.2136/vzj2012.0046 <http://dx.doi.org/10.2136/vzj2012.0046>`__
-
---------------

@@ -1,23 +1,8 @@
-.. _module_fms_mod:
-
 Module fms_mod
---------------
-
-Contents
-~~~~~~~~
-
--  `Module fms_mod <#module_fms_mod>`__
-
-.. container::
-
-   **Contact: ** `Bruce Wyman <mailto:bw@gfdl.noaa.gov>`__
-   **Reviewers: **
-   **Change History: **\ `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/shared/fms>`__
-
---------------
+==============
 
 Overview
-^^^^^^^^
+--------
 
 The fms module provides routines that are commonly used by most FMS modules.
 
@@ -28,8 +13,8 @@ The fms module provides routines that are commonly used by most FMS modules.
    2. Open specific types of files common to many FMS modules. These include namelist files, restart files, and 32-bit
    IEEE data files. There also is a matching interface to close the files. If other file types are needed the
    ``mpp_open`` and ``mpp_close`` interfaces in module
-   ` <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/shared/mpp/models/bgrid_solo/fms_src/shared/mpp/mpp_io.html>`__\ must
-   be used.
+   ` <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/shared/mpp/models/bgrid_solo/fms_src/shared/mpp/mpp_io.html>`__
+   must be used.
    3. Read and write distributed data to simple native unformatted files. This type of file (called a restart file) is
    used to checkpoint model integrations for a subsequent restart of the run.
    4. Time sections of code (using a wrapper for
@@ -40,24 +25,20 @@ The fms module provides routines that are commonly used by most FMS modules.
 
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
    ::
 
-              mpp_mod
+      mpp_mod
       mpp_domains_mod
            mpp_io_mod
            fms_io_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -88,19 +69,15 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
    None.
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Fms_init
       :name: fms_init
@@ -139,19 +116,19 @@ c. .. rubric:: File_exist
       blank return a false result.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``file_name   ``                                          | A file name (or path name) that is checked for existence. |
-      |                                                           |    [character]                                            |
+      | ``file_name``                                             | A file name (or path name) that is checked for existence. |
+      |                                                           | [character]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | This function returns a logical result. If file_name      |
+      |                                                           | This function returns a logical result. If file_name      |
       |                                                           | exists the result is true, otherwise false is returned.   |
       |                                                           | If the length of character string "file_name" is zero or  |
       |                                                           | the first character is blank, then the returned value     |
       |                                                           | will be false. When reading a file, this function is      |
       |                                                           | often used in conjunction with routine open_file.         |
-      |                                                           |    []                                                     |
+      |                                                           | []                                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 d. .. rubric:: Error_mesg
@@ -167,16 +144,16 @@ d. .. rubric:: Error_mesg
       try to use the mpp_error interface**.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``routine   ``                                            | Routine name where the warning or error has occurred.     |
-      |                                                           |    [character]                                            |
+      | ``routine``                                               | Routine name where the warning or error has occurred.     |
+      |                                                           | [character]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``message   ``                                            | Warning or error message to be printed.                   |
-      |                                                           |    [character]                                            |
+      | ``message``                                               | Warning or error message to be printed.                   |
+      |                                                           | [character]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``level   ``                                              | Level of severity; set to NOTE, WARNING, or FATAL         |
+      | ``level``                                                 | Level of severity; set to NOTE, WARNING, or FATAL         |
       |                                                           | Termination always occurs for FATAL, never for NOTE, and  |
       |                                                           | is settable for WARNING (see namelist).                   |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **NOTE**
@@ -202,21 +179,21 @@ e. .. rubric:: Check_nml_error
       this routine will produce a fatal error. See the NOTE below.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``iostat   ``                                             | The iostat value returned when reading a namelist record. |
-      |                                                           |    [integer]                                              |
+      | ``iostat``                                                | The iostat value returned when reading a namelist record. |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``nml_name   ``                                           | The name of the namelist. This name will be printed if an |
+      | ``nml_name``                                              | The name of the namelist. This name will be printed if an |
       |                                                           | error is encountered, otherwise the name is not used.     |
-      |                                                           |    [character]                                            |
+      |                                                           | [character]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | This function returns the input iostat value (integer) if |
+      |                                                           | This function returns the input iostat value (integer) if |
       |                                                           | it is an allowable error code. If the iostat error code   |
       |                                                           | is not allowable, an error message is printed and the     |
       |                                                           | program terminated.                                       |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **NOTE**
@@ -252,17 +229,17 @@ f. .. rubric:: Write_version_number
       Prints to the log file (stdlog) or a specified unit the (cvs) version id string and (cvs) tag name.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``version   ``                                            | string that contains routine name and version number.     |
-      |                                                           |    [character(len=*)]                                     |
+      | ``version``                                               | string that contains routine name and version number.     |
+      |                                                           | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``tag   ``                                                | The tag/name string, this is usually the Name string      |
+      | ``tag``                                                   | The tag/name string, this is usually the Name string      |
       |                                                           | returned by CVS when checking out the code.               |
-      |                                                           |    [character(len=*)]                                     |
+      |                                                           | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``unit   ``                                               | The Fortran unit number of an open formatted file. If     |
+      | ``unit``                                                  | The Fortran unit number of an open formatted file. If     |
       |                                                           | this unit number is not supplied the log file unit number |
       |                                                           | is used (stdlog).                                         |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 g. .. rubric:: Mpp_clock_init
@@ -277,28 +254,28 @@ g. .. rubric:: Mpp_clock_init
       and mpp_clock_end. For more details see the documentation for the MPP module and look at the example below.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``name   ``                                               | A unique name string given to the code segment to be      |
+      | ``name``                                                  | A unique name string given to the code segment to be      |
       |                                                           | timed. The length should not exceed 32 characters.        |
-      |                                                           |    [character]                                            |
+      |                                                           | [character]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``level   ``                                              | Level of timing. When level > timing_level, which is set  |
+      | ``level``                                                 | Level of timing. When level > timing_level, which is set  |
       |                                                           | by namelist &fms_nml, an identifier of zero is returned.  |
       |                                                           | This will turn off performance timing for the code        |
       |                                                           | section.                                                  |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``flags   ``                                              | Use the flags published via the mpp_mod to control        |
+      | ``flags``                                                 | Use the flags published via the mpp_mod to control        |
       |                                                           | whether synchronization or extra detail is desired.       |
       |                                                           | (flags = MPP_CLOCK_SYNC, MPP_CLOCK_DETAILED)              |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``id   ``                                                 | The identification index returned by mpp_clocks_id. A     |
+      | ``id``                                                    | The identification index returned by mpp_clocks_id. A     |
       |                                                           | zero value is returned (turning clocks off) when input    |
       |                                                           | argument level > namelist variable timing_level.          |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **NOTE**
@@ -326,7 +303,7 @@ g. .. rubric:: Mpp_clock_init
 
       ::
 
-                   use fms_mod, only: mpp_clock_init, mpp_clock_begin, &
+         use fms_mod, only: mpp_clock_init, mpp_clock_begin, &
                                       mpp_clock_end. MPP_CLOCK_SYNC
                    integer :: id_mycode
                    integer :: timing_level = 5
@@ -353,16 +330,16 @@ h. .. rubric:: Lowercase
       characters are left unchanged.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``cs   ``                                                 | Character string that may contain upper case letters.     |
-      |                                                           |    [character(len=*), scalar]                             |
+      | ``cs``                                                    | Character string that may contain upper case letters.     |
+      |                                                           | [character(len=*), scalar]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``string   ``                                             | Character string that contains all lower case letters.    |
+      | ``string``                                                | Character string that contains all lower case letters.    |
       |                                                           | The length of this string must be the same as the input   |
       |                                                           | string.                                                   |
-      |                                                           |    [character(len=len(cs)), scalar]                       |
+      |                                                           | [character(len=len(cs)), scalar]                          |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 i. .. rubric:: Uppercase
@@ -377,16 +354,16 @@ i. .. rubric:: Uppercase
       characters are left unchanged.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``cs   ``                                                 | Character string that may contain lower case letters.     |
-      |                                                           |    [character(len=*), scalar]                             |
+      | ``cs``                                                    | Character string that may contain lower case letters.     |
+      |                                                           | [character(len=*), scalar]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``string   ``                                             | Character string that contains all upper case letters.    |
+      | ``string``                                                | Character string that contains all upper case letters.    |
       |                                                           | The length of this string must be the same as the input   |
       |                                                           | string.                                                   |
-      |                                                           |    [character(len=len(cs)), scalar]                       |
+      |                                                           | [character(len=len(cs)), scalar]                          |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 j. .. rubric:: String_array_index
@@ -402,22 +379,22 @@ j. .. rubric:: String_array_index
       disregards blank characters to the right of the string.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``string   ``                                             | Character string of arbitrary length.                     |
-      |                                                           |    [character(len=*), scalar]                             |
+      | ``string``                                                | Character string of arbitrary length.                     |
+      |                                                           | [character(len=*), scalar]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``string_array   ``                                       | Array/list of character strings.                          |
-      |                                                           |    [character(len=*), dimension(:)]                       |
+      | ``string_array``                                          | Array/list of character strings.                          |
+      |                                                           | [character(len=*), dimension(:)]                          |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``index   ``                                              | The index of string_array where the first match was       |
+      | ``index``                                                 | The index of string_array where the first match was       |
       |                                                           | found. If no match was found then index = 0.              |
-      |                                                           |    []                                                     |
+      |                                                           | []                                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``found   ``                                              | If an exact match was found then TRUE is returned,        |
+      | ``found``                                                 | If an exact match was found then TRUE is returned,        |
       |                                                           | otherwise FALSE is returned.                              |
-      |                                                           |    [logical]                                              |
+      |                                                           | [logical]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **NOTE**
@@ -442,29 +419,27 @@ k. .. rubric:: Monotonic_array
       Determines if the real input array has monotonically increasing or decreasing values.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``array   ``                                              | An array of real values. If the size(array) < 2 this      |
+      | ``array``                                                 | An array of real values. If the size(array) < 2 this      |
       |                                                           | function assumes the array is not monotonic, no fatal     |
       |                                                           | error will occur.                                         |
-      |                                                           |    [real, dimension(:)]                                   |
+      |                                                           | [real, dimension(:)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``direction   ``                                          | If the input array is: >> monotonic (small to large) then |
+      | ``direction``                                             | If the input array is: >> monotonic (small to large) then |
       |                                                           | direction = +1. >> monotonic (large to small) then        |
       |                                                           | direction = -1. >> not monotonic then direction = 0.      |
-      |                                                           |    [integer]                                              |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``   ``                                                   | If the input array of real values either increases or     |
+      |                                                           | If the input array of real values either increases or     |
       |                                                           | decreases monotonically then TRUE is returned, otherwise  |
       |                                                           | FALSE is returned.                                        |
-      |                                                           |    [logical]                                              |
+      |                                                           | [logical]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
---------------
-
 Namelist
-^^^^^^^^
+--------
 
 .. container::
 
@@ -500,19 +475,15 @@ Namelist
 
 | 
 
---------------
-
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
 
---------------
-
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
@@ -528,52 +499,42 @@ Error messages
       There was an error message reading the namelist specified. Carefully examine all namelist variables for
       misspellings of type mismatches (e.g., integer vs. real).
 
---------------
-
 References
-^^^^^^^^^^
+----------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Compiler specifics
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Precompiler options
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Loader options
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
-
---------------
 
 Test PROGRAM
-^^^^^^^^^^^^
+------------
 
 .. container::
 
@@ -581,24 +542,8 @@ Test PROGRAM
 
 | 
 
---------------
-
-Known bugs
-^^^^^^^^^^
-
-.. container::
-
-   | Namelist error checking may not work correctly with some compilers.
-   | Users should beware when mixing Fortran reads and read_data calls. If a Fortran read follows read_data and namelist
-     variable read_all_pe = FALSE (not the default), then the code will fail. It is safest if Fortran reads precede
-     calls to read_data.
-
-| 
-
---------------
-
 Notes
-^^^^^
+-----
 
 .. container::
 
@@ -608,24 +553,3 @@ Notes
    will probably be insufficient.
 
 | 
-
---------------
-
-Future plans
-^^^^^^^^^^^^
-
-.. container::
-
-   NetCDF facilities for reading and writing restart files and (IEEE32) data files.
-
-   | May possible split the FMS module into two modules.
-   | i.general utilities (FMS_MOD)
-   | ii.I/O utilities (FMS_IO_MOD)
-
-| 
-
---------------
-
-.. container::
-
-   top

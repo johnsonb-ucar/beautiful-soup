@@ -1,24 +1,8 @@
-.. _module_gaussian_topog_mod:
-
-Module gaussian_topog_mod
--------------------------
-
-Contents
-~~~~~~~~
-
--  `Module gaussian_topog_mod <#module_gaussian_topog_mod>`__
-
-.. container::
-
-   **Contact:**  `Bruce Wyman <mailto:bw@gfdl.noaa.gov>`__
-   **Reviewers:** 
-   **Change History:**  `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/>`__
-   **Last Modified:** 2002/03/22 01:42:43
-
---------------
+module gaussian_topog_mod
+=========================
 
 Overview
-^^^^^^^^
+--------
 
 Routines for creating Gaussian-shaped land surface topography for latitude-longitude grids.
 
@@ -29,10 +13,8 @@ Routines for creating Gaussian-shaped land surface topography for latitude-longi
 
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -41,10 +23,8 @@ Other modules used
             fms_mod
       constants_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -60,19 +40,15 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
    None.
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Gaussian_topog_init
       :name: gaussian_topog_init
@@ -86,18 +62,18 @@ a. .. rubric:: Gaussian_topog_init
       position, width, and elongation of the mountains can be controlled by variables in namelist &gaussian_topog_nml.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lon   ``                                                | The mean grid box longitude in radians.                   |
-      |                                                           |    [real, dimension(:)]                                   |
+      | ``lon``                                                   | The mean grid box longitude in radians.                   |
+      |                                                           | [real, dimension(:)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lat   ``                                                | The mean grid box latitude in radians.                    |
-      |                                                           |    [real, dimension(:)]                                   |
+      | ``lat``                                                   | The mean grid box latitude in radians.                    |
+      |                                                           | [real, dimension(:)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``zsurf   ``                                              | The surface height (in meters). The size of this field    |
+      | ``zsurf``                                                 | The surface height (in meters). The size of this field    |
       |                                                           | must be size(lon) by size(lat).                           |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 b. .. rubric:: Get_gaussian_topog
@@ -112,42 +88,40 @@ b. .. rubric:: Get_gaussian_topog
       controlled by optional arguments.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lon   ``                                                | The mean grid box longitude in radians.                   |
-      |                                                           |    [real, dimension(:)]                                   |
+      | ``lon``                                                   | The mean grid box longitude in radians.                   |
+      |                                                           | [real, dimension(:)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lat   ``                                                | The mean grid box latitude in radians.                    |
-      |                                                           |    [real, dimension(:)]                                   |
+      | ``lat``                                                   | The mean grid box latitude in radians.                    |
+      |                                                           | [real, dimension(:)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``height   ``                                             | Maximum surface height in meters.                         |
-      |                                                           |    [real, dimension(scalar)]                              |
+      | ``height``                                                | Maximum surface height in meters.                         |
+      |                                                           | [real, dimension(scalar)]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``olond, olatd   ``                                       | Position/origin of mountain in degrees longitude and      |
+      | ``olond, olatd``                                          | Position/origin of mountain in degrees longitude and      |
       |                                                           | latitude. This is the location of the maximum height.     |
-      |                                                           |    [real, dimension(scalar)]                              |
+      |                                                           | [real, dimension(scalar)]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``wlond, wlatd   ``                                       | Gaussian half-width of mountain in degrees longitude and  |
+      | ``wlond, wlatd``                                          | Gaussian half-width of mountain in degrees longitude and  |
       |                                                           | latitude.                                                 |
-      |                                                           |    [real, dimension(scalar)]                              |
+      |                                                           | [real, dimension(scalar)]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``rlond, rlatd   ``                                       | Ridge half-width of mountain in degrees longitude and     |
+      | ``rlond, rlatd``                                          | Ridge half-width of mountain in degrees longitude and     |
       |                                                           | latitude. This is the elongation of the maximum height.   |
-      |                                                           |    [real, dimension(scalar)]                              |
+      |                                                           | [real, dimension(scalar)]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``zsurf   ``                                              | The surface height (in meters). The size of the returned  |
+      | ``zsurf``                                                 | The surface height (in meters). The size of the returned  |
       |                                                           | field is size(lon) by size(lat).                          |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **NOTE**
       Mountains do not wrap around the poles.
 
---------------
-
 Namelist
-^^^^^^^^
+--------
 
 .. container::
 
@@ -173,19 +147,15 @@ Namelist
 
 | 
 
---------------
-
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
 
---------------
-
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
@@ -193,74 +163,51 @@ Error messages
       shape(zsurf) is not equal to (/size(lon),size(lat)/)
       Check the input grid size and output field size. The input grid is defined at the midpoint of grid boxes.
 
---------------
-
 References
-^^^^^^^^^^
+----------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Compiler specifics
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Precompiler options
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Loader options
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
-
---------------
 
 Test PROGRAM
-^^^^^^^^^^^^
+------------
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Known bugs
-^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
 
 Notes
-^^^^^
+-----
 
 .. container::
 
@@ -287,20 +234,3 @@ Notes
    See the `topography <topography.html#TEST%20PROGRAM>`__ module documentation for a test program.
 
 | 
-
---------------
-
-Future plans
-^^^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
-
-.. container::
-
-   top

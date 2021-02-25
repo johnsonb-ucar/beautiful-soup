@@ -1,28 +1,16 @@
 program ``obs_seq_coverage``
 ============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Files <#files>`__
--  `Usage <#usage>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
 ``obs_seq_coverage`` queries a set of observation sequence files to determine which observation locations report
 frequently enough to be useful for a verification study. The big picture is to be able to pare down a large set of
-observations into a compact observation sequence file to run through
-`filter </assimilation_code/programs/filter/filter.html>`__ with all of the intended observation types flagged as
-*evaluate_only*. DART's forward operators then get applied and all the forecasts are preserved in a standard
-``obs_seq.final`` file - perhaps more appropriately called ``obs_seq.forecast``! Paring down the input observation
-sequence file cuts down on the unnecessary application of the forward operator to create observation copies that will
-not be used anyway ...
+observations into a compact observation sequence file to run through :doc:`../filter/filter` with all of the intended
+observation types flagged as *evaluate_only*. DART's forward operators then get applied and all the forecasts are
+preserved in a standard ``obs_seq.final`` file - perhaps more appropriately called ``obs_seq.forecast``! Paring down the
+input observation sequence file cuts down on the unnecessary application of the forward operator to create observation
+copies that will not be used anyway ...
 
 |forecast evaluation schematic|
 
@@ -30,12 +18,12 @@ not be used anyway ...
 
 -  ``obsdef_mask.txt`` contains the list of observation definitions (but not the observations themselves) that are
    desired. The observation definitions include the locations and times for each of the desired observation types. This
-   file is read by `obs_selection </assimilation_code/programs/obs_selection/obs_selection.html>`__ and combined with
-   the raw observation sequence files to create the observation sequence file appropriate for use in a forecast.
+   file is read by :doc:`../../../assimilation_code/programs/obs_selection/obs_selection` and combined with the raw
+   observation sequence files to create the observation sequence file appropriate for use in a forecast.
 -  ``obsdef_mask.nc`` contains information needed to be able to plot the times and locations of the observations in a
    manner to help explore the design of the verification locations/network. ``obsdef_mask.nc`` is *required* by
-   `obs_seq_verify </assimilation_code/programs/obs_seq_verify/obs_seq_verify.html>`__, the program that reorders the
-   observations into a structure that makes it easy to calculate statistics like ROC, etc.
+   :doc:`../../../assimilation_code/programs/obs_seq_verify/obs_seq_verify`, the program that reorders the observations
+   into a structure that makes it easy to calculate statistics like ROC, etc.
 
 | The following section explains the strategy and requirements for determining what observations will be used to verify
   a forecast. Since it is 'standard practice' to make several forecasts to build statistical strength, it is important
@@ -79,8 +67,6 @@ not be used anyway ...
   model domain. I'm working on that ....
 | The USAGE section has more on the actual use of ``obs_seq_coverage``.
 
---------------
-
 Namelist
 --------
 
@@ -116,7 +102,7 @@ namelist.
 Note that -888888.0 is not a useful number. To use the defaults delete these lines from the namelist, or set them to
 0.0, 360.0 and -90.0, 90.0.
 
-The date-time integer arrays in this namelist have the form (YYYY, MM, DD, HR, MIN, SEC).
+The date-time integer arrays in this namelist have the form (YYYY, MM, DD, HR, MIN, SEC).
 
 The allowable ranges for the region boundaries are: latitude [-90.,90], longitude [0.,Inf.]
 
@@ -150,13 +136,13 @@ You can specify **either** *obs_sequences* **or** *obs_sequence_list* -- not bot
    |                                       |                                       | for 'obsdir_002/obs_seq.final', and   |
    |                                       |                                       | so on.                                |
    |                                       |                                       | If this is set, *obs_sequence_list*   |
-   |                                       |                                       | must be set to ' '.                   |
+   |                                       |                                       | must be set to ' '.                   |
    +---------------------------------------+---------------------------------------+---------------------------------------+
    | obs_sequence_list                     | character(len=256)                    | Name of an ascii text file which      |
    |                                       |                                       | contains a list of one or more        |
    |                                       |                                       | observation sequence files, one per   |
    |                                       |                                       | line. If this is specified,           |
-   |                                       |                                       | *obs_sequences* must be set to ' '.   |
+   |                                       |                                       | *obs_sequences* must be set to ' '.   |
    |                                       |                                       | Can be created by any method,         |
    |                                       |                                       | including sending the output of the   |
    |                                       |                                       | 'ls' command to a file, a text        |
@@ -179,9 +165,8 @@ You can specify **either** *obs_sequences* **or** *obs_sequence_list* -- not bot
    |                                       |                                       | (location, time, obs_type) are        |
    |                                       |                                       | preserved in this file. They are in   |
    |                                       |                                       | no particular order.                  |
-   |                                       |                                       | `obs_s                                |
-   |                                       |                                       | election </assimilation_code/programs |
-   |                                       |                                       | /obs_selection/obs_selection.html>`__ |
+   |                                       |                                       | :doc:`../../../assimilation_code/     |
+   |                                       |                                       | programs/obs_selection/obs_selection` |
    |                                       |                                       | will use this file as a 'mask' to     |
    |                                       |                                       | extract the real observations from    |
    |                                       |                                       | the candidate observation sequence    |
@@ -192,9 +177,8 @@ You can specify **either** *obs_sequences* **or** *obs_sequence_list* -- not bot
    |                                       |                                       | of the unique locations that match    |
    |                                       |                                       | **any** of the verification times.    |
    |                                       |                                       | This file is used in conjunction with |
-   |                                       |                                       | `obs_seq_                             |
-   |                                       |                                       | verify </assimilation_code/programs/o |
-   |                                       |                                       | bs_seq_verify/obs_seq_verify.html>`__ |
+   |                                       |                                       | :doc:`../../../assimilation_code/pr   |
+   |                                       |                                       | ograms/obs_seq_verify/obs_seq_verify` |
    |                                       |                                       | to reorder the ``obs_seq.forecast``   |
    |                                       |                                       | into a structure that will facilitate |
    |                                       |                                       | calculating the statistics and scores |
@@ -224,10 +208,10 @@ You can specify **either** *obs_sequences* **or** *obs_sequence_list* -- not bot
    | verification_interval_seconds         | integer                               | The number of seconds between each    |
    |                                       |                                       | verification.                         |
    |                                       |                                       |                                       |
-   |                                       |                                       | -   1 h == 3600s                      |
-   |                                       |                                       | -   2 h == 7120s                      |
-   |                                       |                                       | -   3 h == 10800s                     |
-   |                                       |                                       | -   6 h == 21600s                     |
+   |                                       |                                       | -  1 h == 3600s                       |
+   |                                       |                                       | -  2 h == 7120s                       |
+   |                                       |                                       | -  3 h == 10800s                      |
+   |                                       |                                       | -  6 h == 21600s                      |
    |                                       |                                       | -  12 h == 43200s                     |
    +---------------------------------------+---------------------------------------+---------------------------------------+
    | temporal_coverage_percent             | real                                  | While it is possible to specify that  |
@@ -291,10 +275,6 @@ For example:
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -312,23 +292,19 @@ Other modules used
    time_manager_mod
    utilities_mod
 
---------------
-
 Files
 -----
 
 -  ``input.nml`` is used for *obs_seq_coverage_nml*
 -  A text file containing the metadata for the observations to be used for forecast evaluation is created. This file is
-   subsequently required by `obs_selection </assimilation_code/programs/obs_selection/obs_selection.html>`__ to subset
-   the set of input observation sequence files into a single observation sequence file (``obs_seq.evaluate``) for the
-   forecast step.
+   subsequently required by :doc:`../../../assimilation_code/programs/obs_selection/obs_selection` to subset the set of
+   input observation sequence files into a single observation sequence file (``obs_seq.evaluate``) for the forecast
+   step.
    (``obsdef_mask.txt`` is the default name)
 -  A netCDF file containing the metadata for a much larger set of observations that may be used is created. This file is
-   subsequently required by `obs_seq_coverage </assimilation_code/programs/obs_seq_coverage/obs_seq_coverage.html>`__ to
-   define the desired times and locations for the verification.
+   subsequently required by :doc:`../../../assimilation_code/programs/obs_seq_coverage/obs_seq_coverage` to define the
+   desired times and locations for the verification.
    (``obsdef_mask.nc`` is the default name)
-
---------------
 
 Usage
 -----
@@ -586,85 +562,14 @@ Discussion
   Combine that information with the *obs_type* and *location* to determine where your verifications of any particular
   observation type will take place.
 | Now that you have the ``obsdef_mask.txt``, you can run
-  `obs_selection </assimilation_code/programs/obs_selection/obs_selection.html>`__ to subset the observation sequence
-  files into one compact file to use in your ensemble forecast.
-
---------------
+  :doc:`../../../assimilation_code/programs/obs_selection/obs_selection` to subset the observation sequence files into
+  one compact file to use in your ensemble forecast.
 
 References
 ----------
 
 -  none - but this seems like a good place to start: `The Centre for Australian Weather and Climate Research - Forecast
    Verification Issues, Methods and FAQ <http://www.cawcr.gov.au/projects/verification/>`__
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   Routine
-
-Message
-
-Comment
-
-obs_seq_coverage
-
-'namelist: temporal_coverage_percent (xxxx) must be == 100.0 for now.)'
-
-it is required that ALL verification times be present for all forecasts
-
-obs_seq_coverage
-
-'specify "obs_sequences" or "obs_sequence_list"'
-
-one of these namelist variables MUST be an empty string
-
-obs_seq_coverage
-
-'xxxxxx ' is not a known observation type.'
-
-one of the *obs_of_interest* namelist entries specifies an observation type that is not supported. Perhaps you need to
-rerun ``preprocess`` with support for the observation, or perhaps it is spelled incorrectly. All DART observation types
-are strictly uppercase.
-
-obs_seq_coverage
-
-'need at least 1 qc and 1 observation copy'
-
-an observation sequence does not have all the metadata necessary. Cannot use "``obs_seq.in``"-class sequences.
-
-obs_seq_coverage
-
-'num_copies ##### does not match #####'
-
-ALL observation sequences must contain the same 'copy' information. At some point it may be possible to mix
-"``obs_seq.out``"-class sequences with "``obs_seq.final``"-class sequences, but this seems like it can wait.
-
-obs_seq_coverage
-
-'No location had at least ### reporting times.'
-
-The input selection criteria did not result in any locations that had observations at all of the required verification
-times.
-
-set_required_times
-
-'namelist: forecast length is not a multiple of the verification interval'
-
-The namelist settings for *forecast_length_[days,seconds]* and *verification_interval_seconds* do not make sense. Refer
-to the forecast time diagram.
-
-set_required_times
-
-'namelist: last analysis time is not a multiple of the verification interval'
-
-The namelist settings for *first_analysis* and *last_analysis* are not separated by a multiple of
-*verification_interval_seconds*. Refer to the forecast time diagram.
 
 .. |forecast evaluation schematic| image:: ../../../docs/images/forecasting_diagram.png
    :width: 90.0%

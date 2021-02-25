@@ -1,18 +1,6 @@
 MODULE location_mod (threed_cartesian)
 ======================================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -21,8 +9,8 @@ model interface code (model_mod.f90), and to be able to read and write location 
 this location information into separate modules so that the main algorithms can operate with the same code independent
 of whether the model uses latitude/longitude/height, 1D unit cartesian coordinates, cylindrical coordinates, etc. DART
 provides about half a dozen possible coordinate systems, and others can be added. The most common one for geophysical
-models is the `threed_sphere </assimilation_code/location/threed_sphere/location_mod.html>`__ version. This document
-describes an alternative 3D cartesian coordinate system.
+models is the :doc:`../threed_sphere/location_mod` version. This document describes an alternative 3D cartesian
+coordinate system.
 
 **Note that only one location module can be compiled into any single DART executable, and most earth observational data
 is generated in [latitude, longitude, vertical pressure or height] coordinates - the threed_sphere option. The cartesian
@@ -142,8 +130,6 @@ sparsely filled boxes. The overhead of creating, managing, and searching a long 
 The best performance lies somewhere in the middle, where each box contains a reasonable number of values, more or less
 evenly distributed across boxes. The absolute numbers for best performance will certainly vary from case to case.
 
---------------
-
 Namelist
 --------
 
@@ -189,15 +175,15 @@ Items in this namelist either control the way in which distances are computed an
    +---------------------------------------------+----------+----------------------------------------------------+
    | min_x_for_periodic, max_x_for_periodic      | real(r8) | The minimum and maximum values that are considered |
    |                                             |          | to be identical locations if                       |
-   |                                             |          | ``x_is_periodic = .true.``                         |
+   |                                             |          | ``x_is_periodic = .true.``                         |
    +---------------------------------------------+----------+----------------------------------------------------+
    | min_y_for_periodic, max_y_for_periodic      | real(r8) | The minimum and maximum values that are considered |
    |                                             |          | to be identical locations if                       |
-   |                                             |          | ``y_is_periodic = .true.``                         |
+   |                                             |          | ``y_is_periodic = .true.``                         |
    +---------------------------------------------+----------+----------------------------------------------------+
    | min_z_for_periodic, max_z_for_periodic      | real(r8) | The minimum and maximum values that are considered |
    |                                             |          | to be identical locations if                       |
-   |                                             |          | ``z_is_periodic = .true.``                         |
+   |                                             |          | ``z_is_periodic = .true.``                         |
    +---------------------------------------------+----------+----------------------------------------------------+
    | compare_to_correct                          | logical  | If true, do an exhaustive search for the closest   |
    |                                             |          | point. Only useful for debugging because the       |
@@ -215,10 +201,6 @@ Items in this namelist either control the way in which distances are computed an
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -228,40 +210,36 @@ Other modules used
    utilities_mod
    random_seq_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ============================ ======================
 ``use location_mod, only :`` location_type
-                             get_close_type
-                             get_location
-                             set_location
-                             write_location
-                             read_location
-                             interactive_location
-                             set_location_missing
-                             query_location
-                             get_close_maxdist_init
-                             get_close_obs_init
-                             get_close_obs
-                             get_close_obs_destroy
-                             get_dist
-                             LocationDims
-                             LocationName
-                             LocationLName
-                             horiz_dist_only
-                             vert_is_undef
-                             vert_is_surface
-                             vert_is_pressure
-                             vert_is_scale_height
-                             vert_is_level
-                             vert_is_height
-                             operator(==)
-                             operator(/=)
+\                            get_close_type
+\                            get_location
+\                            set_location
+\                            write_location
+\                            read_location
+\                            interactive_location
+\                            set_location_missing
+\                            query_location
+\                            get_close_maxdist_init
+\                            get_close_obs_init
+\                            get_close_obs
+\                            get_close_obs_destroy
+\                            get_dist
+\                            LocationDims
+\                            LocationName
+\                            LocationLName
+\                            horiz_dist_only
+\                            vert_is_undef
+\                            vert_is_surface
+\                            vert_is_pressure
+\                            vert_is_scale_height
+\                            vert_is_level
+\                            vert_is_height
+\                            operator(==)
+\                            operator(/=)
 ============================ ======================
 
 Namelist interface ``&location_nml`` must be read from file ``input.nml``.
@@ -344,6 +322,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
       real(r8), intent(in)    :: z
 
    or
+
    ::
 
       type(location_type) :: set_location
@@ -492,9 +471,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    If the last optional argument is not specified, maxdist applies to all locations. If the last argument is specified,
    it must be a list of exactly the length of the number of specific types in the obs_kind_mod.f90 file. This length can
-   be queried with the
-   `get_num_types_of_obs() </assimilation_code/modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__ function
-   to get count of obs types. It allows a different maximum distance to be set per base type when get_close() is called.
+   be queried with the `get_num_types_of_obs() <../../modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__
+   function to get count of obs types. It allows a different maximum distance to be set per base type when get_close()
+   is called.
 
    +-------------+-------------------------------------------------------------------------------------------------------+
    | ``gc``      | Data for efficiently finding close locations.                                                         |
@@ -503,10 +482,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    +-------------+-------------------------------------------------------------------------------------------------------+
    | *maxdist*   | If specified, must be a list of real values. The length of the list must be exactly the same length   |
    |             | as the number of observation types defined in the obs_def_kind.f90 file. (See                         |
-   |             | `get_n                                                                                                |
-   |             | um_types_of_obs() </assimilation_code/modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__ |
-   |             | to get count of obs types.) The values in this list are used for the obs types as the close distance  |
-   |             | instead of the maxdist argument.                                                                      |
+   |             | `get_num_types_of_obs() <../../modules/observations/obs_kind_mod.html#get_num_types_of_obs>`__ to get |
+   |             | count of obs types.) The values in this list are used for the obs types as the close distance instead |
+   |             | of the maxdist argument.                                                                              |
    +-------------+-------------------------------------------------------------------------------------------------------+
 
 | 
@@ -641,13 +619,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Always returns .false.
 
-   ``vert_is_undef``
-
-Always returns .false.
-
-``loc``
-
-A location type
+   ================= ======================
+   ``vert_is_undef`` Always returns .false. 
+   ``loc``           A location type        
+   ================= ======================
 
 | 
 
@@ -663,13 +638,10 @@ A location type
 
    Always returns .false.
 
-   ``vert_is_surface``
-
-Always returns .false.
-
-``loc``
-
-A location type
+   =================== ======================
+   ``vert_is_surface`` Always returns .false. 
+   ``loc``             A location type        
+   =================== ======================
 
 | 
 
@@ -685,13 +657,10 @@ A location type
 
    Always returns .false.
 
-   ``vert_is_pressure``
-
-Always returns .false.
-
-``loc``
-
-A location type
+   ==================== ======================
+   ``vert_is_pressure`` Always returns .false. 
+   ``loc``              A location type        
+   ==================== ======================
 
 | 
 
@@ -707,13 +676,10 @@ A location type
 
    Always returns .false.
 
-   ``vert_is_scale_height``
-
-Always returns .false.
-
-``loc``
-
-A location type
+   ======================== ======================
+   ``vert_is_scale_height`` Always returns .false. 
+   ``loc``                  A location type        
+   ======================== ======================
 
 | 
 
@@ -729,13 +695,10 @@ A location type
 
    Always returns .false.
 
-   ``vert_is_level``
-
-Always returns .false.
-
-``loc``
-
-A location type
+   ================= ======================
+   ``vert_is_level`` Always returns .false. 
+   ``loc``           A location type        
+   ================= ======================
 
 | 
 
@@ -751,13 +714,10 @@ A location type
 
    Always returns .false.
 
-   ``vert_is_height``
-
-Always returns .false.
-
-``loc``
-
-A location type
+   ================== ======================
+   ``vert_is_height`` Always returns .false. 
+   ``loc``            A location type        
+   ================== ======================
 
 | 
 
@@ -845,8 +805,6 @@ A location type
 
 | 
 
---------------
-
 Files
 -----
 
@@ -856,33 +814,12 @@ filename  purpose
 input.nml to read the location_mod namelist
 ========= =================================
 
---------------
-
 References
 ----------
 
 #. none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ================= =========================================== =================================================
-   Routine           Message                                     Comment
-   ================= =========================================== =================================================
-   nc_write_location Various NetCDF-f90 interface error messages From one of the NetCDF calls in nc_write_location
-   ================= =========================================== =================================================
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

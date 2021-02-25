@@ -1,28 +1,12 @@
 MODULE reg_factor
 =================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
 Computes a weighting factor to reduce the impact of observations on state variables using information from groups of
 ensembles. Can be run using groups or using archived summary information available from previous group filter
 experiments.
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -32,10 +16,6 @@ Other modules used
    types_mod
    utilities_mod
    time_manager_mod
-
---------------
-
-.. _public_interfaces:
 
 Public interfaces
 -----------------
@@ -50,7 +30,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *var = comp_reg_factor(num_groups, regress, obs_index, state_index [, obs_state_ind] [, obs_state_max])*
+   *var = comp_reg_factor(num_groups, regress, obs_index, state_index [, obs_state_ind] [, obs_state_max])*
    ::
 
       real(r8)                                    ::  comp_reg_factor 
@@ -66,24 +46,22 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Returns a weighting factor given regression factors from each group of a group filter or retrieves a factor generated
    by previous group filter runs from a file.
 
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``num_groups   ``  | Number of groups. Set to 1 when using information from previously run group filter from file.  |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``regress   ``     | Regression factor from each group for a given state variable and observation variable pair.    |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``obs_index   ``   | Integer index of the observation being processed. Not used in current implementation .         |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``state_index   `` | Integer index of state variable being processed. Not used in current implementation.           |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | *obs_state_ind   * | Index into file generated for Bgrid model which could be duplicated in other large models.     |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | *obs_state_max   * | Maximum number of observation state variable pairs with non-zero impacts for a given model and |
-   |                    | observation sequence. Used for generating Bgrid statistic files.                               |
-   +--------------------+------------------------------------------------------------------------------------------------+
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``num_groups``  | Number of groups. Set to 1 when using information from previously run group filter from file.     |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``regress``     | Regression factor from each group for a given state variable and observation variable pair.       |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``obs_index``   | Integer index of the observation being processed. Not used in current implementation .            |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | ``state_index`` | Integer index of state variable being processed. Not used in current implementation.              |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | *obs_state_ind* | Index into file generated for Bgrid model which could be duplicated in other large models.        |
+   +-----------------+---------------------------------------------------------------------------------------------------+
+   | *obs_state_max* | Maximum number of observation state variable pairs with non-zero impacts for a given model and    |
+   |                 | observation sequence. Used for generating Bgrid statistic files.                                  |
+   +-----------------+---------------------------------------------------------------------------------------------------+
 
 | 
-
---------------
 
 Namelist
 --------
@@ -125,16 +103,14 @@ namelist.
    | input_reg_file                        | character(len=129)                    | File name from which statistics are   |
    |                                       |                                       | to be read for select_regression = 3. |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | save_reg_diagnostics                  | logical\ * *                          | True if regression diagnostics should |
+   | save_reg_diagnostics                  | logical                               | True if regression diagnostics should |
    |                                       |                                       | be computed.                          |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | reg_diagnostics_file                  | character(len=129)\ * *               | File name to which to write           |
+   | reg_diagnostics_file                  | character(len=129)                    | File name to which to write           |
    |                                       |                                       | diagnostics.                          |
    +---------------------------------------+---------------------------------------+---------------------------------------+
 
 | 
-
---------------
 
 Files
 -----
@@ -148,34 +124,12 @@ filename                                           purpose
 from ``input.nml``\ &reg_factor_mod:input_reg_file file of regression coefficients
 ================================================== ===============================
 
---------------
-
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +-----------------+------------------------------------------------+------------------------------------------------+
-   | Routine         | Message                                        | Comment                                        |
-   +=================+================================================+================================================+
-   | comp_reg_factor | Illegal value for namelist parameter           | Value must be 1(sampling theory), 2 (table     |
-   |                 | select_regression                              | lookup) or 3 (read from obs_state_reg_file).   |
-   +-----------------+------------------------------------------------+------------------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

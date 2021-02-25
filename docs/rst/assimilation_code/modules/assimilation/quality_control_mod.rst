@@ -1,21 +1,6 @@
 MODULE quality_control_mod
 ==========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Usage <#usage>`__
--  `Namelist <#namelist>`__
--  `Discussion <#discussion>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Future plans <#future_plans>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -23,8 +8,6 @@ Routines in this module deal with two different types of quality control (QC) re
 interpretation of the *incoming* data quality, to reject observations at assimilation time which are marked as poor
 quality. The second is to document how DART disposed of each observation; whether it was successfully assimilated or
 rejected, and if rejected, for which reason.
-
---------------
 
 Usage
 -----
@@ -37,8 +20,8 @@ better and higher values are considered poorer. A single namelist item, ``input_
 accepted and rejected observations. Values *larger* than this value are rejected; values equal to or lower are accepted.
 Note that observations could be subsequently rejected for other reasons, including failing the outlier threshold test or
 all observations of this type being excluded by namelist control. See the
-`obs_kind_mod </assimilation_code/modules/observations/obs_kind_mod.html#Namelist>`__ namelist documentation for more
-details on how to enable or disable assimilation by observation type at runtime.
+`obs_kind_mod <../observations/obs_kind_mod.html#Namelist>`__ namelist documentation for more details on how to enable
+or disable assimilation by observation type at runtime.
 
 The incoming quality control value is set when an observation sequence file is created. If the data provider user a
 different scheme the values must be translated into NCEP-consistent values. Generally we use the value 3 for most runs.
@@ -78,8 +61,6 @@ assimilation. The flag is a numeric value with the following meanings:
 == ====================================================================================================================
 
 | 
-
---------------
 
 Namelist
 --------
@@ -125,8 +106,6 @@ Items in this namelist control whether an observation is assimilated or not.
 
 | 
 
---------------
-
 Discussion
 ----------
 
@@ -137,10 +116,6 @@ If an ensemble is spun up from a single state the ensemble spread may be very sm
 be rejected by the ``outlier_threshold``. But as the ensemble spread increases the assimilation should be able to
 assimilate more and more observations as the model trajectory becomes consistent with those observations.
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -150,21 +125,17 @@ Other modules used
    utilities_mod
    random_seq_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 =================================== =======================
 ``use quality_control_mod, only :`` initialize_qc
-                                    input_qc_ok
-                                    get_dart_qc
-                                    check_outlier_threshold
-                                    good_dart_qc
-                                    set_input_qc
-                                    dart_flags
+\                                   input_qc_ok
+\                                   get_dart_qc
+\                                   check_outlier_threshold
+\                                   good_dart_qc
+\                                   set_input_qc
+\                                   dart_flags
 =================================== =======================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -227,8 +198,6 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Files
 -----
 
@@ -238,16 +207,10 @@ filename  purpose
 input.nml to read the quality_control_mod namelist
 ========= ========================================
 
---------------
-
 References
 ----------
 
 #. none
-
---------------
-
-.. _error_codes_and_conditions:
 
 Error codes and conditions
 --------------------------
@@ -259,8 +222,6 @@ Error codes and conditions
    ============ ============= ======================
    routine name output string description or comment
    ============ ============= ======================
-
-.. _future_plans:
 
 Future plans
 ------------
@@ -278,13 +239,7 @@ reserving another value that the interpolate routine could return.
 At this time the best suggestion is to cull out-of-domain obs from the input observation sequence file by a
 preprocessing program before assimilation.
 
---------------
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

@@ -1,29 +1,8 @@
---------------
-
-.. _module_platform_mod:
-
-Module platform_mod
--------------------
-
-Contents
-~~~~~~~~
-
--  `Module platform_mod <#module_platform_mod>`__
-
-.. container::
-
-   **Contact:**   V. Balaji
-   **Reviewers:** 
-   **Change History: ** `WebCVS
-   Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/shared/platform/platform.F90>`__
-   **Last Modified:**  $Date$
-
-| 
-
---------------
+module platform_mod
+===================
 
 Overview
-^^^^^^^^
+--------
 
 .. container::
 
@@ -47,54 +26,44 @@ Overview
    These should be used when the actually bytelength of the variable is important. To specify numerical precision,
    Fortran recommends the use of the intrinsics ``SELECTED_REAL_KIND`` and ``SELECTED_INT_KIND``.
 
---------------
-
 Other other modules used
-^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Namelist
-^^^^^^^^
+--------
 
 .. container::
 
@@ -102,10 +71,8 @@ Namelist
 
 | 
 
---------------
-
 Compiling and linking source
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 .. container::
 
@@ -114,10 +81,8 @@ Compiling and linking source
 
       use platform_mod
 
---------------
-
 Portability
-^^^^^^^^^^^
+-----------
 
 .. container::
 
@@ -125,10 +90,8 @@ Portability
 
 | 
 
---------------
-
 Acquiring source
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -143,15 +106,11 @@ Acquiring source
 
 | 
 
---------------
-
 Notes
-^^^^^
+-----
 
 .. container::
 
    None.
 
 | 
-
---------------

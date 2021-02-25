@@ -1,18 +1,6 @@
 MODULE (1D) location_mod
 ========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -51,16 +39,10 @@ are able to. The correct usage of the ``get_close`` routines is as follows:
 Regardless of the fact that the names include the string 'obs', they are intended for use with any group of locations in
 the system, frequently state vector items or observations, but any location is acceptable.
 
---------------
-
 Namelist
 --------
 
 This version of the locations module does not have any namelist input.
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -71,44 +53,40 @@ Other modules used
    utilities_mod
    random_seq_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ============================ ======================
 ``use location_mod, only :`` location_type
-                             get_close_type
-                             get_location
-                             set_location
-                             write_location
-                             read_location
-                             interactive_location
-                             set_location_missing
-                             query_location
-                             get_close_maxdist_init
-                             get_close_obs_init
-                             get_close_obs
-                             get_close_obs_destroy
-                             get_dist
-                             LocationDims
-                             LocationName
-                             LocationLName
-                             horiz_dist_only
-                             vert_is_undef
-                             vert_is_surface
-                             vert_is_pressure
-                             vert_is_level
-                             vert_is_height
-                             VERTISUNDEF
-                             VERTISSURFACE
-                             VERTISLEVEL
-                             VERTISPRESSURE
-                             VERTISHEIGHT
-                             operator(==)
-                             operator(/=)
+\                            get_close_type
+\                            get_location
+\                            set_location
+\                            write_location
+\                            read_location
+\                            interactive_location
+\                            set_location_missing
+\                            query_location
+\                            get_close_maxdist_init
+\                            get_close_obs_init
+\                            get_close_obs
+\                            get_close_obs_destroy
+\                            get_dist
+\                            LocationDims
+\                            LocationName
+\                            LocationLName
+\                            horiz_dist_only
+\                            vert_is_undef
+\                            vert_is_surface
+\                            vert_is_pressure
+\                            vert_is_level
+\                            vert_is_height
+\                            VERTISUNDEF
+\                            VERTISSURFACE
+\                            VERTISLEVEL
+\                            VERTISPRESSURE
+\                            VERTISHEIGHT
+\                            operator(==)
+\                            operator(/=)
 ============================ ======================
 
 There is currently no namelist interface for the 1D location module.
@@ -634,42 +612,17 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Files
 -----
 
 None.
-
---------------
 
 References
 ----------
 
 #. none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ============== ================================================== ============================================
-   Routine        Message                                            Comment
-   ============== ================================================== ============================================
-   set_location   Value of x is out of 0->1 range                    x cannot be less than 0 or greater than 1
-   query_location Only x is legal attribute to request from location attr must be 'x' or 'X'
-   read_location  Expected location header "loc1d" in input file     Can only read one-dimensional location files
-   ============== ================================================== ============================================
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

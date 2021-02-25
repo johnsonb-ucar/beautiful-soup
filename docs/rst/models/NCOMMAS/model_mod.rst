@@ -1,18 +1,5 @@
-MODULE model_mod (NCOMMAS)
-==========================
-
-Contents
---------
-
--  `Overview <#overview>`__
--  `NCOMMAS 7_1 <#ncommas_7_1>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
+NCOMMAS
+=======
 
 Overview
 --------
@@ -52,7 +39,7 @@ Overview
 .. container:: indent1
 
    .. rubric:: NCOMMAS 7_1
-      :name: ncommas_7_1
+      :name: ncommas-7_1
 
    | was compiled with the Intel 10.1 compilers and run on a linux cluster running SLES10. Initially, DART simply runs
      'end-to-end' at every assimilation time, while the NCOMMAS ensemble mechanism is responsible for slicing and dicing
@@ -83,26 +70,21 @@ Overview
    | There are two programs - both require the list of NCOMMAS variables to use in the DART state vector: the
      ``ncommas_vars_nml`` namelist in the ``ncommas_vars.nml`` file.
 
-   +------------------------------------------------+--------------------------------------------------------------------+
-   | `ncommas_to_dart.f90 <ncommas_to_dart.html>`__ | converts the ncommas restart file ``ncommas_restart.nc`` into a    |
-   |                                                | DART-compatible file normally called ``dart_ics`` . We usually     |
-   |                                                | wind up linking the restart file to a static name that is used by  |
-   |                                                | DART.                                                              |
-   +------------------------------------------------+--------------------------------------------------------------------+
-   | `dart_to_ncommas.f90 <dart_to_ncommas.html>`__ | inserts the DART output into an existing ncommas restart netCDF    |
-   |                                                | file by overwriting the variables in the ncommas restart netCDF    |
-   |                                                | file. There are two different types of DART output files, so there |
-   |                                                | is a namelist option to specify if the DART file has two time      |
-   |                                                | records or just one (if there are two, the first one is the        |
-   |                                                | 'advance_to' time, followed by the 'valid_time' of the ensuing     |
-   |                                                | state). ``dart_to_ncommas`` determines the ncommas restart file    |
-   |                                                | name from the ``input.nml``                                        |
-   |                                                | ``model_nml:ncommas_restart_filename``. If the DART file contains  |
-   |                                                | an 'advance_to' time, ``dart_to_ncommas`` creates a new            |
-   |                                                | ``&time_manager_nml`` for ncommas in a file called                 |
-   |                                                | ``ncommas_in.DART`` which can be used to control the length of the |
-   |                                                | ncommas integration.                                               |
-   +------------------------------------------------+--------------------------------------------------------------------+
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | :doc:`./ncommas_to_dart` | converts the ncommas restart file ``ncommas_restart.nc`` into a DART-compatible file     |
+   |                          | normally called ``dart_ics`` . We usually wind up linking the restart file to a static   |
+   |                          | name that is used by DART.                                                               |
+   +--------------------------+------------------------------------------------------------------------------------------+
+   | :doc:`./dart_to_ncommas` | inserts the DART output into an existing ncommas restart netCDF file by overwriting the  |
+   |                          | variables in the ncommas restart netCDF file. There are two different types of DART      |
+   |                          | output files, so there is a namelist option to specify if the DART file has two time     |
+   |                          | records or just one (if there are two, the first one is the 'advance_to' time, followed  |
+   |                          | by the 'valid_time' of the ensuing state). ``dart_to_ncommas`` determines the ncommas    |
+   |                          | restart file name from the ``input.nml`` ``model_nml:ncommas_restart_filename``. If the  |
+   |                          | DART file contains an 'advance_to' time, ``dart_to_ncommas`` creates a new               |
+   |                          | ``&time_manager_nml`` for ncommas in a file called ``ncommas_in.DART`` which can be used |
+   |                          | to control the length of the ncommas integration.                                        |
+   +--------------------------+------------------------------------------------------------------------------------------+
 
 .. container:: indent1
 
@@ -115,11 +97,10 @@ Overview
      e.g., using the ncommas restarts for '1 January 00Z' from 50 consecutive years from a hindcast experiment.
    | There is **not yet** a ``shell_scripts/MakeInitialEnsemble.csh`` script to demonstrate how to convert a set of
      ncommas netCDF restart files into a set of DART files that have a consistent timestamp. If you simply convert each
-     ncommas file to a DART file using ``ncommas_to_dart``, each DART file will have a 'valid time' that reflects the
+     ncommas file to a DART file using ``ncommas_to_dart``, each DART file will have a 'valid time' that reflects the
      ncommas time of that state - instead of an ensemble of states reflecting one single time. The
-     `restart_file_utility </Users/johnsonb/work/git/beautiful-soup-backup/docs/utilities/restart_file_utility.f90>`__
-     can be used to overwrite the timestep in the header of each DART initial conditions file. The namelist for this
-     program must look something like:
+     `restart_file_utility <../../../utilities/restart_file_utility.f90>`__ can be used to overwrite the timestep in the
+     header of each DART initial conditions file. The namelist for this program must look something like:
 
    ::
 
@@ -140,9 +121,7 @@ Overview
            new_advance_secs             = -1,
            gregorian_cal                = .true.  /
 
-   | The time of days = *145731* seconds = *0* relates to 00Z 1 Jan 2000 in the DART world.
-
---------------
+   | The time of days = *145731* seconds = *0* relates to 00Z 1 Jan 2000 in the DART world.
 
 Namelist
 --------
@@ -169,7 +148,7 @@ prevent them from prematurely terminating the namelist.
    +---------------------------------------+---------------------------------------+---------------------------------------+
    | Contents                              | Type                                  | Description                           |
    +=======================================+=======================================+=======================================+
-   | output_state_vector                   | logical *[default: .true.]*           | The switch to determine the form of   |
+   | output_state_vector                   | logical *[default: .true.]*           | The switch to determine the form of   |
    |                                       |                                       | the state vector in the output netCDF |
    |                                       |                                       | files. If ``.true.`` the state vector |
    |                                       |                                       | will be output exactly as DART uses   |
@@ -179,20 +158,20 @@ prevent them from prematurely terminating the namelist.
    |                                       |                                       | output that way -- much easier to use |
    |                                       |                                       | with 'ncview', for example.           |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | assimilation_period_days              | integer *[default: 1]*                | The number of days to advance the     |
+   | assimilation_period_days              | integer *[default: 1]*                | The number of days to advance the     |
    |                                       |                                       | model for each assimilation.          |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | assimilation_period_seconds           | integer *[default: 0]*                | In addition to                        |
+   | assimilation_period_seconds           | integer *[default: 0]*                | In addition to                        |
    |                                       |                                       | ``assimilation_period_days``, the     |
    |                                       |                                       | number of seconds to advance the      |
    |                                       |                                       | model for each assimilation.          |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | model_perturbation_amplitude          | real(r8) *[default: 0.2]*             | Reserved for future use.              |
+   | model_perturbation_amplitude          | real(r8) *[default: 0.2]*             | Reserved for future use.              |
    +---------------------------------------+---------------------------------------+---------------------------------------+
    | calendar                              | character(len=32)                     | Character string specifying the       |
-   |                                       | *[default: 'Gregorian']*              | calendar being used by NCOMMAS.       |
+   |                                       | *[default: 'Gregorian']*              | calendar being used by NCOMMAS.       |
    +---------------------------------------+---------------------------------------+---------------------------------------+
-   | debug                                 | integer *[default: 0]*                | The switch to specify the run-time    |
+   | debug                                 | integer *[default: 0]*                | The switch to specify the run-time    |
    |                                       |                                       | verbosity. ``0`` is as quiet as it    |
    |                                       |                                       | gets. ``> 1`` provides more run-time  |
    |                                       |                                       | messages. ``> 5`` provides ALL        |
@@ -235,7 +214,7 @@ prevent them from prematurely terminating the namelist.
    | Contents                              | Type                                  | Description                           |
    +=======================================+=======================================+=======================================+
    | ncommas_state_variables               | character(len=NF90_MAX_NAME)::        | The table that relates the NCOMMAS    |
-   |                                       | dimension(160) *[default:  see        | variables to use to build the DART    |
+   |                                       | dimension(160) *[default: see         | variables to use to build the DART    |
    |                                       | example]*                             | state vector, and the corresponding   |
    |                                       |                                       | DART kinds for those variables.       |
    +---------------------------------------+---------------------------------------+---------------------------------------+
@@ -264,10 +243,6 @@ prevent them from prematurely terminating the namelist.
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -281,10 +256,6 @@ Other modules used
    mpi_utilities_mod
    random_seq_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
@@ -294,22 +265,22 @@ Required interface routines
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ======================= ======================
-*use model_mod, only :* get_model_size
-                        adv_1step
-                        get_state_meta_data
-                        model_interpolate
-                        get_model_time_step
-                        static_init_model
-                        end_model
-                        init_time
-                        init_conditions
-                        nc_write_model_atts
-                        nc_write_model_vars
-                        pert_model_state
-                        get_close_maxdist_init
-                        get_close_obs_init
-                        get_close_obs
-                        ens_mean_for_model
+*use model_mod, only :* get_model_size
+\                       adv_1step
+\                       get_state_meta_data
+\                       model_interpolate
+\                       get_model_time_step
+\                       static_init_model
+\                       end_model
+\                       init_time
+\                       init_conditions
+\                       nc_write_model_atts
+\                       nc_write_model_vars
+\                       pert_model_state
+\                       get_close_maxdist_init
+\                       get_close_obs_init
+\                       get_close_obs
+\                       ens_mean_for_model
 ======================= ======================
 
 Unique interface routines
@@ -317,16 +288,17 @@ Unique interface routines
 
 ======================= ============================
 *use model_mod, only :* get_gridsize
-                        restart_file_to_sv
-                        sv_to_restart_file
-                        get_ncommas_restart_filename
-                        get_base_time
-                        get_state_time
+\                       restart_file_to_sv
+\                       sv_to_restart_file
+\                       get_ncommas_restart_filename
+\                       get_base_time
+\                       get_state_time
 ======================= ============================
 
-========================== =============================================================================================
-*use location_mod, only :* `get_close_obs </assimilation_code/location/threed_sphere/location_mod.html#get_close_obs>`__
-========================== =============================================================================================
++----------------------------+----------------------------------------------------------------------------------------+
+| *use location_mod, only :* | `get_close_o                                                                           |
+|                            | bs <../../assimilation_code/location/threed_sphere/location_mod.html#get_close_obs>`__ |
++----------------------------+----------------------------------------------------------------------------------------+
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
 
@@ -367,16 +339,16 @@ Required interface routines
    ``adv_1step`` is not used for the ncommas model. Advancing the model is done through the ``advance_model`` script.
    This is a NULL_INTERFACE, provided only for compatibility with the DART requirements.
 
-   =========== ==========================================
-   ``x``       State vector of length model_size.
-   ``time   `` Specifies time of the initial model state.
-   =========== ==========================================
+   ======== ==========================================
+   ``x``    State vector of length model_size.
+   ``time`` Specifies time of the initial model state.
+   ======== ==========================================
 
 | 
 
 .. container:: routine
 
-   *call get_state_meta_data (index_in, location, [, var_type] )*
+   *call get_state_meta_data (index_in, location, [, var_type] )*
    ::
 
       integer,             intent(in)  :: index_in
@@ -392,18 +364,18 @@ Required interface routines
    to indicate different variable types in ``var_type`` are themselves defined as public interfaces to model_mod if
    required.
 
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``index_in   `` | Index of state vector element about which information is requested.                               |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``location``    | Returns the 3D location of the indexed state variable. The ``location_ type`` comes from          |
-   |                 | ``DART/assimilation_code/location/threed_sphere/location_mod.f90``. Note that the lat/lon are     |
-   |                 | specified in degrees by the user but are converted to radians internally.                         |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | *var_type*      | Returns the type of the indexed state variable as an optional argument. The type is one of the    |
-   |                 | list of supported observation types, found in the block of code starting                          |
-   |                 | ``! Integer definitions for DART TYPES`` in                                                       |
-   |                 | ``DART/assimilation_code/modules/observations/obs_kind_mod.f90``                                  |
-   +-----------------+---------------------------------------------------------------------------------------------------+
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``index_in`` | Index of state vector element about which information is requested.                                  |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``location`` | Returns the 3D location of the indexed state variable. The ``location_ type`` comes from             |
+   |              | ``DART/assimilation_code/location/threed_sphere/location_mod.f90``. Note that the lat/lon are        |
+   |              | specified in degrees by the user but are converted to radians internally.                            |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | *var_type*   | Returns the type of the indexed state variable as an optional argument. The type is one of the list  |
+   |              | of supported observation types, found in the block of code starting                                  |
+   |              | ``! Integer definitions for DART TYPES`` in                                                          |
+   |              | ``DART/assimilation_code/modules/observations/obs_kind_mod.f90``                                     |
+   +--------------+------------------------------------------------------------------------------------------------------+
 
    The list of supported variables in ``DART/assimilation_code/modules/observations/obs_kind_mod.f90`` is created by
    ``preprocess``.
@@ -435,7 +407,7 @@ Required interface routines
    +-----------------------------------------------------------+-----------------------------------------------------------+
    | ``x``                                                     | A model state vector.                                     |
    +-----------------------------------------------------------+-----------------------------------------------------------+
-   | ``location   ``                                           | Location to which to interpolate.                         |
+   | ``location``                                              | Location to which to interpolate.                         |
    +-----------------------------------------------------------+-----------------------------------------------------------+
    | ``itype``                                                 | Integer indexing which type of observation is desired.    |
    +-----------------------------------------------------------+-----------------------------------------------------------+
@@ -462,9 +434,9 @@ Required interface routines
    this is set from the namelist values for
    ``input.nml``\ ``&model_nml:assimilation_period_days, assimilation_period_seconds``.
 
-   ========== ============================
-   ``var   `` Smallest time step of model.
-   ========== ============================
+   ======= ============================
+   ``var`` Smallest time step of model.
+   ======= ============================
 
 | 
 
@@ -477,7 +449,7 @@ Required interface routines
    | ``static_init_model`` is called for runtime initialization of the model. The namelists are read to determine
      runtime configuration of the model, the grid coordinates, etc. There are no input arguments and no return values.
      The routine sets module-local private attributes that can then be queried by the public interface routines.
-   | See the ncommas documentation for all namelists in ``ncommas_in`` . Be aware that DART reads the ncommas
+   | See the ncommas documentation for all namelists in ``ncommas_in`` . Be aware that DART reads the ncommas
      ``&grid_nml`` namelist to get the filenames for the horizontal and vertical grid information as well as the
      topography information.
    | The namelists (all mandatory) are:
@@ -516,9 +488,9 @@ Required interface routines
    this routine would get called is if the ``input.nml``\ ``&perfect_model_obs_nml:start_from_restart`` is .false.,
    which is not supported in the ncommas model.
 
-   =========== =====================================================================================================
-   ``time   `` the starting time for the model if no initial conditions are to be supplied. This is hardwired to 0.0
-   =========== =====================================================================================================
+   ======== =====================================================================================================
+   ``time`` the starting time for the model if no initial conditions are to be supplied. This is hardwired to 0.0
+   ======== =====================================================================================================
 
 | 
 
@@ -534,9 +506,9 @@ Required interface routines
    ``init_conditions`` returns default initial conditions for model; generally used for spinning up initial model
    states. For the ncommas model it is just a stub because the initial state is always provided by the input files.
 
-   ======== =============================================================
-   ``x   `` Initial conditions for state vector. This is hardwired to 0.0
-   ======== =============================================================
+   ===== =============================================================
+   ``x`` Initial conditions for state vector. This is hardwired to 0.0
+   ===== =============================================================
 
 | 
 
@@ -557,10 +529,10 @@ Required interface routines
    module. Both the ``input.nml`` and ``ncommas_in`` files are preserved in the netCDF file as variables ``inputnml``
    and ``ncommas_in``, respectively.
 
-   =============== =========================================================
-   ``ncFileID   `` Integer file descriptor to previously-opened netCDF file.
-   ``ierr``        Returns a 0 for successful completion.
-   =============== =========================================================
+   ============ =========================================================
+   ``ncFileID`` Integer file descriptor to previously-opened netCDF file.
+   ``ierr``     Returns a 0 for successful completion.
+   ============ =========================================================
 
    ``nc_write_model_atts`` is responsible for the model-specific attributes in the following DART-output netCDF files:
    ``true_state.nc``, ``preassim.nc``, and ``analysis.nc``.
@@ -583,17 +555,17 @@ Required interface routines
    ``nc_write_model_vars`` writes a copy of the state variables to a NetCDF file. Multiple copies of the state for a
    given time are supported, allowing, for instance, a single file to include multiple ensemble estimates of the state.
    Whether the state vector is parsed into prognostic variables (SALT, TEMP, UVEL, VVEL, PSURF) or simply written as a
-   1D array is controlled by ``input.nml``\ ``&model_mod_nml:output_state_vector``. If ``output_state_vector = .true.``
+   1D array is controlled by ``input.nml``\ ``&model_mod_nml:output_state_vector``. If ``output_state_vector = .true.``
    the state vector is written as a 1D array (the simplest case, but hard to explore with the diagnostics). If
-   ``output_state_vector = .false.`` the state vector is parsed into prognostic variables before being written.
+   ``output_state_vector = .false.`` the state vector is parsed into prognostic variables before being written.
 
-   ================ =================================================
-   ``ncFileID``     file descriptor to previously-opened netCDF file.
-   ``statevec``     A model state vector.
-   ``copyindex   `` Integer index of copy to be written.
-   ``timeindex``    The timestep counter for the given state.
-   ``ierr``         Returns 0 for normal completion.
-   ================ =================================================
+   ============= =================================================
+   ``ncFileID``  file descriptor to previously-opened netCDF file.
+   ``statevec``  A model state vector.
+   ``copyindex`` Integer index of copy to be written.
+   ``timeindex`` The timestep counter for the given state.
+   ``ierr``      Returns 0 for normal completion.
+   ============= =================================================
 
 | 
 
@@ -617,14 +589,14 @@ Required interface routines
    | A more robust perturbation mechanism is needed. Until then, avoid using this routine by using your own ensemble of
      initial conditions. This is determined by setting ``input.nml``\ ``&filter_nml:start_from_restart = .false.``
 
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``state``              | State vector to be perturbed.                                                              |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``pert_state``         | The perturbed state vector.                                                                |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``interf_provided   `` | Because of the 'wet/dry' issue discussed above, this is always ``.true.``, indicating a    |
-   |                        | model-specific perturbation is available.                                                  |
-   +------------------------+--------------------------------------------------------------------------------------------+
+   +---------------------+-----------------------------------------------------------------------------------------------+
+   | ``state``           | State vector to be perturbed.                                                                 |
+   +---------------------+-----------------------------------------------------------------------------------------------+
+   | ``pert_state``      | The perturbed state vector.                                                                   |
+   +---------------------+-----------------------------------------------------------------------------------------------+
+   | ``interf_provided`` | Because of the 'wet/dry' issue discussed above, this is always ``.true.``, indicating a       |
+   |                     | model-specific perturbation is available.                                                     |
+   +---------------------+-----------------------------------------------------------------------------------------------+
 
 | 
 
@@ -639,8 +611,8 @@ Required interface routines
 .. container:: indent1
 
    Pass-through to the 3-D sphere locations module. See
-   `get_close_maxdist_init() </assimilation_code/location/threed_sphere/location_mod.html#get_close_maxdist_init>`__ for
-   the documentation of this subroutine.
+   `get_close_maxdist_init() <../../assimilation_code/location/threed_sphere/location_mod.html#get_close_maxdist_init>`__
+   for the documentation of this subroutine.
 
 | 
 
@@ -656,15 +628,15 @@ Required interface routines
 .. container:: indent1
 
    Pass-through to the 3-D sphere locations module. See
-   `get_close_obs_init() </assimilation_code/location/threed_sphere/location_mod.html#get_close_obs_init>`__ for the
-   documentation of this subroutine.
+   `get_close_obs_init() <../../assimilation_code/location/threed_sphere/location_mod.html#get_close_obs_init>`__ for
+   the documentation of this subroutine.
 
 | 
 
 .. container:: routine
 
    *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, &
-             num_close, close_ind [, dist])*
+   num_close, close_ind [, dist])*
    ::
 
       type(get_close_type),              intent(in ) :: gc
@@ -722,8 +694,6 @@ Required interface routines
 
 | 
 
---------------
-
 .. _unique-interface-routines-1:
 
 Unique interface routines
@@ -765,17 +735,11 @@ Unique interface routines
    ``restart_file_to_sv`` Reads a NCOMMAS netCDF format restart file and packs the desired variables into a DART state
    vector. The desired variables are specified in the ``ncommas_vars_nml`` namelist.
 
-   ``filename``
-
-The name of the netCDF format NCOMMAS restart file.
-
-``state_vector``
-
-the 1D array containing the concatenated NCOMMAS variables.
-
-``model_time``
-
-the time of the model state. The last time in the netCDF restart file.
+   ================ ======================================================================
+   ``filename``     The name of the netCDF format NCOMMAS restart file.
+   ``state_vector`` the 1D array containing the concatenated NCOMMAS variables.
+   ``model_time``   the time of the model state. The last time in the netCDF restart file.
+   ================ ======================================================================
 
 | 
 
@@ -813,9 +777,9 @@ the time of the model state. The last time in the netCDF restart file.
    ``get_ncommas_restart_filename`` returns the name of the NCOMMAS restart file - the filename itself is in private
    module storage.
 
-   =============== =====================================
-   ``filename   `` The name of the NCOMMAS restart file.
-   =============== =====================================
+   ============ =====================================
+   ``filename`` The name of the NCOMMAS restart file.
+   ============ =====================================
 
 | 
 
@@ -852,8 +816,6 @@ the time of the model state. The last time in the netCDF restart file.
 
 | 
 
---------------
-
 Files
 -----
 
@@ -862,7 +824,7 @@ filename                    purpose
 =========================== ===========================================================================
 input.nml                   to read the model_mod namelist
 ncommas_vars.nml            to read the ``ncommas_vars_nml`` namelist
-ncommas_restart.nc          provides grid dimensions, model state, and 'valid_time' of the model state
+ncommas_restart.nc          provides grid dimensions, model state, and 'valid_time' of the model state
 true_state.nc               the time-history of the "true" model state from an OSSE
 preassim.nc                 the time-history of the model state before assimilation
 analysis.nc                 the time-history of the model state after assimilation
@@ -872,44 +834,12 @@ dart_log.nml [default name] the record of all the namelists actually USED - cont
 
 | 
 
---------------
-
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-   | Routine            | Message                                       | Comment                                       |
-   +====================+===============================================+===============================================+
-   | restart_file_to_sv | cannot open file "xxxx" for reading           | The ncommas restart file "xxxx" does not      |
-   |                    |                                               | exist.                                        |
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-   | restart_file_to_sv | 'WARNING!!! year 0 not supported; setting to  | year 0 ... is not supported in a Gregorian    |
-   |                    | year 1                                        | calendar. Our intent here is to do data       |
-   |                    |                                               | assimilation, normally 'real' observations    |
-   |                    |                                               | have 'real' dates.                            |
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-   | sv_to_restart_file | current time /= model time. FATAL error.      | The DART time does not match the time of the  |
-   |                    |                                               | ncommas restart file. This message is         |
-   |                    |                                               | preceeded by several lines indicating the     |
-   |                    |                                               | expected times of both DART and ncommas.      |
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

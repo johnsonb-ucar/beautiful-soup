@@ -1,32 +1,8 @@
 +---------------------------------------+---------------------------------------+---------------------------------------+
-|                                       |                                       | .. rubric:: The Data Assimilation     |
+|                                       |                                       | .. rubric:: The Data Assimilation     |
 |                                       |                                       |    Research Testbed -- DART           |
 |                                       |                                       |    :name: the-data-                   |
 |                                       |                                       | assimilation-research-testbed----dart |
-|                                       |                                       |                                       |
-|                                       |                                       | .. rubric:: Contents                  |
-|                                       |                                       |    :name: contents                    |
-|                                       |                                       |                                       |
-|                                       |                                       | -  ` <#>`__                           |
-|                                       |                                       | -  `Quick guide                       |
-|                                       |                                       |    topics <#quick_guide_topics>`__    |
-|                                       |                                       | -  `Getting                           |
-|                                       |                                       |    started <#getting_started>`__      |
-|                                       |                                       | -  `DART                              |
-|                                       |                                       |                                       |
-|                                       |                                       |  requirements <#dart_requirements>`__ |
-|                                       |                                       | -  `DART platforms/compilers/batch    |
-|                                       |                                       |    systems <#dart_                    |
-|                                       |                                       | platforms/compilers/batch_systems>`__ |
-|                                       |                                       | -  `DART tutorial materials and       |
-|                                       |                                       |    presentations <#dart_tut           |
-|                                       |                                       | orial_materials_and_presentations>`__ |
-|                                       |                                       | -  `Presentations about               |
-|                                       |                                       |                                       |
-|                                       |                                       |   DART <#presentations_about_dart>`__ |
-|                                       |                                       | -  `Related links <#related_links>`__ |
-|                                       |                                       | -  `DART contact                      |
-|                                       |                                       |    list <#dart_contact_list>`__       |
 |                                       |                                       |                                       |
 |                                       |                                       | |cool spaghetti plot of North America |
 |                                       |                                       | demonstrating the uncertainty among   |
@@ -40,8 +16,6 @@
 
 | 
 
-.. _quick_guide_topics:
-
 Quick guide topics
 ------------------
 
@@ -53,10 +27,8 @@ Quick guide topics
 -  You are a current DART user and want to download the latest updates.
 -  You are interested in using the DART software and tutorial materials to teach a class using Data Assimilation (or
    would like to use the DART tutorial material to teach yourself).
--  You are interested in learning how DART `runs on parallel machines <mpi_intro.html>`__.
+-  You are interested in learning how DART :doc:`./mpi_intro`.
 -  You want to contact our group for more information.
-
-.. _getting_started:
 
 Getting started
 ---------------
@@ -68,14 +40,11 @@ primarily in C Shell, and the distribution includes Matlab® diagnostic scripts.
 
 The DART system comes with many models -- ranging from 1-dimensional Lorenz systems to full global atmospheric and ocean
 models. DART also has extensive tutorial materials that explain typical DART experiments and explores many aspects of
-ensemble data assimilation. Download the DART source code and see the `release notes <Lanai_release.html>`__ for
-instructions on how to build an executable, run the "workshop" experiments, and look at the results. The ``DART_LAB``
-directory contains presentation slides and interactive MATLAB demonstrations which illustrate and explain the
-fundamentals of the ensemble data assimilation algorithms. The ``tutorial`` directory contains a series of PDF files
-which go into more mathematical detail on various ensemble data assimilation topics, and specifics on the DART
-implementation.
-
-.. _dart_requirements:
+ensemble data assimilation. Download the DART source code and see the :doc:`./Lanai_release` for instructions on how to
+build an executable, run the "workshop" experiments, and look at the results. The ``DART_LAB`` directory contains
+presentation slides and interactive MATLAB demonstrations which illustrate and explain the fundamentals of the ensemble
+data assimilation algorithms. The ``tutorial`` directory contains a series of PDF files which go into more mathematical
+detail on various ensemble data assimilation topics, and specifics on the DART implementation.
 
 DART requirements
 -----------------
@@ -83,7 +52,7 @@ DART requirements
 | DART is intended to be highly portable but has a strong Unix/Linux preference. DART has been run successfully on
   Windows machines under the cygwin environment. Those instructions are under development - if you would like to be a
   friendly beta-tester please send me (Tim Hoar) an email and I'll send you the instructions, as long as you promise to
-  provide feedback (good or bad!) so I can improve them. My email is   thoar @ ucar . edu - minus the spaces, naturally.
+  provide feedback (good or bad!) so I can improve them. My email is thoar @ ucar . edu - minus the spaces, naturally.
 | Minimally, you will need a Fortran90 compiler and the netCDF libraries built with the F90 interface. History has shown
   that it is a very good idea to make sure your run-time environment has the following:
 
@@ -100,12 +69,10 @@ DART requirements
 | Starting with the Jamaica release there is an option to compile with the MPI (Message Passing Interface) libraries in
   order to run the assimilation step in parallel on hardware with multiple CPUs. Note that this is optional; MPI is not
   required to run DART. If you do want to run in parallel then we also require a working MPI library and appropriate
-  cluster or SMP hardware. See the `MPI intro <mpi_intro.html>`__ for more information on running with the MPI option.
+  cluster or SMP hardware. See the :doc:`./mpi_intro` for more information on running with the MPI option.
 | One of the beauties of ensemble data assimilation is that even if (particularly if) your model is single-threaded, you
   can still run efficiently on parallel machines by dealing out each ensemble member (an unique instance of the model)
   to a separate processor. If your model cannot run single-threaded, fear not, DART can do that too.
-
-.. _dart_platforms/compilers/batch_systems:
 
 DART platforms/compilers/batch systems
 --------------------------------------
@@ -152,141 +119,97 @@ registered in the past are encouraged to reregister when downloading new version
 
 | 
 
-version
-
-date                
-
-instructions
-
-most noteable change(s)
-
-`lanai </DAReS/DART/DART_download>`__
-
-13 Dec 2013
-
-`[doc] <Lanai_release.html>`__
-
-| Support for the CESM climate components under the CESM framework; the MPAS models, the NOAH land model, the GITM
-  ionosphere model, the NOGAPS atmosphere model, the NAAPS aerosol model, and the SQG surface quasi-geostrophic model.
-  Support for many new chemistry and aerosol observation types, support for many new observations sources, many new
-  diagnostic routines, and new utilities.
-| `change log <Lanai_release.html#CurrentUsers>`__
-
-`trunk </DAReS/DART/DART_download>`__
-
-today
-
-included in distrib.
-
-varies, use *svn log --revision ####:HEAD* to see log messages about changes since revision ####.
-
-`kodiak </DAReS/DART/DART_download>`__
-
-30 Jun 2011
-
-`[doc] <history/Kodiak_release.html>`__
-
-| Damped Inflation, Sampling Error Correction, Boxcar Kernel Filter option, support for new models, new observation
-  types, new diagnostics, new utilities.
-| `change log <history/Kodiak_release.html#CurrentUsers>`__
-
-jamaica
-
-12 Apr 2007
-
-`[doc] <history/Jamaica_release.html>`__
-
-| vertical localization, extensive testing of MPI implementation, full documentation for new algorithms, new tutorial
-  sections
-| `change log <history/Jamaica_diffs_from_I.html>`__
-
-pre_j
-
-02 Oct 2006
-
-`[doc] <history/pre_j_release.html>`__
-
-| contains an updated scalable filter algorithm
-
-post_iceland
-
-20 Jun 2006
-
-`[doc] <history/Post_Iceland_release.html>`__
-
-| observation-space adaptive inflation, bug fixes,
-| obs_sequence_tool support ...
-| `change log <history/PostI_diffs_from_I.html>`__
-
-iceland
-
-23 Nov 2005
-
-`[doc] <history/Iceland_release.html>`__
-
-| huge expansion of real observation capability
-| better namelist processing, PBL_1d available.
-| `change log <history/I_diffs_from_workshop.html>`__
-
-pre_iceland
-
-20 Oct 2005
-
-for developers only
-
-huge expansion of real observation capability
-
-DA workshop 2005
-
-13 Jun 2005
-
-docs included in distrib.
-
-tutorial directory in distribution, observation preprocessing
-
-hawaii
-
-28 Feb 2005
-
-`[doc] <history/hawaii_release.html>`__
-
-new filtering algorithms
-
-pre-hawaii
-
-20 Dec 2004
-
-`[doc] <history/pre_hawaii_release.html>`__
-
-new filtering algorithms
-
-guam
-
-12 Aug 2004
-
-`[doc] <history/Guam_release.html>`__
-
-new observation modules, removing autopromotion
-
-fiji
-
-29 Apr 2004
-
-`[doc] <history/Fiji_release.html>`__
-
-enhanced portability, CAM, WRF
-
-easter
-
-8 March 2004
-
-`[doc] <history/ASP_DART_exercise.html>`__
-
-initial release
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| version                     | date                        | instructions                | most noteable change(s)     |
++=============================+=============================+=============================+=============================+
+| `lanai </D                  | 13 Dec 2013                 | :doc:`./Lanai_release`      | Support for the CESM        |
+| AReS/DART/DART_download>`__ |                             |                             | climate components under    |
+|                             |                             |                             | the CESM framework; the     |
+|                             |                             |                             | MPAS models, the NOAH land  |
+|                             |                             |                             | model, the GITM ionosphere  |
+|                             |                             |                             | model, the NOGAPS           |
+|                             |                             |                             | atmosphere model, the NAAPS |
+|                             |                             |                             | aerosol model, and the SQG  |
+|                             |                             |                             | surface quasi-geostrophic   |
+|                             |                             |                             | model. Support for many new |
+|                             |                             |                             | chemistry and aerosol       |
+|                             |                             |                             | observation types, support  |
+|                             |                             |                             | for many new observations   |
+|                             |                             |                             | sources, many new           |
+|                             |                             |                             | diagnostic routines, and    |
+|                             |                             |                             | new utilities.              |
+|                             |                             |                             | `change                     |
+|                             |                             |                             | log <Lanai_re               |
+|                             |                             |                             | lease.html#CurrentUsers>`__ |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| `trunk </D                  | today                       | included in distrib.        | varies, use *svn log        |
+| AReS/DART/DART_download>`__ |                             |                             | --revision ####:HEAD* to    |
+|                             |                             |                             | see log messages about      |
+|                             |                             |                             | changes since revision      |
+|                             |                             |                             | ####.                       |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| `kodiak </D                 | 30 Jun 2011                 | :doc                        | Damped Inflation, Sampling  |
+| AReS/DART/DART_download>`__ |                             | :`./history/Kodiak_release` | Error Correction, Boxcar    |
+|                             |                             |                             | Kernel Filter option,       |
+|                             |                             |                             | support for new models, new |
+|                             |                             |                             | observation types, new      |
+|                             |                             |                             | diagnostics, new utilities. |
+|                             |                             |                             | `change                     |
+|                             |                             |                             | log <history/Kodiak_re      |
+|                             |                             |                             | lease.html#CurrentUsers>`__ |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| jamaica                     | 12 Apr 2007                 | :doc:                       | vertical localization,      |
+|                             |                             | `./history/Jamaica_release` | extensive testing of MPI    |
+|                             |                             |                             | implementation, full        |
+|                             |                             |                             | documentation for new       |
+|                             |                             |                             | algorithms, new tutorial    |
+|                             |                             |                             | sections                    |
+|                             |                             |                             | :doc:`./hi                  |
+|                             |                             |                             | story/Jamaica_diffs_from_I` |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| pre_j                       | 02 Oct 2006                 | :do                         | contains an updated         |
+|                             |                             | c:`./history/pre_j_release` | scalable filter algorithm   |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| post_iceland                | 20 Jun 2006                 | :doc:`./hi                  | observation-space adaptive  |
+|                             |                             | story/Post_Iceland_release` | inflation, bug fixes,       |
+|                             |                             |                             | obs_sequence_tool support   |
+|                             |                             |                             | ...                         |
+|                             |                             |                             | :doc:`./                    |
+|                             |                             |                             | history/PostI_diffs_from_I` |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| iceland                     | 23 Nov 2005                 | :doc:                       | huge expansion of real      |
+|                             |                             | `./history/Iceland_release` | observation capability      |
+|                             |                             |                             | better namelist processing, |
+|                             |                             |                             | PBL_1d available.           |
+|                             |                             |                             | :doc:`./his                 |
+|                             |                             |                             | tory/I_diffs_from_workshop` |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| pre_iceland                 | 20 Oct 2005                 | for developers only         | huge expansion of real      |
+|                             |                             |                             | observation capability      |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| DA workshop 2005            | 13 Jun 2005                 | docs included in distrib.   | tutorial directory in       |
+|                             |                             |                             | distribution, observation   |
+|                             |                             |                             | preprocessing               |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| hawaii                      | 28 Feb 2005                 | :doc                        | new filtering algorithms    |
+|                             |                             | :`./history/hawaii_release` |                             |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| pre-hawaii                  | 20 Dec 2004                 | :doc:`./                    | new filtering algorithms    |
+|                             |                             | history/pre_hawaii_release` |                             |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| guam                        | 12 Aug 2004                 | :d                          | new observation modules,    |
+|                             |                             | oc:`./history/Guam_release` | removing autopromotion      |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| fiji                        | 29 Apr 2004                 | :d                          | enhanced portability, CAM,  |
+|                             |                             | oc:`./history/Fiji_release` | WRF                         |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+|                             |                             |                             |                             |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+| easter                      | 8 March 2004                | :doc:`.                     | initial release             |
+|                             |                             | /history/ASP_DART_exercise` |                             |
++-----------------------------+-----------------------------+-----------------------------+-----------------------------+
 
 | 
-
-.. _dart_tutorial_materials_and_presentations:
 
 DART tutorial materials and presentations
 -----------------------------------------
@@ -299,15 +222,11 @@ DART tutorial materials and presentations
 | **Browsing the DART_LAB and tutorial directories in the distribution is worth the effort. Doing the tutorials is even
   better!**
 
-.. _presentations_about_dart:
-
 Presentations about DART
 ------------------------
 
 The full list of presentations (as well as some of the presentations themselves) and publications is available on our
 `Publications <http://www.image.ucar.edu/DAReS/Publications>`__ page.
-
-.. _related_links:
 
 Related links
 -------------
@@ -317,8 +236,6 @@ Related links
 -  `UK Met Office Fortran 90 Standards <http://www.meto.gov.uk/research/nwp/numerical/fortran90/f90_standards.html/>`__
 -  `WEG -- NCAR's Web Engineering Group <http://www.scd.ucar.edu/weg>`__
 -  `ncview -- a visual browser for netCDF files <http://meteora.ucsd.edu/~pierce/ncview_home_page.html>`__
-
-.. _dart_contact_list:
 
 DART contact list
 -----------------
@@ -332,12 +249,10 @@ contact us individually, here is our information:
 +==================+==================+==================+==================+==================+==================+
 | Jeff Anderson    | Tim Hoar         | Nancy Collins    | Helen Kershaw    | Kevin Raeder     | Glen Romine      |
 +------------------+------------------+------------------+------------------+------------------+------------------+
-| j                | tho              | nan              | hkersh           | raed             | romi             |
-| la @ ucar . edu  | ar @ ucar . edu  | cy @ ucar . edu  | aw @ ucar . edu  | er @ ucar . edu  | ne @ ucar . edu  |
+| jla @ ucar . edu | thoar @ ucar .   | nancy @ ucar .   | hkershaw @ ucar  | raeder @ ucar .  | romine @ ucar .  |
+|                  | edu              | edu              | . edu            | edu              | edu              |
 +------------------+------------------+------------------+------------------+------------------+------------------+
 
 | 
-
---------------
 
 .. |cool spaghetti plot of North America demonstrating the uncertainty among the ensemble members| image:: ../images/DARTspaghettiSquare.gif

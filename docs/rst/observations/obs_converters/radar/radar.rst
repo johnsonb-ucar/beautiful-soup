@@ -1,13 +1,6 @@
 Radar Observations
 ==================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
-
 Overview
 --------
 
@@ -21,16 +14,8 @@ observations with clear-air or storm sweep patterns, for testing or for OSSEs (O
 
 There are challenges to working with radar data; for more information contact us.
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
-
- 
-
---------------
 
 Programs
 --------
@@ -39,7 +24,7 @@ Programs
 subdirectory and run ``quickbuild.csh`` to build this program.
 
 Many DART users working with radar observations are using the WRF Weather and Research Forecast model. See the `WRF
-tests directory </models/wrf/regression/Radar/README>`__ for pointers to data to run a radar test case.
+tests directory <../../../models/wrf/regression/Radar/README>`__ for pointers to data to run a radar test case.
 
 In addition to the programs available in the DART distribution, the following external program produces DART observation
 sequence files:
@@ -48,5 +33,3 @@ sequence files:
    Dorade (sweep) and NCAR EOL Foray (netcdf) radar data. It analyzes (grids) data in either two-dimensions (on the
    conical surface of each sweep) or three-dimensions (Cartesian). Analyses are output in netcdf, Vis5d, and/or DART
    (Data Assimilation Research Testbed) formats.
-
---------------

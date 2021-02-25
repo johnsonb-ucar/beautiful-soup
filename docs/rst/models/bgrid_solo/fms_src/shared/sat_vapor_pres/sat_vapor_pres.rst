@@ -1,23 +1,8 @@
-.. _module_sat_vapor_pres_mod:
-
 Module sat_vapor_pres_mod
--------------------------
-
-Contents
-~~~~~~~~
-
--  `Module sat_vapor_pres_mod <#module_sat_vapor_pres_mod>`__
-
-.. container::
-
-   **Contact: ** `Bruce Wyman <mailto:bw@gfdl.noaa.gov>`__
-   **Reviewers: **
-   **Change History: **\ `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/shared/sat_vapor_pres>`__
-
---------------
+=========================
 
 Overview
-^^^^^^^^
+--------
 
 Routines for determining the saturation vapor pressure (``ES``) and the derivative of ``ES`` with respect to
 temperature.
@@ -32,10 +17,8 @@ temperature.
 
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -44,10 +27,8 @@ Other modules used
       constants_mod
             fms_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -64,19 +45,15 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
    None.
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Lookup_es
       :name: lookup_es
@@ -90,22 +67,22 @@ a. .. rubric:: Lookup_es
       derived from lookup tables (see notes below).
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``temp   ``                                               | Temperature in degrees Kelvin.                            |
-      |                                                           |    [real, dimension(scalar)]                              |
-      |                                                           |    [real, dimension(:)]                                   |
-      |                                                           |    [real, dimension(:,:)]                                 |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``temp``                                                  | Temperature in degrees Kelvin.                            |
+      |                                                           | [real, dimension(scalar)]                                 |
+      |                                                           | [real, dimension(:)]                                      |
+      |                                                           | [real, dimension(:,:)]                                    |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``esat   ``                                               | Saturation vapor pressure in pascals. May be a scalar,    |
+      | ``esat``                                                  | Saturation vapor pressure in pascals. May be a scalar,    |
       |                                                           | 1d, 2d, or 3d array. Must have the same order and size as |
       |                                                           | temp.                                                     |
-      |                                                           |    [real, dimension(scalar)]                              |
-      |                                                           |    [real, dimension(:)]                                   |
-      |                                                           |    [real, dimension(:,:)]                                 |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      |                                                           | [real, dimension(scalar)]                                 |
+      |                                                           | [real, dimension(:)]                                      |
+      |                                                           | [real, dimension(:,:)]                                    |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 b. .. rubric:: Lookup_des
@@ -120,22 +97,22 @@ b. .. rubric:: Lookup_des
       values are derived from lookup tables (see notes below).
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``temp   ``                                               | Temperature in degrees Kelvin.                            |
-      |                                                           |    [real, dimension(scalar)]                              |
-      |                                                           |    [real, dimension(:)]                                   |
-      |                                                           |    [real, dimension(:,:)]                                 |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``temp``                                                  | Temperature in degrees Kelvin.                            |
+      |                                                           | [real, dimension(scalar)]                                 |
+      |                                                           | [real, dimension(:)]                                      |
+      |                                                           | [real, dimension(:,:)]                                    |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``desat   ``                                              | Derivative of saturation vapor pressure w.r.t.            |
+      | ``desat``                                                 | Derivative of saturation vapor pressure w.r.t.            |
       |                                                           | temperature in pascals/degree. May be a scalar, 1d, 2d,   |
       |                                                           | or 3d array. Must have the same order and size as temp.   |
-      |                                                           |    [real, dimension(scalar)]                              |
-      |                                                           |    [real, dimension(:)]                                   |
-      |                                                           |    [real, dimension(:,:)]                                 |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      |                                                           | [real, dimension(scalar)]                                 |
+      |                                                           | [real, dimension(:)]                                      |
+      |                                                           | [real, dimension(:,:)]                                    |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 c. .. rubric:: Compute_es
@@ -150,22 +127,22 @@ c. .. rubric:: Compute_es
       Meteorological Tables. Between -20C and 0C a blended value over ice and water is returned.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``temp   ``                                               | Temperature in degrees Kelvin.                            |
-      |                                                           |    [real, dimension(:)]                                   |
-      |                                                           |    [real, dimension(scalar)]                              |
-      |                                                           |    [real, dimension(:,:)]                                 |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``temp``                                                  | Temperature in degrees Kelvin.                            |
+      |                                                           | [real, dimension(:)]                                      |
+      |                                                           | [real, dimension(scalar)]                                 |
+      |                                                           | [real, dimension(:,:)]                                    |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``es   ``                                                 | Saturation vapor pressure in pascals. May be a scalar,    |
+      | ``es``                                                    | Saturation vapor pressure in pascals. May be a scalar,    |
       |                                                           | 1d, 2d, or 3d array. Must have the same order and size as |
       |                                                           | temp.                                                     |
-      |                                                           |    [real, dimension(:)]                                   |
-      |                                                           |    [real, dimension(scalar)]                              |
-      |                                                           |    [real, dimension(:,:)]                                 |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      |                                                           | [real, dimension(:)]                                      |
+      |                                                           | [real, dimension(scalar)]                                 |
+      |                                                           | [real, dimension(:,:)]                                    |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 d. .. rubric:: Sat_vapor_pres_init
@@ -180,19 +157,15 @@ d. .. rubric:: Sat_vapor_pres_init
       time **lookup_es** or **lookup_des** is called, the user does not need to call this routine. There are no
       arguments.
 
---------------
-
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
 
---------------
-
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
@@ -203,10 +176,8 @@ Error messages
       to standard output to help determine where the instability may have occurred. If the lookup table needs a larger
       temperature range, then parameters in the module header must be modified.
 
---------------
-
 References
-^^^^^^^^^^
+----------
 
 .. container::
 
@@ -214,21 +185,17 @@ References
 
 | 
 
---------------
-
 Compiler specifics
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
    None.
 
 | 
-
---------------
 
 Precompiler options
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 .. container::
 
@@ -236,19 +203,15 @@ Precompiler options
 
 | 
 
---------------
-
 Loader options
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
 
---------------
-
 Test PROGRAM
-^^^^^^^^^^^^
+------------
 
 .. container::
 
@@ -303,21 +266,8 @@ Test PROGRAM
 
 | 
 
---------------
-
-Known bugs
-^^^^^^^^^^
-
-.. container::
-
-   No error checking is done to make sure that the size of the input and output fields match.
-
-| 
-
---------------
-
 Notes
-^^^^^
+-----
 
 .. container::
 
@@ -327,7 +277,7 @@ Notes
    2. **Construction of the ``ES`` tables**
    The tables are constructed using the saturation vapor pressure (``ES``) equations in the Smithsonian tables. The
    tables are valid between -160C to +100C with increments at 1/10 degree. Between -160C and -20C values of ``ES`` over
-   ice are used, between 0C and 100C values of\ ``ES`` over water are used, between -20C and 0C blended values of ``ES``
+   ice are used, between 0C and 100C values of ``ES`` over water are used, between -20C and 0C blended values of ``ES``
    (over water and over ice) are used.
    There are three tables constructed: ``ES``, first derivative (``ES'``), and second derivative (``ES``''). The ES
    table is constructed directly from the equations in the Smithsonian tables. The ``ES``' table is constructed by
@@ -348,27 +298,10 @@ Notes
    These parameters can be modified to increase/decrease the size/range of the lookup tables.
    ::
 
-          tcmin   The minimum temperature (in deg C) in the lookup tables.
+      tcmin   The minimum temperature (in deg C) in the lookup tables.
                     [integer, default: tcmin = -160]
 
           tcmax   The maximum temperature (in deg C) in the lookup tables.
                     [integer, default: tcmin = +100]
 
 | 
-
---------------
-
-Future plans
-^^^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
-
-.. container::
-
-   top

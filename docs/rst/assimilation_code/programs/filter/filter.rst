@@ -1,16 +1,6 @@
 PROGRAM ``filter``
 ==================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -85,15 +75,14 @@ program. Each model has a separate directory under DART/models, and under each m
 is compiled and can be run for testing. Generally when a full-size experiment is done the executables are copied to a
 different location - e.g. scratch space on a large filesystem - since the data files for 10s to 100s of copies of a
 model can get very large. A lightly pruned directory tree can be browsed in the main
-`index.html </docs/index.html#Directories>`__.
+`index.html <../../../docs/index.html#Directories>`__.
 
 Types of filters available
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The different types of assimilation algorithms (EAKF, ENKF, Kernel filter, Particle filter, etc.) are determined by the
-``&assim_tools_nml:filter_kind`` entry, described in
-`assim_tools_mod.html </assimilation_code/modules/assimilation/assim_tools_mod.html>`__. Despite having 'filter' in the
-name, they are assimilation algorithms and so are implemented in ``assim_tools_mod.f90``.
+``&assim_tools_nml:filter_kind`` entry, described in :doc:`../../modules/assimilation/assim_tools_mod`. Despite having
+'filter' in the name, they are assimilation algorithms and so are implemented in ``assim_tools_mod.f90``.
 
 Getting started
 ^^^^^^^^^^^^^^^
@@ -141,8 +130,8 @@ include:
    variables because of spurious correlations. The other is that, especially for large models, it improves run-time
    performance because only points within the localization radius need to be considered. Because of the way the
    parallelization was implemented in DART, localization was easy to add and using it usually results in a very large
-   performance gain. See `here </assimilation_code/modules/assimilation/assim_tools_mod.html#Localization>`__ for a
-   discussion of localization-related namelist items.
+   performance gain. See `here <../../modules/assimilation/assim_tools_mod.html#Localization>`__ for a discussion of
+   localization-related namelist items.
 
 -  Inflation
 
@@ -173,9 +162,9 @@ include:
    improve the assimilation results. The namelist item to enable this option is
    ``&assim_tools_nml :: sampling_error_correction``. Additionally you will need to have the precomputed correction file
    ``sampling_error_correction_table.nc``, in the run directory. See the description of the namelist item in the
-   `&assim_tools_nml </assimilation_code/modules/assimilation/assim_tools_mod.html#Namelist>`__ namelist, and `look
-   here </assimilation_code/programs/system_simulation/system_simulation.html>`__ for instructions on where to find (or
-   how to generate) the auxiliary file needed by this code. See Anderson (2011).
+   `&assim_tools_nml <../../modules/assimilation/assim_tools_mod.html#Namelist>`__ namelist, and
+   :doc:`../system_simulation/system_simulation` for instructions on where to find (or how to generate) the auxiliary
+   file needed by this code. See Anderson (2011).
 
 Free run/forecast after assimilation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -183,10 +172,9 @@ Free run/forecast after assimilation
 Separate scripting can be done to support forecasts starting from the analyzed model states. After filter exits, the
 models can be run freely (with no assimilated data) further forward in time using one or more of the last updated model
 states from filter. Since all ensemble members are equally likely a member can be selected at random, or a member close
-to the mean can be chosen. See the
-`closest_member_tool </assimilation_code/programs/closest_member_tool/closest_member_tool.html>`__ for one way to select
-a "close" member. The ensemble mean is available to be used, but since it is a combination of all the member states it
-may not have self-consistent features, so using a single member is usually preferred.
+to the mean can be chosen. See the :doc:`../../../assimilation_code/programs/closest_member_tool/closest_member_tool`
+for one way to select a "close" member. The ensemble mean is available to be used, but since it is a combination of all
+the member states it may not have self-consistent features, so using a single member is usually preferred.
 
 Evaluating observations without assimilation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -261,12 +249,11 @@ observations declines. So there is also an option to damp inflation through time
 models using damped inflation has been a successful strategy.
 
 The following namelist items which control inflation are found in the ``input.nml`` file, in the &filter_nml namelist.
-The detailed descriptions are in the `namelist </assimilation_code/modules/assimilation/filter_mod.html#Namelist>`__
-page. Here we try to give some basic advice about commonly used values and suggestions for where to start. Spatial
-variation is controlled by ``inf_flavor``, which also controls whether there's any inflation,
-``inf_initial_from_restart``, and ``inf_initial``, as described below. Time variation is controlled by
-``inf_sd_initial_from_restart``, ``inf_sd_initial``, ``inf_sd_lower_bound``, ``inf_damping``, ``inf_lower_bound`` and
-``inf_upper_bound``.
+The detailed descriptions are in the `namelist <../../modules/assimilation/filter_mod.html#Namelist>`__ page. Here we
+try to give some basic advice about commonly used values and suggestions for where to start. Spatial variation is
+controlled by ``inf_flavor``, which also controls whether there's any inflation, ``inf_initial_from_restart``, and
+``inf_initial``, as described below. Time variation is controlled by ``inf_sd_initial_from_restart``,
+``inf_sd_initial``, ``inf_sd_lower_bound``, ``inf_damping``, ``inf_lower_bound`` and ``inf_upper_bound``.
 
 In the namelist each entry has two values. The first is for Prior inflation and the second is for Posterior inflation.
 
@@ -391,15 +378,16 @@ DART is distributed as a toolkit/library/facility that can be used as-is with th
 is also designed so that users can add new models, new observation types and forward operators, and new assimilation
 algorithms.
 
-The locations in the DART `code tree </docs/index.html#Directories>`__ which are intended to be modified by users are:
+The locations in the DART `code tree <../../../docs/index.html#Directories>`__ which are intended to be modified by
+users are:
 
 New Models
    Add a new directory in the ``models`` subdirectory. Copy (recursively, e.g. ``cp -r``) the contents of the
    ``template`` directory and modify from there. Note that the ``model_mod.f90`` file in the template dir is appropriate
    for small models; for large geophysical models see the ``full_model_mod.f90`` file and also examine other model
-   directories for ideas. See additional documentation in the `model_mod </models/template/model_mod.html>`__
-   documentation, and the `DART web
-   pages <http://www.image.ucar.edu/DAReS/DART/DART2_Documentation.php#adding_a_model>`__ on adding new models.
+   directories for ideas. See additional documentation in the :doc:`../../../models/template/model_mod` documentation,
+   and the `DART web pages <http://www.image.ucar.edu/DAReS/DART/DART2_Documentation.php#adding_a_model>`__ on adding
+   new models.
 New Observation Platforms
    To convert observations from other formats to DART format, add a new directory in the ``observations/obs_converters``
    subdirectory and populate it with converter code.
@@ -407,13 +395,13 @@ New Observation Types and Forward Operators
    Define a new type (a measurement from an observing platform) via a file in the ``observations/forward_operators``
    subdirectory. If the forward operator is more complicated than directly interpolating a field in the model state,
    this is where the code for that goes. See additional documentation in the
-   `obs_def_mod </observations/forward_operators/obs_def_mod.html>`__ documentation, and the `DART web
+   :doc:`../../../observations/forward_operators/obs_def_mod` documentation, and the `DART web
    pages <http://www.image.ucar.edu/DAReS/DART/DART2_Observations.php#adding_types>`__ on adding new types. Adding a new
    type may require adding a new ``generic kind``, which is documented in
-   `obs_def_mod </assimilation_code/modules/observations/obs_kind_mod.html>`__.
+   :doc:`../../modules/observations/obs_kind_mod`.
 New Assimilation Algorithms
    If you want to try out a different filter type modify the filter code in the ``assim_tools_mod.f90`` file. See the
-   `assim_tools_mod </assimilation_code/modules/assimilation/assim_tools_mod.html>`__ documentation.
+   :doc:`../../modules/assimilation/assim_tools_mod` documentation.
 
 Detailed program execution flow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -421,7 +409,7 @@ Detailed program execution flow
 The Manhattan release of DART includes state space output expanded from the previous two stages (Prior and Posterior) to
 up to four (input, preassim, postassim, and output). This makes it possible to examine the states with and without
 either kind of inflation, as described below. In addition, the state space vectors are each written to a separate NetCDF
-file: ``${stage}_mean.nc, ${stage}_sd.nc, ${stage}_member_####.nc``. The detailed execution flow inside the filter
+file: ``${stage}_mean.nc, ${stage}_sd.nc, ${stage}_member_####.nc`` . The detailed execution flow inside the filter
 program is:
 
 -  Read in observations.
@@ -477,17 +465,11 @@ program is:
 -  Write out final state vectors to model restart files if requested.
 -  Release memory for state vector and observation ensemble members.
 
---------------
-
 Namelist
 --------
 
-See the `filter namelist </assimilation_code/modules/assimilation/filter_mod.html#Namelist>`__ page for a detailed
-description of all ``&filter_nml`` variables. This namelist is read from the file ``input.nml``.
-
---------------
-
-.. _modules_used:
+See the `filter namelist <../../modules/assimilation/filter_mod.html#Namelist>`__ page for a detailed description of all
+``&filter_nml`` variables. This namelist is read from the file ``input.nml``.
 
 Modules used
 ------------
@@ -497,9 +479,7 @@ Modules used
    mpi_utilities_mod
    filter_mod
 
-Note that `filter_mod.f90 </assimilation_code/modules/assimilation/filter_mod.html#Modules>`__ uses many more modules.
-
---------------
+Note that `filter_mod.f90 <../../modules/assimilation/filter_mod.html#Modules>`__ uses many more modules.
 
 Files
 -----
@@ -517,8 +497,6 @@ scripts to suit the user's needs.
 -  input state space inflation data (if enabled); from ``input_{prior,post}inf_{mean,sd}.nc.``
 -  output state space inflation data (if enabled); to ``${stage}_{prior,post}inf_{mean,sd}.nc.``, where stage ≠ "input"
 -  input.nml, to read &filter_nml
-
---------------
 
 References
 ----------
@@ -548,40 +526,3 @@ References
    `doi: 10.1175/2010MWR3253.1 <http://dx.doi.org/10.1175/2010MWR3253.1>`__
 -  Anderson, J. L., 2011: Localization and Sampling Error Correction in Ensemble Kalman Filter Data Assimilation.
    Submitted for publication, Jan 2011. Contact author.
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | Routine                        | Message                                 | Comment                                 |
-   +================================+=========================================+=========================================+
-   | filter_main                    | ens_size in namelist is ###: Must be >  | Ensemble size must be at least 2.       |
-   |                                | 1                                       |                                         |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_main                    | inf_flavor= ### Must be 0, 2, 3.        | Observation Inflation is no longer      |
-   |                                |                                         | supported (i.e flavor 1).               |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_main                    | Posterior observation space inflation   | Posterior observation space inflation   |
-   |                                | (type 1) not supported.                 | doesn't work.                           |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_main                    | Number of processes > model size.       | Number of processes can't exceed model  |
-   |                                |                                         | size for now.                           |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_generate_copy_meta_data | output metadata in filter needs state   | Only up to 10000 ensemble members with  |
-   |                                | ensemble size < 10000, not ###.         | state output for now.                   |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_generate_copy_meta_data | output metadata in filter needs obs     | Only up to 10000 ensemble members with  |
-   |                                | ensemble size < 10000, not ###.         | obs space output for now.               |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | filter_setup_obs_sequence      | input obs_seq file has ### qc fields;   | Only 0 or 1 qc fields in input obs      |
-   |                                | must be < 2.                            | sequence for now.                       |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+
-   | get_obs_copy_index             | Did not find observation copy with      | Only 0 or 1 qc fields in input obs      |
-   |                                | metadata observation.                   | sequence for now.                       |
-   +--------------------------------+-----------------------------------------+-----------------------------------------+

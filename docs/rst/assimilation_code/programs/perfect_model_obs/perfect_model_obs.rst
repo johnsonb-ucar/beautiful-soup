@@ -1,16 +1,6 @@
 program ``perfect_model_obs``
 =============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -18,8 +8,6 @@ Main program for creating synthetic observation sequences given a model for use 
 observation sequence file which has only observation definitions and generates synthetic observation values for an
 output observation sequence file. The execution of perfect_model_obs is controlled by the input observation sequence
 file and the model time-stepping capabilities in a manner analogous to that used by the filter program.
-
---------------
 
 Namelist
 --------
@@ -186,10 +174,6 @@ namelist.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -206,8 +190,6 @@ Modules used
    random_seq_mod
    ensemble_manager_mod
 
---------------
-
 Files
 -----
 
@@ -217,24 +199,7 @@ Files
 -  output state vector file; name comes from restart_out_file_name
 -  perfect_model_mod.nml in input.nml
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   ============ ================================================= =======================
-   Routine      Message                                           Comment
-   ============ ================================================= =======================
-   perfect_main Only use one mpi process here: ### were requested Don't use mpi for this.
-   ============ ================================================= =======================

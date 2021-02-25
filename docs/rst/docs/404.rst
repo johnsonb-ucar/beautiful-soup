@@ -5,9 +5,6 @@
    .. rubric:: 404
       :name: section
 
-   .. rubric:: Contents
-      :name: contents
-
    **Page not found :(**
 
    The requested page could not be found.

@@ -1,19 +1,6 @@
 MODULE ensemble_manager_mod
 ===========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Private interfaces <#private_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -45,8 +32,6 @@ After the direct access if the following operations detect that the data they ar
 updated they will print an error message. Routines inside the ensemble manager that alter the copies or vars will set
 the state automatically so these routines are only necessary to call if you are directly accessing the copies or vars
 arrays from outside the ensemble manager.
-
---------------
 
 Namelist
 --------
@@ -111,14 +96,11 @@ namelist.
 
 .. container::
 
-   |communication pattern|
-   |communication pattern 2|
+   ======================= =========================
+   |communication pattern| |communication pattern 2|
+   ======================= =========================
 
 | 
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -133,44 +115,40 @@ Other modules used
    mpi_utilities_mod
    sort_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ================================== ===========================
 *use ensemble_manager_mod, only :* init_ensemble_manager
-                                   read_ensemble_restart
-                                   write_ensemble_restart
-                                   get_copy
-                                   put_copy
-                                   broadcast_copy
-                                   set_ensemble_time
-                                   get_ensemble_time
-                                   end_ensemble_manager
-                                   duplicate_ens
-                                   get_my_num_copies
-                                   get_my_copies
-                                   get_my_num_vars
-                                   get_my_vars
-                                   get_copy_owner_index
-                                   get_var_owner_index
-                                   all_vars_to_all_copies
-                                   all_copies_to_all_vars
-                                   compute_copy_mean
-                                   compute_copy_mean_sd
-                                   compute_copy_mean_var
-                                   prepare_to_write_to_vars
-                                   prepare_to_write_to_copies
-                                   prepare_to_read_from_vars
-                                   prepare_to_read_from_copies
-                                   prepare_to_update_vars
-                                   prepare_to_update_copies
-                                   print_ens_handle
-                                   map_pe_to_task
-                                   map_task_to_pe
+\                                  read_ensemble_restart
+\                                  write_ensemble_restart
+\                                  get_copy
+\                                  put_copy
+\                                  broadcast_copy
+\                                  set_ensemble_time
+\                                  get_ensemble_time
+\                                  end_ensemble_manager
+\                                  duplicate_ens
+\                                  get_my_num_copies
+\                                  get_my_copies
+\                                  get_my_num_vars
+\                                  get_my_vars
+\                                  get_copy_owner_index
+\                                  get_var_owner_index
+\                                  all_vars_to_all_copies
+\                                  all_copies_to_all_vars
+\                                  compute_copy_mean
+\                                  compute_copy_mean_sd
+\                                  compute_copy_mean_var
+\                                  prepare_to_write_to_vars
+\                                  prepare_to_write_to_copies
+\                                  prepare_to_read_from_vars
+\                                  prepare_to_read_from_copies
+\                                  prepare_to_update_vars
+\                                  prepare_to_update_copies
+\                                  print_ens_handle
+\                                  map_pe_to_task
+\                                  map_task_to_pe
 ================================== ===========================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -264,7 +242,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call init_ensemble_manager(ens_handle, num_copies, num_vars [, distribution_type_in] [, layout_type])*
+   *call init_ensemble_manager(ens_handle, num_copies, num_vars [, distribution_type_in] [, layout_type])*
    ::
 
       type(ensemble_type), intent(out) :: ens_handle
@@ -297,8 +275,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call read_ensemble_restart(ens_handle, start_copy, end_copy, start_from_restart, file_name [, init_time]
-   [, force_single_file])*
+   *call read_ensemble_restart(ens_handle, start_copy, end_copy, start_from_restart, file_name [, init_time] [,
+   force_single_file])*
    ::
 
       type(ensemble_type),       intent(inout) :: ens_handle
@@ -336,7 +314,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call write_ensemble_restart(ens_handle, file_name, start_copy, end_copy [, force_single_file])*
+   *call write_ensemble_restart(ens_handle, file_name, start_copy, end_copy [, force_single_file])*
    ::
 
       type(ensemble_type), intent(inout) :: ens_handle
@@ -368,7 +346,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call get_copy(receiving_pe, ens_handle, copy, vars [, mtime])*
+   *call get_copy(receiving_pe, ens_handle, copy, vars [, mtime])*
    ::
 
       integer,                   intent(in)  :: receiving_pe
@@ -401,7 +379,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call put_copy(sending_pe, ens_handle, copy, vars [, mtime])*
+   *call put_copy(sending_pe, ens_handle, copy, vars [, mtime])*
    ::
 
       integer,                   intent(in)    :: sending_pe
@@ -538,11 +516,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    copied over the times of ens2. Only the vars array data is copied from the source to the destination. Transpose the
    data after duplication if you want to access the copies.
 
-   ==================== ================================================================================================
-   ``ens1``             Ensemble handle of ensemble to be copies into ens2. Data from the vars array will be replicated.
-   ``ens2``             Ensemble handle of ensemble into which ens1 vars data will be copied.
-   ``duplicate_time  `` If true, copy the times from ens1 into ens2, else leave ens2 times unchanged.
-   ==================== ================================================================================================
+   ================== ================================================================================================
+   ``ens1``           Ensemble handle of ensemble to be copies into ens2. Data from the vars array will be replicated.
+   ``ens2``           Ensemble handle of ensemble into which ens1 vars data will be copied.
+   ``duplicate_time`` If true, copy the times from ens1 into ens2, else leave ens2 times unchanged.
+   ================== ================================================================================================
 
 | 
 
@@ -639,11 +617,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Given the global index of a copy number, returns the PE that stores this copy when all variables of a subset of
    copies are stored and the local storage index for this copy on that process.
 
-   ================== =============================================================================================
-   ``copy_number``    Global index of a copy from an ensemble.
-   ``owner``          Process Element (PE) that stores this copy when each has all variables of a subset of copies.
-   ``owners_index  `` Local storage index for this copy on the owning process.
-   ================== =============================================================================================
+   ================ =============================================================================================
+   ``copy_number``  Global index of a copy from an ensemble.
+   ``owner``        Process Element (PE) that stores this copy when each has all variables of a subset of copies.
+   ``owners_index`` Local storage index for this copy on the owning process.
+   ================ =============================================================================================
 
 | 
 
@@ -661,11 +639,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Given the global index of a variable in the vector, returns the PE that stores this variable when all copies of a
    subset of variables are stored and the local storage index for this variable on that process.
 
-   ================== ===============================================================================================
-   ``var_number``     Global index of a variable in the vector from an ensemble.
-   ``owner``          Process Element (PE) that stores this variable when each has all copies of subset of variables.
-   ``owners_index  `` Local storage index for this variable on the owning process.
-   ================== ===============================================================================================
+   ================ ===============================================================================================
+   ``var_number``   Global index of a variable in the vector from an ensemble.
+   ``owner``        Process Element (PE) that stores this variable when each has all copies of subset of variables.
+   ``owners_index`` Local storage index for this variable on the owning process.
+   ================ ===============================================================================================
 
 | 
 
@@ -994,27 +972,23 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
-.. _private_interfaces:
-
 Private interfaces
 ------------------
 
-= =======================
-  assign_tasks_to_pes
-  calc_tasks_on_each_node
-  create_pe_to_task_list
-  get_copy_list
-  get_max_num_copies
-  get_max_num_vars
-  get_var_list
-  round_robin
-  set_up_ens_distribution
-  simple_layout
-  sort_task_list
-  timestamp_message
-= =======================
+== =======================
+\  assign_tasks_to_pes
+\  calc_tasks_on_each_node
+\  create_pe_to_task_list
+\  get_copy_list
+\  get_max_num_copies
+\  get_max_num_vars
+\  get_var_list
+\  round_robin
+\  set_up_ens_distribution
+\  simple_layout
+\  sort_task_list
+\  timestamp_message
+== =======================
 
 | 
 
@@ -1127,7 +1101,7 @@ Private interfaces
 
 .. container:: routine
 
-   *call timestamp_message(msg [, sync] [, alltasks])*
+   *call timestamp_message(msg [, sync] [, alltasks])*
    ::
 
       character(len=*), intent(in)           :: msg
@@ -1191,8 +1165,8 @@ Private interfaces
 
    ============== =======================
    ``ens_handle`` Handle for an ensemble.
-   ````           
-   ````           
+   \              
+   \              
    ============== =======================
 
 | 
@@ -1333,8 +1307,6 @@ Private interfaces
 
 | 
 
---------------
-
 Files
 -----
 
@@ -1342,75 +1314,19 @@ Files
 -  State vector restart files, either one for all copies or one per copy.
 -  State vector output files, either one for all copies or one per copy.
 
---------------
-
 References
 ----------
 
 #. none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | Routine               | Message                                     | Comment                                     |
-   +=======================+=============================================+=============================================+
-   | init_ensemble_manager | only distribution type 1 is implemented     | For now, can't request option other than 1  |
-   |                       |                                             | for layout                                  |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | read_ensemble_restart | start_from_restart in filter_nml and        | Doesn't make sense to specify both of these |
-   |                       | single_restart_file_in in                   | options.                                    |
-   |                       | ensemble_manager_nml cannot both be false   |                                             |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | get_copy              | Requested copy is > maximum_copy            | Can't ask for a copy that is greater than   |
-   |                       |                                             | the maximum.                                |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | get_copy              | Size of vars ### Must be at least ###       | The vars array is not big enough to hold    |
-   |                       |                                             | the returned copy of the vector.            |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | put_copy              | Requested copy: ### is > maximum_copy: ###  | Can't ask for a copy that is greater than   |
-   |                       |                                             | maximum.                                    |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | put_copy              | Size of vars: ### Must be at least ###      | The vars array is not big enough to hold    |
-   |                       |                                             | the state vector.                           |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | get_ensemble_time     | indx ### cannot exceed ###                  | The index of the requested copy must be no  |
-   |                       |                                             | greater than the maximum number of copies.  |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | duplicate_ens         | num_copies ### and ### must be equal        | Number of copies in ensembles being copied  |
-   |                       |                                             | must be the same.                           |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | duplicate_ens         | num_vars ### and ### must be equal          | Number of variables in ensembles being      |
-   |                       |                                             | copied must be the same.                    |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | duplicate_ens         | distribution_type ### and ### must be       | Distribution types of ensembles being       |
-   |                       | equal.                                      | copies must be the same.                    |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | get_my_copies         | Array copies only has size ### but must be  | The copies array must be large enough to    |
-   |                       | at least ###                                | hold all copies of the state vector.        |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | get_my_vars           | Array vars only has size ### but must be at | The vars array must be large enough to hold |
-   |                       | least ###                                   | all variables of the state vector.          |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-
-.. _private_components:
 
 Private components
 ------------------
 
 N/A
 
---------------
-
 .. |communication pattern| image:: ../../../docs/images/comm_pattern96.png
    :width: 400px
-   :target: /docs/images/comm_pattern96.png
+   :target: ../../../docs/images/comm_pattern96.png
 .. |communication pattern 2| image:: ../../../docs/images/comm_pattern512.png
    :width: 400px
-   :target: /docs/images/comm_pattern512.png
+   :target: ../../../docs/images/comm_pattern512.png

@@ -1,18 +1,6 @@
 MODULE adaptive_inflate_mod
 ===========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -33,10 +21,6 @@ switch between flavors 2 and 3. Going from inflation flavor 3 to 2 the initial v
 will be a constant value and will then start to adapt. Going from inflation flavor 2 to 3 whatever value is in the array
 at index 1 will be replicated and used for the entire rest of the state vector items.
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -48,28 +32,24 @@ Other modules used
    time_manager_mod
    ensemble_manager_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ================================== ==========================
 *use adaptive_inflate_mod, only :* update_inflation
-                                   adaptive_inflate_end
-                                   inflate_ens
-                                   output_inflate_diagnostics
-                                   do_obs_inflate
-                                   do_single_ss_inflate
-                                   do_varying_ss_inflate
-                                   adaptive_inflate_init
-                                   adaptive_inflate_type
-                                   get_inflate
-                                   set_inflate
-                                   set_sd
-                                   set_sd
-                                   deterministic_inflate
+\                                  adaptive_inflate_end
+\                                  inflate_ens
+\                                  output_inflate_diagnostics
+\                                  do_obs_inflate
+\                                  do_single_ss_inflate
+\                                  do_varying_ss_inflate
+\                                  adaptive_inflate_init
+\                                  adaptive_inflate_type
+\                                  get_inflate
+\                                  set_inflate
+\                                  set_sd
+\                                  set_sd
+\                                  deterministic_inflate
 ================================== ==========================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -97,16 +77,16 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    1) of the state variable corresponding to the inflation on the observation and is the product of the ensemble
    correlation plus an additional localization factor or group regression factors.
 
-   ==================== ================================================================================
-   ``inflate_handle  `` Handle to object that describes the inflation type and values.
-   ``inflate  ``        Prior mean value of the inflation distribution.
-   ``inflate_sd  ``     Prior standard deviation of the inflation distribution.
-   ``prior_mean  ``     Mean of the prior observation ensemble.
-   ``prior_var  ``      Variance of the prior observation ensemble.
-   ``obs  ``            The observed value.
-   ``obs_var  ``        Observational error variance.
-   ``gamma  ``          Expected impact factor, product of correlation, localization, regression factor.
-   ==================== ================================================================================
+   ================== ================================================================================
+   ``inflate_handle`` Handle to object that describes the inflation type and values.
+   ``inflate``        Prior mean value of the inflation distribution.
+   ``inflate_sd``     Prior standard deviation of the inflation distribution.
+   ``prior_mean``     Mean of the prior observation ensemble.
+   ``prior_var``      Variance of the prior observation ensemble.
+   ``obs``            The observed value.
+   ``obs_var``        Observational error variance.
+   ``gamma``          Expected impact factor, product of correlation, localization, regression factor.
+   ================== ================================================================================
 
 | 
 
@@ -125,12 +105,12 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Outputs the values of inflation to restart files using the ensemble_manager for state space inflation and file output
    for observation space inflation. Releases allocated storage in inflate_handle.
 
-   ========================= ==============================================================================
-   ``inflate_handle  ``      Handle for the details of the inflation being performed.
-   ``ens_handle  ``          Handle for ensemble storage that holds values of state space inflation.
-   ``ss_inflate_index  ``    Index in ensemble storage copies for state space inflation.
-   ``ss_inflate_sd_index  `` Index in ensemble storage copies for state space inflation standard deviation.
-   ========================= ==============================================================================
+   ======================= ==============================================================================
+   ``inflate_handle``      Handle for the details of the inflation being performed.
+   ``ens_handle``          Handle for ensemble storage that holds values of state space inflation.
+   ``ss_inflate_index``    Index in ensemble storage copies for state space inflation.
+   ``ss_inflate_sd_index`` Index in ensemble storage copies for state space inflation standard deviation.
+   ======================= ==============================================================================
 
 | 
 
@@ -149,13 +129,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Given an ensemble, its mean and the covarance inflation factor, inflates the ensemble.
 
-   ==================== ========================================================
-   ``inflate_handle  `` Handle for the details of the inflation being performed.
-   ``ens  ``            Values for the ensemble to be inflated
-   ``mean  ``           The mean of the ensemble.
-   ``inflate  ``        The covariance inflation factor.
-   ``var_in  ``         The variance of the ensemble.
-   ==================== ========================================================
+   ================== ========================================================
+   ``inflate_handle`` Handle for the details of the inflation being performed.
+   ``ens``            Values for the ensemble to be inflated
+   ``mean``           The mean of the ensemble.
+   ``inflate``        The covariance inflation factor.
+   ``var_in``         The variance of the ensemble.
+   ================== ========================================================
 
 | 
 
@@ -173,10 +153,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Spatially varying state space diagnostics are in the Posterior and Prior Diagnostic netcdf files and are written with
    calls from filter.f90.
 
-   ==================== ========================================================
-   ``inflate_handle  `` Handle for the details of the inflation being performed.
-   ``time  ``           Time of this diagnostic info.
-   ==================== ========================================================
+   ================== ========================================================
+   ``inflate_handle`` Handle for the details of the inflation being performed.
+   ``time``           Time of this diagnostic info.
+   ================== ========================================================
 
 | 
 
@@ -192,10 +172,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns true if observation space inflation is being done by this handle.
 
-   ==================== =========================================================
-   ``do_obs_inflate  `` True if obs space inflation is being done by this handle.
-   ``inflate_handle  `` Handle to inflation details.
-   ==================== =========================================================
+   ================== =========================================================
+   ``do_obs_inflate`` True if obs space inflation is being done by this handle.
+   ``inflate_handle`` Handle to inflation details.
+   ================== =========================================================
 
 | 
 
@@ -211,10 +191,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns true if spatially varying state space inflation is being done by this handle.
 
-   =========================== =============================================================================
-   ``do_varying_ss_inflate  `` True if spatially varying state space inflation is being done by this handle.
-   ``inflate_handle  ``        Handle to inflation details.
-   =========================== =============================================================================
+   ========================= =============================================================================
+   ``do_varying_ss_inflate`` True if spatially varying state space inflation is being done by this handle.
+   ``inflate_handle``        Handle to inflation details.
+   ========================= =============================================================================
 
 | 
 
@@ -230,10 +210,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns true if spatially fixed state space inflation is being done by this handle.
 
-   ========================== ===========================================================================
-   ``do_single_ss_inflate  `` True if spatially fixed state space inflation is being done by this handle.
-   ``inflate_handle  ``       Handle to inflation details.
-   ========================== ===========================================================================
+   ======================== ===========================================================================
+   ``do_single_ss_inflate`` True if spatially fixed state space inflation is being done by this handle.
+   ``inflate_handle``       Handle to inflation details.
+   ======================== ===========================================================================
 
 | 
 
@@ -267,26 +247,26 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Initializes a descriptor of an inflation object.
 
-   ========================= ============================================================================
-   ``inflate_handle  ``      Handle for the inflation descriptor being initialized.
-   ``inf_flavor  ``          Type of inflation, 1=obs_inflate, 2=varying_ss_inflate, 3=single_ss_inflate.
-   ``mean_from_restart  ``   True if inflation mean values to be read from restart file.
-   ``sd_from_restart  ``     True if inflation standard deviation values to be read from restart file.
-   ``output_restart  ``      True if an inflation restart file is to be output.
-   ``deterministic  ``       True if deterministic inflation is to be done.
-   ``in_file_name  ``        File name from which to read restart.
-   ``out_file_name  ``       File name to which to write restart.
-   ``diag_file_name  ``      File name to which to write diagnostic output; obs space inflation only .
-   ``inf_initial  ``         Initial value of inflation for start_from_restart=.false.
-   ``sd_initial  ``          Initial value of inflation standard deviation for start_from_restart=.false.
-   ``inf_lower_bound  ``     Lower bound on inflation value.
-   ``inf_upper_bound  ``     Upper bound on inflation value.
-   ``sd_lower_bound  ``      Lower bound on inflation standard deviation.
-   ``ens_handle  ``          Ensemble handle with storage for state space inflation.
-   ``ss_inflate_index  ``    Index op copy in ensemble storage for inflation value.
-   ``ss_inflate_sd_index  `` Index of copy in ensemble storage for inflation standard deviation.
-   ``label  ``               Character label to be used in diagnostic output (e.g. 'Prior', 'Posterior').
-   ========================= ============================================================================
+   ======================= ============================================================================
+   ``inflate_handle``      Handle for the inflation descriptor being initialized.
+   ``inf_flavor``          Type of inflation, 1=obs_inflate, 2=varying_ss_inflate, 3=single_ss_inflate.
+   ``mean_from_restart``   True if inflation mean values to be read from restart file.
+   ``sd_from_restart``     True if inflation standard deviation values to be read from restart file.
+   ``output_restart``      True if an inflation restart file is to be output.
+   ``deterministic``       True if deterministic inflation is to be done.
+   ``in_file_name``        File name from which to read restart.
+   ``out_file_name``       File name to which to write restart.
+   ``diag_file_name``      File name to which to write diagnostic output; obs space inflation only .
+   ``inf_initial``         Initial value of inflation for start_from_restart=.false.
+   ``sd_initial``          Initial value of inflation standard deviation for start_from_restart=.false.
+   ``inf_lower_bound``     Lower bound on inflation value.
+   ``inf_upper_bound``     Upper bound on inflation value.
+   ``sd_lower_bound``      Lower bound on inflation standard deviation.
+   ``ens_handle``          Ensemble handle with storage for state space inflation.
+   ``ss_inflate_index``    Index op copy in ensemble storage for inflation value.
+   ``ss_inflate_sd_index`` Index of copy in ensemble storage for inflation standard deviation.
+   ``label``               Character label to be used in diagnostic output (e.g. 'Prior', 'Posterior').
+   ======================= ============================================================================
 
 | 
 
@@ -302,10 +282,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns value of observation space inflation standard deviation.
 
-   ==================== =================================================
-   ``get_sd  ``         Returns the value of observation space inflation.
-   ``inflate_handle  `` Handle for inflation descriptor.
-   ==================== =================================================
+   ================== =================================================
+   ``get_sd``         Returns the value of observation space inflation.
+   ``inflate_handle`` Handle for inflation descriptor.
+   ================== =================================================
 
 | 
 
@@ -321,10 +301,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns value of observation space inflation.
 
-   ==================== =================================================
-   ``get_inflate  ``    Returns the value of observation space inflation.
-   ``inflate_handle  `` Handle for inflation descriptor.
-   ==================== =================================================
+   ================== =================================================
+   ``get_inflate``    Returns the value of observation space inflation.
+   ``inflate_handle`` Handle for inflation descriptor.
+   ================== =================================================
 
 | 
 
@@ -340,10 +320,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Set the value of observation space inflation.
 
-   ==================== ==============================================
-   ``inflate_handle  `` Handle for inflation descriptor.
-   ``inflate  ``        Set observation space inflation to this value.
-   ==================== ==============================================
+   ================== ==============================================
+   ``inflate_handle`` Handle for inflation descriptor.
+   ``inflate``        Set observation space inflation to this value.
+   ================== ==============================================
 
 | 
 
@@ -359,10 +339,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Set the value of observation space inflation standard deviation.
 
-   ==================== =================================================================
-   ``inflate_handle  `` Handle for inflation descriptor.
-   ``sd  ``             Set observation space inflation standard deviation to this value.
-   ==================== =================================================================
+   ================== =================================================================
+   ``inflate_handle`` Handle for inflation descriptor.
+   ``sd``             Set observation space inflation standard deviation to this value.
+   ================== =================================================================
 
 | 
 
@@ -378,10 +358,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns true if deterministic inflation is being done.
 
-   =========================== ======================================================
-   ``deterministic_inflate  `` Returns true if deterministic inflation is being done.
-   ``inflate_handle  ``        Handle for inflation descriptor.
-   =========================== ======================================================
+   ========================= ======================================================
+   ``deterministic_inflate`` Returns true if deterministic inflation is being done.
+   ``inflate_handle``        Handle for inflation descriptor.
+   ========================= ======================================================
 
 | 
 
@@ -435,15 +415,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Namelist
 --------
 
 The adaptive_inflate module no longer has a namelist. Control has been moved to
 `&filter_nml <filter_mod.html#Namelist>`__ in filter.
-
---------------
 
 Files
 -----
@@ -460,8 +436,6 @@ each name: one for the prior and one for the posterior inflation.
    for spatially-varying state space inflation are extra fields on the Posterior and Prior diagnostic netcdf files
    created in filter.f90.
 
---------------
-
 References
 ----------
 
@@ -472,35 +446,7 @@ References
    61, 72-83.
    `doi: 10.1111/j.1600-0870.2008.00361.x <http://dx.doi.org/10.1111/j.1600-0870.2008.00361.x>`__
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | Routine                               | Message                               | Comment                               |
-   +=======================================+=======================================+=======================================+
-   | adaptive_inflate_init                 | Cannot have non-deterministic         | Algorithm can't work in this case.    |
-   |                                       | inflation and inf_lower_bound < 1.    |                                       |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | adaptive_inflate_init                 | ss_inflate_index = ### and            | Storage for these two must be         |
-   |                                       | ss_inflate_sd_index = ### must be     | contiguous in ensemble_manager.       |
-   |                                       | contiguous.                           |                                       |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | adaptive_inflate_end                  | ss_inflate_index = ### and            | Storage for these two must be         |
-   |                                       | ss_inflate_sd_index = ### must be     | contiguous in ensemble_manager.       |
-   |                                       | contiguous.                           |                                       |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 no discussion
-
---------------

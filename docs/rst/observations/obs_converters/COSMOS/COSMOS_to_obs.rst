@@ -1,19 +1,11 @@
 PROGRAM ``COSMOS_to_obs``
 =========================
 
-Contents
+Overview
 --------
 
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Namelist <#namelist>`__
--  `References <#references>`__
-
-Overview
-========
-
-Cosmos "level 2" text file to DART converter
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+COSMOS "level 2" text file to DART converter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 | `COSMOS <http://cosmos.hwr.arizona.edu/>`__ is an NSF supported project to measure soil moisture on the horizontal
   scale of hectometers and depths of decimeters using cosmic-ray neutrons. The data for each station is available from
@@ -21,9 +13,9 @@ Cosmos "level 2" text file to DART converter
   also available from the data portal. The **Level 2 Data** is most suited for use with DART.
 | Since each site has a separate input data file, and the metadata for each site must essentially be hand-input to the
   converter program, it is generally easiest to convert the observations for each site separately and then use the
-  `obs_sequence_tool.f90 </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__ to combine the
-  observations from multiple sites and restrict the DART observation sequence file to contain just the observations of
-  the timeframe of interest.
+  :doc:`../../../assimilation_code/programs/obs_sequence_tool/obs_sequence_tool` to combine the observations from
+  multiple sites and restrict the DART observation sequence file to contain just the observations of the timeframe of
+  interest.
 | FYI - in DART, the soil moisture profile is converted to expected neutron counts using the **CO**\ smic-ray **S**\ oil
   **M**\ oisture **I**\ nteraction **C**\ ode (COSMIC), developed at the University of Arizona by Rafael Rosolem and Jim
   Shuttleworth.
@@ -38,12 +30,8 @@ Cosmos "level 2" text file to DART converter
 #. run ``COSMOS_to_obs`` to generate a DART observation sequence file for the station and rename the output file if
    necessary (you can explicity name the output file via the namelist).
 #. repeat steps 1-4 for this converter to generate a DART observation sequence file for each station.
-#. use the `obs_sequence_tool.f90 </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__ to combine
-   the observations from multiple sites
-
---------------
-
-.. _data_sources:
+#. use the :doc:`../../../assimilation_code/programs/obs_sequence_tool/obs_sequence_tool` to combine the observations
+   from multiple sites
 
 Data sources
 ------------
@@ -62,8 +50,6 @@ Data follows:
    2009-10-23 21:34 6339 0.800 1.068 06.901 2.486 1.059 1.000 1843 023
    ...
 
---------------
-
 Programs
 --------
 
@@ -76,13 +62,13 @@ each observation.
 
 To compile and test, go into the ``COSMOS/work`` subdirectory and run the ``quickbuild.csh`` script to build the
 converter and a couple of general purpose utilities. The
-`obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__ manipulates (i.e. combines,
-subsets) DART observation files once they have been created. The default observations supported are those defined in
-`DART/observations/forward_operators/obs_def_land_mod.f90 </observations/observations/forward_operators/obs_def_land_mod.f90>`__
+:doc:`../../../assimilation_code/programs/obs_sequence_tool/obs_sequence_tool` manipulates (i.e. combines, subsets) DART
+observation files once they have been created. The default observations supported are those defined in
+`DART/observations/forward_operators/obs_def_land_mod.f90 <../../observations/forward_operators/obs_def_land_mod.f90>`__
 and
-`DART/observations/forward_operators/obs_def_COSMOS_mod.f90 </observations/observations/forward_operators/obs_def_COSMOS_mod.f90>`__.
+`DART/observations/forward_operators/obs_def_COSMOS_mod.f90 <../../observations/forward_operators/obs_def_COSMOS_mod.f90>`__.
 If you need additional observation types, you will have to add the appropriate ``obs_def_XXX_mod.f90`` file to the
-``input.nml`` ``&preprocess_nml:input_files`` variable and run ``quickbuild.csh`` again. It rebuilds the table of
+``input.nml`` ``&preprocess_nml:input_files`` variable and run ``quickbuild.csh`` again. It rebuilds the table of
 supported observation types before compiling the source code.
 
 .. container:: indent1
@@ -224,17 +210,17 @@ supported observation types before compiling the source code.
               4.154723123116714        0.7997185899100618         0.000000000000000     -1
          kind
                    20
-          cosmic
-           0.88500000000000001       5.84099999999999966E-002   336.95696938999998       0.31918025877000000
-            161.98621864285701        129.14558984999999        55.311849408000000        3.8086191933000002
-                    1
+
+      .. container::
+
+         cosmic 0.88500000000000001 5.84099999999999966E-002 336.95696938999998 0.31918025877000000 161.98621864285701
+         129.14558984999999 55.311849408000000 3.8086191933000002 1
+
+      ::
+
           77340     150034
             1225.0000000000000
             ...
-
- 
-
---------------
 
 Namelist
 --------
@@ -267,7 +253,7 @@ namelist.
    +--------------------+--------------------+--------------------------------------------------------------------------+
    | sitename           | character(len=128) | The name of the site. Must match one of the site names in the            |
    |                    |                    | ``site_metadata_file``. Case-insensitive match, trailing blanks ignored. |
-   |                    |                    | Use *ncdump -v sitenames COSMIC_parlist.nc*                              |
+   |                    |                    | Use *ncdump -v sitenames COSMIC_parlist.nc*                              |
    +--------------------+--------------------+--------------------------------------------------------------------------+
    | maxgoodqc          | integer            | left for future implementation.                                          |
    +--------------------+--------------------+--------------------------------------------------------------------------+
@@ -287,8 +273,6 @@ namelist.
          obs_out_file       = 'SantaRita_obs_seq.out',
          sitename           = 'Santa_Rita_Creosote',
 
---------------
-
 References
 ----------
 
@@ -299,5 +283,3 @@ References
 -  Franz, T.E, M. Zreda, R. Rosolem, T.P.A. Ferre, 2012: Field validation of cosmic-ray soil moisture probe using a
    distributed sensor network. Vadose Zone Journal (in press),
    `doi:10.2136/vzj2012.0046 <http://dx.doi.org/10.2136/vzj2012.0046>`__
-
---------------

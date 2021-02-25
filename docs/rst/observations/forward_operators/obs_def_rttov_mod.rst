@@ -1,18 +1,6 @@
 MODULE ``obs_def_rttov_mod``
 ============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -49,12 +37,8 @@ Overview
 -  DART Code: Jeff Steward, jsteward at ucar.edu
 -  Original DART/RTTOV work: Nancy Collins, Johnny Hendricks
 
-Backward compatibility note:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
---------------
-
-.. _other_modules_used:
+Backward compatibility note
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Other modules used
 ------------------
@@ -72,18 +56,14 @@ Other modules used
    rttov_types (from RTTOV)
    obs_kind_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 =============================== ========================
 *use obs_def_rttov_mod, only :* set_visir_metadata
-                                set_mw_metadata
-                                get_expected_radiance
-                                get_rttov_option_logical
+\                               set_mw_metadata
+\                               get_expected_radiance
+\                               get_rttov_option_logical
 =============================== ========================
 
 Namelist interface ``&obs_def_rttov_mod_nml`` is read from file ``input.nml``.
@@ -117,7 +97,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    user guide for more information.
 
    =============== ================================================================
-   ``key  ``       The DART observation key.
+   ``key``         The DART observation key.
    ``sat_az``      The satellite azimuth angle.
    ``sat_ze``      The satellite zenith angle.
    ``sun_az``      The solar azimuth angle. Only relevant if addsolar is true.
@@ -157,7 +137,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    user guide) can be used until a better solution is devised.
 
    +-------------------+-------------------------------------------------------------------------------------------------+
-   | ``key  ``         | The DART observation key.                                                                       |
+   | ``key``           | The DART observation key.                                                                       |
    +-------------------+-------------------------------------------------------------------------------------------------+
    | ``sat_az``        | The satellite azimuth angle.                                                                    |
    +-------------------+-------------------------------------------------------------------------------------------------+
@@ -201,31 +181,22 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    observation. This can be either in units of radiance (mW/cm-1/sr/sq.m) or a brightness temperature (in K), depending
    on if this is a visible/infrared observation or a microwave observation.
 
-   ``obs_kind_ind  ``
-
-The index of the observation kind; since many observation kinds are handled by this module, this can be used to
-determine precisely which observation kind is being used.
-
-``state_handle  ``
-
-The ensemble of model states to be used for the observation operator calculations.
-
-``location``
-
-Location of this observation
-
-``key``
-
-Unique identifier associated with this satellite observation
-
-``val``
-
-The returned observation in units of either radiance or brightness temperature.
-
-``istatus``
-
-Returned integer status code describing problems with applying forward operator. 0 is a good value; any positive value
-indicates an error; negative values are reserved for internal DART use only.
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``obs_kind_ind`` | The index of the observation kind; since many observation kinds are handled by this module, this |
+   |                  | can be used to determine precisely which observation kind is being used.                         |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``state_handle`` | The ensemble of model states to be used for the observation operator calculations.               |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``location``     | Location of this observation                                                                     |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``key``          | Unique identifier associated with this satellite observation                                     |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``val``          | The returned observation in units of either radiance or brightness temperature.                  |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``istatus``      | Returned integer status code describing problems with applying forward operator. 0 is a good     |
+   |                  | value; any positive value indicates an error; negative values are reserved for internal DART use |
+   |                  | only.                                                                                            |
+   +------------------+--------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -241,14 +212,12 @@ indicates an error; negative values are reserved for internal DART use only.
 
    Return the logical value of the RTTOV parameter associated with the field_name.
 
-   ================ =======================================================
-   ``field_name  `` The name of the RTTOV parameter from the namelist.
-   ``p``            The logical return value associated with the parameter.
-   ================ =======================================================
+   ============== =======================================================
+   ``field_name`` The name of the RTTOV parameter from the namelist.
+   ``p``          The logical return value associated with the parameter.
+   ============== =======================================================
 
 | 
-
---------------
 
 Namelist
 --------
@@ -337,533 +306,247 @@ namelist.
 
 .. container::
 
-   Item
-
-Type
-
-Description
-
-rttov_sensor_db_file
-
-character(len=512)
-
-The location of the RTTOV sensor database. The format for the database is a comma-separated file. The columns of the
-database are the DART observation-kind, the platform/satellite/sensor ID, the observation type, the coefficient file,
-and a comma-separated list of RTTOV channels to use for this observation type.
-
-1
-
-first_lvl_is_sfc
-
-logical
-
-Whether the first level of the model represents the surface (true) or the top of the atmosphere (false).
-
-mw_clear_sky_only
-
-logical
-
-If microwave calculations should be "clear-sky" only (although cloud-liquid water absorption/emission is considered; see
-the RTTOV user guide).
-
-interp_mode
-
-integer
-
-The interpolation mode (see the RTTOV user guide).
-
-do_checkinput
-
-logical
-
-Whether to check the input for reasonableness (see the RTTOV user guide).
-
-apply_reg_limits
-
-logical
-
-Whether to clamp the atmospheric values to the RTTOV bounds (see the RTTOV user guide).
-
-verbose
-
-logical
-
-Whether to output lots of additional output (see the RTTOV user guide).
-
-fix_hgpl
-
-logical
-
-Whether the surface pressure represents the surface or the 2 meter value (see the RTTOV user guide).
-
-do_lambertian
-
-logical
-
-Whether to include the effects of surface specularity (see the RTTOV user guide).
-
-lambertian_fixed_angle
-
-logical
-
-Whether to include a fixed angle for the lambertian effect (see the RTTOV user guide).
-
-rad_down_lin_tau
-
-logical
-
-Whether to use the linear-in-tau approximation (see the RTTOV user guide).
-
-use_q2m
-
-logical
-
-Whether to use 2m humidity information (see the RTTOV user guide). If true, the QTY_2M_SPECIFIC_HUMIDITY will be
-requested from the model.
-
-use_q2m
-
-logical
-
-Whether to use 2m humidity information (see the RTTOV user guide). If true, the QTY_2M_SPECIFIC_HUMIDITY will be
-requested from the model.
-
-use_uv10m
-
-logical
-
-Whether to use 10m wind speed information (see the RTTOV user guide). If true, the QTY_10M_U_WIND_COMPONENT and
-QTY_10M_V_WIND_COMPONENTS will be requested from the model.
-
-use_wfetch
-
-logical
-
-Whether to use wind fetch information (see the RTTOV user guide). If true, the QTY_WIND_FETCH will be requested from the
-model.
-
-use_water_type
-
-logical
-
-Whether to use water-type information (0 = fresh, 1 = ocean; see the RTTOV user guide). If true, the QTY_WATER_TYPE will
-be requested from the model.
-
-addrefrac
-
-logical
-
-Whether to enable atmospheric refraction (see the RTTOV user guide).
-
-plane_parallel
-
-logical
-
-Whether to treat the atmosphere as plane parallel (see the RTTOV user guide).
-
-use_salinity
-
-logical
-
-Whether to use salinity (see the RTTOV user guide). If true, the QTY_SALINITY will be requested from the model.
-
-apply_band_correction
-
-logical
-
-Whether to apply band correction from the coefficient field for microwave data (see the RTTOV user guide).
-
-cfrac_data
-
-logical
-
-Whether to use the cloud fraction from 0 to 1 (see the RTTOV user guide). If true, the QTY_CLOUD_FRACTION will be
-requested from the model.
-
-clw_data
-
-logical
-
-Whether to use cloud-liquid water data (see the RTTOV user guide). If true, the QTY_CLOUDWATER_MIXING_RATIO will be
-requested from the model.
-
-rain_data
-
-logical
-
-Whether to use precipitating water data (see the RTTOV user guide). If true, the QTY_RAINWATER_MIXING_RATIO will be
-requested from the model.
-
-ciw_data
-
-logical
-
-Whether to use non-precipiting ice information (see the RTTOV user guide). If true, the QTY_ICE_MIXING_RATIO will be
-requested from the model.
-
-snow_data
-
-logical
-
-Whether to use precipitating fluffy ice (see the RTTOV user guide). If true, the QTY_SNOW_MIXING_RATIO will be requested
-from the model.
-
-graupel_data
-
-logical
-
-Whether to use precipting small, hard ice (see the RTTOV user guide). If true, the QTY_GRAUPEL_MIXING_RATIO will be
-requested from the model.
-
-hail_data
-
-logical
-
-Whether to use precipitating large, hard ice (see the RTTOV user guide). If true, the QTY_HAIL_MIXING_RATIO will be
-requested from the model.
-
-w_data
-
-logical
-
-Whether to use vertical velocity information. This will be used to crudely classify if a cloud is cumulus or stratiform
-for the purpose of visible/infrared calculations. If true, the QTY_VERTICAL_VELOCITY will be requested from the model.
-
-clw_scheme
-
-integer
-
-The clw_scheme to use (see the RTTOV user guide).
-
-clw_cloud_top
-
-real(r8)
-
-Lower hPa limit for clw calculations (see the RTTOV user guide).
-
-fastem_version
-
-integer
-
-Which FASTEM version to use (see the RTTOV user guide).
-
-supply_foam_fraction
-
-logical
-
-Whether to use sea-surface foam fraction (see the RTTOV user guide). If true, the QTY_FOAM_FRAC will be requested from
-the model.
-
-use_totalice
-
-logical
-
-Whether to use totalice instead of precip/non-precip ice for microwave (see the RTTOV user guide).
-
-use_zeeman
-
-logical
-
-Whether to use the Zeeman effect (see the RTTOV user guide). If true, the magnetic field and cosine of bk will be used
-from the observation metadata.
-
-cc_threshold
-
-real(r8)
-
-Cloud-fraction value to treat as clear-sky (see the RTTOV user guide).
-
-ozone_data
-
-logical
-
-Whether to use ozone (O3) profiles (see the RTTOV user guide). If true, the QTY_O3 will be requested from the model.
-
-co2_data
-
-logical
-
-Whether to use carbon dioxide (CO2) profiles (see the RTTOV user guide). If true, the QTY_CO2 will be requested from the
-model.
-
-n2o_data
-
-logical
-
-Whether to use nitrous oxide (N2O) profiles (see the RTTOV user guide). If true, the QTY_N2O will be requested from the
-model.
-
-co_data
-
-logical
-
-Whether to use carbon monoxide (CO) profiles (see the RTTOV user guide). If true, the QTY_CO will be requested from the
-model.
-
-ch4_data
-
-logical
-
-Whether to use methane (CH4) profiles (see the RTTOV user guide). If true, the QTY_CH4 will be requested from the model.
-
-so2_data
-
-logical
-
-Whether to use sulfur dioxide (SO2) (see the RTTOV user guide). If true, the QTY_SO2 will be requested from the model.
-
-addsolar
-
-logical
-
-Whether to use solar angles (see the RTTOV user guide). If true, the sun_ze and sun_az from the observation metadata
-will be used for visible/infrared.
-
-rayleigh_single_scatt
-
-logical
-
-Whether to use only single scattering for Rayleigh scattering for visible calculations (see the RTTOV user guide).
-
-do_nlte_correction
-
-logical
-
-Whether to include non-LTE bias correction for HI-RES sounder (see the RTTOV user guide).
-
-solar_sea_brdf_model
-
-integer
-
-The solar sea BRDF model to use (see the RTTOV user guide).
-
-ir_sea_emis_model
-
-logical
-
-The infrared sea emissivity model to use (see the RTTOV user guide).
-
-use_sfc_snow_frac
-
-logical
-
-Whether to use the surface snow fraction (see the RTTOV user guide). If true, the QTY_SNOWCOVER_FRAC will be requested
-from the model.
-
-add_aerosl
-
-logical
-
-Whether to use aerosols (see the RTTOV user guide).
-
-aerosl_type
-
-integer
-
-Whether to use OPAC or CAMS aerosols (see the RTTOV user guide).
-
-add_clouds
-
-logical
-
-Whether to enable cloud scattering for visible/infrared (see the RTTOV user guide).
-
-ice_scheme
-
-integer
-
-The ice scheme to use (see the RTTOV user guide).
-
-use_icede
-
-logical
-
-Whether to use the ice effective diameter for visible/infrared (see the RTTOV user guide). If true, the QTY_CLOUD_ICE_DE
-will be requested from the model.
-
-idg_scheme
-
-integer
-
-The ice water effective diameter scheme to use (see the RTTOV user guide).
-
-user_aer_opt_param
-
-logical
-
-Whether to directly specify aerosol scattering properties (see the RTTOV user guide). Not yet supported.
-
-user_cld_opt_param
-
-logical
-
-Whether to directly specify cloud scattering properties (see the RTTOV user guide). Not yet supported.
-
-grid_box_avg_cloud
-
-logical
-
-Whether to cloud concentrations are grid box averages (see the RTTOV user guide).
-
-cldstr_threshold
-
-real(r8)
-
-Threshold for cloud stream weights for scattering (see the RTTOV user guide).
-
-cldstr_simple
-
-logical
-
-Whether to use one clear and one cloudy column (see the RTTOV user guide).
-
-cldstr_low_cloud_top
-
-real(r8)
-
-Cloud fraction maximum in layers from the top of the atmosphere down to the specified hPa (see the RTTOV user guide).
-
-ir_scatt_model
-
-integer
-
-Which infrared scattering method to use (see the RTTOV user guide).
-
-vis_scatt_model
-
-integer
-
-Which visible scattering method to use (see the RTTOV user guide).
-
-dom_nstreams
-
-integer
-
-The number of streams to use with DOM (see the RTTOV user guide).
-
-dom_accuracy
-
-real(r8)
-
-The convergence criteria for DOM (see the RTTOV user guide).
-
-dom_opdep_threshold
-
-real(r8)
-
-Ignore layers below this optical depth (see the RTTOV user guide).
-
-addpc
-
-logical
-
-Whether to do principal component calculations (see the RTTOV user guide).
-
-npcscores
-
-integer
-
-Number of principal components to use for addpc (see the RTTOV user guide).
-
-addradrec
-
-logical
-
-Reconstruct the radiances using addpc (see the RTTOV user guide).
-
-ipcreg
-
-integer
-
-Number of predictors to use with addpc (see the RTTOV user guide).
-
-use_htfrtc
-
-logical
-
-Whether to use HTFRTC (see the RTTOV user guide).
-
-htfrtc_n_pc
-
-integer
-
-Number of PCs to use with HTFRTC (see the RTTOV user guide).
-
-htfrtc_simple_cloud
-
-logical
-
-Whether to use simple cloud scattering with htfrtc (see the RTTOV user guide).
-
-htfrtc_overcast
-
-logical
-
-Whether to calculate overcast radiances with HTFRTC (see the RTTOV user guide).
+   1
+
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | Item                   | Type               | Description                                                          |
+   +========================+====================+======================================================================+
+   | rttov_sensor_db_file   | character(len=512) | The location of the RTTOV sensor database. The format for the        |
+   |                        |                    | database is a comma-separated file. The columns of the database are  |
+   |                        |                    | the DART observation-kind, the platform/satellite/sensor ID, the     |
+   |                        |                    | observation type, the coefficient file, and a comma-separated list   |
+   |                        |                    | of RTTOV channels to use for this observation type.                  |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | first_lvl_is_sfc       | logical            | Whether the first level of the model represents the surface (true)   |
+   |                        |                    | or the top of the atmosphere (false).                                |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | mw_clear_sky_only      | logical            | If microwave calculations should be "clear-sky" only (although       |
+   |                        |                    | cloud-liquid water absorption/emission is considered; see the RTTOV  |
+   |                        |                    | user guide).                                                         |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | interp_mode            | integer            | The interpolation mode (see the RTTOV user guide).                   |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | do_checkinput          | logical            | Whether to check the input for reasonableness (see the RTTOV user    |
+   |                        |                    | guide).                                                              |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | apply_reg_limits       | logical            | Whether to clamp the atmospheric values to the RTTOV bounds (see the |
+   |                        |                    | RTTOV user guide).                                                   |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | verbose                | logical            | Whether to output lots of additional output (see the RTTOV user      |
+   |                        |                    | guide).                                                              |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | fix_hgpl               | logical            | Whether the surface pressure represents the surface or the 2 meter   |
+   |                        |                    | value (see the RTTOV user guide).                                    |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | do_lambertian          | logical            | Whether to include the effects of surface specularity (see the RTTOV |
+   |                        |                    | user guide).                                                         |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | lambertian_fixed_angle | logical            | Whether to include a fixed angle for the lambertian effect (see the  |
+   |                        |                    | RTTOV user guide).                                                   |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | rad_down_lin_tau       | logical            | Whether to use the linear-in-tau approximation (see the RTTOV user   |
+   |                        |                    | guide).                                                              |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | use_q2m                | logical            | Whether to use 2m humidity information (see the RTTOV user guide).   |
+   |                        |                    | If true, the QTY_2M_SPECIFIC_HUMIDITY will be requested from the     |
+   |                        |                    | model.                                                               |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | use_q2m                | logical            | Whether to use 2m humidity information (see the RTTOV user guide).   |
+   |                        |                    | If true, the QTY_2M_SPECIFIC_HUMIDITY will be requested from the     |
+   |                        |                    | model.                                                               |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | use_uv10m              | logical            | Whether to use 10m wind speed information (see the RTTOV user        |
+   |                        |                    | guide). If true, the QTY_10M_U_WIND_COMPONENT and                    |
+   |                        |                    | QTY_10M_V_WIND_COMPONENTS will be requested from the model.          |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | use_wfetch             | logical            | Whether to use wind fetch information (see the RTTOV user guide). If |
+   |                        |                    | true, the QTY_WIND_FETCH will be requested from the model.           |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | use_water_type         | logical            | Whether to use water-type information (0 = fresh, 1 = ocean; see the |
+   |                        |                    | RTTOV user guide). If true, the QTY_WATER_TYPE will be requested     |
+   |                        |                    | from the model.                                                      |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | addrefrac              | logical            | Whether to enable atmospheric refraction (see the RTTOV user guide). |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | plane_parallel         | logical            | Whether to treat the atmosphere as plane parallel (see the RTTOV     |
+   |                        |                    | user guide).                                                         |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | use_salinity           | logical            | Whether to use salinity (see the RTTOV user guide). If true, the     |
+   |                        |                    | QTY_SALINITY will be requested from the model.                       |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | apply_band_correction  | logical            | Whether to apply band correction from the coefficient field for      |
+   |                        |                    | microwave data (see the RTTOV user guide).                           |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | cfrac_data             | logical            | Whether to use the cloud fraction from 0 to 1 (see the RTTOV user    |
+   |                        |                    | guide). If true, the QTY_CLOUD_FRACTION will be requested from the   |
+   |                        |                    | model.                                                               |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | clw_data               | logical            | Whether to use cloud-liquid water data (see the RTTOV user guide).   |
+   |                        |                    | If true, the QTY_CLOUDWATER_MIXING_RATIO will be requested from the  |
+   |                        |                    | model.                                                               |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | rain_data              | logical            | Whether to use precipitating water data (see the RTTOV user guide).  |
+   |                        |                    | If true, the QTY_RAINWATER_MIXING_RATIO will be requested from the   |
+   |                        |                    | model.                                                               |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | ciw_data               | logical            | Whether to use non-precipiting ice information (see the RTTOV user   |
+   |                        |                    | guide). If true, the QTY_ICE_MIXING_RATIO will be requested from the |
+   |                        |                    | model.                                                               |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | snow_data              | logical            | Whether to use precipitating fluffy ice (see the RTTOV user guide).  |
+   |                        |                    | If true, the QTY_SNOW_MIXING_RATIO will be requested from the model. |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | graupel_data           | logical            | Whether to use precipting small, hard ice (see the RTTOV user        |
+   |                        |                    | guide). If true, the QTY_GRAUPEL_MIXING_RATIO will be requested from |
+   |                        |                    | the model.                                                           |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | hail_data              | logical            | Whether to use precipitating large, hard ice (see the RTTOV user     |
+   |                        |                    | guide). If true, the QTY_HAIL_MIXING_RATIO will be requested from    |
+   |                        |                    | the model.                                                           |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | w_data                 | logical            | Whether to use vertical velocity information. This will be used to   |
+   |                        |                    | crudely classify if a cloud is cumulus or stratiform for the purpose |
+   |                        |                    | of visible/infrared calculations. If true, the QTY_VERTICAL_VELOCITY |
+   |                        |                    | will be requested from the model.                                    |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | clw_scheme             | integer            | The clw_scheme to use (see the RTTOV user guide).                    |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | clw_cloud_top          | real(r8)           | Lower hPa limit for clw calculations (see the RTTOV user guide).     |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | fastem_version         | integer            | Which FASTEM version to use (see the RTTOV user guide).              |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | supply_foam_fraction   | logical            | Whether to use sea-surface foam fraction (see the RTTOV user guide). |
+   |                        |                    | If true, the QTY_FOAM_FRAC will be requested from the model.         |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | use_totalice           | logical            | Whether to use totalice instead of precip/non-precip ice for         |
+   |                        |                    | microwave (see the RTTOV user guide).                                |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | use_zeeman             | logical            | Whether to use the Zeeman effect (see the RTTOV user guide). If      |
+   |                        |                    | true, the magnetic field and cosine of bk will be used from the      |
+   |                        |                    | observation metadata.                                                |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | cc_threshold           | real(r8)           | Cloud-fraction value to treat as clear-sky (see the RTTOV user       |
+   |                        |                    | guide).                                                              |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | ozone_data             | logical            | Whether to use ozone (O3) profiles (see the RTTOV user guide). If    |
+   |                        |                    | true, the QTY_O3 will be requested from the model.                   |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | co2_data               | logical            | Whether to use carbon dioxide (CO2) profiles (see the RTTOV user     |
+   |                        |                    | guide). If true, the QTY_CO2 will be requested from the model.       |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | n2o_data               | logical            | Whether to use nitrous oxide (N2O) profiles (see the RTTOV user      |
+   |                        |                    | guide). If true, the QTY_N2O will be requested from the model.       |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | co_data                | logical            | Whether to use carbon monoxide (CO) profiles (see the RTTOV user     |
+   |                        |                    | guide). If true, the QTY_CO will be requested from the model.        |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | ch4_data               | logical            | Whether to use methane (CH4) profiles (see the RTTOV user guide). If |
+   |                        |                    | true, the QTY_CH4 will be requested from the model.                  |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | so2_data               | logical            | Whether to use sulfur dioxide (SO2) (see the RTTOV user guide). If   |
+   |                        |                    | true, the QTY_SO2 will be requested from the model.                  |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | addsolar               | logical            | Whether to use solar angles (see the RTTOV user guide). If true, the |
+   |                        |                    | sun_ze and sun_az from the observation metadata will be used for     |
+   |                        |                    | visible/infrared.                                                    |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | rayleigh_single_scatt  | logical            | Whether to use only single scattering for Rayleigh scattering for    |
+   |                        |                    | visible calculations (see the RTTOV user guide).                     |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | do_nlte_correction     | logical            | Whether to include non-LTE bias correction for HI-RES sounder (see   |
+   |                        |                    | the RTTOV user guide).                                               |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | solar_sea_brdf_model   | integer            | The solar sea BRDF model to use (see the RTTOV user guide).          |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | ir_sea_emis_model      | logical            | The infrared sea emissivity model to use (see the RTTOV user guide). |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | use_sfc_snow_frac      | logical            | Whether to use the surface snow fraction (see the RTTOV user guide). |
+   |                        |                    | If true, the QTY_SNOWCOVER_FRAC will be requested from the model.    |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | add_aerosl             | logical            | Whether to use aerosols (see the RTTOV user guide).                  |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | aerosl_type            | integer            | Whether to use OPAC or CAMS aerosols (see the RTTOV user guide).     |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | add_clouds             | logical            | Whether to enable cloud scattering for visible/infrared (see the     |
+   |                        |                    | RTTOV user guide).                                                   |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | ice_scheme             | integer            | The ice scheme to use (see the RTTOV user guide).                    |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | use_icede              | logical            | Whether to use the ice effective diameter for visible/infrared (see  |
+   |                        |                    | the RTTOV user guide). If true, the QTY_CLOUD_ICE_DE will be         |
+   |                        |                    | requested from the model.                                            |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | idg_scheme             | integer            | The ice water effective diameter scheme to use (see the RTTOV user   |
+   |                        |                    | guide).                                                              |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | user_aer_opt_param     | logical            | Whether to directly specify aerosol scattering properties (see the   |
+   |                        |                    | RTTOV user guide). Not yet supported.                                |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | user_cld_opt_param     | logical            | Whether to directly specify cloud scattering properties (see the     |
+   |                        |                    | RTTOV user guide). Not yet supported.                                |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | grid_box_avg_cloud     | logical            | Whether to cloud concentrations are grid box averages (see the RTTOV |
+   |                        |                    | user guide).                                                         |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | cldstr_threshold       | real(r8)           | Threshold for cloud stream weights for scattering (see the RTTOV     |
+   |                        |                    | user guide).                                                         |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | cldstr_simple          | logical            | Whether to use one clear and one cloudy column (see the RTTOV user   |
+   |                        |                    | guide).                                                              |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | cldstr_low_cloud_top   | real(r8)           | Cloud fraction maximum in layers from the top of the atmosphere down |
+   |                        |                    | to the specified hPa (see the RTTOV user guide).                     |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | ir_scatt_model         | integer            | Which infrared scattering method to use (see the RTTOV user guide).  |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | vis_scatt_model        | integer            | Which visible scattering method to use (see the RTTOV user guide).   |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | dom_nstreams           | integer            | The number of streams to use with DOM (see the RTTOV user guide).    |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | dom_accuracy           | real(r8)           | The convergence criteria for DOM (see the RTTOV user guide).         |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | dom_opdep_threshold    | real(r8)           | Ignore layers below this optical depth (see the RTTOV user guide).   |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | addpc                  | logical            | Whether to do principal component calculations (see the RTTOV user   |
+   |                        |                    | guide).                                                              |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | npcscores              | integer            | Number of principal components to use for addpc (see the RTTOV user  |
+   |                        |                    | guide).                                                              |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | addradrec              | logical            | Reconstruct the radiances using addpc (see the RTTOV user guide).    |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | ipcreg                 | integer            | Number of predictors to use with addpc (see the RTTOV user guide).   |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | use_htfrtc             | logical            | Whether to use HTFRTC (see the RTTOV user guide).                    |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | htfrtc_n_pc            | integer            | Number of PCs to use with HTFRTC (see the RTTOV user guide).         |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | htfrtc_simple_cloud    | logical            | Whether to use simple cloud scattering with htfrtc (see the RTTOV    |
+   |                        |                    | user guide).                                                         |
+   +------------------------+--------------------+----------------------------------------------------------------------+
+   | htfrtc_overcast        | logical            | Whether to calculate overcast radiances with HTFRTC (see the RTTOV   |
+   |                        |                    | user guide).                                                         |
+   +------------------------+--------------------+----------------------------------------------------------------------+
 
 | 
-
---------------
 
 Files
 -----
 
 -  A DART observation sequence file containing Radar obs.
 
---------------
-
 References
 ----------
 
 -  `RTTOV user guide <https://www.nwpsaf.eu/site/software/rttov/documentation/>`__
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------------------------+----------------------------------------+----------------------------------------+
-   | Routine                         | Message                                | Comment                                |
-   +=================================+========================================+========================================+
-   | initialize_module               | initial allocation failed for          | Need to increase MAXrttovkey           |
-   |                                 | satellite observation data             |                                        |
-   +---------------------------------+----------------------------------------+----------------------------------------+
-   | initialize_rttov_sensor_runtime | Module or sensor is not initialized    | Both the module and the sensor must be |
-   |                                 |                                        | initialized before calling this        |
-   |                                 |                                        | routine.                               |
-   +---------------------------------+----------------------------------------+----------------------------------------+
-   | get_visir_metadata              | The key exceeds the size of the        | The number of satellite observations   |
-   |                                 | metadata arrays, or the key is not a   | exceeds the array size allocated in    |
-   |                                 | VIS/IR type                            | the module. Check the input and/or     |
-   |                                 |                                        | increase MAXrttovkey.                  |
-   +---------------------------------+----------------------------------------+----------------------------------------+
-   | get_mw_metadata                 | The key exceeds the size of the        | The number of satellite observations   |
-   |                                 | metadata arrays, or the key is not a   | exceeds the array size allocated in    |
-   |                                 | MW type                                | the module. Check the input and/or     |
-   |                                 |                                        | increase MAXrttovkey.                  |
-   +---------------------------------+----------------------------------------+----------------------------------------+
-   | read_rttov_metadata             | bad value for RTTOV fields             | The format of the input obs_seq file   |
-   |                                 |                                        | is not consistent.                     |
-   +---------------------------------+----------------------------------------+----------------------------------------+
-   | get_expected_radiance           | Could not find the                     | An unknown RTTOV instrument ID was     |
-   |                                 | platform/satellite/sensor id           | encountered. Check the database and/or |
-   |                                 | combination in the RTTOV sensor        | the observation metadata.              |
-   |                                 | database file.                         |                                        |
-   +---------------------------------+----------------------------------------+----------------------------------------+
-
-.. _private_components:
 
 Private components
 ------------------
 
 =============================== ===============================
 *use obs_def_rttov_mod, only :* initialize_module
-                                initialize_rttov_sensor_runtime
-                                initialize_rttov_sensor_runtime
+\                               initialize_rttov_sensor_runtime
+\                               initialize_rttov_sensor_runtime
 =============================== ===============================
 
 | 
@@ -895,11 +578,9 @@ Private components
    that are initialized in a "lazy" fashion only when it will be used for the first time.
 
    ============ ===============================================
-   ``sensor  `` The sensor type to be initialized
+   ``sensor``   The sensor type to be initialized
    ``ens_size`` The size of the ensemble
    ``nlevels``  The number of vertical levels in the atmosphere
    ============ ===============================================
 
 | 
-
---------------

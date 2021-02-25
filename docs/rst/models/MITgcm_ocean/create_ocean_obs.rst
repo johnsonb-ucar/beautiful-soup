@@ -1,17 +1,6 @@
 PROGRAM ``create_ocean_obs``
 ============================
 
-Contents
---------
-
--  `Modules used <#modules_used>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
-$Id$
-
 ``create_ocean_obs`` is responsible for converting an interim ASCII file of ocean observations into a DART observation
 sequence file. The interim ASCII file is a simple 'whitespace separated' table where each row is an observation and each
 column is specific information about the observation.
@@ -28,7 +17,7 @@ column is specific information about the observation.
 | 4             | observation value        | such as it is ...                                                       |
 +---------------+--------------------------+-------------------------------------------------------------------------+
 | 5             | vertical coordinate flag | see                                                                     |
-|               |                          | `location_mod:location_type </assim                                     |
+|               |                          | `location_mod:location_type <../../assim                                |
 |               |                          | ilation_code/location/threed_sphere/location_mod.html#location_type>`__ |
 |               |                          | for a full explanation. The short explanation is that *surface == -1*,  |
 |               |                          | and *depth == 3* There is a pathological difference between a surface   |
@@ -37,13 +26,13 @@ column is specific information about the observation.
 | 6             | observation variance     | good luck here ...                                                      |
 +---------------+--------------------------+-------------------------------------------------------------------------+
 | 7             | Quality Control flag     | integer value passed through to DART. There is a namelist parameter for |
-|               |                          | ``filter`` to ignore any observation with a                             |
-|               |                          | QC value <= `input_qc                                                   |
-|               |                          | _threshold </assimilation_code/programs/filter/filter.html#Namelist>`__ |
+|               |                          | ``filter`` to ignore any observation with a QC value <=                 |
+|               |                          | `input_qc_thre                                                          |
+|               |                          | shold <../../assimilation_code/programs/filter/filter.html#Namelist>`__ |
 +---------------+--------------------------+-------------------------------------------------------------------------+
 | 8             | obs_kind_name            | a character string that must match a string in                          |
-|               |                          | `obs_def/obs_def_MITgcm_ocean_mod.f90 <                                 |
-|               |                          | /observations/forward_operators/obs_def_MITgcm_ocean_model_mod.html>`__ |
+|               |                          | :do                                                                     |
+|               |                          | c:`../../observations/forward_operators/obs_def_MITgcm_ocean_model_mod` |
 +---------------+--------------------------+-------------------------------------------------------------------------+
 | 9             | startDate_1              | the year-month-date of the observation (YYYYMMDD format)                |
 +---------------+--------------------------+-------------------------------------------------------------------------+
@@ -67,13 +56,8 @@ For example:
    ...
 
 It is always possible to combine observation sequence files with the program
-`obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html>`__, so it was simply
-convenient to generate a separate file for each observation platform and type ('GLIDER' and 'TEMPERATURE'), however it
-is by no means required.
-
---------------
-
-.. _modules_used:
+:doc:`../../assimilation_code/programs/obs_sequence_tool/obs_sequence_tool`, so it was simply convenient to generate a
+separate file for each observation platform and type ('GLIDER' and 'TEMPERATURE'), however it is by no means required.
 
 Modules used
 ------------
@@ -87,8 +71,6 @@ Some of these modules use modules ... **those** modules and namelists are not di
    dart_MITocean_mod
    obs_sequence_mod
 
---------------
-
 Namelist
 --------
 
@@ -99,10 +81,10 @@ to the full documentation for each namelist.
 +----------------------------------------------------------+----------------------------------------------------------+
 | Namelist                                                 | Primary Purpose                                          |
 +==========================================================+==========================================================+
-| `utilities_nml </assimilatio                             | set the termination level and file name for the run-time |
+| `utilities_nml <../../assimilatio                        | set the termination level and file name for the run-time |
 | n_code/modules/utilities/utilities_mod.html#Namelist>`__ | log                                                      |
 +----------------------------------------------------------+----------------------------------------------------------+
-| `obs_sequence_nml </assimilation_code                    | write binary or ASCII observation sequence files         |
+| `obs_sequence_nml <../../assimilation_code               | write binary or ASCII observation sequence files         |
 | /modules/observations/obs_sequence_mod.html#Namelist>`__ |                                                          |
 +----------------------------------------------------------+----------------------------------------------------------+
 
@@ -154,8 +136,6 @@ terminating the namelist.
 
 | 
 
---------------
-
 Files
 -----
 
@@ -163,18 +143,7 @@ Files
 -  input data file: as listed by ``input.nml``\ ``&create_ocean_obs_nml:fname``
 -  output data file: as listed by ``input.nml``\ ``&create_ocean_obs_nml:output_name``
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-There are no error conditions specific to ``create_ocean_obs``.

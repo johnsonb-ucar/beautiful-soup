@@ -1,24 +1,8 @@
-.. _module_diag_manager_mod:
-
-Module diag_manager_mod
------------------------
-
-Contents
-~~~~~~~~
-
--  `Module diag_manager_mod <#module_diag_manager_mod>`__
-
-.. container::
-
-   **Contact:**  `Matt Harrison <mailto:mh@gfdl.noaa.gov>`__
-   **Reviewers:** 
-   **Change History:**  `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/>`__
-   **Last Modified:** 2002/03/22 00:08:55
-
---------------
+module diag_manager_mod
+=======================
 
 Overview
-^^^^^^^^
+--------
 
 <TT>diag_manager_mod</TT> is a set of simple calls for parallel diagnostics on distributed systems. It is geared toward
 the writing of data in netCDF format.
@@ -30,8 +14,8 @@ the writing of data in netCDF format.
    `<TT>mpp_io</TT> <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/shared/mpp/models/bgrid_solo/fms_src/shared/mpp/mpp_io.html>`__.
    A single group of calls to the <TT>diag_manager_mod</TT> interfaces provides data to disk at any number of sampling
    and/or averaging intervals specified at run-time. Run-time specification of diagnostics are input through the
-   diagnostics table, which is described in the
-   `diag_table_tk <models/bgrid_solo/fms_src/shared/diag_manager/diag_table_tk.html>`__ documentation.
+   diagnostics table, which is described in the :doc:`./models/bgrid_solo/fms_src/shared/diag_manager/diag_table_tk`
+   documentation.
    <B>Features of <TT>diag_manager_mod</TT> include:</B> Simple, minimal API.
    Run-time choice of diagnostics.
    Self-describing files: comprehensive header information (metadata) in the file itself.
@@ -46,10 +30,8 @@ the writing of data in netCDF format.
 
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -61,10 +43,8 @@ Other modules used
          diag_axis_mod
        diag_output_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -98,19 +78,15 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
    None.
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Send_data
       :name: send_data
@@ -123,20 +99,20 @@ a. .. rubric:: Send_data
       0.5. The weight array is currently not implemented.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``diag_field_id   ``                                      |    [integer]                                              |
-      |                                                           |    [integer]                                              |
-      |                                                           |    [integer]                                              |
-      |                                                           |    [integer]                                              |
+      | ``diag_field_id``                                         | [integer]                                                 |
+      |                                                           | [integer]                                                 |
+      |                                                           | [integer]                                                 |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``field   ``                                              |    [real]                                                 |
-      |                                                           |    [real, dimension(:)]                                   |
-      |                                                           |    [real, dimension(:,:)]                                 |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``field``                                                 | [real]                                                    |
+      |                                                           | [real, dimension(:)]                                      |
+      |                                                           | [real, dimension(:,:)]                                    |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``time   ``                                               |    [time_type]                                            |
-      |                                                           |    [time_type]                                            |
-      |                                                           |    [time_type]                                            |
-      |                                                           |    [time_type]                                            |
+      | ``time``                                                  | [time_type]                                               |
+      |                                                           | [time_type]                                               |
+      |                                                           | [time_type]                                               |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 b. .. rubric:: Register_diag_field
@@ -151,21 +127,21 @@ b. .. rubric:: Register_diag_field
       Return field index for subsequent calls to send_data
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``module_name   ``                                        |    [character(len=*)]                                     |
+      | ``module_name``                                           | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``field_name   ``                                         |    [character(len=*)]                                     |
+      | ``field_name``                                            | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``axes   ``                                               |    [integer, dimension(:)]                                |
+      | ``axes``                                                  | [integer, dimension(:)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``init_time   ``                                          |    [time_type]                                            |
+      | ``init_time``                                             | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``long_name   ``                                          |    [character(len=*)]                                     |
+      | ``long_name``                                             | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``units   ``                                              |    [character(len=*)]                                     |
+      | ``units``                                                 | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``missing_value   ``                                      |    [real]                                                 |
+      | ``missing_value``                                         | [real]                                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``range   ``                                              |    [real, dimension(2)]                                   |
+      | ``range``                                                 | [real, dimension(2)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 c. .. rubric:: Register_static_field
@@ -180,19 +156,19 @@ c. .. rubric:: Register_static_field
       Return field index for subsequent call to send_data.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``module_name   ``                                        |    [character(len=*)]                                     |
+      | ``module_name``                                           | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``field_name   ``                                         |    [character(len=*)]                                     |
+      | ``field_name``                                            | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``axes   ``                                               |    [integer, dimension(:)]                                |
+      | ``axes``                                                  | [integer, dimension(:)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``long_name   ``                                          |    [character(len=*)]                                     |
+      | ``long_name``                                             | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``units   ``                                              |    [character(len=*)]                                     |
+      | ``units``                                                 | [character(len=*)]                                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``missing_value   ``                                      |    [real]                                                 |
+      | ``missing_value``                                         | [real]                                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``range   ``                                              |    [real, dimension(2)]                                   |
+      | ``range``                                                 | [real, dimension(2)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 d. .. rubric:: Diag_manager_end
@@ -206,7 +182,7 @@ d. .. rubric:: Diag_manager_end
       Flushes diagnostic buffers where necessary. Close diagnostics files.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``TIME   ``                                               |    [time_type]                                            |
+      | ``TIME``                                                  | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 e. .. rubric:: Diag_manager_init
@@ -253,34 +229,28 @@ h. .. rubric:: Need_data
       diagnostics.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``inext_model_time   ``                                   | next_model_time = current model time + model time_step    |
-      |                                                           |    [time_type]                                            |
+      | ``inext_model_time``                                      | next_model_time = current model time + model time_step    |
+      |                                                           | [time_type]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``diag_field_id   ``                                      |    [integer]                                              |
+      | ``diag_field_id``                                         | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-
---------------
 
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
-
---------------
 
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
 
---------------
-
 References
-^^^^^^^^^^
+----------
 
 .. container::
 
@@ -288,10 +258,8 @@ References
 
 | 
 
---------------
-
 Compiler specifics
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -309,10 +277,8 @@ Compiler specifics
 
 | 
 
---------------
-
 Precompiler options
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 .. container::
 
@@ -321,10 +287,8 @@ Precompiler options
 
 | 
 
---------------
-
 Loader options
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
@@ -335,52 +299,20 @@ Loader options
 
               ACQUIRING SOURCE
 
---------------
-
 Test PROGRAM
-^^^^^^^^^^^^
+------------
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Known bugs
-^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
 
 Notes
-^^^^^
+-----
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Future plans
-^^^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
-
-.. container::
-
-   top

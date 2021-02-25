@@ -1,16 +1,6 @@
 PROGRAM ``snow_to_obs``
 =======================
 
-Contents
---------
-
--  `MODIS snowcover fraction observation converter <#modis_snowcover_fraction_observation_converter>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Namelist <#namelist>`__
-
-.. _modis_snowcover_fraction_observation_converter:
-
 MODIS snowcover fraction observation converter
 ----------------------------------------------
 
@@ -21,16 +11,10 @@ There are several satellite sources for snow observations. Generally the data is
 converter code in this directory DOES NOT READ HDF FILES as input. It expects the files to have been preprocessed to
 contain text, one line per observation, with northern hemisphere data only.
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
 not sure.
-
---------------
 
 Programs
 --------
@@ -47,8 +31,6 @@ There is another program in this directory called ``snow_to_obs_netcdf.f90`` whi
 files that contain some metadata and presumably have been converted from the original HDF. THIS HAS NOT BEEN TESTED but
 if you have such data, please contact dart@ucar.edu for more assistance. If you write something that reads the HDF-EOS
 MODIS files directly, please, please contact us! Thanks.
-
---------------
 
 Namelist
 --------
@@ -90,5 +72,3 @@ namelist.
 | debug           | logical            | If set to .true. the converter will print out more information as it does   |
 |                 |                    | the conversion.                                                             |
 +-----------------+--------------------+-----------------------------------------------------------------------------+
-
---------------

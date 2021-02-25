@@ -1,18 +1,6 @@
 PROGRAM ``obs_seq_to_netcdf``
 =============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Files <#files>`__
--  `Usage <#usage>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -21,7 +9,7 @@ Overview
   distribution of the observations and be able to discern which observations were assimilated or rejected, for example.
   Here are some graphics from ``DART/diagnostics/matlab/``\ ``plot_obs_netcdf.m``.
 | |DART observation 3D scatterplot| |DART 'bad' QC 3D scatterplot|
-| The intent is that user input is queried and a series of output files - one per assimilation cycle - will contain the
+| The intent is that user input is queried and a series of output files - one per assimilation cycle - will contain the
   observations for that cycle. It is hoped this will be useful for experiment design or, perhaps, debugging. This
   routine is also the first to use the new ``schedule_mod`` module which will ultimately control the temporal aspects of
   the assimilations (i.e. the assimilation schedule).
@@ -40,8 +28,6 @@ What's on the horizon ..
 | There are several Matlab scripts that understand how to read and plot observation data in netcdf format. See the
   ``link_obs.m`` script that creates several linked figures with the ability to 'brush' data in one view and have those
   selected data (and attributes) get highlighted in the other views.
-
---------------
 
 Namelist
 --------
@@ -97,15 +83,15 @@ You can only specify **either** ``obs_sequence_name`` **or** ``obs_sequence_list
    |                                       |                                       | for 'obsdir_002/obs_seq.final', and   |
    |                                       |                                       | so on.                                |
    |                                       |                                       | If this is specified,                 |
-   |                                       |                                       | 'obs_sequence_list' must be set to    |
-   |                                       |                                       | ' '.                                  |
+   |                                       |                                       | 'obs_sequence_list' must be set to '  |
+   |                                       |                                       | '.                                    |
    +---------------------------------------+---------------------------------------+---------------------------------------+
    | obs_sequence_list                     | character(len=256)                    | Name of an ascii text file which      |
    |                                       |                                       | contains a list of one or more        |
    |                                       |                                       | observation sequence files, one per   |
    |                                       |                                       | line. If this is specified,           |
-   |                                       |                                       | 'obs_sequence_name' must be set to    |
-   |                                       |                                       | ' '. Can be created by any method,    |
+   |                                       |                                       | 'obs_sequence_name' must be set to '  |
+   |                                       |                                       | '. Can be created by any method,      |
    |                                       |                                       | including sending the output of the   |
    |                                       |                                       | 'ls' command to a file, a text        |
    |                                       |                                       | editor, or another program.           |
@@ -145,7 +131,7 @@ You can only specify **either** ``obs_sequence_name`` **or** ``obs_sequence_list
    +---------------------------------------+---------------------------------------+---------------------------------------+
 
 The schedule namelist
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
 The default values specify one giant 'bin'.
 
@@ -286,10 +272,6 @@ only participate in one assimilation window. Historically, DART has always taken
 part of the subsequent assimilation cycle. The smallest amount of time representable to DART is 1 second, so the
 smallest possible delta is added to one of the assimilation edges.
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -308,9 +290,7 @@ Other modules used
 
 Naturally, the program must be compiled with support for the observation types contained in the observation sequence
 files, so ``preprocess`` must be run to build appropriate ``obs_def_mod`` and ``obs_kind_mod`` modules - which may need
-specific obs_def_?????.f90 files.
-
---------------
+specific ``obs_def_?????.f90`` files.
 
 Files
 -----
@@ -442,11 +422,9 @@ make sensible plots of the observations. Some important aspects are highlighted.
   interpretation of the column is found in the ``CopyMetaData`` variable. Same thing goes for the ``qc`` variable - each
   column is defined by the ``QCMetaData`` variable.
 | The ``Obs_Type`` variable is crucial. Each observation has an integer code to define the specific ... DART observation
-  type. In our example - lets assume that observation number 10 (i.e. ObsIndex == 10) has an ``obs_type`` of 3
-  [i.e. obs_type(10) = 3]. Since ``ObsTypesMetaData(3) == "RADIOSONDE_SURFACE_PRESSURE"``, we know that any/all
-  quantities where ObsIndex == 10 pertain to a radiosonde surface pressure observation.
-
---------------
+  type. In our example - lets assume that observation number 10 (i.e. ObsIndex == 10) has an ``obs_type`` of 3 [i.e.
+  obs_type(10) = 3]. Since ``ObsTypesMetaData(3) == "RADIOSONDE_SURFACE_PRESSURE"``, we know that any/all quantities
+  where ObsIndex == 10 pertain to a radiosonde surface pressure observation.
 
 Usage
 -----
@@ -606,7 +584,7 @@ Matlab helper functions
 | On my systems, I've bundled those last 2 commands into a function called ``ncstartup.m`` which is run every time I
   start Matlab (because it is in my ``~/matlab/startup.m``)
 | As is standard practice, the instructions for using the Matlab scripts ``plot_obs_netcdf`` and
-  ``plot_obs_netcdf_diffs`` are available by using the Matlab 'help' facility (i.e. *help plot_obs_netcdf* ). A quick
+  ``plot_obs_netcdf_diffs`` are available by using the Matlab 'help' facility (i.e. *help plot_obs_netcdf* ). A quick
   discussion of them here still seems appropriate. If you run the following Matlab commands with an
   ``obs_sequence_001.nc`` file you cannot possibly have:
 
@@ -693,50 +671,21 @@ And if you act today, we'll throw in a structure containing the selected data AT
 If there are observations with QC values above that defined by ``maxQC`` there will be a ``badobs`` structure as a
 component in the ``obs`` structure.
 
---------------
-
 References
 ----------
 
 #. none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +-------------------+-----------------------------------+------------------------------------------------------------+
-   | Routine           | Message                           | Comment                                                    |
-   +===================+===================================+============================================================+
-   | obs_seq_to_netcdf | No first observation in sequence. | get_first_obs couldn't find a "first obs" in the           |
-   |                   |                                   | obs_seq.final.                                             |
-   +-------------------+-----------------------------------+------------------------------------------------------------+
-   | obs_seq_to_netcdf | No last observation in sequence   | get_last_obs couldn't find a "last obs" in the             |
-   |                   |                                   | obs_seq.final                                              |
-   +-------------------+-----------------------------------+------------------------------------------------------------+
-   | obs_seq_to_netcdf | metadata:observation not found    | Couldn't find the index for the observation value in the   |
-   |                   |                                   | observation sequence file. It is the only one that is      |
-   |                   |                                   | required.                                                  |
-   +-------------------+-----------------------------------+------------------------------------------------------------+
-
-.. _private_components:
 
 Private components
 ------------------
 
 N/A
 
---------------
-
 .. |DART observation 3D scatterplot| image:: ../../../docs/images/plot_obs_netcdf_fig1.png
    :height: 300px
-   :target: /docs/images/plot_obs_netcdf_fig1.png
+   :target: ../../../docs/images/plot_obs_netcdf_fig1.png
 .. |DART 'bad' QC 3D scatterplot| image:: ../../../docs/images/plot_obs_netcdf_fig2.png
    :height: 300px
-   :target: /docs/images/plot_obs_netcdf_fig2.png
+   :target: ../../../docs/images/plot_obs_netcdf_fig2.png
 .. |DART assimilation schedule| image:: ../../../docs/images/schedule.png
    :height: 200px

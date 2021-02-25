@@ -1,18 +1,6 @@
 MODULE model_mod
 ================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -26,16 +14,10 @@ Overview
 
 and then leave them in the public list.
 
---------------
-
 Namelist
 --------
 
 The default routines have no namelist.
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -50,34 +32,30 @@ Other modules used
    ensemble_manager_mod
    dart_time_io_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ======================= ===================================
 *use model_mod, only :* get_model_size
-                        adv_1step
-                        get_state_meta_data
-                        model_interpolate
-                        shortest_time_between_assimilations
-                        static_init_model
-                        init_time
-                        fail_init_time
-                        init_conditions
-                        fail_init_conditions
-                        nc_write_model_atts
-                        nc_write_model_vars
-                        pert_model_copies
-                        get_close_obs
-                        get_close_state
-                        convert_vertical_obs
-                        convert_vertical_state
-                        read_model_time
-                        write_model_time
-                        end_model
+\                       adv_1step
+\                       get_state_meta_data
+\                       model_interpolate
+\                       shortest_time_between_assimilations
+\                       static_init_model
+\                       init_time
+\                       fail_init_time
+\                       init_conditions
+\                       fail_init_conditions
+\                       nc_write_model_atts
+\                       nc_write_model_vars
+\                       pert_model_copies
+\                       get_close_obs
+\                       get_close_state
+\                       convert_vertical_obs
+\                       convert_vertical_state
+\                       read_model_time
+\                       write_model_time
+\                       end_model
 ======================= ===================================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -124,7 +102,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call get_state_meta_data (index_in, location, [, var_type] )*
+   *call get_state_meta_data (index_in, location, [, var_type] )*
    ::
 
       integer,             intent(in)  :: index_in
@@ -298,7 +276,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call nc_write_model_vars(ncFileID, domain_id, state_ens_handle [, memberindex] [, timeindex])*
+   *call nc_write_model_vars(ncFileID, domain_id, state_ens_handle [, memberindex] [, timeindex])*
    ::
 
       integer,             intent(in) :: ncFileID
@@ -356,8 +334,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call get_close_obs(gc, base_loc, base_type, locs, loc_qtys, loc_types, num_close, close_ind [, dist]
-   [, state_handle)*
+   *call get_close_obs(gc, base_loc, base_type, locs, loc_qtys, loc_types, num_close, close_ind [, dist] [,
+   state_handle)*
    ::
 
       type(get_close_type),          intent(in)  :: gc
@@ -488,7 +466,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    | ``which_vert``   | the desired vertical coordinate system. There is a table in the ``location_mod.f90`` that        |
    |                  | relates integers to vertical coordinate systems.                                                 |
    +------------------+--------------------------------------------------------------------------------------------------+
-   | ``status``       | Success or failure of the vertical conversion. If ``istatus = 0``, the conversion was a success. |
+   | ``status``       | Success or failure of the vertical conversion. If ``istatus = 0``, the conversion was a success. |
    |                  | Any other value is a failure.                                                                    |
    +------------------+--------------------------------------------------------------------------------------------------+
 
@@ -525,7 +503,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    | ``which_vert``   | the desired vertical coordinate system. There is a table in the ``location_mod.f90`` that        |
    |                  | relates integers to vertical coordinate systems.                                                 |
    +------------------+--------------------------------------------------------------------------------------------------+
-   | ``status``       | Success or failure of the vertical conversion. If ``istatus = 0``, the conversion was a success. |
+   | ``status``       | Success or failure of the vertical conversion. If ``istatus = 0``, the conversion was a success. |
    |                  | Any other value is a failure.                                                                    |
    +------------------+--------------------------------------------------------------------------------------------------+
 
@@ -577,34 +555,17 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Does nothing.
 
---------------
-
 Files
 -----
 
 none
-
---------------
 
 References
 ----------
 
 #. none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-Standard errors.
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

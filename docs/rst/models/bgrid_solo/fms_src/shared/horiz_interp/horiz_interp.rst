@@ -1,24 +1,8 @@
-.. _module_horiz_interp_mod:
-
-Module horiz_interp_mod
------------------------
-
-Contents
-~~~~~~~~
-
--  `Module horiz_interp_mod <#module_horiz_interp_mod>`__
-
-.. container::
-
-   **Contact:**  `Bruce Wyman <mailto:bw@gfdl.noaa.gov>`__
-   **Reviewers:** 
-   **Change History:**  `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/>`__
-   **Last Modified:** 2002/06/06 17:58:37
-
---------------
+module horiz_interp_mod
+=======================
 
 Overview
-^^^^^^^^
+--------
 
 Performs spatial interpolation between rectangular latitude/longitude grids.
 

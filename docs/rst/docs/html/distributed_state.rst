@@ -1,9 +1,6 @@
 Distributed State
 =================
 
-Contents
---------
-
 The key part of RMA DART is having a state that is physically distributed across processors. The location in memory of
 any part of the state vector (which processor and where in memory on that processor) is completely under the control of
 filter, not model_mod.
@@ -27,7 +24,7 @@ State accessor routines
 Getting the dart index
 ''''''''''''''''''''''
 
-function get_dart_vector_index(i, j, k, dom_id, var_id)
+``function get_dart_vector_index(i, j, k, dom_id, var_id)``
 
 get_dart_vector_index returns the dart index for a given i,j,k of a variable. Note if the variable is 1D j and k are
 ignored. If a variable is 2D k is ignored. Note only variables upto 3D are supported, but this could be extended to
@@ -51,24 +48,22 @@ an observation is in depends on the state and so can vary across the ensemble.
 The code inside get_state_array will do the minimum amount of communication to get you the indices you need. For example
 if
 
-  index = [ 3 4 3 3 4 3]
+index = [ 3 4 3 3 4 3]
 
 get_state_array will only do 2 mpi communications and return
 
-  x = [state(3), state(4), state(3), state(3), state(4), state(3)]
+x = [state(3), state(4), state(3), state(3), state(4), state(3)]
 
 A limited module diagram is shown below. A -> B means A uses B:
 
-|image1|
-
-Filter_mod and assim_tools_mod take care of making data available for use with get_state. Note get_state will only
-return data during *model_interpolate*, *get_close_obs*, or *vert_convert*. If you use get_state outside these routines
-you will get and error.
+|image1| Filter_mod and assim_tools_mod take care of making data available for use with get_state. Note get_state will
+only return data during *model_interpolate*, *get_close_obs*, or *vert_convert*. If you use get_state outside these
+routines you will get and error.
 
 **Compliation Notes**
 
 The Remote Memory Access programming model we are using uses mpi_windows. There are 2 ways to compile window mods for
-mpi and non-mpi filter. This is taken care of automatically when you run quickbuild.csh or an mkmf_\* with -mpi or
+mpi and non-mpi filter. This is taken care of automatically when you run quickbuild.csh or an ``mkmf_*`` with -mpi or
 -nompi. However, if you use mpi, there is a choice of mpi_window mods:
 
 -  cray_win_mod.f90
@@ -81,6 +76,4 @@ mpi and non-mpi filter. This is taken care of automatically when you run quickbu
   no_cray_win_mod.f90 is the default since some versions of gfortran (4.9.0) do not support cray pointers. These
   different modules will go away when we swap to MPI 3.
 
---------------
-
-.. |image1| image:: ./Graphs/window.gv.svg
+.. |image1| image:: ../Graphs/window.gv.svg

@@ -1,21 +1,11 @@
 PROGRAM ``dart_to_ncommas``
 ===========================
 
-Contents
---------
-
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files read <#files_read>`__
--  `Files written <#files_written>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 | ``dart_to_ncommas`` is the program that **updates** a ncommas netCDF-format restart file (usually
   ``ncommas_restart.nc``) with the state information contained in a DART output/restart file (e.g.
-  ``perfect_ics, filter_ics, ...``). Only the CURRENT values in the ncommas restart file will be updated. The DART model
-  time is compared to the time in the ncommas restart file. If the last time in the restart file does not match the DART
-  model time, the program issues an error message and aborts.
+  ``perfect_ics, filter_ics, ...`` ). Only the CURRENT values in the ncommas restart file will be updated. The DART
+  model time is compared to the time in the ncommas restart file. If the last time in the restart file does not match
+  the DART model time, the program issues an error message and aborts.
 | From the user perspective, most of the time ``dart_to_ncommas`` will be used on DART files that have a header
   containing one time stamp followed by the model state.
 | The dart_to_ncommas_nml namelist allows ``dart_to_ncommas`` to read the ``assim_model_state_ic`` files that have *two*
@@ -35,8 +25,6 @@ Contents
 Since this program is called repeatedly for every ensemble member, we have found it convenient to link the DART input
 file to the default input filename (``dart_restart``). The same thing goes true for the ncommas output filename
 ``ncommas_restart.nc``.
-
---------------
 
 Namelist
 --------
@@ -125,10 +113,6 @@ namelist.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -144,10 +128,6 @@ Modules used
    types_mod
    utilities_mod
 
---------------
-
-.. _files_read:
-
 Files read
 ----------
 
@@ -156,26 +136,13 @@ Files read
 -  ncommas namelist file; ``ncommas_vars.nml``
 -  ncommas restart file ``ncommas_restart.nc``
 
-.. _files_written:
-
 Files written
 -------------
 
 -  ncommas restart file; ``ncommas_restart.nc``
 -  ncommas namelist file; ``ncommas_in.DART``
 
---------------
-
 References
 ----------
 
 none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-none - all error messages come from modules that have their own documentation.

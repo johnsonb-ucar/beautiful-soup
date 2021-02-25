@@ -1,20 +1,6 @@
 program ``obs_sequence_tool``
 =============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Examples <#examples>`__
--  `Discussion <#discussion>`__
--  `Faq <#faq>`__
--  `Building <#building>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -34,8 +20,6 @@ section below.
 The examples section of this document below has extensive examples of common usages for this tool. Below that are more
 details about DART observation sequence files, the structure of individual observations, and general background
 information.
-
---------------
 
 Namelist
 --------
@@ -293,8 +277,6 @@ namelist.
    +----------------------+-------------------------------------+-------------------------------------------------------+
 
 | 
-
---------------
 
 Examples
 --------
@@ -606,8 +588,6 @@ units and valid ranges. For example:
       min_copy           = 250.0,
       max_copy           = 300.0,
 
---------------
-
 Discussion
 ----------
 
@@ -668,8 +648,6 @@ Observations can be restricted to a given bounding box, either in latitude and l
 the observations have 1D locations, then a single value for min_box and max_box can be specified to restrict the
 observations to a subset of the space.
 
---------------
-
 Faq
 ---
 
@@ -694,23 +672,17 @@ types. But it is not an error to list files where no observations will be copied
 to list a set of observation files and then set the first and last observation times, run the tool to select a shorter
 time period, then change the first and last times and run again with the same list of files.
 
---------------
-
 Building
 --------
 
 Most ``$DART/models/*/work`` directories will build the tool along with other executable programs. It is also possible
 to build the tool in the ``$DART/observations/utilities`` directory. The ``preprocess`` program must be built and run
-first, to define what set of observation types will be supported. See the `preprocess
-documentation </assimilation_code/programs/preprocess/preprocess.html>`__ for more details on how to define the list and
-run it. The combined list of all observation types which will be encountered over all input files must be in the
-preprocess input list. The other important choice when building the tool is to include a compatible locations module.
-For the low-order models, the ``oned`` module should be used; for real-world observations, the ``threed_sphere`` module
-should be used.
-
---------------
-
-.. _modules_used:
+first, to define what set of observation types will be supported. See the
+:doc:`../../../assimilation_code/programs/preprocess/preprocess` for more details on how to define the list and run it.
+The combined list of all observation types which will be encountered over all input files must be in the preprocess
+input list. The other important choice when building the tool is to include a compatible locations module. For the
+low-order models, the ``oned`` module should be used; for real-world observations, the ``threed_sphere`` module should
+be used.
 
 Modules used
 ------------
@@ -723,8 +695,6 @@ Modules used
    obs_def_mod
    obs_sequence_mod
 
---------------
-
 Files
 -----
 
@@ -733,129 +703,7 @@ Files
    ``filename_seq_list``.
 -  The output file specified in the ``filename_out`` namelist variable.
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   Routine
-
-Message
-
-Comment
-
-obs_sequence_tool
-
-num_input_files > max_num_input_files.
-
-The limit is currently 1000 files. Change 'max_num_input_files' in the source file and recompile.
-
-obs_sequence_tool
-
-use either lat/lon box or min/max box but not both
-
-When selecting a region you can specify a box by latitude/longitude namelist limits, or you can use the min/max box
-namelist lists but not both.
-
-obs_sequence_tool
-
-can only use lat/lon box with 2d/3d sphere locations
-
-The lat/lon limits work only for the 2D and 3D sphere locations.
-
-obs_sequence_tool
-
-min_lat must be less than max_lat
-
-adjust region limits so min is less than max
-
-obs_sequence_tool
-
-| min_lat cannot be less than -90.0 degrees
-| max_lat cannot be greater than 90.0 degrees
-| min_lon cannot be greater than 360.0 degrees
-| max_lon cannot be greater than 360.0 degrees
-
-fix latitude limits to be within -90 to 90, longitude limits to be 0 to 360. If longitude is negative, 360 will be added
-so values of -180 to 180 are ok.
-
-obs_sequence_tool
-
-| min_lon cannot exactly equal max_lon
-| min_lat cannot exactly equal max_lat
-
-the region select box must have a positive volume
-
-obs_sequence_tool
-
-must specify the metadata name of a QC field
-
-if selecting observations by QC value, you must specify the metadata string for which QC field to use.
-
-obs_sequence_tool
-
-must specify the metadata name of a copy field
-
-if selecting observations by value, you must specify the metadata string for which copy field to use.
-
-obs_sequence_tool
-
-first time cannot be later than last time
-
-if selecting a time range, the interval must be legal
-
-obs_sequence_tool
-
-new_copy_index values must be between 0 and N
-
-if reordering or selecting only certain copies the list must only include valid indices from the input sequence
-
-obs_sequence_tool
-
-new_qc_index values must be between 0 and N
-
-if reordering or selecting only certain QCs the list must only include valid indices from the input sequence
-
-obs_sequence_tool
-
-All input files are empty or all obs excluded by time/type/location
-
-The selection criteria has excluded all the possible observations, or none of the input observation sequence files
-contain observations.
-
-obs_sequence_tool
-
-Internal error trying to process file
-
-Shouldn't happen. Contact the DART development team with details of how this occurred.
-
-obs_sequence_tool
-
-observations must be in increasing time order
-
-one or more of the input observation sequence files has out-of-time-order observations. This should not happen if the
-input file was created with DART subroutines.
-
-obs_sequence_tool
-
-cannot specify both filename_seq and filename_seq_list
-
-In the input namelist you can either give a file or a list of files for the 'filename_seq' item, or you can give the
-name of a file that contains the names in 'filename_seq_list'. You cannot specify both. Set one of these to ' '.
-
-obs_sequence_tool
-
-contains no filenames
-
-the 'filename_seq_list' file contains no filenames to be used as input observation sequence files

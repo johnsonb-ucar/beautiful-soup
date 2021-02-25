@@ -1,16 +1,6 @@
 PROGRAM ``replace_wrf_fields``
 ==============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -25,8 +15,6 @@ This program copies the given data fields from the input file to the output file
 data types do not match exactly. The expected use is to copy fields which are updated by the WRF program but are not
 part of the DART state vector, for example, sea surface temperature or soil fields. After DART has updated the WRF
 restart ``wrfinput_d01`` file, this program can be used to update other fields in the file before running the model.
-
---------------
 
 Namelist
 --------
@@ -55,12 +43,12 @@ namelist.
    |                       |                        | file to the output netCDF file. The names must match exactly, and |
    |                       |                        | the size and shape of the data must be the same in the input and  |
    |                       |                        | output files for the data to be copied. If the field names are    |
-   |                       |                        | set here, the fieldlist_file item must be ' '.                    |
+   |                       |                        | set here, the fieldlist_file item must be ' '.                    |
    +-----------------------+------------------------+-------------------------------------------------------------------+
    | fieldlist_file        | character(len=129)     | An alternative to an explicit list of field names to copy. This   |
    |                       |                        | is a single string, the name of a file which contains a single    |
    |                       |                        | field name, one per line. If this option is set, the fieldnames   |
-   |                       |                        | namelist item must be ' '.                                        |
+   |                       |                        | namelist item must be ' '.                                        |
    +-----------------------+------------------------+-------------------------------------------------------------------+
    | fail_on_missing_field | logical                | If any fields in the input list are not found in either the input |
    |                       |                        | or output netcdf files, fail if this is set to true. If false, a  |
@@ -72,10 +60,6 @@ namelist.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -85,13 +69,11 @@ Modules used
    utilities_mod
    parse_args_mod
 
---------------
-
 Files
 -----
 
 -  input namelist ; ``input.nml``
--  Input - output WRF state netCDF files; ``wrfinput_d01,    wrfinput_d02, ...``
+-  Input - output WRF state netCDF files; ``wrfinput_d01, wrfinput_d02, ...``
 -  fieldlist_file (if specified in namelist)
 
 File formats
@@ -99,39 +81,7 @@ File formats
 
 This utility works on any pair of netCDF files, doing a simple read and copy from one to the other.
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-   | Routine            | Message                                       | Comment                                       |
-   +====================+===============================================+===============================================+
-   | replace_wrf_fields | Usage: echo infile.nc outfile.nc \|           | The program did not read 2 filenames from the |
-   |                    | ./replace_wrf_fields                          | console.                                      |
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-   | replace_wrf_fields | cannot specify both fieldnames and            | In the namelist you must either specify an    |
-   |                    | fieldlist_file                                | explicit list of fieldnames to copy between   |
-   |                    |                                               | the files, or give a single filename which    |
-   |                    |                                               | contains the list of field names. You cannot  |
-   |                    |                                               | specify both.                                 |
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-   | replace_wrf_fields | *field* not found in input/output file        | If 'fail_on_missing_field' is true in the     |
-   |                    |                                               | namelist and a field is not found in either   |
-   |                    |                                               | the input or output file.                     |
-   +--------------------+-----------------------------------------------+-----------------------------------------------+
-   | replace_wrf_fields | *field* does not match                        | If the input and output files have different  |
-   |                    |                                               | sizes, number of dimensions, or data types,   |
-   |                    |                                               | the program cannot copy the data.             |
-   +--------------------+-----------------------------------------------+-----------------------------------------------+

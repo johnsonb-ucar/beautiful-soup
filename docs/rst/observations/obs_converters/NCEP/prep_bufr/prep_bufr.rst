@@ -1,26 +1,13 @@
 PROGRAM ``prepbufr``
 ====================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Instructions <#instructions>`__
--  `Other modules used <#other_modules_used>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
 Translating NCEP PREPBUFR files into DART obs_seq.out files (input file to filter) is a 2 stage process. The first stage
 uses NCEP software to translate the PREPBUFR file into an intermediate text file. This is described in this document.
 The second step is to translate the intermediate files into obs_seq.out files, which is done by create_real_obs, as
-described in `create_real_obs </observations/obs_converters/NCEP/ascii_to_obs/create_real_obs.html>`__ .
-
---------------
+described in :doc:`../ascii_to_obs/create_real_obs` .
 
 Instructions
 ------------
@@ -158,8 +145,8 @@ executable cwordsh.x executable.
 
 Note that if you can get the blocked file formats to begin with, this program is not needed.
 
-Getting the ncep reanalysis prepbufr format data from ncar hpss.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Getting the ncep reanalysis prepbufr format data from ncar hpss
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The NCEP PREPBUFR files (prepqmYYMMDDHH) can be found within the NCEP reanalysis dataset, ds090.0, on NCAR Mass Store
 System (HPSS).
@@ -223,25 +210,19 @@ code for running in the LSF batch environment, but not PBS.
 Currently, this script generates decoded PREPBUFR text data each 24 hours which contains the observations within the
 time window of -3:01 hours to +3:00Z within each six-hour synoptic time. These daily output text files are named as
 temp_obs.yyyymmdd. These text PREPBUFR data files can then be read by
-DART/observations/NCEP/ascii_to_obs/work/`create_real_obs </observations/obs_converters/NCEP/ascii_to_obs/create_real_obs.html>`__
-to generate the DART daily observation sequence files.
+DART/observations/NCEP/ascii_to_obs/work/:doc:`../ascii_to_obs/create_real_obs` to generate the DART daily observation
+sequence files.
 
 There is an alternate section in the script which creates a decoded PREPBUFR text data file each 6 hours (so they are
 1-for-1 with the original PREPBUFR files). Edit the script prepbufr.csh and look for the commented out code which
 outputs 4 individual files per day. Note that if you chose this option, you will have to make corresponding changes in
 the create_obs_seq.csh script in step 2.
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
 This is a piece of code that is intended to be 'close' to the original, as such, we have not modified it to use the DART
 build mechanism. This code does not use any DART modules.
-
---------------
 
 Namelist
 --------
@@ -307,8 +288,6 @@ namelist.
 
 | 
 
---------------
-
 Files
 -----
 
@@ -317,18 +296,7 @@ Files
 -  intermediate (binary) prepqm.little; output from grabbufr, input to prepbufr.
 -  intermediate (text) file(s) "temp_obs.yyyymmddhh"; output from prepbufr, input to create_real_obs
 
---------------
-
 References
 ----------
 
 DART/observations/NCEP/prep_bufr/docs/\* (NCEP text files describing the PREPBUFR files)
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-Various, see the source code, doc directory, and README files for more help.

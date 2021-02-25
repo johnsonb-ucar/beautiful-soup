@@ -1,19 +1,11 @@
 PROGRAM ``level4_to_obs``
 =========================
 
-Contents
+Overview
 --------
 
--  `Namelist <#namelist>`__
--  `Data sources <#data_sources>`__
--  `Programs <#programs>`__
--  `Decisions you might need to make <#decisions_you_might_need_to_make>`__
-
-Overview
-========
-
 AmeriFlux level 4 data to DART observation sequence converter
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 | This routine is designed to convert the flux tower Level 4 data from the `AmeriFlux <http://ameriflux.lbl.gov>`__
   network of observations from micrometeorological tower sites. AmeriFlux is part of
@@ -22,11 +14,10 @@ AmeriFlux level 4 data to DART observation sequence converter
 | The AmeriFlux Level 4 products are recorded using the local time. DART observation sequence files use GMT. For more
   information about AmeriFlux data products, go to http://ameriflux.lbl.gov.
 
-Notice
-^^^^^^
+.. warning::
 
-There was a pretty severe bug in the converter that swapped latent heat flux and sensible heat flux. The bug was present
-through revision 7200. It has been corrected in all subsequent versions.
+   There was a pretty severe bug in the converter that swapped latent heat flux and sensible heat flux. The bug was
+   present through revision 7200. It has been corrected in all subsequent versions.
 
 The workflow is usually:
 
@@ -38,13 +29,11 @@ The workflow is usually:
    Level 4 data file
 #. convert each Level 4 data file individually using ``level4_to_obs``
 #. combine all output files for the region and timeframe of interest into one file using
-   `obs_sequence_tool </assimilation_code/programs/obs_sequence_tool/obs_sequence_tool.html%20>`__
+   :doc:`../../../assimilation_code/programs/obs_sequence_tool/obs_sequence_tool`
 
 For some models (CLM, for example), it is required to reorganize the observation sequence files into a series of files
 that contains ONLY the observations for each assimilation. This can be achieved with the `makedaily.sh <makedaily.sh>`__
 script.
-
---------------
 
 Namelist
 --------
@@ -101,16 +90,12 @@ namelist.
    | verbose         | logical            | Print extra information during the ``level4_to_obs`` execution.             |
    +-----------------+--------------------+-----------------------------------------------------------------------------+
 
---------------
-
-.. _data_sources:
-
 Data sources
 ------------
 
 | The data was acquired from http://cdiac.ornl.gov/ftp/ameriflux/data/Level4/Sites_ByName
 | and have names like
-  ``USBar2004_L4_h.txt,  USHa12004_L4_h.txt,  USNR12004_L4_h.txt,  USSP32004_L4_h.txt,  USSRM2004_L4_h.txt,  USWCr2004_L4_h.txt,  USWrc2004_L4_h.txt, ...``
+  ``USBar2004_L4_h.txt, USHa12004_L4_h.txt, USNR12004_L4_h.txt, USSP32004_L4_h.txt, USSRM2004_L4_h.txt, USWCr2004_L4_h.txt, USWrc2004_L4_h.txt, ...``
 | The Level 4 products in question are ASCII files of comma-separated values taken every 30 minutes for an entire year.
   The first line is a comma-separated list of column descriptors, all subsequent lines are comma-separated numerical
   values. The converter presently searches for the columns pertaining to *NEE_or_fMDS*, *H_f*, *LE_f*, their
@@ -128,8 +113,6 @@ DART type
 DART kind
 
 DART units
-
---------------
 
 W/m^2
 
@@ -155,8 +138,6 @@ N/A
 
 same
 
---------------
-
 W/m^2
 
 H_f
@@ -180,8 +161,6 @@ N/A
 N/A
 
 same
-
---------------
 
 umolCO2/m^2/s
 
@@ -232,8 +211,6 @@ I believe it is important to be a good scientific citizen:
    Lastly, we kindly request that those publishing papers using AmeriFlux data provide reprints to the PIs providing the
    data and to the AmeriFlux archive via ameriflux.lbl.gov."
 
---------------
-
 Programs
 --------
 
@@ -256,15 +233,9 @@ the ``data`` directory. These are *NOT* intended to be turnkey scripts; they wil
 your use. There are comments at the top of the script saying what options they include, and should be commented enough
 to indicate where changes will be likely to need to be made.
 
---------------
-
-.. _decisions_you_might_need_to_make:
-
 Decisions you might need to make
 --------------------------------
 
-See the discussion in the `obs_converters/README.md </observations/obs_converters/README.md#Decisions>`__ page about
-what options are available for the things you need to specify. These include setting a time, specifying an expected
-error, setting a location, and an observation type.
-
---------------
+See the discussion in the `obs_converters/README.md <../README.md#Decisions>`__ page about what options are available
+for the things you need to specify. These include setting a time, specifying an expected error, setting a location, and
+an observation type.

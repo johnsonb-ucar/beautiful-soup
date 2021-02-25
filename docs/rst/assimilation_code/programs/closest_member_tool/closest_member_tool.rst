@@ -1,15 +1,6 @@
 PROGRAM ``closest_member_tool``
 ===============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -48,8 +39,6 @@ output file 'closest_restart' contains a single number which is the ensemble mem
 in separate files, the output file contains the full filename of the closest member, e.g. 'filter_restart.0004' if
 member 4 is closest. For scripting the contents of this file can be used to copy the corresponding member data and
 convert it to the model input format for a free forecast, for example.
-
---------------
 
 Namelist
 --------
@@ -112,8 +101,8 @@ namelist.
    |                                       |                                       | model interface code to determine     |
    |                                       |                                       | which possible quantities are         |
    |                                       |                                       | returned by the                       |
-   |                                       |                                       | `get_                                 |
-   |                                       |                                       | state_meta_data() </models/template/m |
+   |                                       |                                       | `get_state_me                         |
+   |                                       |                                       | ta_data() <../../../models/template/m |
    |                                       |                                       | odel_mod.html#get_state_meta_data>`__ |
    |                                       |                                       | routine.                              |
    +---------------------------------------+---------------------------------------+---------------------------------------+
@@ -151,8 +140,6 @@ model advances such as ``lorenz_96``.
 
 | 
 
---------------
-
 Files
 -----
 
@@ -160,28 +147,7 @@ Files
 -  ``restart_list.txt`` (a file containing a list of restart files) and,
 -  ``input.nml``
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------------+----------------------------------------------+----------------------------------------------+
-   | Routine             | Message                                      | Comment                                      |
-   +=====================+==============================================+==============================================+
-   | closest_member_tool | Invalid method number                        | Values 1-4 are supported                     |
-   +---------------------+----------------------------------------------+----------------------------------------------+
-   | read_variables      | <some variable name>: NetCDF: Start+count    | The variable in the model definition is not  |
-   |                     | exceeds dimension bound                      | conformable with the variable in the restart |
-   |                     |                                              | file.                                        |
-   +---------------------+----------------------------------------------+----------------------------------------------+

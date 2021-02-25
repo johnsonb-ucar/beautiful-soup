@@ -1,9 +1,6 @@
 The MPI version of DART
 =======================
 
-Contents
---------
-
 Introduction
 ~~~~~~~~~~~~
 
@@ -85,8 +82,8 @@ DART use of MPI
   independently without the model having to know about MPI or parallelism.
 | Compiling and running an MPI application can be substantially more complicated than running a single executable. There
   are a suite of small test programs to help diagnose any problems encountered in trying to run the new version of DART.
-  Look in `developer_tests/mpi_utilities/tests/README </developer_tests/mpi_utilities/tests/README>`__ for instructions
-  and a set of tests to narrow down any difficulties.
+  Look in `developer_tests/mpi_utilities/tests/README <../../developer_tests/mpi_utilities/tests/README>`__ for
+  instructions and a set of tests to narrow down any difficulties.
 
 Performance issues and timing results
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -153,5 +150,3 @@ User considerations for their own configurations
 | Some models have large memory footprints, and it may be necessary to run in MPI mode not necessarily because the
   computation is faster in parallel, but because the dataset size is larger than the physical memory on a node and must
   be divided and spread across multiple nodes to avoid paging to disk.
-
---------------

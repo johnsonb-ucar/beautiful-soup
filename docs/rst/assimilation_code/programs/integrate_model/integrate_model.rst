@@ -1,16 +1,6 @@
 PROGRAM ``integrate_model``
 ===========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -26,16 +16,10 @@ be compiled with the MPI wrappers and called with mpirun with more than 1 task, 
 advance subroutine from a single task (task 0). This can be useful in testing various scripting options using simpler
 and smaller models in preparation for running a larger parallel model.
 
---------------
-
 Namelist
 --------
 
 There is no namelist for this program.
-
---------------
-
-.. _modules_used:
 
 Modules used
 ------------
@@ -50,32 +34,13 @@ Modules used
    ensemble_manager_mod
    mpi_utilities_mod
 
---------------
-
 Files
 -----
 
 -  inputfile (temp_ic)
 -  outputfile (temp_ud)
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   =============== ======= =======
-   Routine         Message Comment
-   =============== ======= =======
-   integrate_model none    none
-   =============== ======= =======

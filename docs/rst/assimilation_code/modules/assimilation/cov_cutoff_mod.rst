@@ -1,25 +1,11 @@
 MODULE cov_cutoff_mod
 =====================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
 Computes the weight with which an observation should impact a state variable that is separated by a given distance. The
 distance is in units determined by the location module being used.
-
---------------
 
 Namelist
 --------
@@ -54,10 +40,6 @@ namelist.
 
 | 
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -66,10 +48,6 @@ Other modules used
    types_mod
    utilities_mod
    location_mod
-
---------------
-
-.. _public_interfaces:
 
 Public interfaces
 -----------------
@@ -84,7 +62,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *var = comp_cov_factor(z_in, c [, obs_loc] [, obs_type] [, target_loc] [, target_kind] [, localization_override])*
+   *var = comp_cov_factor(z_in, c [, obs_loc] [, obs_type] [, target_loc] [, target_kind] [, localization_override])*
    ::
 
       real(r8)                                  :: comp_cov_factor
@@ -117,8 +95,6 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Files
 -----
 
@@ -128,34 +104,12 @@ filename  purpose
 input.nml to read ``cov_cutoff_nml``
 ========= ==========================
 
---------------
-
 References
 ----------
 
 #. Gaspari and Cohn, 1999, QJRMS, **125**, 723-757. (eqn. 4.10)
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +-----------------+------------------------------------------------+------------------------------------------------+
-   | Routine         | Message                                        | Comment                                        |
-   +=================+================================================+================================================+
-   | comp_cov_factor | Illegal value of "select_localization" in      | Only values 1 through 3 select a localization  |
-   |                 | cov_cutoff_mod namelist                        | function.                                      |
-   +-----------------+------------------------------------------------+------------------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

@@ -1,11 +1,6 @@
 Forward Operator
 ================
 
-Contents
---------
-
--  `State access <#_state_access_>`__
-
 In Lanai the forward operator is performed by the first ens_size processors. This was because access to the whole state
 vector is required for the forward operator, and only the first ens_size processors had the whole state vector. The
 distributed state forward operator has a diffent loop structure to Lanai because all processors can do the foward
@@ -43,8 +38,6 @@ To transpose and do the forward operators like Lanai, you can use the filter_nml
 Note, that if you have fewer tasks than ensemble members some tasks will still be doing vectorized forward operators
 (because they own more than one ensemble member).
 
-.. __state_access_:
-
 State access
 ------------
 
@@ -55,7 +48,5 @@ Model_mod routines no longer get an array containing the state. The state is acc
 
 where x is the state at index i. ``state_handle`` is passed from above. During model_interpolate ``get_state`` returns
 an array. Durring ``get_state`` returns a single value (the mean state).
-
---------------
 
 .. |image1| image:: ../Graphs/forward_operator.gv.svg

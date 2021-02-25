@@ -1,18 +1,6 @@
 MODULE assim_model_mod
 ======================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -28,16 +16,10 @@ Notes
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
 
---------------
-
 Namelist
 --------
 
 This module does not have a namelist.
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -52,170 +34,51 @@ Other modules used
    netcdf
    typeSizes (part of netcdf)
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
-*use assim_model_mod, only :*
-
- 
-
-adv_1step
-
- 
-
-aoutput_diagnostics
-
- 
-
-aread_state_restart
-
- 
-
-assim_model_type
-
- 
-
-awrite_state_restart
-
- 
-
-close_restart
-
- 
-
-copy_assim_model
-
- 
-
-end_assim_model
-
- 
-
-ens_mean_for_model
-
- 
-
-finalize_diag_output
-
- 
-
-get_close_maxdist_init
-
- 
-
-get_close_obs
-
- 
-
-get_close_obs_init
-
- 
-
-get_closest_state_time_to
-
- 
-
-get_diag_input_copy_meta_data
-
- 
-
-get_initial_condition
-
- 
-
-get_model_size
-
- 
-
-get_model_state_vector
-
- 
-
-get_model_time
-
- 
-
-get_model_time_step
-
- 
-
-get_state_meta_data
-
- 
-
-init_assim_model
-
- 
-
-init_diag_input
-
- 
-
-init_diag_output
-
- 
-
-input_diagnostics
-
- 
-
-interpolate
-
- 
-
-nc_append_time
-
- 
-
-nc_get_tindex
-
- 
-
-nc_write_calendar_atts
-
- 
-
-netcdf_file_type
-
- 
-
-open_restart_read
-
- 
-
-open_restart_write
-
- 
-
-output_diagnostics
-
- 
-
-pert_model_state
-
- 
-
-read_state_restart
-
- 
-
-set_model_state_vector
-
- 
-
-set_model_time
-
- 
-
-static_init_assim_model
-
- 
-
-write_state_restart
+============================= =============================
+*use assim_model_mod, only :* 
+\                             adv_1step
+\                             aoutput_diagnostics
+\                             aread_state_restart
+\                             assim_model_type
+\                             awrite_state_restart
+\                             close_restart
+\                             copy_assim_model
+\                             end_assim_model
+\                             ens_mean_for_model
+\                             finalize_diag_output
+\                             get_close_maxdist_init
+\                             get_close_obs
+\                             get_close_obs_init
+\                             get_closest_state_time_to
+\                             get_diag_input_copy_meta_data
+\                             get_initial_condition
+\                             get_model_size
+\                             get_model_state_vector
+\                             get_model_time
+\                             get_model_time_step
+\                             get_state_meta_data
+\                             init_assim_model
+\                             init_diag_input
+\                             init_diag_output
+\                             input_diagnostics
+\                             interpolate
+\                             nc_append_time
+\                             nc_get_tindex
+\                             nc_write_calendar_atts
+\                             netcdf_file_type
+\                             open_restart_read
+\                             open_restart_write
+\                             output_diagnostics
+\                             pert_model_state
+\                             read_state_restart
+\                             set_model_state_vector
+\                             set_model_time
+\                             static_init_assim_model
+\                             write_state_restart
+============================= =============================
 
 | 
 
@@ -290,7 +153,7 @@ write_state_restart
 
 .. container:: routine
 
-   *ncFileID = init_diag_output(FileName, global_meta_data, copies_of_field_per_time, meta_data_per_copy [, lagID])*
+   *ncFileID = init_diag_output(FileName, global_meta_data, copies_of_field_per_time, meta_data_per_copy [, lagID])*
    ::
 
       type(netcdf_file_type)          :: init_diag_output 
@@ -305,22 +168,22 @@ write_state_restart
    Initializes a netCDF file for output of state space diagnostics. A handle to the channel on which the file is opened
    is returned.
 
-   +---------------------------------+-----------------------------------------------------------------------------------+
-   | ``ncFileID``                    | Identifier for the netcdf file is returned. This is not an integer unit number,   |
-   |                                 | but a derived type containing additional information about the opened file.       |
-   +---------------------------------+-----------------------------------------------------------------------------------+
-   | ``FileName``                    | Name of file to open.                                                             |
-   +---------------------------------+-----------------------------------------------------------------------------------+
-   | ``global_meta_data``            | Global metadata that describes the contents of this file.                         |
-   +---------------------------------+-----------------------------------------------------------------------------------+
-   | ``copies_of_field_per_time   `` | Number of copies of data to be written at each time. For instance, these could be |
-   |                                 | the prior ensemble members, prior ensemble mean, prior ensemble spread, posterior |
-   |                                 | ensemble members, posterior spread and mean, etc..                                |
-   +---------------------------------+-----------------------------------------------------------------------------------+
-   | ``meta_data_per_copy``          | Metadata describing each of the copies.                                           |
-   +---------------------------------+-----------------------------------------------------------------------------------+
-   | *lagID*                         | If using the smoother, which lag number this output is for.                       |
-   +---------------------------------+-----------------------------------------------------------------------------------+
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``ncFileID``                 | Identifier for the netcdf file is returned. This is not an integer unit number, but  |
+   |                              | a derived type containing additional information about the opened file.              |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``FileName``                 | Name of file to open.                                                                |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``global_meta_data``         | Global metadata that describes the contents of this file.                            |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``copies_of_field_per_time`` | Number of copies of data to be written at each time. For instance, these could be    |
+   |                              | the prior ensemble members, prior ensemble mean, prior ensemble spread, posterior    |
+   |                              | ensemble members, posterior spread and mean, etc..                                   |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | ``meta_data_per_copy``       | Metadata describing each of the copies.                                              |
+   +------------------------------+--------------------------------------------------------------------------------------+
+   | *lagID*                      | If using the smoother, which lag number this output is for.                          |
+   +------------------------------+--------------------------------------------------------------------------------------+
 
 | 
 
@@ -352,11 +215,11 @@ write_state_restart
    is the closest time to 12GMT 01 January, 2004 that a model state at 00GMT 01 January, 2004 can be advanced? If the
    model time is past the time, the model time is returned (new feature in releases after Hawaii).
 
-   ================= ================================================================
-   ``var``           The closest time to which the model can be advanced is returned.
-   ``model_time   `` The time of a model state vector.
-   ``time``          A time that one would like to get close to with the model.
-   ================= ================================================================
+   ============== ================================================================
+   ``var``        The closest time to which the model can be advanced is returned.
+   ``model_time`` The time of a model state vector.
+   ``time``       A time that one would like to get close to with the model.
+   ============== ================================================================
 
 | 
 
@@ -382,10 +245,10 @@ write_state_restart
 
    Returns time from an assim_model type.
 
-   ================== ===========================================
-   ``var``            Returned time from assim_model
-   ``assim_model   `` Assim_model type from which to extract time
-   ================== ===========================================
+   =============== ===========================================
+   ``var``         Returned time from assim_model
+   ``assim_model`` Assim_model type from which to extract time
+   =============== ===========================================
 
 | 
 
@@ -401,10 +264,10 @@ write_state_restart
 
    Returns the state vector component from an assim_model_type.
 
-   ================== ======================
-   ``var``            Returned state vector
-   ``assim_model   `` Input assim_model_type
-   ================== ======================
+   =============== ======================
+   ``var``         Returned state vector
+   ``assim_model`` Input assim_model_type
+   =============== ======================
 
 | 
 
@@ -420,10 +283,10 @@ write_state_restart
 
    Copies one assim_model_type to another.
 
-   ================ ==================
-   ``model_out   `` Copy.
-   ``model_in``     Data to be copied.
-   ================ ==================
+   ============= ==================
+   ``model_out`` Copy.
+   ``model_in``  Data to be copied.
+   ============= ==================
 
 | 
 
@@ -443,13 +306,13 @@ write_state_restart
    Interpolates a given model state variable type to a location given the model state vector. Nearly direct call to
    model_interpolate in model_mod. See model_mod for the error return values in istatus.
 
-   =============== ==================================================
-   ``x``           Model state vector.
-   ``location   `` Location to which to interpolate.
-   ``loctype``     Type of variable to interpolate.
-   ``obs_vals``    Returned interpolated value.
-   ``istatus``     Returned as 0 if all is well, else various errors.
-   =============== ==================================================
+   ============ ==================================================
+   ``x``        Model state vector.
+   ``location`` Location to which to interpolate.
+   ``loctype``  Type of variable to interpolate.
+   ``obs_vals`` Returned interpolated value.
+   ``istatus``  Returned as 0 if all is well, else various errors.
+   ============ ==================================================
 
 | 
 
@@ -465,10 +328,10 @@ write_state_restart
 
    Sets the time in an assim_model_type.
 
-   ================== ======================================
-   ``assim_model   `` Set the time in this assim_model_type.
-   ``time``           Set to this time
-   ================== ======================================
+   =============== ======================================
+   ``assim_model`` Set the time in this assim_model_type.
+   ``time``        Set to this time
+   =============== ======================================
 
 | 
 
@@ -484,16 +347,16 @@ write_state_restart
 
    Set the state in an assim_model_type.
 
-   ================== ==============================================
-   ``assim_model   `` Set the state vector in this assim_model_type.
-   ``state``          The state vector to be inserted.
-   ================== ==============================================
+   =============== ==============================================
+   ``assim_model`` Set the state vector in this assim_model_type.
+   ``state``       The state vector to be inserted.
+   =============== ==============================================
 
 | 
 
 .. container:: routine
 
-   *call write_state_restart(assim_model, funit [, target_time])*
+   *call write_state_restart(assim_model, funit [, target_time])*
    ::
 
       type(assim_model_type),    intent(in) :: assim_model
@@ -504,17 +367,17 @@ write_state_restart
 
    Writes a restart from an assim_model_type with an optional target_time.
 
-   ================== ==================================================================
-   ``assim_model   `` Write a restart from this assim_model_type.
-   ``funit``          Integer file unit id open for output of restart files.
-   *target_time*      If present, put this target time at the front of the restart file.
-   ================== ==================================================================
+   =============== ==================================================================
+   ``assim_model`` Write a restart from this assim_model_type.
+   ``funit``       Integer file unit id open for output of restart files.
+   *target_time*   If present, put this target time at the front of the restart file.
+   =============== ==================================================================
 
 | 
 
 .. container:: routine
 
-   *call read_state_restart(assim_model, funit [, target_time])*
+   *call read_state_restart(assim_model, funit [, target_time])*
    ::
 
       type(assim_model_type),    intent(out) :: assim_model
@@ -525,17 +388,17 @@ write_state_restart
 
    Read a state restart file into assim_model_type. Optionally read a prepended target time.
 
-   ================== ====================================================================
-   ``assim_model   `` Read the time and state vector from restart into this.
-   ``funit``          File id that has been opened for reading restart files.
-   *target_time*      If present, read a target time from the front of the file into this.
-   ================== ====================================================================
+   =============== ====================================================================
+   ``assim_model`` Read the time and state vector from restart into this.
+   ``funit``       File id that has been opened for reading restart files.
+   *target_time*   If present, read a target time from the front of the file into this.
+   =============== ====================================================================
 
 | 
 
 .. container:: routine
 
-   *call output_diagnostics(ndFileID, state [, copy_index])*
+   *call output_diagnostics(ndFileID, state [, copy_index])*
    ::
 
       type(netcdf_file_type), intent(inout) :: ndFileID
@@ -546,11 +409,11 @@ write_state_restart
 
    Writes one copy of the state time and vector to a netCDF file.
 
-   =============== ===================================
-   ``ndFileID``    An identifier for a netCDF file
-   ``state``       State vector and time
-   *copy_index   * Which copy of state is to be output
-   =============== ===================================
+   ============ ===================================
+   ``ndFileID`` An identifier for a netCDF file
+   ``state``    State vector and time
+   *copy_index* Which copy of state is to be output
+   ============ ===================================
 
 | 
 
@@ -577,11 +440,11 @@ write_state_restart
 
    Used to read in a particular copy of the state vector from an open state diagnostics file.
 
-   ================= ======================================================================
-   ``file_id``       Integer descriptor (channel number) for a diagnostics file being read.
-   ``state``         Assim_model_type to read in data.
-   ``copy_index   `` Which copy of state to be read.
-   ================= ======================================================================
+   ============== ======================================================================
+   ``file_id``    Integer descriptor (channel number) for a diagnostics file being read.
+   ``state``      Assim_model_type to read in data.
+   ``copy_index`` Which copy of state to be read.
+   ============== ======================================================================
 
 | 
 
@@ -600,13 +463,13 @@ write_state_restart
 
    Opens a state diagnostic file and reads the global meta data, model size, and number of data copies.
 
-   =============================== ==================================================
-   ``var``                         Returns the unit number on which the file is open.
-   ``file_name``                   File name of state diagnostic file.
-   ``global_meta_data``            Global metadata string from file.
-   ``model_size``                  Size of model.
-   ``copies_of_field_per_time   `` Number of copies of the state vector at each time.
-   =============================== ==================================================
+   ============================ ==================================================
+   ``var``                      Returns the unit number on which the file is open.
+   ``file_name``                File name of state diagnostic file.
+   ``global_meta_data``         Global metadata string from file.
+   ``model_size``               Size of model.
+   ``copies_of_field_per_time`` Number of copies of the state vector at each time.
+   ============================ ==================================================
 
 | 
 
@@ -621,9 +484,9 @@ write_state_restart
 
    Creates storage for an assim_model_type.
 
-   ============ ===============================================
-   ``state   `` An assim_model_type that needs storage created.
-   ============ ===============================================
+   ========= ===============================================
+   ``state`` An assim_model_type that needs storage created.
+   ========= ===============================================
 
 | 
 
@@ -643,13 +506,13 @@ write_state_restart
    Reads meta-data describing state vectors in a state diagnostics file. Given the file, the model_size, and the number
    of copies, returns the locations of each state variable and the text description of each copy.
 
-   ========================= =========================================================
-   ``file_id``               Integer channel open to state diagostic file being read
-   ``Model_size_out``        model size
-   ``num_copies``            Number of copies of state in file
-   ``location``              Returned locations for state vector
-   ``meta_data_per_copy   `` Meta data describing what is in each copy of state vector
-   ========================= =========================================================
+   ====================== =========================================================
+   ``file_id``            Integer channel open to state diagostic file being read
+   ``Model_size_out``     model size
+   ``num_copies``         Number of copies of state in file
+   ``location``           Returned locations for state vector
+   ``meta_data_per_copy`` Meta data describing what is in each copy of state vector
+   ====================== =========================================================
 
 | 
 
@@ -666,16 +529,16 @@ write_state_restart
    Used to complete writing on and open netcdf file. An error return is provided for passing to the netcdf error
    handling routines.
 
-   =============== ===============================
-   ``var``         Returns an error value.
-   ``ncFileID   `` Netcdf file id of an open file.
-   =============== ===============================
+   ============ ===============================
+   ``var``      Returns an error value.
+   ``ncFileID`` Netcdf file id of an open file.
+   ============ ===============================
 
 | 
 
 .. container:: routine
 
-   *call aread_state_restart(model_time, model_state, funit [, target_time])*
+   *call aread_state_restart(model_time, model_state, funit [, target_time])*
    ::
 
       type(time_type),           intent(out) :: model_time
@@ -687,12 +550,12 @@ write_state_restart
 
    Reads a model time and state, and optionally a prepended target time, from a state restart file.
 
-   ================== =================================================================
-   ``model_time``     Returned time of model state
-   ``model_state   `` Returned model state.
-   ``funit``          Channel open for reading a state restart file.
-   *target_time*      If present, this time is read from the front of the restart file.
-   ================== =================================================================
+   =============== =================================================================
+   ``model_time``  Returned time of model state
+   ``model_state`` Returned model state.
+   ``funit``       Channel open for reading a state restart file.
+   *target_time*   If present, this time is read from the front of the restart file.
+   =============== =================================================================
 
 | 
 
@@ -710,12 +573,12 @@ write_state_restart
 
    Write a state vector to a state diagnostics netcdf file.
 
-   ================== ==============================================================
-   ``ncFileID``       Unit for a state vector netcdf file open for output.
-   ``model_time``     The time of the state to be output
-   ``model_state   `` A model state vector to be output.
-   *copy_index*       Which copy of state vector is to be written, default is copy 1
-   ================== ==============================================================
+   =============== ==============================================================
+   ``ncFileID``    Unit for a state vector netcdf file open for output.
+   ``model_time``  The time of the state to be output
+   ``model_state`` A model state vector to be output.
+   *copy_index*    Which copy of state vector is to be written, default is copy 1
+   =============== ==============================================================
 
 | 
 
@@ -733,12 +596,12 @@ write_state_restart
 
    Writes a model time and state vector to a restart file and optionally prepends a target time.
 
-   ================ ========================================================
-   ``model_time``   Time of model state.
-   ``model_state``  Model state vector.
-   ``funit``        Channel of file open for restart output.
-   *target_time   * If present, time to be prepended to state time / vector.
-   ================ ========================================================
+   =============== ========================================================
+   ``model_time``  Time of model state.
+   ``model_state`` Model state vector.
+   ``funit``       Channel of file open for restart output.
+   *target_time*   If present, time to be prepended to state time / vector.
+   =============== ========================================================
 
 | 
 
@@ -766,11 +629,11 @@ write_state_restart
    Appends the time to the time coordinate variable of the netcdf file. The new length of the time variable is returned.
    Requires that time is a coordinate variable AND it is the unlimited dimension.
 
-   =============== ======================================
-   ``var``         Returns new length of time variable.
-   ``ncFileID   `` Points to open netcdf file.
-   ``time``        The next time to be added to the file.
-   =============== ======================================
+   ============ ======================================
+   ``var``      Returns new length of time variable.
+   ``ncFileID`` Points to open netcdf file.
+   ``time``     The next time to be added to the file.
+   ============ ======================================
 
 | 
 
@@ -787,11 +650,11 @@ write_state_restart
 
    Sets up the metadata for the appropriate calendar being used in the time manager an writes it to a netcdf file.
 
-   ================ ===================================================
-   ``var``          Returns a netcdf error code.
-   ``ncFileID``     Netcdf file id pointing to a file open for writing.
-   ``TimeVarID   `` The index of the time variable in the netcdf file.
-   ================ ===================================================
+   ============= ===================================================
+   ``var``       Returns a netcdf error code.
+   ``ncFileID``  Netcdf file id pointing to a file open for writing.
+   ``TimeVarID`` The index of the time variable in the netcdf file.
+   ============= ===================================================
 
 | 
 
@@ -809,11 +672,11 @@ write_state_restart
    Returns the index of a time from the time variable in a netcdf file. This function has been replaced with more
    efficient approaches and may be deleted from future releases.
 
-   ================ =========================================
-   ``var``          The index of the time in the netcdf file.
-   ``ncFileID``     File id for an open netcdf file.
-   ``statetime   `` The time to be found in the netcdf file.
-   ================ =========================================
+   ============= =========================================
+   ``var``       The index of the time in the netcdf file.
+   ``ncFileID``  File id for an open netcdf file.
+   ``statetime`` The time to be found in the netcdf file.
+   ============= =========================================
 
 | 
 
@@ -828,9 +691,9 @@ write_state_restart
 
    This passes through to model_mod. See model_mod documentation for arguments and details.
 
-   ========== ===========================
-   ``var   `` Returns time step of model.
-   ========== ===========================
+   ======= ===========================
+   ``var`` Returns time step of model.
+   ======= ===========================
 
 | 
 
@@ -846,10 +709,10 @@ write_state_restart
 
    Opens a restart file for readig.
 
-   ================ ============================================
-   ``var``          Returns a file descriptor (channel number).
-   ``file_name   `` Name of restart file to be open for reading.
-   ================ ============================================
+   ============= ============================================
+   ``var``       Returns a file descriptor (channel number).
+   ``file_name`` Name of restart file to be open for reading.
+   ============= ============================================
 
 | 
 
@@ -865,10 +728,10 @@ write_state_restart
 
    Open a restart file for writing.
 
-   ================ =======================================================
-   ``var``          Returns a file descriptor (channel) for a restart file.
-   ``file_name   `` File name of restart file to be opened.
-   ================ =======================================================
+   ============= =======================================================
+   ``var``       Returns a file descriptor (channel) for a restart file.
+   ``file_name`` File name of restart file to be opened.
+   ============= =======================================================
 
 | 
 
@@ -883,9 +746,9 @@ write_state_restart
 
    Closes a restart file.
 
-   ================ ======================================================
-   ``file_unit   `` File descriptor (channel number) of open restart file.
-   ================ ======================================================
+   ============= ======================================================
+   ``file_unit`` File descriptor (channel number) of open restart file.
+   ============= ======================================================
 
 | 
 
@@ -911,10 +774,10 @@ write_state_restart
 
    Obtains an initial condition from models that support this option.
 
-   =========== =================================
-   ``time   `` the valid time of the model state
-   ``x``       the initial model state
-   =========== =================================
+   ======== =================================
+   ``time`` the valid time of the model state
+   ``x``    the initial model state
+   ======== =================================
 
 | 
 
@@ -929,9 +792,9 @@ write_state_restart
 
    An array of length model_size containing the ensemble means. This is a direct pass through to the model_mod.
 
-   =============== ==================================================================================
-   ``ens_mean   `` Array of length model_size containing the mean for each entry in the state vector.
-   =============== ==================================================================================
+   ============ ==================================================================================
+   ``ens_mean`` Array of length model_size containing the mean for each entry in the state vector.
+   ============ ==================================================================================
 
 | 
 
@@ -948,16 +811,16 @@ write_state_restart
    Sets the threshold distance. Anything closer than this is deemed to be close. This is a direct pass through to the
    model_mod, which in turn can pass through to the location_mod.
 
-   ============== =======================================================
-   ``gc``         Data for efficiently finding close locations.
-   ``maxdist   `` Anything closer than this distance is a close location.
-   ============== =======================================================
+   =========== =======================================================
+   ``gc``      Data for efficiently finding close locations.
+   ``maxdist`` Anything closer than this distance is a close location.
+   =========== =======================================================
 
 | 
 
 .. container:: routine
 
-   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
+   *call get_close_obs(gc, base_obs_loc, base_obs_kind, obs, obs_kind, num_close, close_ind [, dist])*
    ::
 
       type(get_close_type), intent(in)  :: gc
@@ -976,16 +839,16 @@ write_state_restart
    more sophisticated distance computations to be done if needed. This is a direct pass through to the model_mod, which
    in turn can pass through to the location_mod.
 
-   ==================== ===========================================================================
-   ``gc``               Data for efficiently finding close locations.
-   ``base_obs_loc``     Single given location.
-   ``base_obs_kind   `` Kind of the single location.
-   ``obs``              List of observations from which close ones are to be found.
-   ``obs_kind``         Kind associated with observations in obs list.
-   ``num_close``        Number of observations close to the given location.
-   ``close_ind``        Indices of those locations that are close.
-   *dist*               Distance between given location and the close ones identified in close_ind.
-   ==================== ===========================================================================
+   ================= ===========================================================================
+   ``gc``            Data for efficiently finding close locations.
+   ``base_obs_loc``  Single given location.
+   ``base_obs_kind`` Kind of the single location.
+   ``obs``           List of observations from which close ones are to be found.
+   ``obs_kind``      Kind associated with observations in obs list.
+   ``num_close``     Number of observations close to the given location.
+   ``close_ind``     Indices of those locations that are close.
+   *dist*            Distance between given location and the close ones identified in close_ind.
+   ================= ===========================================================================
 
 | 
 
@@ -1004,116 +867,31 @@ write_state_restart
    track of which 'box' each observation in the list is in. This is a direct pass through to the model_mod, which in
    turn can pass through to the location_mod.
 
-   ========== ========================================================================
-   ``gc``     Data for efficiently finding close locations.
-   ``num``    The number of locations in the list.
-   ``obs   `` The location of each element in the list, not used in 1D implementation.
-   ========== ========================================================================
+   ======= ========================================================================
+   ``gc``  Data for efficiently finding close locations.
+   ``num`` The number of locations in the list.
+   ``obs`` The location of each element in the list, not used in 1D implementation.
+   ======= ========================================================================
 
 | 
-
---------------
 
 Files
 -----
 
 ============== =============================================
-filename       purpose/comment
+filename       purpose/comment
 ============== =============================================
 filter_restart specified in &filter_nml:restart_in_filename
 filter_restart specified in &filter_nml:restart_out_filename
 input.nml      to read namelists
 ============== =============================================
 
---------------
-
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | Routine                               | Message                               | Comment                               |
-   +=======================================+=======================================+=======================================+
-   | init_diag_output                      | Compiler does not support required    | NetCDF-f90 interface function         |
-   |                                       | kinds of variables.                   | byteSizeOK returned FALSE             |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | init_diag_output and various nc_XXX   | various NetCDF-f90 messages           | Returned by one of the NetCDF calls   |
-   |                                       |                                       | in this subroutine. Consult the       |
-   |                                       |                                       | NetCDF manual.                        |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | get_diag_input_copy_meta_data         | expected to read "locat" got ...      | The header of the metadata for the    |
-   |                                       |                                       | copies of the data in diagnostic      |
-   |                                       |                                       | input file is not = 'locat'           |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | set_model_state_vector                | state vector has length # model size  | Check your model resolution and       |
-   |                                       | (#) does not match.                   | fields included in the state vector.  |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | aread_state_restart                   | read error is : #                     | Unable to read model state from       |
-   |                                       |                                       | assim_model_state_ic# file. # is      |
-   |                                       |                                       | error condition retured by read       |
-   |                                       |                                       | statement.                            |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | open_restart_read                     | OPEN status was #                     | Failed to open file listed for reason |
-   |                                       |                                       | #.                                    |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | aoutput_diagnostics                   | model time (d,s) (#,#) is index # in  | Time index for file listed is < 0     |
-   |                                       | ncFileID #                            |                                       |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | ainput_diagnostics                    | expected "copy", got \_____'          | Trying to read diagnostic state       |
-   |                                       |                                       | output header.                        |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | nc_append_time                        | "time" expected to be rank-1          | ndims /= 1                            |
-   |                                       |                                       | The time array of the NetCDF file     |
-   |                                       |                                       | should be 1-dimensional               |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | nc_append_time                        | unlimited dimension expected to be    | dimids(1) /= unlimitedDimID           |
-   |                                       | slowest-moving                        |                                       |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | nc_append_time                        | time mirror and netcdf file time      | lngth /= ncFileId%Ntimes              |
-   |                                       | dimension out-of-sync                 |                                       |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | nc_append_time                        | various NetCDF-f90 error messages     | Returned from one of the NetCDF calls |
-   |                                       |                                       | in this subroutine. Consult the       |
-   |                                       |                                       | NetCDF manual.                        |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | nc_get_tindex                         | trouble deep ... can go no farther.   | timeindex < -1                        |
-   |                                       | Stopping.                             |                                       |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | nc_get_tindex                         | Model time preceeds earliest netCDF   | Time of current assim_model is        |
-   |                                       | time.                                 | earlier than all the times on the     |
-   |                                       |                                       | NetCDF file to which the state is to  |
-   |                                       |                                       | be written by aoutput_diagnostics.    |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | nc_get_tindex                         | subsequent netCDF time (days,         | Time of current assim_model is in the |
-   |                                       | seconds) # #                          | midst of the times on the NetCDF file |
-   |                                       |                                       | to which the state is to be written   |
-   |                                       |                                       | by aoutput_diagnostics, but doesn't   |
-   |                                       |                                       | match any of them. Very bad.          |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | nc_get_tindex                         | various NetCDF-f90 error messages     | Returned from one of the NetCDF calls |
-   |                                       |                                       | in this subroutine. Consult the       |
-   |                                       |                                       | NetCDF manual.                        |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-   | nc_write_calendar_atts                | various NetCDF-f90 error messages     | Returned from one of the NetCDF calls |
-   |                                       |                                       | in this subroutine. Consult the       |
-   |                                       |                                       | NetCDF manual.                        |
-   +---------------------------------------+---------------------------------------+---------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

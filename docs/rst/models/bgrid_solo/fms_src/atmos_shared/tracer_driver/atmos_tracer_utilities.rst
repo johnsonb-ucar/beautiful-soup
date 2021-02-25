@@ -1,24 +1,8 @@
-.. _module_atmos_tracer_utilities_mod:
-
-Module atmos_tracer_utilities_mod
----------------------------------
-
-Contents
-~~~~~~~~
-
--  `Module atmos_tracer_utilities_mod <#module_atmos_tracer_utilities_mod>`__
-
-.. container::
-
-   **Contact:**  `William Cooke <mailto:wfc@gfdl.noaa.gov>`__
-   **Reviewers:**  `Bruce Wyman <mailto:bw@gfdl.noaa.gov>`__
-   **Change History:**  `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/>`__
-   **Last Modified:** 2002/06/14 18:29:08
-
---------------
+module atmos_tracer_utilities_mod
+=================================
 
 Overview
-^^^^^^^^
+--------
 
 This code provides some utility routines for atmospheric tracers in the FMS framework.
 
@@ -30,16 +14,14 @@ This code provides some utility routines for atmospheric tracers in the FMS fram
 
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
    ::
 
-                 fms_mod
+      fms_mod
         time_manager_mod
         diag_manager_mod
       tracer_manager_mod
@@ -47,10 +29,8 @@ Other modules used
            constants_mod
         horiz_interp_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -75,19 +55,15 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
    None.
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Atmos_tracer_utilities_init
       :name: atmos_tracer_utilities_init
@@ -103,17 +79,17 @@ a. .. rubric:: Atmos_tracer_utilities_init
       with these fields in "tracers". The units of the deposition fields are assumed to be kg/m2/s.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lonb   ``                                               | The longitudes for the local domain.                      |
-      |                                                           |    [real, dimension(:)]                                   |
+      | ``lonb``                                                  | The longitudes for the local domain.                      |
+      |                                                           | [real, dimension(:)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``latb   ``                                               | The latitudes for the local domain.                       |
-      |                                                           |    [real, dimension(:)]                                   |
+      | ``latb``                                                  | The latitudes for the local domain.                       |
+      |                                                           | [real, dimension(:)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``mass_axes   ``                                          | The axes relating to the tracer array.                    |
-      |                                                           |    [integer, dimension(3)]                                |
+      | ``mass_axes``                                             | The axes relating to the tracer array.                    |
+      |                                                           | [integer, dimension(3)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``Time   ``                                               | Model time.                                               |
-      |                                                           |    [type(time_type)]                                      |
+      | ``Time``                                                  | Model time.                                               |
+      |                                                           | [type(time_type)]                                         |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 b. .. rubric:: Dry_deposition
@@ -155,39 +131,39 @@ b. .. rubric:: Dry_deposition
 
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  | The tracer number.                                        |
-      |                                                           |    [integer]                                              |
+      | ``n``                                                     | The tracer number.                                        |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``is, js   ``                                             | Start indices for array (computational indices).          |
-      |                                                           |    [integer]                                              |
+      | ``is, js``                                                | Start indices for array (computational indices).          |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``u   ``                                                  | U wind field.                                             |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``u``                                                     | U wind field.                                             |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``v   ``                                                  | V wind field.                                             |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``v``                                                     | V wind field.                                             |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``T   ``                                                  | Temperature.                                              |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``T``                                                     | Temperature.                                              |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pwt   ``                                                | Pressure differential of half levels.                     |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``pwt``                                                   | Pressure differential of half levels.                     |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pfull   ``                                              | Full pressure levels.                                     |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``pfull``                                                 | Full pressure levels.                                     |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``u_star   ``                                             | Friction velocity.                                        |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``u_star``                                                | Friction velocity.                                        |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``landmask   ``                                           | Land - sea mask.                                          |
-      |                                                           |    [logical]                                              |
+      | ``landmask``                                              | Land - sea mask.                                          |
+      |                                                           | [logical]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``dsinku   ``                                             | The amount of tracer in the surface layer which is dry    |
+      | ``dsinku``                                                | The amount of tracer in the surface layer which is dry    |
       |                                                           | deposited per second.                                     |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 c. .. rubric:: Wet_deposition
@@ -221,47 +197,47 @@ c. .. rubric:: Wet_deposition
 
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``n   ``                                                  | Tracer number                                             |
-      |                                                           |    [integer]                                              |
+      | ``n``                                                     | Tracer number                                             |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``is, js   ``                                             | start indices for array (computational indices)           |
-      |                                                           |    [integer]                                              |
+      | ``is, js``                                                | start indices for array (computational indices)           |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``T   ``                                                  | Temperature                                               |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``T``                                                     | Temperature                                               |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pfull   ``                                              | Full level pressure field                                 |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``pfull``                                                 | Full level pressure field                                 |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``phalf   ``                                              | Half level pressure field                                 |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``phalf``                                                 | Half level pressure field                                 |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``rain   ``                                               | Precipitation in the form of rain                         |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``rain``                                                  | Precipitation in the form of rain                         |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``snow   ``                                               | Precipitation in the form of snow                         |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``snow``                                                  | Precipitation in the form of snow                         |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``qdt   ``                                                | The tendency of the specific humidity due to the cloud    |
+      | ``qdt``                                                   | The tendency of the specific humidity due to the cloud    |
       |                                                           | parametrization                                           |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``tracer   ``                                             | The tracer field                                          |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``tracer``                                                | The tracer field                                          |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``Time   ``                                               | The time structure for submitting wet deposition as a     |
+      | ``Time``                                                  | The time structure for submitting wet deposition as a     |
       |                                                           | diagnostic                                                |
-      |                                                           |    [type(time_type)]                                      |
+      |                                                           | [type(time_type)]                                         |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``cloud_param   ``                                        | Is this a convective (convect) or large scale (lscale)    |
+      | ``cloud_param``                                           | Is this a convective (convect) or large scale (lscale)    |
       |                                                           | cloud parametrization?                                    |
-      |                                                           |    [character]                                            |
+      |                                                           | [character]                                               |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``tracer_dt   ``                                          | The tendency of the tracer field due to wet deposition.   |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``tracer_dt``                                             | The tendency of the tracer field due to wet deposition.   |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 d. .. rubric:: Interp_emiss
@@ -276,31 +252,31 @@ d. .. rubric:: Interp_emiss
       field is returned to the local processor.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``global_source   ``                                      | Global emission field.                                    |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``global_source``                                         | Global emission field.                                    |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``start_lon   ``                                          | Longitude of starting point of emission field (in         |
+      | ``start_lon``                                             | Longitude of starting point of emission field (in         |
       |                                                           | radians). This is the westernmost boundary of the global  |
       |                                                           | field.                                                    |
-      |                                                           |    [real]                                                 |
+      |                                                           | [real]                                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``start_lat   ``                                          | Latitude of starting point of emission field (in          |
+      | ``start_lat``                                             | Latitude of starting point of emission field (in          |
       |                                                           | radians). This is the southern boundary of the global     |
       |                                                           | field.                                                    |
-      |                                                           |    [real]                                                 |
+      |                                                           | [real]                                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lon_resol   ``                                          | Longitudinal resolution of the emission data (in          |
+      | ``lon_resol``                                             | Longitudinal resolution of the emission data (in          |
       |                                                           | radians).                                                 |
-      |                                                           |    [real]                                                 |
+      |                                                           | [real]                                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lat_resol   ``                                          | Latitudinal resolution of the emission data (in radians). |
-      |                                                           |    [real]                                                 |
+      | ``lat_resol``                                             | Latitudinal resolution of the emission data (in radians). |
+      |                                                           | [real]                                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``data_out   ``                                           | Interpolated emission field on the local PE.              |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``data_out``                                              | Interpolated emission field on the local PE.              |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 e. .. rubric:: Tracer_utilities_end
@@ -309,25 +285,19 @@ e. .. rubric:: Tracer_utilities_end
    **DESCRIPTION**
       This subroutine writes the version name to logfile and exits.
 
---------------
-
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
-
---------------
 
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    None.
-
---------------
 
 .. container::
 

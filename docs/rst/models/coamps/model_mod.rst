@@ -1,17 +1,5 @@
-MODULE model_mod (COAMPS)
-=========================
-
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
+COAMPS
+======
 
 Overview
 --------
@@ -38,10 +26,6 @@ Overview
    code is capable of executing efficiently across vector, parallel, or symmetric muti-processor (SMP) machines by
    simply changing run-time options."
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -60,30 +44,26 @@ Other modules used
    coamps_restart_mod
    coamps_util_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ======================= ======================
 *use model_mod, only :* get_model_size
-                        get_state_meta_data
-                        model_interpolate
-                        get_model_time_step
-                        static_init_model
-                        nc_write_model_atts
-                        nc_write_model_vars
-                        pert_model_state
-                        get_close_maxdist_init
-                        get_close_obs_init
-                        get_close_obs
-                        ens_mean_for_model
-                        adv_1step
-                        end_model
-                        init_time
-                        init_conditions
+\                       get_state_meta_data
+\                       model_interpolate
+\                       get_model_time_step
+\                       static_init_model
+\                       nc_write_model_atts
+\                       nc_write_model_vars
+\                       pert_model_state
+\                       get_close_maxdist_init
+\                       get_close_obs_init
+\                       get_close_obs
+\                       ens_mean_for_model
+\                       adv_1step
+\                       end_model
+\                       init_time
+\                       init_conditions
 ======================= ======================
 
 The last 4 interfaces are only required for low-order models where advancing the model can be done by a call to a
@@ -113,7 +93,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 .. container:: routine
 
-   *call get_state_meta_data (index_in, location, [, var_type] )*
+   *call get_state_meta_data (index_in, location, [, var_type] )*
    ::
 
       integer,             intent(in)  :: index_in
@@ -127,16 +107,16 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    returned by var_type. The integer values used to indicate different variable types in var_type are themselves defined
    as public interfaces to model_mod if required.
 
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``index_in   `` | Index of state vector element about which information is requested.                               |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | ``location``    | Returns location of indexed state variable. The location should use a location_mod that is        |
-   |                 | appropriate for the model domain. For realistic atmospheric models, for instance, a               |
-   |                 | three-dimensional spherical location module that can represent height in a variety of ways is     |
-   |                 | provided.                                                                                         |
-   +-----------------+---------------------------------------------------------------------------------------------------+
-   | *var_type*      | Returns the type of the indexed state variable as an optional argument.                           |
-   +-----------------+---------------------------------------------------------------------------------------------------+
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``index_in`` | Index of state vector element about which information is requested.                                  |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | ``location`` | Returns location of indexed state variable. The location should use a location_mod that is           |
+   |              | appropriate for the model domain. For realistic atmospheric models, for instance, a                  |
+   |              | three-dimensional spherical location module that can represent height in a variety of ways is        |
+   |              | provided.                                                                                            |
+   +--------------+------------------------------------------------------------------------------------------------------+
+   | *var_type*   | Returns the type of the indexed state variable as an optional argument.                              |
+   +--------------+------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -180,9 +160,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns the model base time step as a time_type. For now this is set to 1 minute.
 
-   ========== ============================
-   ``var   `` Smallest time step of model.
-   ========== ============================
+   ======= ============================
+   ``var`` Smallest time step of model.
+   ======= ============================
 
 | 
 
@@ -212,10 +192,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    diagnostic information. This is not a requirement, and models could choose to provide output in other formats. This
    function writes the metadata associated with the model to a NetCDF file opened to a file identified by ncFileID.
 
-   =============== ==============================================
-   ``ncFileId   `` Integer file descriptor opened to NetCDF file.
-   ``ierr``        Returned error code.
-   =============== ==============================================
+   ============ ==============================================
+   ``ncFileId`` Integer file descriptor opened to NetCDF file.
+   ``ierr``     Returned error code.
+   ============ ==============================================
 
 | 
 
@@ -235,13 +215,13 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Writes a copy of the state variables to a NetCDF file. Multiple copies of the state for a given time are supported,
    allowing, for instance, a single file to include multiple ensemble estimates of the state.
 
-   =============== =========================================================
-   ``ncFileID   `` Integer file descriptor opened to NetCDF file.
-   ``statevec``    State vector.
-   ``copyindex``   Integer index to which copy is to be written.
-   ``timeindex``   Integer index of which time in the file is being written.
-   ``ierr``        Returned error code.
-   =============== =========================================================
+   ============= =========================================================
+   ``ncFileID``  Integer file descriptor opened to NetCDF file.
+   ``statevec``  State vector.
+   ``copyindex`` Integer index to which copy is to be written.
+   ``timeindex`` Integer index of which time in the file is being written.
+   ``ierr``      Returned error code.
+   ============= =========================================================
 
 | 
 
@@ -285,8 +265,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3-D sphere locations module. See
-   `get_close_maxdist_init() </location/threed-sphere/location_mod.html#get_close_maxdist_init>`__ for the documentation
-   of this subroutine.
+   `get_close_maxdist_init() <../../location/threed-sphere/location_mod.html#get_close_maxdist_init>`__ for the
+   documentation of this subroutine.
 
 | 
 
@@ -302,8 +282,8 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3-D sphere locations module. See
-   `get_close_obs_init() </location/threed-sphere/location_mod.html#get_close_obs_init>`__ for the documentation of this
-   subroutine.
+   `get_close_obs_init() <../../location/threed-sphere/location_mod.html#get_close_obs_init>`__ for the documentation of
+   this subroutine.
 
 | 
 
@@ -324,7 +304,7 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 .. container:: indent1
 
    Pass-through to the 3-D sphere locations module. See
-   `get_close_obs() </location/threed-sphere/location_mod.html#get_close_obs>`__ for the documentation of this
+   `get_close_obs() <../../location/threed-sphere/location_mod.html#get_close_obs>`__ for the documentation of this
    subroutine.
 
 | 
@@ -340,9 +320,9 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    A local copy is available here for use during other computations in the model_mod code.
 
-   ============== ==========================
-   ``ens_mean  `` Ensemble mean state vector
-   ============== ==========================
+   ============ ==========================
+   ``ens_mean`` Ensemble mean state vector
+   ============ ==========================
 
 | 
 
@@ -412,8 +392,6 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Namelist
 --------
 
@@ -444,8 +422,6 @@ namelist.
 
 | 
 
---------------
-
 Files
 -----
 
@@ -454,12 +430,10 @@ filename                    purpose
 =========================== ===========================================================================
 input.nml                   to read the model_mod namelist
 preassim.nc                 the time-history of the model state before assimilation
-analysis.nc                 the time-history of the model state after assimilation
+analysis.nc                 the time-history of the model state after assimilation
 dart_log.out [default name] the run-time diagnostic output
 dart_log.nml [default name] the record of all the namelists actually USED - contains the default values
 =========================== ===========================================================================
-
---------------
 
 References
 ----------
@@ -467,26 +441,7 @@ References
 The COAMPS registration web site is http://www.nrlmry.navy.mil/coamps-web/web/home and COAMPS is a registered trademark
 of the Naval Research Laboratory.
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   =================== ======================================================= =========================
-   Routine             Message                                                 Comment
-   =================== ======================================================= =========================
-   nc_write_model_atts Time dimension ID # must match Unlimited Dimension ID # NetCDF file writing error
-   =================== ======================================================= =========================
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------

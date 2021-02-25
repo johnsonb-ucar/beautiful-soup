@@ -1,17 +1,6 @@
 PROGRAM ``obs_impact_tool``
 ===========================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Examples <#examples>`__
--  `Modules used <#modules_used>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
-
 Overview
 --------
 
@@ -107,8 +96,6 @@ Format of the input file can be any combination of these types of sections:
 
 Namelist interface ``&obs_impact_tool_nml`` must be read from file ``input.nml``.
 
---------------
-
 Namelist
 --------
 
@@ -128,37 +115,23 @@ namelist.
 
 .. container::
 
-   Item
-
-Type
-
-Description
-
-input_filename
-
-character(len=512)
-
-Name of an ascii text file which describes how the interaction of observations to state vector values and observations
-to other observations should be controlled. See the Overview section for details about the format of the input file
-entries.
-
-output_filename
-
-character(len=512)
-
-Name of an ascii text file which created by this tool. It can be read at filter run time to control the impact of
-observations on state vector items and other observation values. The format of this file is set by this tool and should
-not be modified by hand. Rerun this tool to recreate the file.
-
-debug
-
-logical
-
-If true print out debugging info.
+   +-----------------+--------------------+-----------------------------------------------------------------------------+
+   | Item            | Type               | Description                                                                 |
+   +=================+====================+=============================================================================+
+   | input_filename  | character(len=512) | Name of an ascii text file which describes how the interaction of           |
+   |                 |                    | observations to state vector values and observations to other observations  |
+   |                 |                    | should be controlled. See the Overview section for details about the format |
+   |                 |                    | of the input file entries.                                                  |
+   +-----------------+--------------------+-----------------------------------------------------------------------------+
+   | output_filename | character(len=512) | Name of an ascii text file which created by this tool. It can be read at    |
+   |                 |                    | filter run time to control the impact of observations on state vector items |
+   |                 |                    | and other observation values. The format of this file is set by this tool   |
+   |                 |                    | and should not be modified by hand. Rerun this tool to recreate the file.   |
+   +-----------------+--------------------+-----------------------------------------------------------------------------+
+   | debug           | logical            | If true print out debugging info.                                           |
+   +-----------------+--------------------+-----------------------------------------------------------------------------+
 
 | 
-
---------------
 
 Examples
 --------
@@ -182,10 +155,6 @@ To prevent chemistry species from impacting the meterological variables in the m
        met    chem   0.0
       END IMPACT
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -195,38 +164,13 @@ Modules used
    utilities_mod
    parse_args_mod
 
---------------
-
 Files
 -----
 
 -  two text files, one input and one output.
 -  obs_impact_tool.nml
 
---------------
-
 References
 ----------
 
 -  none
-
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +-----------------+---------------------------+----------------------------------------------------------------------+
-   | Routine         | Message                   | Comment                                                              |
-   +=================+===========================+======================================================================+
-   | obs_impact_tool | Only use single process   | Only a single mpi process can be used with this program              |
-   +-----------------+---------------------------+----------------------------------------------------------------------+
-   | obs_impact_tool | cannot nest groups        | Groups cannot contain other groups. You can exclude a group from     |
-   |                 |                           | another group.                                                       |
-   +-----------------+---------------------------+----------------------------------------------------------------------+
-   | obs_impact_tool | Impact must be 0.0 or 1.0 | Currently the impact can be either full or nothing. Contact the DART |
-   |                 |                           | developers if you want to experiment with other values.              |
-   +-----------------+---------------------------+----------------------------------------------------------------------+

@@ -1,26 +1,12 @@
 PROGRM OR MODULE name_of_thing
 ==============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Namelist <#namelist>`__
--  `Modules used <#modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 NAMELIST / MODULES USED / INTERFACES / FILES / REFERENCES / ERRORS / PLANS / PRIVATE COMPONENTS /
 
 Overview
 --------
 
 Explain in general terms what this is.
-
---------------
 
 Namelist
 --------
@@ -53,10 +39,6 @@ Any comments about the namelist as a whole.
 
 | 
 
---------------
-
-.. _modules_used:
-
 Modules used
 ------------
 
@@ -68,17 +50,13 @@ Modules used
    time_manager_mod
    ensemble_manager_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 ================================== ==================
 *use this_module_name_mod, only :* subr/function name
-                                   name2
-                                   name3
+\                                  name2
+\                                  name3
 ================================== ==================
 
 A note about documentation style. Optional arguments are enclosed in brackets *[like this]*.
@@ -146,14 +124,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
 | 
 
---------------
-
 Files
 -----
 
 describe files used by code
-
---------------
 
 References
 ----------
@@ -161,26 +135,7 @@ References
 -  author, title. publication, volume, pages.
    `doi: nn.yyyy/rest_of_number <http://dx.doi.org/nn.yyyy/rest_of_number>`__
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   =============== ================== ==============================
-   Routine         Message            Comment
-   =============== ================== ==============================
-   subroutine_name error message text what it means to the end user.
-   =============== ================== ==============================
-
-.. _private_components:
-
 Private components
 ------------------
 
 no discussion
-
---------------

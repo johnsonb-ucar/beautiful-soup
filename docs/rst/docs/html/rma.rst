@@ -1,9 +1,6 @@
 RMA notes
 =========
 
-Contents
---------
-
 In the RMA version of DART, the state vector is not required to be stored completely on any process. This is achieved
 using Remote Memory Access (RMA). The RMA programing model allows processes to read (and write) memory on other
 processors asynchronously. RMA DART supported models:
@@ -28,13 +25,13 @@ There are six major differences between Lanai and RMA DART:
 -  Calculation of forward operators
 -  Vertical conversion of observation locations
 -  Diagnostic file changes
--  `State structure module <state_structure.html>`__
+-  :doc:`./state_structure`
 -  Perturbation of the state
 
-Before bitwise testing with Lanai please read `bitwise considerations <bitwise_considerations.html>`__
+Before bitwise testing with Lanai please read :doc:`./bitwise_considerations`
 
 NetCDF restarts
-^^^^^^^^^^^^^^^
+---------------
 
 The programs filter and perfect_model_obs now read/write directly from NetCDF files, rather than having to run
 converters (``model_to_dart`` and ``dart_to_model``). To facilitate this, there is a new required call ``add_domain``
@@ -64,31 +61,32 @@ the model is spun up in perfect_model_obs, but the model itself has variable str
 Additions/Changes to existing namelists for how to use NetCDF IO.
 
 **Note** when using NetCDF restarts, inflation files are NetCDF also. The inflation mean and inflation standard
-deviation are in separate files when you use NetCDF restarts. See `NetCDF inflation
-files <netcdf_inflation_files.html>`__ for details.
+deviation are in separate files when you use NetCDF restarts. See :doc:`./netcdf_inflation_files` for details.
 
 Calculation of forward operators
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 
-The forward operator code in model_mod now operates on an array of state values. See `forward
-operator <forward_operator.html>`__ for more detail about distributed vs. non-distributed forward operators. In
-distributed mode the forward operators for all ensemble members are calculated in the same ``model_interpolate`` call.
-In non-distributed mode, the forward oeprators for all ensemble members a task owns (1-ens_size) are calculated at once.
+The forward operator code in model_mod now operates on an array of state values. See :doc:`./forward_operator` for more
+detail about distributed vs. non-distributed forward operators.
+
+In distributed mode the forward operators for all ensemble members are calculated in the same ``model_interpolate``
+call. In non-distributed mode, the forward oeprators for all ensemble members a task owns (1-ens_size) are calculated at
+once.
 
 Vertical conversion of observation locations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------------------
 
 The vertical conversion of observation locations is done before the assimilation. In Lanai this calculation is done in
-the assimilation as part of ``get_close_obs`` if a model_mod does vertical conversion. See `vertical
-conversion <vertical_conversion.html>`__ for details about this change. Note that not all models do vertical conversion
-or even have a concept of vertical location, but every model_mod must have the following routines:
+the assimilation as part of ``get_close_obs`` if a model_mod does vertical conversion. See :doc:`./vertical_conversion`
+for details about this change. Note that not all models do vertical conversion or even have a concept of vertical
+location, but every model_mod must have the following routines:
 
 -  ``query_vert_localization_coord`` - returns the vertical localization coordiate (or does nothing if there is no
    vertical conversion)
 -  ``vert_convert`` - converts location to required vertical (or does nothing if there is no vertical conversion)
 
 Diagnostic file changes
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 For large models DART format diagnostic files (Prior_Diag.nc and Posterior_Diag.nc) have been replaced with separate
 files for each copy that would have gone into Prior_Diag.nc and Posterior_Diag.nc.
@@ -96,24 +94,24 @@ files for each copy that would have gone into Prior_Diag.nc and Posterior_Diag.n
 For Prior_Diag.nc:
 
 -  **Mean and standard deviation**:
-     preassim_mean.nc
-     preassim_sd.nc
+   preassim_mean.nc
+   preassim_sd.nc
 -  **Inflation mean and standard deviation** (if state space inflation is used):
-     preassim_priorinf_mean.nc
-     preassim_priorinf_sd.nc
+   preassim_priorinf_mean.nc
+   preassim_priorinf_sd.nc
 -  **The number of ensemble members specifed** in filter_nml (num_output_state_members):
-     preassim_member_####.nc
+   preassim_member_####.nc
 
 For Posterior_Diag.nc:
 
 -  **Mean and standard deviation**:
-     postassim_mean.nc
-     postassim_sd.nc
+   postassim_mean.nc
+   postassim_sd.nc
 -  **Inflation mean and standard deviation** (if state space inflation is used):
-     postassim_priorinf_mean.nc
-     postassim_priorinf_sd.nc
+   postassim_priorinf_mean.nc
+   postassim_priorinf_sd.nc
 -  **The number of ensemble members specifed** in filter_nml (num_output_state_members):
-     postassim_member_####.nc
+   postassim_member_####.nc
 
 The ``num_output_state_members`` are not written separately from the restarts. Note that restarts will have been clamped
 if any clamping is applied (given as an arguement to add_domain). This is *different* to Posterior_Diag.nc which
@@ -124,15 +122,15 @@ For models with multiple domains the filenames above are appended with the domai
 preassim_mean_d01.nc, preassim_mean_d02.nc, etc.
 
 Changes to nc_write_model_atts
-''''''''''''''''''''''''''''''
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``nc_write_model_atts`` has an new argument '``model_mod_writes_state_variables``'. This is used to communicate to DART
 whether the model will create and write state variables in Prior_Diag.nc and Posterior_Diag.nc. If
 ``model_model_writes_state_variables = .false.`` DART will define and write state variables to the new diagnostic files.
-If ``model_model_writes_state_variables = .true.,  nc_write_model_vars`` is called as normal.
+If ``model_model_writes_state_variables = .true., nc_write_model_vars`` is called as normal.
 
 Perturbations
-^^^^^^^^^^^^^
+-------------
 
 The option to perturb one ensemble member to produce an ensemble is in filter_nml:``perturb_from_single_instance``. The
 model_mod interface is now ``pert_model_copies`` not ``pert_model_state``. Each task perturbs every ensemble member for
@@ -142,7 +140,7 @@ amplitude set in filter_nml:perturbation_amplitude. Note the perturb namelist op
 ensemble_manager_nml
 
 State_vector_io_nml
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 ::
 
@@ -157,7 +155,7 @@ a time. If your model can not fit into memory at once this must be set to ``.tru
 ``single_precision_output`` allows you to run filter in double precision but write NetCDF files in single precision.
 
 Quality_control_nml
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 These namelist options used to be in filter_nml, now they are in quality_control_nml.
 
@@ -170,12 +168,12 @@ These namelist options used to be in filter_nml, now they are in quality_control
    /
 
 Additions/changes to existing namelists
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 New namelist variables
 
-Filter_nml
-^^^^^^^^^^
+filter_nml
+~~~~~~~~~~
 
 ::
 
@@ -204,112 +202,110 @@ Filter_nml
 
 .. container::
 
-   Item
-
-Type
-
-Description
-
-single_file_in
-
-logical
-
-True means that all of the restart and inflation information is read from a single NetCDF file. False means that you
-must specify an input_state_file_list and DART will be expecting input_{priorinf,postinf}_{mean,sd}.nc files for
-inflation.
-
-single_file_out
-
-logical
-
-True means that all of the restart and inflation information is written to a single NetCDF file. False means that you
-must specify a output_state_file_list and DART will be output files specified in the list. Inflation files will be
-written in the form input_{priorinf,postinf}_{mean,sd}.nc.
-
-input_restart_files
-
-character array
-
-This is used for single file input for low order models. For multiple domains you can specify a file for each domain.
-When specifying a list single_file_in, single_file_out must be set to .true.
-
-output_restart_files
-
-character array
-
-This is used for single file input for low order models. For multiple domains you can specify a file for each domain.
-When specifying a list single_file_in, single_file_out must be set to .true.
-
-input_state_file_list
-
-character array
-
-A list of files containing input model restarts. For multiple domains you can specify a file for each domain. When
-specifying a list single_file_in, single_file_out must be set to .false.
-
-output_state_file_list
-
-character array
-
-A list of files containing output model restarts. For multiple domains you can specify a file for each domain. When
-specifying a list single_file_in, single_file_out must be set to .false.
-
-stages_to_write
-
-character array
-
-Controls which stages to write. Currently there are four options:
-
--  ``input`` -- writes input mean and sd only
--  ``preassim`` -- before assimilation, before prior inflation is applied
--  ``postassim`` -- after assimilation, before posterior inflation is applied
--  ``output`` -- final output for filter which includes clamping and inflation
-
-write_all_stages_at_end
-
-logical
-
-True means output all stages at the end of filter. This is more memory intensive but requires less time. For larger
-models IO begins to dominate the overall cost of the assimilation, so writting all stages at the end writes more files
-in parallel, reducing the IO time. ``output_state_file_list``.
-
-output_restarts
-
-logical
-
-True means output a restart file(s). Filenames are defined in ``output_state_file_list``.
-
-output_mean
-
-logical
-
-True means output a restart file which contains the ensemble mean for the stages that have been turned on in
-``stages_to_write``. The file name will have the stage with ``_mean`` appended.
-
-output_sd
-
-logical
-
-True means output a restart file which contains the ensemble standard deviation for the stages that have been turned on
-in ``stages_to_write``. The file name will have the stage with ``_sd`` appended.
-
-perturb_from_single_instance
-
-logical
-
-Read a single file and perturb this to create an ensemble
-
-perturbation_amplitude
-
-float
-
-Perturbation amplitude
-
-distribute_state
-
-logical
-
-True keeps the state distributed across all tasks throughout the entire execution of filter.
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | Item                                  | Type                                  | Description                           |
+   +=======================================+=======================================+=======================================+
+   | single_file_in                        | logical                               | True means that all of the restart    |
+   |                                       |                                       | and inflation information is read     |
+   |                                       |                                       | from a single NetCDF file. False      |
+   |                                       |                                       | means that you must specify an        |
+   |                                       |                                       | input_state_file_list and DART will   |
+   |                                       |                                       | be expecting                          |
+   |                                       |                                       | input_{priorinf,postinf}_{mean,sd}.nc |
+   |                                       |                                       | files for inflation.                  |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | single_file_out                       | logical                               | True means that all of the restart    |
+   |                                       |                                       | and inflation information is written  |
+   |                                       |                                       | to a single NetCDF file. False means  |
+   |                                       |                                       | that you must specify a               |
+   |                                       |                                       | output_state_file_list and DART will  |
+   |                                       |                                       | be output files specified in the      |
+   |                                       |                                       | list. Inflation files will be written |
+   |                                       |                                       | in the form                           |
+   |                                       |                                       | i                                     |
+   |                                       |                                       | nput_{priorinf,postinf}_{mean,sd}.nc. |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | input_restart_files                   | character array                       | This is used for single file input    |
+   |                                       |                                       | for low order models. For multiple    |
+   |                                       |                                       | domains you can specify a file for    |
+   |                                       |                                       | each domain. When specifying a list   |
+   |                                       |                                       | single_file_in, single_file_out must  |
+   |                                       |                                       | be set to .true.                      |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | output_restart_files                  | character array                       | This is used for single file input    |
+   |                                       |                                       | for low order models. For multiple    |
+   |                                       |                                       | domains you can specify a file for    |
+   |                                       |                                       | each domain. When specifying a list   |
+   |                                       |                                       | single_file_in, single_file_out must  |
+   |                                       |                                       | be set to .true.                      |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | input_state_file_list                 | character array                       | A list of files containing input      |
+   |                                       |                                       | model restarts. For multiple domains  |
+   |                                       |                                       | you can specify a file for each       |
+   |                                       |                                       | domain. When specifying a list        |
+   |                                       |                                       | single_file_in, single_file_out must  |
+   |                                       |                                       | be set to .false.                     |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | output_state_file_list                | character array                       | A list of files containing output     |
+   |                                       |                                       | model restarts. For multiple domains  |
+   |                                       |                                       | you can specify a file for each       |
+   |                                       |                                       | domain. When specifying a list        |
+   |                                       |                                       | single_file_in, single_file_out must  |
+   |                                       |                                       | be set to .false.                     |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | stages_to_write                       | character array                       | Controls which stages to write.       |
+   |                                       |                                       | Currently there are four options:     |
+   |                                       |                                       |                                       |
+   |                                       |                                       | -  ``input`` -- writes input mean and |
+   |                                       |                                       |    sd only                            |
+   |                                       |                                       | -  ``preassim`` -- before             |
+   |                                       |                                       |    assimilation, before prior         |
+   |                                       |                                       |    inflation is applied               |
+   |                                       |                                       | -  ``postassim`` -- after             |
+   |                                       |                                       |    assimilation, before posterior     |
+   |                                       |                                       |    inflation is applied               |
+   |                                       |                                       | -  ``output`` -- final output for     |
+   |                                       |                                       |    filter which includes clamping and |
+   |                                       |                                       |    inflation                          |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | write_all_stages_at_end               | logical                               | True means output all stages at the   |
+   |                                       |                                       | end of filter. This is more memory    |
+   |                                       |                                       | intensive but requires less time. For |
+   |                                       |                                       | larger models IO begins to dominate   |
+   |                                       |                                       | the overall cost of the assimilation, |
+   |                                       |                                       | so writting all stages at the end     |
+   |                                       |                                       | writes more files in parallel,        |
+   |                                       |                                       | reducing the IO time.                 |
+   |                                       |                                       | ``output_state_file_list``.           |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | output_restarts                       | logical                               | True means output a restart file(s).  |
+   |                                       |                                       | Filenames are defined in              |
+   |                                       |                                       | ``output_state_file_list``.           |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | output_mean                           | logical                               | True means output a restart file      |
+   |                                       |                                       | which contains the ensemble mean for  |
+   |                                       |                                       | the stages that have been turned on   |
+   |                                       |                                       | in ``stages_to_write``. The file name |
+   |                                       |                                       | will have the stage with ``_mean``    |
+   |                                       |                                       | appended.                             |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | output_sd                             | logical                               | True means output a restart file      |
+   |                                       |                                       | which contains the ensemble standard  |
+   |                                       |                                       | deviation for the stages that have    |
+   |                                       |                                       | been turned on in                     |
+   |                                       |                                       | ``stages_to_write``. The file name    |
+   |                                       |                                       | will have the stage with ``_sd``      |
+   |                                       |                                       | appended.                             |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | perturb_from_single_instance          | logical                               | Read a single file and perturb this   |
+   |                                       |                                       | to create an ensemble                 |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | perturbation_amplitude                | float                                 | Perturbation amplitude                |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
+   | distribute_state                      | logical                               | True keeps the state distributed      |
+   |                                       |                                       | across all tasks throughout the       |
+   |                                       |                                       | entire execution of filter.           |
+   +---------------------------------------+---------------------------------------+---------------------------------------+
 
 **For NetCDF reads and writes**
 
@@ -329,7 +325,7 @@ For small models you may want to use ``single_file_in``, ``single_file_out`` whi
 filter.
 
 Assim_tools_nml
-^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~
 
 ::
 
@@ -372,5 +368,3 @@ only writes inflation files if ``inf_flavor > 1``
       write_binary_restart_files = .true.,
       netCDF_large_file_support  = .false.
       /
-
---------------

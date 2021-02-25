@@ -1,18 +1,6 @@
 MODULE ``obs_def_radar_mod``
 ============================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
@@ -32,8 +20,8 @@ Overview
 -  DART Code: Nancy Collins, nancy at ucar.edu
 -  Original DART/Radar work: Alain Caya
 
-Backward compatibility note:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Backward compatibility note
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For users of previous versions of the radar obs_def code, here are a list of changes beginning with subversion revision
 3616 which are not backward compatible:
@@ -56,10 +44,6 @@ For users of previous versions of the radar obs_def code, here are a list of cha
    in the DART types_mod.f90 code, but in reality the code should be using whatever value of gravity is being used in
    the model code. For now, the value is at least separated so users can change the value in this code if necessary.
 
---------------
-
-.. _other_modules_used:
-
 Other modules used
 ------------------
 
@@ -71,22 +55,18 @@ Other modules used
    assim_model_mod
    obs_kind_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 =============================== =======================
 *use obs_def_radar_mod, only :* read_radar_ref
-                                get_expected_radar_ref
-                                read_radial_vel
-                                write_radial_vel
-                                interactive_radial_vel
-                                get_expected_radial_vel
-                                get_obs_def_radial_vel
-                                set_radial_vel
+\                               get_expected_radar_ref
+\                               read_radial_vel
+\                               write_radial_vel
+\                               interactive_radial_vel
+\                               get_expected_radial_vel
+\                               get_obs_def_radial_vel
+\                               set_radial_vel
 =============================== =======================
 
 Namelist interface ``&obs_def_radar_mod_nml`` is read from file ``input.nml``.
@@ -108,10 +88,10 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Reflectivity observations have no auxiliary data to read or write, but there are namelist options that can alter the
    observation value at runtime. This routine tests the observation value and alters it if required.
 
-   ============== =============================================================
-   ``obsvalue  `` Observation value.
-   ``refkey``     Set to 0 to avoid uninitialized values, but otherwise unused.
-   ============== =============================================================
+   ============ =============================================================
+   ``obsvalue`` Observation value.
+   ``refkey``   Set to 0 to avoid uninitialized values, but otherwise unused.
+   ============ =============================================================
 
 | 
 
@@ -132,17 +112,17 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    | If ``apply_ref_limit_to_fwd_op`` is .TRUE. in the namelist, reflectivity values less than
      ``reflectivity_limit_fwd_op`` will be set to ``lowest_reflectivity_fwd_op``.
 
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``state_vector  `` | A one dimensional representation of the model state vector                                     |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``location``       | Location of this observation                                                                   |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``ref``            | The returned radar reflectivity value                                                          |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``istatus``        | Returned integer status code describing problems with applying forward operator. 0 is a good   |
-   |                    | value; any positive value indicates an error; negative values are reserved for internal DART   |
-   |                    | use only.                                                                                      |
-   +--------------------+------------------------------------------------------------------------------------------------+
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``state_vector`` | A one dimensional representation of the model state vector                                       |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``location``     | Location of this observation                                                                     |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``ref``          | The returned radar reflectivity value                                                            |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``istatus``      | Returned integer status code describing problems with applying forward operator. 0 is a good     |
+   |                  | value; any positive value indicates an error; negative values are reserved for internal DART use |
+   |                  | only.                                                                                            |
+   +------------------+--------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -160,15 +140,15 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Reads the additional auxiliary information associated with a radial velocity observation. This includes the location
    of the radar source, the beam direction, and the nyquist velocity.
 
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``velkey  `` | Unique identifier associated with this radial velocity observation. In this code it is an integer    |
-   |              | index into module local arrays which hold the additional data. This routine increments it and        |
-   |              | returns the new value.                                                                               |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``ifile``    | File unit descriptor for input file                                                                  |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | *fform*      | File format specifier: FORMATTED or UNFORMATTED; default FORMATTED                                   |
-   +--------------+------------------------------------------------------------------------------------------------------+
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``velkey`` | Unique identifier associated with this radial velocity observation. In this code it is an integer      |
+   |            | index into module local arrays which hold the additional data. This routine increments it and returns  |
+   |            | the new value.                                                                                         |
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``ifile``  | File unit descriptor for input file                                                                    |
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | *fform*    | File format specifier: FORMATTED or UNFORMATTED; default FORMATTED                                     |
+   +------------+--------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -186,15 +166,15 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Writes the additional auxiliary information associated with a radial velocity observation. This includes the location
    of the radar source, the beam direction, and the nyquist velocity.
 
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``velkey  `` | Unique identifier associated with this radial velocity observation. In this code it is an integer    |
-   |              | index into module local arrays which hold the additional data. This routine uses the value to select |
-   |              | the appropriate data to write for this observation.                                                  |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``ifile``    | File unit descriptor for output file                                                                 |
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | *fform*      | File format specifier: FORMATTED or UNFORMATTED; default FORMATTED                                   |
-   +--------------+------------------------------------------------------------------------------------------------------+
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``velkey`` | Unique identifier associated with this radial velocity observation. In this code it is an integer      |
+   |            | index into module local arrays which hold the additional data. This routine uses the value to select   |
+   |            | the appropriate data to write for this observation.                                                    |
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``ifile``  | File unit descriptor for output file                                                                   |
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | *fform*    | File format specifier: FORMATTED or UNFORMATTED; default FORMATTED                                     |
+   +------------+--------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -212,18 +192,18 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
 
    Returns the auxiliary information associated with a given radial velocity observation.
 
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``velkey``             | Unique identifier associated with this radial velocity observation. In this code it is an  |
-   |                        | integer index into module local arrays which hold the additional data. This routine uses   |
-   |                        | the value to select the appropriate data to return.                                        |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``radar_location``     | Location of the radar.                                                                     |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``beam_orientation``   | Orientation of the radar beam at the observation location. The three values are:           |
-   |                        | sin(azimuth)*cos(elevation), cos(azimuth)*cos(elevation), and sin(elevation).              |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``nyquist_velocity  `` | Nyquist velocity at the observation point in meters/second.                                |
-   +------------------------+--------------------------------------------------------------------------------------------+
+   +----------------------+----------------------------------------------------------------------------------------------+
+   | ``velkey``           | Unique identifier associated with this radial velocity observation. In this code it is an    |
+   |                      | integer index into module local arrays which hold the additional data. This routine uses the |
+   |                      | value to select the appropriate data to return.                                              |
+   +----------------------+----------------------------------------------------------------------------------------------+
+   | ``radar_location``   | Location of the radar.                                                                       |
+   +----------------------+----------------------------------------------------------------------------------------------+
+   | ``beam_orientation`` | Orientation of the radar beam at the observation location. The three values are:             |
+   |                      | sin(azimuth)*cos(elevation), cos(azimuth)*cos(elevation), and sin(elevation).                |
+   +----------------------+----------------------------------------------------------------------------------------------+
+   | ``nyquist_velocity`` | Nyquist velocity at the observation point in meters/second.                                  |
+   +----------------------+----------------------------------------------------------------------------------------------+
 
 | 
 
@@ -242,18 +222,18 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Sets the auxiliary information associated with a radial velocity observation. This routine increments and returns the
    new key associated with these values.
 
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``velkey``             | Unique identifier associated with this radial velocity observation. In this code it is an  |
-   |                        | integer index into module local arrays which hold the additional data. This routine        |
-   |                        | returns the incremented value associated with this data.                                   |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``radar_location``     | Location of the radar.                                                                     |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``beam_orientation``   | Orientation of the radar beam at the observation location. The three values are:           |
-   |                        | sin(azimuth)*cos(elevation), cos(azimuth)*cos(elevation), and sin(elevation).              |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``nyquist_velocity  `` | Nyquist velocity at the observation point in meters/second.                                |
-   +------------------------+--------------------------------------------------------------------------------------------+
+   +----------------------+----------------------------------------------------------------------------------------------+
+   | ``velkey``           | Unique identifier associated with this radial velocity observation. In this code it is an    |
+   |                      | integer index into module local arrays which hold the additional data. This routine returns  |
+   |                      | the incremented value associated with this data.                                             |
+   +----------------------+----------------------------------------------------------------------------------------------+
+   | ``radar_location``   | Location of the radar.                                                                       |
+   +----------------------+----------------------------------------------------------------------------------------------+
+   | ``beam_orientation`` | Orientation of the radar beam at the observation location. The three values are:             |
+   |                      | sin(azimuth)*cos(elevation), cos(azimuth)*cos(elevation), and sin(elevation).                |
+   +----------------------+----------------------------------------------------------------------------------------------+
+   | ``nyquist_velocity`` | Nyquist velocity at the observation point in meters/second.                                  |
+   +----------------------+----------------------------------------------------------------------------------------------+
 
 | 
 
@@ -269,11 +249,11 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    Prompts the user for the auxiliary information needed for a radial velocity observation, and returns the new key
    associated with this data.
 
-   +--------------+------------------------------------------------------------------------------------------------------+
-   | ``velkey  `` | Unique identifier associated with this radial velocity observation. In this code it is an integer    |
-   |              | index into module local arrays which hold the additional data. This routine returns the incremented  |
-   |              | value associated with this data.                                                                     |
-   +--------------+------------------------------------------------------------------------------------------------------+
+   +------------+--------------------------------------------------------------------------------------------------------+
+   | ``velkey`` | Unique identifier associated with this radial velocity observation. In this code it is an integer      |
+   |            | index into module local arrays which hold the additional data. This routine returns the incremented    |
+   |            | value associated with this data.                                                                       |
+   +------------+--------------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -296,23 +276,21 @@ A note about documentation style. Optional arguments are enclosed in brackets *[
    | The along-beam component of the 3-d air velocity is computed from the u, v, and w fields plus the beam_direction.
      The along-beam component of power-weighted precipitation fall velocity is added to the result.
 
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``state_vector  `` | A one dimensional representation of the model state vector                                     |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``location``       | Location of this observation                                                                   |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``velkey``         | Unique identifier associated with this radial velocity observation                             |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``radial_vel``     | The returned radial velocity value in meters/second                                            |
-   +--------------------+------------------------------------------------------------------------------------------------+
-   | ``istatus``        | Returned integer status code describing problems with applying forward operator. 0 is a good   |
-   |                    | value; any positive value indicates an error; negative values are reserved for internal DART   |
-   |                    | use only.                                                                                      |
-   +--------------------+------------------------------------------------------------------------------------------------+
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``state_vector`` | A one dimensional representation of the model state vector                                       |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``location``     | Location of this observation                                                                     |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``velkey``       | Unique identifier associated with this radial velocity observation                               |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``radial_vel``   | The returned radial velocity value in meters/second                                              |
+   +------------------+--------------------------------------------------------------------------------------------------+
+   | ``istatus``      | Returned integer status code describing problems with applying forward operator. 0 is a good     |
+   |                  | value; any positive value indicates an error; negative values are reserved for internal DART use |
+   |                  | only.                                                                                            |
+   +------------------+--------------------------------------------------------------------------------------------------+
 
 | 
-
---------------
 
 Namelist
 --------
@@ -515,14 +493,10 @@ namelist.
 
 | 
 
---------------
-
 Files
 -----
 
 -  A DART observation sequence file containing Radar obs.
-
---------------
 
 References
 ----------
@@ -539,60 +513,25 @@ References
 -  Smith, P. L. Jr., Myers C. G., and H. D. Orville, 1975: Radar reflectivity factor calculations in numerical cloud
    models using bulk parameterization of precipitation. *J. Appl. Meteor.*, **14**, 1156-1165.
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | Routine               | Message                                     | Comment                                     |
-   +=======================+=============================================+=============================================+
-   | initialize_module     | initial allocation failed for radial vel    | Need to increase max_radial_vel_obs count   |
-   |                       | obs data, itemcount = (max_radial_vel_obs)  | in namelist                                 |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | read_radial_vel       | Expected location header "platform" in      | The format of the input file is not         |
-   |                       | input file                                  | consistent.                                 |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | velkey_out_of_range   | velkey (val) exceeds max_radial_vel_obs     | The number of radial velocity observations  |
-   |                       | (maxval)                                    | exceeds the array size allocated in the     |
-   |                       |                                             | module. Need to increase max_radial_vel_obs |
-   |                       |                                             | count in namelist.                          |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | read_nyquist_velocity | bad value for nyquist velocity              | The format of the input obs_seq file is not |
-   |                       |                                             | consistent.                                 |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | read_beam_direction   | beam_direction value must be between -1 and | The format of the input obs_seq file is not |
-   |                       | 1, got ()                                   | consistent.                                 |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-   | read_beam_direction   | Expected orientation header "dir3d" in      | The format of the input obs_seq file is not |
-   |                       | input file                                  | consistent.                                 |
-   +-----------------------+---------------------------------------------+---------------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 =============================== ============================
 *use obs_def_radar_mod, only :* initialize_module
-                                read_beam_direction
-                                read_nyquist_velocity
-                                write_beam_direction
-                                write_nyquist_velocity
-                                interactive_beam_direction
-                                interactive_nyquist_velocity
-                                get_reflectivity
-                                get_precip_fall_speed
-                                initialize_constants
-                                print_constants
-                                pr_con
-                                velkey_out_of_range
-                                check_namelist_limits
-                                ascii_file_format
+\                               read_beam_direction
+\                               read_nyquist_velocity
+\                               write_beam_direction
+\                               write_nyquist_velocity
+\                               interactive_beam_direction
+\                               interactive_nyquist_velocity
+\                               get_reflectivity
+\                               get_precip_fall_speed
+\                               initialize_constants
+\                               print_constants
+\                               pr_con
+\                               velkey_out_of_range
+\                               check_namelist_limits
+\                               ascii_file_format
 =============================== ============================
 
 | 
@@ -622,14 +561,14 @@ Private components
 
    Reads the beam direction at the observation location. Auxiliary data for doppler radial velocity observations.
 
-   +---------------------------+-----------------------------------------------------------------------------------------+
-   | ``read_beam_direction  `` | Returns three real values for the radar beam orientation                                |
-   +---------------------------+-----------------------------------------------------------------------------------------+
-   | ``ifile``                 | File unit descriptor for input file                                                     |
-   +---------------------------+-----------------------------------------------------------------------------------------+
-   | ``is_asciiformat``        | File format specifier: .TRUE. if file is formatted/ascii, or .FALSE. if                 |
-   |                           | unformatted/binary. Default .TRUE.                                                      |
-   +---------------------------+-----------------------------------------------------------------------------------------+
+   +-------------------------+-------------------------------------------------------------------------------------------+
+   | ``read_beam_direction`` | Returns three real values for the radar beam orientation                                  |
+   +-------------------------+-------------------------------------------------------------------------------------------+
+   | ``ifile``               | File unit descriptor for input file                                                       |
+   +-------------------------+-------------------------------------------------------------------------------------------+
+   | ``is_asciiformat``      | File format specifier: .TRUE. if file is formatted/ascii, or .FALSE. if                   |
+   |                         | unformatted/binary. Default .TRUE.                                                        |
+   +-------------------------+-------------------------------------------------------------------------------------------+
 
 | 
 
@@ -646,14 +585,14 @@ Private components
 
    Reads nyquist velocity for a doppler radial velocity observation.
 
-   +-----------------------------+---------------------------------------------------------------------------------------+
-   | ``read_nyquist_velocity  `` | Returns a real value for the nyquist velocity value                                   |
-   +-----------------------------+---------------------------------------------------------------------------------------+
-   | ``ifile``                   | File unit descriptor for input file                                                   |
-   +-----------------------------+---------------------------------------------------------------------------------------+
-   | ``is_asciiformat``          | File format specifier: .TRUE. if file is formatted/ascii, or .FALSE. if               |
-   |                             | unformatted/binary. Default .TRUE.                                                    |
-   +-----------------------------+---------------------------------------------------------------------------------------+
+   +---------------------------+-----------------------------------------------------------------------------------------+
+   | ``read_nyquist_velocity`` | Returns a real value for the nyquist velocity value                                     |
+   +---------------------------+-----------------------------------------------------------------------------------------+
+   | ``ifile``                 | File unit descriptor for input file                                                     |
+   +---------------------------+-----------------------------------------------------------------------------------------+
+   | ``is_asciiformat``        | File format specifier: .TRUE. if file is formatted/ascii, or .FALSE. if                 |
+   |                           | unformatted/binary. Default .TRUE.                                                      |
+   +---------------------------+-----------------------------------------------------------------------------------------+
 
 | 
 
@@ -670,14 +609,14 @@ Private components
 
    Writes the beam direction at the observation location. Auxiliary data for doppler radial velocity observations.
 
-   +----------------------+----------------------------------------------------------------------------------------------+
-   | ``ifile``            | File unit descriptor for output file                                                         |
-   +----------------------+----------------------------------------------------------------------------------------------+
-   | ``beam_direction  `` | Three components of the radar beam orientation                                               |
-   +----------------------+----------------------------------------------------------------------------------------------+
-   | ``is_asciiformat``   | File format specifier: .TRUE. if file is formatted/ascii, or .FALSE. if unformatted/binary.  |
-   |                      | Default .TRUE.                                                                               |
-   +----------------------+----------------------------------------------------------------------------------------------+
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``ifile``          | File unit descriptor for output file                                                           |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``beam_direction`` | Three components of the radar beam orientation                                                 |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``is_asciiformat`` | File format specifier: .TRUE. if file is formatted/ascii, or .FALSE. if unformatted/binary.    |
+   |                    | Default .TRUE.                                                                                 |
+   +--------------------+------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -694,14 +633,14 @@ Private components
 
    Writes nyquist velocity for a doppler radial velocity observation.
 
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``ifile``              | File unit descriptor for output file                                                       |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``nyquist_velocity  `` | The nyquist velocity value for this observation                                            |
-   +------------------------+--------------------------------------------------------------------------------------------+
-   | ``is_asciiformat``     | File format specifier: .TRUE. if file is formatted/ascii, or .FALSE. if                    |
-   |                        | unformatted/binary. Default .TRUE.                                                         |
-   +------------------------+--------------------------------------------------------------------------------------------+
+   +----------------------+----------------------------------------------------------------------------------------------+
+   | ``ifile``            | File unit descriptor for output file                                                         |
+   +----------------------+----------------------------------------------------------------------------------------------+
+   | ``nyquist_velocity`` | The nyquist velocity value for this observation                                              |
+   +----------------------+----------------------------------------------------------------------------------------------+
+   | ``is_asciiformat``   | File format specifier: .TRUE. if file is formatted/ascii, or .FALSE. if unformatted/binary.  |
+   |                      | Default .TRUE.                                                                               |
+   +----------------------+----------------------------------------------------------------------------------------------+
 
 | 
 
@@ -717,9 +656,9 @@ Private components
    Prompts the user for input for the azimuth and elevation of the radar beam at the observation location. Will be
    converted to the three values actually stored in the observation sequence file.
 
-   ==================== ==============================================
-   ``beam_direction  `` Three components of the radar beam orientation
-   ==================== ==============================================
+   ================== ==============================================
+   ``beam_direction`` Three components of the radar beam orientation
+   ================== ==============================================
 
 | 
 
@@ -734,9 +673,9 @@ Private components
 
    Prompts the user for input for the nyquist velocity value associated with a doppler radial velocity observation.
 
-   ====================== ===========================================
-   ``nyquist_velocity  `` Nyquist velocity value for the observation.
-   ====================== ===========================================
+   ==================== ===========================================
+   ``nyquist_velocity`` Nyquist velocity value for the observation.
+   ==================== ===========================================
 
 | 
 
@@ -757,14 +696,14 @@ Private components
    Computes the equivalent radar reflectivity factor in mm\ :sup:`6` m\ :sup:`-3` for simple single-moment microphysics
    schemes such as Kessler and Lin, et al. See the references for more details.
 
-   ========== =======================================
-   ``qr``     Rain water content (kg kg\ :sup:`-1`)
-   ``qg``     Graupel/hail content (kg kg\ :sup:`-1`)
-   ``qs``     Snow content (kg kg\ :sup:`-1`)
-   ``rho``    Air density (kg m\ :sup:`-3`)
-   ``temp  `` Air temperature (K)
-   ``ref``    The returned radar reflectivity value
-   ========== =======================================
+   ======== =======================================
+   ``qr``   Rain water content (kg kg\ :sup:`-1`)
+   ``qg``   Graupel/hail content (kg kg\ :sup:`-1`)
+   ``qs``   Snow content (kg kg\ :sup:`-1`)
+   ``rho``  Air density (kg m\ :sup:`-3`)
+   ``temp`` Air temperature (K)
+   ``ref``  The returned radar reflectivity value
+   ======== =======================================
 
 | 
 
@@ -785,14 +724,14 @@ Private components
    Computes power-weighted precipitation fall speed in m s\ :sup:`-1` for simple single-moment microphysics schemes such
    as Kessler and Lin, et al. See the references for more details.
 
-   ======================= =======================================
-   ``qr``                  Rain water content (kg kg\ :sup:`-1`)
-   ``qg``                  Graupel/hail content (kg kg\ :sup:`-1`)
-   ``qs``                  Snow content (kg kg\ :sup:`-1`)
-   ``rho``                 Air density (kg m\ :sup:`-3`)
-   ``temp``                Air temperature (K)
-   ``precip_fall_speed  `` The returned precipitation vall speed
-   ======================= =======================================
+   ===================== =======================================
+   ``qr``                Rain water content (kg kg\ :sup:`-1`)
+   ``qg``                Graupel/hail content (kg kg\ :sup:`-1`)
+   ``qs``                Snow content (kg kg\ :sup:`-1`)
+   ``rho``               Air density (kg m\ :sup:`-3`)
+   ``temp``              Air temperature (K)
+   ``precip_fall_speed`` The returned precipitation vall speed
+   ===================== =======================================
 
 | 
 
@@ -833,10 +772,10 @@ Private components
    Calls the DART error handler routine to print out a string label and a real value to both the log file and to the
    standard output.
 
-   ======================= ===================
-   ``Value of constant  `` A real value.
-   ``Name of constant``    A character string.
-   ======================= ===================
+   ===================== ===================
+   ``Value of constant`` A real value.
+   ``Name of constant``  A character string.
+   ===================== ===================
 
 | 
 
@@ -851,9 +790,9 @@ Private components
 
    Range check key and trigger a fatal error if larger than the allocated array for observation auxiliary data.
 
-   ============ =============================================================
-   ``velkey  `` Integer key into a local array of auxiliary observation data.
-   ============ =============================================================
+   ========== =============================================================
+   ``velkey`` Integer key into a local array of auxiliary observation data.
+   ========== =============================================================
 
 | 
 
@@ -876,14 +815,14 @@ Private components
    different; this may be intentional but is not generally expected to be the case. In all cases below, see the namelist
    documentation for a fuller explanation of each value.
 
-   ================================ =========================
-   ``apply_ref_limit_to_obs``       Logical. See namelist.
-   ``reflectivity_limit_obs``       Real value. See namelist.
-   ``lowest_reflectivity_obs``      Real value. See namelist.
-   ``apply_ref_limit_to_fwd_op``    Logical. See namelist.
-   ``reflectivity_limit_fwd_op``    Real value. See namelist.
-   ``lowest_reflectivity_fwd_op  `` Real value. See namelist.
-   ================================ =========================
+   ============================== =========================
+   ``apply_ref_limit_to_obs``     Logical. See namelist.
+   ``reflectivity_limit_obs``     Real value. See namelist.
+   ``lowest_reflectivity_obs``    Real value. See namelist.
+   ``apply_ref_limit_to_fwd_op``  Logical. See namelist.
+   ``reflectivity_limit_fwd_op``  Real value. See namelist.
+   ``lowest_reflectivity_fwd_op`` Real value. See namelist.
+   ============================== =========================
 
 | 
 
@@ -900,11 +839,9 @@ Private components
    Should be moved to DART utility module at some point. Returns .TRUE. if the optional argument is missing or if it is
    not one of the following values: ``"unformatted", "UNFORMATTED", "unf", "UNF"``.
 
-   ======================= ========================================
-   ``ascii_file_format  `` Return value. Logical. Default is .TRUE.
-   ``fform``               Character string file format.
-   ======================= ========================================
+   ===================== ========================================
+   ``ascii_file_format`` Return value. Logical. Default is .TRUE.
+   ``fform``             Character string file format.
+   ===================== ========================================
 
 | 
-
---------------

@@ -1,29 +1,8 @@
---------------
-
-.. _module_vert_advection_mod:
-
-Module vert_advection_mod
--------------------------
-
-Contents
-~~~~~~~~
-
--  `Module vert_advection_mod <#module_vert_advection_mod>`__
-
-.. container::
-
-   **Contact:**   Bruce Wyman
-   **Reviewers:** 
-   **Change History: ** `WebCVS
-   Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/atmos/shared/vert_advection/vert_advection.f90>`__
-   **Last Modified:**  $Date$
-
-| 
-
---------------
+module vert_advection_mod
+=========================
 
 Overview
-^^^^^^^^
+--------
 
 Computes the tendency due to vertical advection for an arbitrary quantity.
 
@@ -33,10 +12,8 @@ Computes the tendency due to vertical advection for an arbitrary quantity.
    differencing may be *centered* (second or fourth order) or *finite volume* (van Leer) using a piecewise linear
    method.
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
@@ -44,10 +21,8 @@ Other modules used
 
            fms_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -63,10 +38,8 @@ Public interface
 
 | 
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Vert_advection
       :name: vert_advection
@@ -135,10 +108,8 @@ a. .. rubric:: Vert_advection
          size(w,3) == size(dz,3)+1 == size(r,3)+1 == size(rdt,3)+1 == size(mask,3)+1
          All horizontal dimensions must have the same size (no check is done).
 
---------------
-
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
@@ -153,10 +124,8 @@ Error messages
 
 | 
 
---------------
-
 References
-^^^^^^^^^^
+----------
 
 .. container::
 
@@ -165,37 +134,11 @@ References
 
 | 
 
---------------
-
-Known bugs
-^^^^^^^^^^
-
-.. container::
-
-   None.
-
-| 
-
---------------
-
 Notes
-^^^^^
+-----
 
 .. container::
 
    None.
 
 | 
-
---------------
-
-Future plans
-^^^^^^^^^^^^
-
-.. container::
-
-   Add option for finite volume, piecewise parabolic method.
-
-| 
-
---------------

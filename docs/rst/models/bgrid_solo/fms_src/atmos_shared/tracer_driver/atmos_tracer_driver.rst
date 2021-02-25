@@ -1,24 +1,8 @@
-.. _module_atmos_tracer_driver_mod:
-
-Module atmos_tracer_driver_mod
-------------------------------
-
-Contents
-~~~~~~~~
-
--  `Module atmos_tracer_driver_mod <#module_atmos_tracer_driver_mod>`__
-
-.. container::
-
-   **Contact:**  `William Cooke <mailto:wfc@gfdl.noaa.gov>`__
-   **Reviewers:**  `Matt Harrison <mailto:mjh@gfdl.noaa.gov>`__,  `Bruce Wyman <mailto:bw@gfdl.noaa.gov>`__
-   **Change History:**  `WebCVS Log <http://www.gfdl.noaa.gov/fms-cgi-bin/cvsweb.cgi/FMS/>`__
-   **Last Modified:** 2002/06/14 18:32:06
-
---------------
+module atmos_tracer_driver_mod
+==============================
 
 Overview
-^^^^^^^^
+--------
 
 This code allows the user to easily add tracers to the FMS framework.
 
@@ -32,7 +16,7 @@ This code allows the user to easily add tracers to the FMS framework.
    Within the global scope of tracer_driver_mod a use statement should be inserted for each tracer to be added.
    ::
 
-            use radon_mod, only : radon_sourcesink, radon_init, radon_end
+      use radon_mod, only : radon_sourcesink, radon_init, radon_end
 
    An integer parameter, which will be used as an identifier for the tracer, should be assigned.
    ::
@@ -74,16 +58,14 @@ This code allows the user to easily add tracers to the FMS framework.
 
 | 
 
---------------
-
 Other modules used
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. container::
 
    ::
 
-                       fms_mod
+      fms_mod
               time_manager_mod
             tracer_manager_mod
              field_manager_mod
@@ -93,10 +75,8 @@ Other modules used
       atmos_carbon_aerosol_mod
           atmos_sulfur_hex_mod
 
---------------
-
 Public interface
-^^^^^^^^^^^^^^^^
+----------------
 
 .. container::
 
@@ -115,19 +95,15 @@ Public interface
 
 | 
 
---------------
-
 Public data
-^^^^^^^^^^^
+-----------
 
 .. container::
 
    None.
 
---------------
-
 Public routines
-^^^^^^^^^^^^^^^
+---------------
 
 a. .. rubric:: Atmos_tracer_driver
       :name: atmos_tracer_driver
@@ -142,69 +118,69 @@ a. .. rubric:: Atmos_tracer_driver
       they need in order to calculate the tendency of that tracer with respect to emissions or chemical losses.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``is, ie, js, je   ``                                     | Local domain boundaries.                                  |
-      |                                                           |    [integer]                                              |
+      | ``is, ie, js, je``                                        | Local domain boundaries.                                  |
+      |                                                           | [integer]                                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``Time   ``                                               | Model time.                                               |
-      |                                                           |    [type(time_type)]                                      |
+      | ``Time``                                                  | Model time.                                               |
+      |                                                           | [type(time_type)]                                         |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lon   ``                                                | Longitude of the centre of the model gridcells            |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``lon``                                                   | Longitude of the centre of the model gridcells            |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lat   ``                                                | Latitude of the centre of the model gridcells             |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      | ``lat``                                                   | Latitude of the centre of the model gridcells             |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``land   ``                                               | Land/sea mask.                                            |
-      |                                                           |    [logical, dimension(:,:)]                              |
+      | ``land``                                                  | Land/sea mask.                                            |
+      |                                                           | [logical, dimension(:,:)]                                 |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``phalf   ``                                              | Pressures on the model half levels.                       |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``phalf``                                                 | Pressures on the model half levels.                       |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``pfull   ``                                              | Pressures on the model full levels.                       |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``pfull``                                                 | Pressures on the model full levels.                       |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``r   ``                                                  | The tracer array in the component model.                  |
-      |                                                           |    [real, dimension(:,:,:,:)]                             |
+      | ``r``                                                     | The tracer array in the component model.                  |
+      |                                                           | [real, dimension(:,:,:,:)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``u   ``                                                  | Zonal wind speed.                                         |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``u``                                                     | Zonal wind speed.                                         |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``v   ``                                                  | Meridonal wind speed.                                     |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``v``                                                     | Meridonal wind speed.                                     |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``t   ``                                                  | Temperature.                                              |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      | ``t``                                                     | Temperature.                                              |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``q   ``                                                  | Specific humidity. This may also be accessible as a       |
+      | ``q``                                                     | Specific humidity. This may also be accessible as a       |
       |                                                           | portion of the tracer array.                              |
-      |                                                           |    [real, dimension(:,:,:)]                               |
+      |                                                           | [real, dimension(:,:,:)]                                  |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``u_star   ``                                             | Friction velocity :: The magnitude of the wind stress is  |
+      | ``u_star``                                                | Friction velocity :: The magnitude of the wind stress is  |
       |                                                           | density*(ustar**2) The drag coefficient for momentum is   |
       |                                                           | u_star**2/(u**2+v**2)                                     |
-      |                                                           |    [real, dimension(:,:)]                                 |
+      |                                                           | [real, dimension(:,:)]                                    |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``rm   ``                                                 | The tracer array in the component model for the previous  |
+      | ``rm``                                                    | The tracer array in the component model for the previous  |
       |                                                           | timestep.                                                 |
-      |                                                           |    [real, dimension(:,:,:,:)]                             |
+      |                                                           | [real, dimension(:,:,:,:)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``kbot   ``                                               | Integer array describing which model layer intercepts the |
+      | ``kbot``                                                  | Integer array describing which model layer intercepts the |
       |                                                           | surface.                                                  |
-      |                                                           |    [integer, optional, dimension(:,:)]                    |
+      |                                                           | [integer, optional, dimension(:,:)]                       |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **INPUT/OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``rdt   ``                                                | The tendency of the tracer array in the compenent model.  |
+      | ``rdt``                                                   | The tendency of the tracer array in the compenent model.  |
       |                                                           | The tendency due to sources and sinks computed in the     |
       |                                                           | individual tracer routines should be added to this array  |
       |                                                           | before exiting tracer_driver.                             |
-      |                                                           |    [real, dimension(:,:,:,:)]                             |
+      |                                                           | [real, dimension(:,:,:,:)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``rdiag   ``                                              | The array of diagnostic tracers. As these may be changed  |
+      | ``rdiag``                                                 | The array of diagnostic tracers. As these may be changed  |
       |                                                           | within the tracer routines for diagnostic purposes, they  |
       |                                                           | need to be writable.                                      |
-      |                                                           |    [real, dimension(:,:,:,:)]                             |
+      |                                                           | [real, dimension(:,:,:,:)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 b. .. rubric:: Atmos_tracer_driver_init
@@ -222,29 +198,29 @@ b. .. rubric:: Atmos_tracer_driver_init
       the user tracer code.
    **INPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``lonb   ``                                               | The longitudes for the local domain.                      |
-      |                                                           |    [real, dimension(:)]                                   |
+      | ``lonb``                                                  | The longitudes for the local domain.                      |
+      |                                                           | [real, dimension(:)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``latb   ``                                               | The latitudes for the local domain.                       |
-      |                                                           |    [real, dimension(:)]                                   |
+      | ``latb``                                                  | The latitudes for the local domain.                       |
+      |                                                           | [real, dimension(:)]                                      |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``mask   ``                                               | optional mask (0. or 1.) that designates which grid       |
+      | ``mask``                                                  | optional mask (0. or 1.) that designates which grid       |
       |                                                           | points are above (=1.) or below (=0.) the ground          |
       |                                                           | dimensioned as (nlon,nlat,nlev).                          |
-      |                                                           |    [real, optional, dimension(:,:,:)]                     |
+      |                                                           | [real, optional, dimension(:,:,:)]                        |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``Time   ``                                               | Model time.                                               |
-      |                                                           |    [type(time_type)]                                      |
+      | ``Time``                                                  | Model time.                                               |
+      |                                                           | [type(time_type)]                                         |
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``axes   ``                                               | The axes relating to the tracer array dimensioned as      |
+      | ``axes``                                                  | The axes relating to the tracer array dimensioned as      |
       |                                                           | (nlon, nlat, nlev, ntime)                                 |
-      |                                                           |    [integer, dimension(4)]                                |
+      |                                                           | [integer, dimension(4)]                                   |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
    **INPUT/OUTPUT**
       +-----------------------------------------------------------+-----------------------------------------------------------+
-      | ``r   ``                                                  | Tracer fields dimensioned as (nlon,nlat,nlev,ntrace).     |
-      |                                                           |    [real, dimension(:,:,:,:)]                             |
+      | ``r``                                                     | Tracer fields dimensioned as (nlon,nlat,nlev,ntrace).     |
+      |                                                           | [real, dimension(:,:,:,:)]                                |
       +-----------------------------------------------------------+-----------------------------------------------------------+
 
 c. .. rubric:: Atmos_tracer_driver_end
@@ -257,27 +233,21 @@ c. .. rubric:: Atmos_tracer_driver_end
    **DESCRIPTION**
       Termination routine for tracer_driver. It should also call the destructors for the individual tracer routines.
 
---------------
-
 Data sets
-^^^^^^^^^
+---------
 
 .. container::
 
    None.
 
---------------
-
 Error messages
-^^^^^^^^^^^^^^
+--------------
 
 .. container::
 
    **FATAL in atmos_tracer_driver**
       tracer_driver_init must be called first.
       Tracer_driver_init needs to be called before tracer_driver.
-
---------------
 
 .. container::
 

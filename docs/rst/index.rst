@@ -30,19 +30,34 @@ Welcome to the DART documentation
 
 .. toctree::
    :maxdepth: 1
+   :caption: Latest Release
+
+   /docs/rst/docs/html/Manhattan_release
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Prior Releases
+
+   /docs/rst/docs/html/Lanai_release
+   /docs/rst/docs/html/history/Kodiak_release
+   /docs/rst/docs/html/history/Jamaica_release
+   /docs/rst/docs/html/history/Iceland_release
+   /docs/rst/docs/html/history/hawaii_release
+   /docs/rst/docs/html/history/Guam_release
+   /docs/rst/docs/html/history/Fiji_release
+
+.. toctree::
+   :maxdepth: 1
    :caption: Models
 
    /docs/rst/models/LMDZ/README
    /docs/rst/models/ECHAM/README
    /docs/rst/models/null_model/README
    /docs/rst/models/coamps_nest/README
-   /docs/rst/models/POP/dart_pop_mod
    /docs/rst/models/POP/README
    /docs/rst/models/pe2lyr/model_mod
    /docs/rst/models/lorenz_63/README
    /docs/rst/models/9var/README
-   /docs/rst/models/gitm/netcdf_to_gitm_blocks
-   /docs/rst/models/gitm/gitm_blocks_to_netcdf
    /docs/rst/models/gitm/README
    /docs/rst/models/simple_advection/README
    /docs/rst/models/lorenz_96/README
@@ -51,110 +66,29 @@ Welcome to the DART documentation
    /docs/rst/models/PBL_1d/README
    /docs/rst/models/ROMS/README
    /docs/rst/models/lorenz_84/README
-   /docs/rst/models/mpas_ocn/model_to_dart
    /docs/rst/models/mpas_ocn/model_mod
    /docs/rst/models/template/model_mod
    /docs/rst/models/cam-fv/README
    /docs/rst/models/sqg/model_mod
    /docs/rst/models/rose/README
-   /docs/rst/models/mpas_atm/mpas_dart_obs_preprocess
    /docs/rst/models/mpas_atm/README
    /docs/rst/models/forced_lorenz_96/README
-   /docs/rst/models/wrf/WRF_DART_utilities/replace_wrf_fields
-   /docs/rst/models/wrf/WRF_DART_utilities/wrf_dart_obs_preprocess
    /docs/rst/models/wrf/README
-   /docs/rst/models/utilities/default_model_mod
-   /docs/rst/models/cam-old/cam_to_dart
    /docs/rst/models/cam-old/README
-   /docs/rst/models/cam-old/dart_to_cam
    /docs/rst/models/cice/README
    /docs/rst/models/am2/README
    /docs/rst/models/cm1/README
    /docs/rst/models/lorenz_04/README
-   /docs/rst/models/CESM/doc/setup_guidelines
    /docs/rst/models/CESM/README
-   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/tracer_driver/atmos_radon
-   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/tracer_driver/atmos_sulfur_hex
-   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/tracer_driver/atmos_tracer_driver
-   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/tracer_driver/atmos_carbon_aerosol
-   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/tracer_driver/atmos_tracer_utilities
-   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/vert_advection/vert_advection
-   /docs/rst/models/bgrid_solo/fms_src/shared/time_manager/time_manager
-   /docs/rst/models/bgrid_solo/fms_src/shared/field_manager/field_manager
-   /docs/rst/models/bgrid_solo/fms_src/shared/horiz_interp/horiz_interp
-   /docs/rst/models/bgrid_solo/fms_src/shared/fms/fms
-   /docs/rst/models/bgrid_solo/fms_src/shared/constants/constants
-   /docs/rst/models/bgrid_solo/fms_src/shared/platform/platform
-   /docs/rst/models/bgrid_solo/fms_src/shared/utilities/utilities
-   /docs/rst/models/bgrid_solo/fms_src/shared/tracer_manager/tracer_manager
-   /docs/rst/models/bgrid_solo/fms_src/shared/mpp/mpp_domains
-   /docs/rst/models/bgrid_solo/fms_src/shared/mpp/mpp_io
-   /docs/rst/models/bgrid_solo/fms_src/shared/mpp/mpp
-   /docs/rst/models/bgrid_solo/fms_src/shared/fft/fft
-   /docs/rst/models/bgrid_solo/fms_src/shared/sat_vapor_pres/sat_vapor_pres
-   /docs/rst/models/bgrid_solo/fms_src/shared/topography/topography
-   /docs/rst/models/bgrid_solo/fms_src/shared/topography/gaussian_topog
-   /docs/rst/models/bgrid_solo/fms_src/shared/diag_manager/diag_manager
-   /docs/rst/models/bgrid_solo/fms_src/shared/diag_manager/diag_table_tk
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_polar_filter
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_halo
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_horiz
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_cold_start
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_prog_var
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_diagnostics
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_integrals
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_change_grid
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_masks
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_vert
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/driver/solo/atmosphere
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/model/bgrid_core
-   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/model/bgrid_core_driver
-   /docs/rst/models/bgrid_solo/fms_src/atmos_param/hs_forcing/hs_forcing
-   /docs/rst/models/bgrid_solo/fms_src/atmos_solo/atmos_model
    /docs/rst/models/bgrid_solo/README
    /docs/rst/models/noah/README
    /docs/rst/models/FESOM/README
-   /docs/rst/models/NCOMMAS/dart_to_ncommas
    /docs/rst/models/NCOMMAS/model_mod
-   /docs/rst/models/NCOMMAS/ncommas_to_dart
    /docs/rst/models/wrf_hydro/README
    /docs/rst/models/tiegcm/model_mod
    /docs/rst/models/lorenz_96_2scale/README
-   /docs/rst/models/MITgcm_ocean/trans_pv_sv
-   /docs/rst/models/MITgcm_ocean/trans_sv_pv
    /docs/rst/models/MITgcm_ocean/model_mod
-   /docs/rst/models/MITgcm_ocean/create_ocean_obs
    /docs/rst/models/clm/model_mod
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Releases
-
-   /docs/rst/docs/html/Lanai_diffs_from_Kodiak
-   /docs/rst/docs/html/filter_async_modes
-   /docs/rst/docs/html/distributed_state
-   /docs/rst/docs/html/Manhattan_release
-   /docs/rst/docs/html/Manhattan_getting_started
-   /docs/rst/docs/html/rma
-   /docs/rst/docs/html/Manhattan_diffs_from_Lanai
-   /docs/rst/docs/html/forward_operator
-   /docs/rst/docs/html/Lanai_release
-   /docs/rst/docs/html/boilerplate/boilerplate
-   /docs/rst/docs/html/boilerplate/template
-   /docs/rst/docs/html/vertical_conversion
-   /docs/rst/docs/html/history/Iceland_release
-   /docs/rst/docs/html/history/Fiji_release
-   /docs/rst/docs/html/history/pre_j_release
-   /docs/rst/docs/html/history/Kodiak_release
-   /docs/rst/docs/html/history/PostI_diffs_from_I
-   /docs/rst/docs/html/history/Jamaica_release
-   /docs/rst/docs/html/history/Guam_release
-   /docs/rst/docs/html/history/Jamaica_diffs_from_I
-   /docs/rst/docs/html/history/I_diffs_from_workshop
-   /docs/rst/docs/html/history/pre_hawaii_release
-   /docs/rst/docs/html/history/hawaii_release
-   /docs/rst/docs/html/history/pre_guam_release
-   /docs/rst/docs/html/history/Post_Iceland_release
 
 .. toctree::
    :maxdepth: 1
@@ -213,6 +147,82 @@ Welcome to the DART documentation
    /docs/rst/assimilation_code/modules/assimilation/quality_control_mod
    /docs/rst/assimilation_code/modules/assimilation/filter_mod
    /docs/rst/assimilation_code/modules/assimilation/assim_model_mod
+
+.. toctree::
+   :maxdepth: 1
+   :caption: To organize later with toctree directives
+
+   /docs/rst/docs/html/Lanai_diffs_from_Kodiak
+   /docs/rst/docs/html/filter_async_modes
+   /docs/rst/docs/html/distributed_state
+   /docs/rst/docs/html/Manhattan_getting_started
+   /docs/rst/docs/html/rma
+   /docs/rst/docs/html/Manhattan_diffs_from_Lanai
+   /docs/rst/docs/html/forward_operator
+   /docs/rst/docs/html/boilerplate/boilerplate
+   /docs/rst/docs/html/boilerplate/template
+   /docs/rst/docs/html/vertical_conversion
+   /docs/rst/docs/html/history/pre_j_release
+   /docs/rst/docs/html/history/PostI_diffs_from_I
+   /docs/rst/docs/html/history/Jamaica_diffs_from_I
+   /docs/rst/docs/html/history/I_diffs_from_workshop
+   /docs/rst/docs/html/history/pre_hawaii_release
+   /docs/rst/docs/html/history/pre_guam_release
+   /docs/rst/docs/html/history/Post_Iceland_release
+   /docs/rst/models/POP/dart_pop_mod
+   /docs/rst/models/gitm/netcdf_to_gitm_blocks
+   /docs/rst/models/gitm/gitm_blocks_to_netcdf
+   /docs/rst/models/mpas_ocn/model_to_dart
+   /docs/rst/models/mpas_atm/mpas_dart_obs_preprocess
+   /docs/rst/models/wrf/WRF_DART_utilities/replace_wrf_fields
+   /docs/rst/models/wrf/WRF_DART_utilities/wrf_dart_obs_preprocess
+   /docs/rst/models/utilities/default_model_mod
+   /docs/rst/models/cam-old/cam_to_dart
+   /docs/rst/models/cam-old/dart_to_cam
+   /docs/rst/models/CESM/doc/setup_guidelines
+   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/tracer_driver/atmos_radon
+   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/tracer_driver/atmos_sulfur_hex
+   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/tracer_driver/atmos_tracer_driver
+   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/tracer_driver/atmos_carbon_aerosol
+   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/tracer_driver/atmos_tracer_utilities
+   /docs/rst/models/bgrid_solo/fms_src/atmos_shared/vert_advection/vert_advection
+   /docs/rst/models/bgrid_solo/fms_src/shared/time_manager/time_manager
+   /docs/rst/models/bgrid_solo/fms_src/shared/field_manager/field_manager
+   /docs/rst/models/bgrid_solo/fms_src/shared/horiz_interp/horiz_interp
+   /docs/rst/models/bgrid_solo/fms_src/shared/fms/fms
+   /docs/rst/models/bgrid_solo/fms_src/shared/constants/constants
+   /docs/rst/models/bgrid_solo/fms_src/shared/platform/platform
+   /docs/rst/models/bgrid_solo/fms_src/shared/utilities/utilities
+   /docs/rst/models/bgrid_solo/fms_src/shared/tracer_manager/tracer_manager
+   /docs/rst/models/bgrid_solo/fms_src/shared/mpp/mpp_domains
+   /docs/rst/models/bgrid_solo/fms_src/shared/mpp/mpp_io
+   /docs/rst/models/bgrid_solo/fms_src/shared/mpp/mpp
+   /docs/rst/models/bgrid_solo/fms_src/shared/fft/fft
+   /docs/rst/models/bgrid_solo/fms_src/shared/sat_vapor_pres/sat_vapor_pres
+   /docs/rst/models/bgrid_solo/fms_src/shared/topography/topography
+   /docs/rst/models/bgrid_solo/fms_src/shared/topography/gaussian_topog
+   /docs/rst/models/bgrid_solo/fms_src/shared/diag_manager/diag_manager
+   /docs/rst/models/bgrid_solo/fms_src/shared/diag_manager/diag_table_tk
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_polar_filter
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_halo
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_horiz
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_cold_start
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_prog_var
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_diagnostics
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_integrals
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_change_grid
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_masks
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/tools/bgrid_vert
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/driver/solo/atmosphere
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/model/bgrid_core
+   /docs/rst/models/bgrid_solo/fms_src/atmos_bgrid/model/bgrid_core_driver
+   /docs/rst/models/bgrid_solo/fms_src/atmos_param/hs_forcing/hs_forcing
+   /docs/rst/models/bgrid_solo/fms_src/atmos_solo/atmos_model
+   /docs/rst/models/NCOMMAS/dart_to_ncommas
+   /docs/rst/models/NCOMMAS/ncommas_to_dart
+   /docs/rst/models/MITgcm_ocean/trans_pv_sv
+   /docs/rst/models/MITgcm_ocean/trans_sv_pv
+   /docs/rst/models/MITgcm_ocean/create_ocean_obs
 
 .. toctree::
    :maxdepth: 1

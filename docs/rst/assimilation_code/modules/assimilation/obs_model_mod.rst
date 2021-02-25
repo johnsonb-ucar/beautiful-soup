@@ -1,28 +1,12 @@
 MODULE obs_model_mod
 ====================
 
-Contents
---------
-
--  `Overview <#overview>`__
--  `Other modules used <#other_modules_used>`__
--  `Public interfaces <#public_interfaces>`__
--  `Namelist <#namelist>`__
--  `Files <#files>`__
--  `References <#references>`__
--  `Error codes and conditions <#error_codes_and_conditions>`__
--  `Private components <#private_components>`__
-
 Overview
 --------
 
 The code in this module computes the assimilation windows, and decides if the model needs to run in order for the data
 to be at the appropriate time to assimilate the next available observations. It also has the code to write out the
 current states, advance the model (in a variety of ways) and then read back in the updated states.
-
---------------
-
-.. _other_modules_used:
 
 Other modules used
 ------------------
@@ -38,16 +22,12 @@ Other modules used
    ensemble_manager_mod
    mpi_utilities_mod
 
---------------
-
-.. _public_interfaces:
-
 Public interfaces
 -----------------
 
 =========================== =============
 *use obs_model_mod, only :* advance_state
-                            move_ahead
+\                           move_ahead
 =========================== =============
 
 | 
@@ -86,48 +66,30 @@ Public interfaces
      determined by comparing the current ensemble time with the next ensemble time. If equal no advance is needed.
      Otherwise, next ensemble time is the target time for advance_state().
 
-   ``ens_handle``
-
-Identifies the model state ensemble
-
-``ens_size``
-
-Number of ensemble members
-
-``seq``
-
-An observation sequence
-
-``last_key_used``
-
-Identifies the last observation from the sequence that has been used
-
-``window_time``
-
-Reserved for future use.
-
-``key_bounds``
-
-Returned lower and upper bound on observations to be used at this time
-
-``num_obs_in_set``
-
-Number of observations to be used at this time
-
-``curr_ens_time``
-
-The time of the ensemble data passed into this routine.
-
-``next_ens_time``
-
-The time the ensemble data should be advanced to. If equal to curr_ens_time, the model does not need to advance to
-assimilate the next observation.
-
-``trace_messages``
-
-Optional argument. By default, detailed time trace messages are disabled but can be turned on by passing this in as
-.True. . The messages will print the current window times, data time, next observation time, next window time, next data
-time, etc.
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``ens_handle``     | Identifies the model state ensemble                                                            |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``ens_size``       | Number of ensemble members                                                                     |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``seq``            | An observation sequence                                                                        |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``last_key_used``  | Identifies the last observation from the sequence that has been used                           |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``window_time``    | Reserved for future use.                                                                       |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``key_bounds``     | Returned lower and upper bound on observations to be used at this time                         |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``num_obs_in_set`` | Number of observations to be used at this time                                                 |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``curr_ens_time``  | The time of the ensemble data passed into this routine.                                        |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``next_ens_time``  | The time the ensemble data should be advanced to. If equal to curr_ens_time, the model does    |
+   |                    | not need to advance to assimilate the next observation.                                        |
+   +--------------------+------------------------------------------------------------------------------------------------+
+   | ``trace_messages`` | Optional argument. By default, detailed time trace messages are disabled but can be turned on  |
+   |                    | by passing this in as .True. . The messages will print the current window times, data time,    |
+   |                    | next observation time, next window time, next data time, etc.                                  |
+   +--------------------+------------------------------------------------------------------------------------------------+
 
 | 
 
@@ -172,78 +134,42 @@ time, etc.
    | ``adv_ens_command``                                       | Command to be issued to shell to advance model if         |
    |                                                           | async=2.                                                  |
    +-----------------------------------------------------------+-----------------------------------------------------------+
-   | ``tasks_per_model_advance   ``                            | Reserved for future use.                                  |
+   | ``tasks_per_model_advance``                               | Reserved for future use.                                  |
    +-----------------------------------------------------------+-----------------------------------------------------------+
 
 | 
-
---------------
 
 Namelist
 --------
 
 This module does not have a namelist.
 
---------------
-
 Files
 -----
 
-+---------------------------------+-----------------------------------------------------------------------------------+
-| filename                        | purpose                                                                           |
-+=================================+===================================================================================+
-| assim_model_state_ic\ *####*    | a binary representation of the state vector prepended by a small header           |
-|                                 | consisting of the 'advance-to' time and the 'valid-time' of the state vector. The |
-|                                 | *####* represents the ensemble member number if ``&ensemble_manager_nml``:        |
-|                                 | ``single_restart_file_out = .true.``.                                             |
-+---------------------------------+-----------------------------------------------------------------------------------+
-| assim_model_state_ud\ *####   * | a binary representation of the state vector prepended by a small header           |
-|                                 | consisting of the 'valid-time' of the state vector. This is the 'updated' model   |
-|                                 | state (after the model has advanced the state to the desired 'advance-to' time).  |
-+---------------------------------+-----------------------------------------------------------------------------------+
-| filter_control\ *####*          | a text file containing information needed to advance the ensemble members; i.e.,  |
-|                                 | the ensemble member number, the input state vector file, the output state vector  |
-|                                 | file - that sort of thing.                                                        |
-+---------------------------------+-----------------------------------------------------------------------------------+
-
---------------
++------------------------------+--------------------------------------------------------------------------------------+
+| filename                     | purpose                                                                              |
++==============================+======================================================================================+
+| assim_model_state_ic\ *####* | a binary representation of the state vector prepended by a small header consisting   |
+|                              | of the 'advance-to' time and the 'valid-time' of the state vector. The *####*        |
+|                              | represents the ensemble member number if ``&ensemble_manager_nml``:                  |
+|                              | ``single_restart_file_out = .true.``.                                                |
++------------------------------+--------------------------------------------------------------------------------------+
+| assim_model_state_ud\ *####* | a binary representation of the state vector prepended by a small header consisting   |
+|                              | of the 'valid-time' of the state vector. This is the 'updated' model state (after    |
+|                              | the model has advanced the state to the desired 'advance-to' time).                  |
++------------------------------+--------------------------------------------------------------------------------------+
+| filter_control\ *####*       | a text file containing information needed to advance the ensemble members; i.e., the |
+|                              | ensemble member number, the input state vector file, the output state vector file -  |
+|                              | that sort of thing.                                                                  |
++------------------------------+--------------------------------------------------------------------------------------+
 
 References
 ----------
 
 -  none
 
---------------
-
-.. _error_codes_and_conditions:
-
-Error codes and conditions
---------------------------
-
-.. container:: errors
-
-   +---------------+-------------------------------------------------+-------------------------------------------------+
-   | Routine       | Message                                         | Comment                                         |
-   +===============+=================================================+=================================================+
-   | move_ahead    | next obs time not in model time window          | Error in algorithm to compute observation       |
-   |               |                                                 | window                                          |
-   +---------------+-------------------------------------------------+-------------------------------------------------+
-   | advance_state | target time ###,### is before model_time        | Target time must not be before current model    |
-   |               | ###,###                                         | time.                                           |
-   +---------------+-------------------------------------------------+-------------------------------------------------+
-   | advance_state | Trying to use ### model states -- too many. Use | Maximum of 9999 ensemble members is allowed.    |
-   |               | less than 10000 member ensemble.                |                                                 |
-   +---------------+-------------------------------------------------+-------------------------------------------------+
-   | advance_state | Can only have 10000 processes.                  | No more than 9999 processes can run.            |
-   +---------------+-------------------------------------------------+-------------------------------------------------+
-   | advance_state | input.nml - async is #, must be 0, or 2.        | Only 0 or 2 work for async.                     |
-   +---------------+-------------------------------------------------+-------------------------------------------------+
-
-.. _private_components:
-
 Private components
 ------------------
 
 N/A
-
---------------
